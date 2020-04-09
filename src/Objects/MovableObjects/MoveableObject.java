@@ -2,6 +2,6 @@ package Objects.MovableObjects;
 
 import Objects.GameObject;
 
-public class MoveableObject extends GameObject{
+public class MoveableObject{
 
 }

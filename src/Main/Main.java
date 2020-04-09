@@ -10,6 +10,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+
+//Triumph Plankton, TRIUMPH
 public class Main extends Application {
 
 	private Pane root;
