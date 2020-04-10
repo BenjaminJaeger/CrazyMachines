@@ -47,10 +47,6 @@ private static boolean experimental = false;
 			    }
 			});
 		}	
-		
-		swingNode.setOnMouseMoved(e->{
-			graphics.moveModel((float)e.getX(), (float)e.getY());
-		});
-		
+				
 	}
 }

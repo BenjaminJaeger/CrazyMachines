@@ -19,6 +19,7 @@ import Engine.Core.Math.Vector3f;
 import Engine.Core.Renderer.Renderer;
 import Engine.Core.Shaders.Core.BasicShader;
 import Engine.Core.Shaders.Core.Material;
+import Engine.Primitives.Sphere;
 import Objects.GameObject;
 
 public class ComputerGraphics  implements GLEventListener{
@@ -30,7 +31,8 @@ public class ComputerGraphics  implements GLEventListener{
 	private BasicShader shader;
 	private Camera camera;
 	private Matrix4f projectionMatrix;
-	private GameObject model; 
+	private GameObject model1; 
+	private GameObject model2; 
 	
 	private ArrayList<GameObject> test = new ArrayList<GameObject>();
 	
@@ -74,12 +76,10 @@ public class ComputerGraphics  implements GLEventListener{
 			tinc*=-1;
 		t+=tinc;
 			
-		model.increaseRotation(0.1f,0.5f);
-		model.setX(modelX);
-		model.setY(modelY);
+		model1.update();
 		
-		renderer.render(model, shader); 
-		//renderer.render(model2, shader); 
+		renderer.render(model1, shader); 
+		renderer.render(model2, shader); 
 		
 		for (GameObject object : test) 
 			renderer.render(object,shader);			
@@ -117,12 +117,19 @@ public class ComputerGraphics  implements GLEventListener{
 		//Sphere sphere = new Sphere(20);
 		
 		
-		String[] files = {"cube"};
-		float[][] colors = {{1f,0f,0f}};
+		String[] files1 = {"cube"};
+		float[][] colors1 = {{1f,0f,0f}};
+		float[][] colors2 = {{0f,0f,1f}};
 		
-		model = new GameObject(files, basicMaterial, colors, 0f, 0f);
+		model1 = new GameObject(new Sphere(50), basicMaterial, colors1, 0f, 0f);
+		model1.setScale(0.5f);
+		model2 = new GameObject(files1, basicMaterial, colors2, 0, -1200f);
+
 		
-		test.add(new GameObject(files, basicMaterial, colors, 0f, 0f));
+		test.add(new GameObject(files1, basicMaterial, colors1, 0f, 0f));
+		
+		//GL4 gl=(GL4)GLContext.getCurrentGL();
+		//gl.glViewport(-Config.CANVAS_WIDTH/2, -Config.CANVAS_HEIGHT/2, Config.CANVAS_WIDTH, Config.CANVAS_HEIGHT);
 	}
 
 	@Override

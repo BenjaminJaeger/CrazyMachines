@@ -42,6 +42,7 @@ public class Model  {
 		this.x = x;
 		this.y = y;
 		this.material=material;
+		updateMatrix=true;
 	}
 	
 	
@@ -50,7 +51,7 @@ public class Model  {
 	 * The model has the scale 1 and is at location x,y,0 and is not rotated
 	 *
 	 */
-	public Model(Primitive primitive,Material material,float x,float y) {
+	public Model(Primitive primitive,Material material,float[] colors, float x,float y) {
 		this.mesh=primitive.getMesh();
 		scaleX=1;
 		scaleY=1;
@@ -58,8 +59,8 @@ public class Model  {
 		this.x = x;
 		this.y = y;
 		this.material=material;
+		updateMatrix=true;
 	}
-	
 	
 	
 

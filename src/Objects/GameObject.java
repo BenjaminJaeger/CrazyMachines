@@ -1,17 +1,22 @@
 package Objects;
 
+import Engine.Core.Config;
 import Engine.Core.Models.Model;
 import Engine.Core.Shaders.Core.Material;
+import Engine.Primitives.Primitive;
 
 public class GameObject {
 
 	Model[] models;
 	float[][] colors;
 	
-	
 	float x,y;
 	float rotationX,rotationY;
 	float scaleX,scaleY;
+	
+	float velocityX,velocityY; //Geschwindigkeit
+	float accelerationX,accelerationY; //Beschleunigung
+	
 	
 	public GameObject(String[] files,Material material, float[][] colors,float x,float y) {
 		this.colors = colors;
@@ -22,6 +27,44 @@ public class GameObject {
 			models[i] = new Model(files[i],material,colors[i],x,y);		
 	}
 	
+	public GameObject(Primitive primitive,Material material, float[][] colors,float x,float y) {
+		this.colors = colors;
+		this.x = x;
+		this.y = y;
+		models = new Model[1];
+		models[0] = new Model(primitive,material,colors[0],x,y);		
+	}
+	
+	
+	public void update() {
+		applyForce(0, -1f);
+		checkEdge();
+		increaseVelocity(accelerationX, accelerationY);
+		increasePosition(velocityX, velocityY);
+	}
+	
+	public void checkEdge() {
+		if(y<-Config.CANVAS_HEIGHT) {
+			setY(-Config.CANVAS_HEIGHT);
+			setVelocityY(-velocityY);
+		}
+	}
+	
+	public void applyForce(float x,float y) {
+		this.accelerationX=x;
+		this.accelerationY=y;
+	}
+	
+
+	public void increaseVelocity(float dx,float dy) {
+		this.velocityX+=dx;
+		this.velocityY+=dy;
+	}
+	
+	public void increaseAcceleration(float dx,float dy) {
+		this.accelerationX+=dx;
+		this.accelerationY+=dy;
+	}
 	
 	/**
 	 * increases the current xyz position by dx,dy,dz
@@ -30,8 +73,7 @@ public class GameObject {
 		this.x+=dx;
 		this.y+=dy;
 		for (Model model : models) 
-			model.increasePosition(dx, dy,0);
-		
+			model.increasePosition(dx, dy,0);	
 	}
 	
 	/**
@@ -42,16 +84,14 @@ public class GameObject {
 		this.rotationX+=dx;
 		this.rotationY+=dy;
 		for (Model model : models) 
-			model.increaseRotation(dx, dy, 0);
-		
+			model.increaseRotation(dx, dy, 0);		
 	}
 	
-	
-	public Model[] getModesl() {
+	public Model[] getModels() {
 		return models;
 	}
 	
-	public void setModesl(Model[] modesl) {
+	public void setModels(Model[] modesl) {
 		this.models = modesl;
 	}
 	
@@ -70,8 +110,7 @@ public class GameObject {
 	public void setX(float x) {
 		this.x = x;
 		for (Model model : models) 
-			model.setX(x);
-		
+			model.setX(x);	
 	}
 	
 	public float getY() {
@@ -104,6 +143,18 @@ public class GameObject {
 			model.setRotationY(rotationY);
 	}
 	
+	public void setScale(float scale) {
+		this.scaleX = scale;
+		for (Model model : models) 
+			model.setScaleX(scale);
+		this.scaleY = scale;
+		for (Model model : models) 
+			model.setScaleY(scale);
+		
+		for (Model model : models) 
+			model.setScaleZ(scale);
+	}
+	
 	public float getScaleX() {
 		return scaleX;
 	}
@@ -123,5 +174,46 @@ public class GameObject {
 		for (Model model : models) 
 			model.setScaleY(scaleY);
 	}
+
+
+	public float getVelocityX() {
+		return velocityX;
+	}
+
+
+	public void setVelocityX(float velocityX) {
+		this.velocityX = velocityX;
+	}
+
+
+	public float getVelocityY() {
+		return velocityY;
+	}
+
+
+	public void setVelocityY(float velocityY) {
+		this.velocityY = velocityY;
+	}
+
+
+	public float getAccelerationX() {
+		return accelerationX;
+	}
+
+
+	public void setAccelerationX(float accelerationX) {
+		this.accelerationX = accelerationX;
+	}
+
+
+	public float getAccelerationY() {
+		return accelerationY;
+	}
+
+
+	public void setAccelerationY(float accelerationY) {
+		this.accelerationY = accelerationY;
+	}
+	
 	
 }

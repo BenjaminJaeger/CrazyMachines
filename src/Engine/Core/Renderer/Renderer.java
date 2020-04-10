@@ -90,7 +90,7 @@ public class Renderer {
 	public void render(GameObject object,BasicShader shader) {
 		GL4 gl=(GL4)GLContext.getCurrentGL();
 		
-		for (Model model : object.getModesl()) {			
+		for (Model model : object.getModels()) {			
 			shader.use(); //activate shader before rendering
 			shader.uploadMaterial(model.getMaterial());		
 			shader.uploadAmbientLight(AmbientLight.getAmbientLight());

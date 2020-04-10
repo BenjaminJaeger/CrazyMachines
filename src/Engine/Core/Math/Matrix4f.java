@@ -4,6 +4,7 @@ import java.nio.FloatBuffer;
 
 import com.jogamp.common.nio.Buffers;
 
+import Engine.Core.Config;
 import Engine.Core.Camera.Camera;
 import Engine.Core.Models.Model;
 
@@ -521,9 +522,9 @@ public class Matrix4f {
 		 * (some multiplication lead up to 0 and are not listed here)
 		 * could also construct new Matrix as translation matrix and use the multiply method with the new matrix (worse performance)
 		*/
-		m03 += m00 * x + m01 * y + m02 * z;
-		m13 += m10 * x + m11 * y + m12 * z;
-		m23 += m20 * x + m21 * y + m22 * z;
+		m03 += m00 * x/Config.CANVAS_WIDTH + m01 * y/Config.CANVAS_HEIGHT + m02 * z;
+		m13 += m10 * x/Config.CANVAS_WIDTH + m11 * y/Config.CANVAS_HEIGHT + m12 * z;
+		m23 += m20 * x/Config.CANVAS_WIDTH + m21 * y/Config.CANVAS_HEIGHT + m22 * z;
 	}
 	
 
