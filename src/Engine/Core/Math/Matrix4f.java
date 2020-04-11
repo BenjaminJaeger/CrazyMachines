@@ -29,6 +29,7 @@ public class Matrix4f {
 	 * The matrix starts as an identity matrix
 	 */
 	public Matrix4f() {
+		
 	}
 	
 	/**
@@ -496,7 +497,6 @@ public class Matrix4f {
 		rotateZ.m11=c;
 		
 		this.multiply(rotateZ);
-		
 	}
 		
 	/**

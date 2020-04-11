@@ -10,9 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-//Simons Kommentar
 
-//Testkommentar von Benjamin 
 public class Main extends Application {
 
 	private Pane root;

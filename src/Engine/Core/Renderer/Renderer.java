@@ -116,7 +116,7 @@ public class Renderer {
 					
 			shader.uploadProjectionMatrix(projectionMatrix);
 			
-			gl.glBindVertexArray(model.getMesh().getVaoID()); //activates the specific VAO
+			gl.glBindVertexArray(model.getMesh().getVaoID());//activates the specific VAO
 			gl.glDrawElements(GL_TRIANGLES, model.getMesh().getIndexCount(), GL_UNSIGNED_INT, 0); //draws with the usage of indices 	
 		}
 	}

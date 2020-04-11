@@ -116,7 +116,7 @@ public class ComputerGraphics  implements GLEventListener{
 		DirectionalLight directionalLight=new DirectionalLight(new Vector3f(0, 0, -1), new Vector3f(1, 1, 1), new Vector3f(1, 1, 1));
 		
 		//                        new Material(ambientColor, diffuseColor, specularColor, shininess, alpha)
-		Material basicMaterial = new Material( new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 0, 1f);
+		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
 		
 		

@@ -13,7 +13,7 @@ import Engine.Primitives.Primitive;
  * The model can get rendered to the screen
  * @author Simon Weck
  */
-public class Model  {
+public class Model {
 	
 	private Material material;
 	private Mesh mesh; //raw mesh that we can transform

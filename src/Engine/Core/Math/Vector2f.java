@@ -23,4 +23,5 @@ public class Vector2f {
 		x/=devisor;
 		y/=devisor;
 	}
+	
 }
