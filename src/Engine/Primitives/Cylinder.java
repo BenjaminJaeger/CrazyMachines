@@ -1,7 +1,5 @@
 package Engine.Primitives;
 
-import Engine.Core.Models.Mesh;
-
 public class Cylinder extends Primitive {
 
     private float radiusBot;
@@ -9,20 +7,15 @@ public class Cylinder extends Primitive {
     private float height;
     private int indexPointer;
     private int vertexPointer;
+    private int resolution;
     
 	public Cylinder(int resolution,float radiusBot,float radiusTop,float height) {
-		super(resolution);
 		this.radiusBot=radiusBot;
 		this.radiusTop=radiusTop;
 		this.height=height;
+		this.resolution=resolution;
 		
 		constructMesh();
-				
-		colors=new float[vertices.length];
-		for (int i = 0; i < colors.length; i++) 
-			colors[i]=1;	
-		
-		mesh=new Mesh(vertices,colors,indices);
 	}
 	
 	@Override
@@ -115,59 +108,5 @@ public class Cylinder extends Primitive {
 			indexPointer+=6;
 		}
 	}
-	
-	public void update(int resolution,float radiusTop, float radiusBot,float height,float r,float g,float b) {
-		if (this.resolution!=resolution) 
-			setResolution(resolution);
-		
-		if(this.radiusBot!=radiusBot)
-			setRadiusBot(radiusBot);
-		
-		if(this.radiusTop!=radiusTop)
-			setRadiusTop(radiusTop);
-		
-		if (this.height!=height) 
-			setHeight(height);
-		
-		if (colors[0]!=r || colors[1]!=g || colors[2]!=b) 
-			setColors(r,g,b);
-	}
 
-	public float getRadiusBot() {
-		return radiusBot;
-	}
-
-	public void setRadiusBot(float radiusBot) {
-		this.radiusBot = radiusBot;
-		generate();
-	}
-
-	public float getRadiusTop() {
-		return radiusTop;
-	}
-
-	public void setRadiusTop(float radiusTop) {
-		this.radiusTop = radiusTop;
-		generate();
-	}
-
-	public float getHeight() {
-		return height;
-	}
-
-	public void setHeight(float height) {
-		this.height = height;
-		generate();
-	}
-	
-	public void setColors(float r,float g,float b) {
-		colors=new float[vertices.length];
-		for (int i = 0; i < colors.length; i+=3) {
-			colors[i]=r;
-			colors[i+1]=g;
-			colors[i+2]=b;
-		}
-		mesh.setColorValues(colors);
-	}
-	
 }

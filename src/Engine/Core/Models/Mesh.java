@@ -1,6 +1,7 @@
 package Engine.Core.Models;
 
 import Engine.Core.Math.Vector3f;
+import Engine.Primitives.Primitive;
 
 /**
  * 
@@ -135,6 +136,26 @@ public class Mesh {
 		}
 		
 //		normals=parser.getNormals(); // normals dont get read properly
+		calculateNormals();
+		loadToGPU.loadMeshToGPU(this);
+	}
+	
+	/**
+	 * creates a mesh out of a obj file with a given rgb color values
+	 */
+	public Mesh(Primitive primitive,float[] colors) { 
+		baseVertices=primitive.getVertices();
+		vertices=primitive.getVertices();
+		indices=primitive.getIndices();
+		indexCount=indices.length;
+		this.colors=new float[vertices.length];
+		
+		for (int i = 0; i < this.colors.length; i+=3) {
+			this.colors[i] =  colors[0];
+			this.colors[i+1] =  colors[1];
+			this.colors[i+2] =  colors[2];
+		}
+		
 		calculateNormals();
 		loadToGPU.loadMeshToGPU(this);
 	}

@@ -26,7 +26,7 @@ public class Main extends Application {
 		root = new StackPane();
 
 		primaryStage.setTitle("JavaFX OpenGL");
-		primaryStage.setScene(new Scene(root, 800, 600));
+		primaryStage.setScene(new Scene(root, 600, 600));
 		primaryStage.show();		 
 		
 		ComputerGraphicsCanvas.addCanvas(root);

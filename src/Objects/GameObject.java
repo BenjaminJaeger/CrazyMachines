@@ -1,25 +1,24 @@
 package Objects;
 
-import Engine.Core.Config;
 import Engine.Core.Models.Model;
 import Engine.Core.Shaders.Core.Material;
 import Engine.Primitives.Primitive;
 
-public class GameObject {
+public abstract class GameObject {
 
 	Model[] models;
-	float[][] colors;
 	
-	float x,y;
-	float rotationX,rotationY;
-	float scaleX,scaleY;
+	protected float x,y;
+	protected float rotationX,rotationY;
+	protected float scaleX,scaleY;
 	
-	float velocityX,velocityY; //Geschwindigkeit
-	float accelerationX,accelerationY; //Beschleunigung
+	protected float velocityX,velocityY; //Geschwindigkeit
+	protected float accelerationX,accelerationY; //Beschleunigung
+	
+	protected float mass=1;
 	
 	
 	public GameObject(String[] files,Material material, float[][] colors,float x,float y) {
-		this.colors = colors;
 		this.x = x;
 		this.y = y;
 		models = new Model[files.length];
@@ -27,32 +26,31 @@ public class GameObject {
 			models[i] = new Model(files[i],material,colors[i],x,y);		
 	}
 	
-	public GameObject(Primitive primitive,Material material, float[][] colors,float x,float y) {
-		this.colors = colors;
+	public GameObject(Primitive primitive,Material material,float[] colors, float x,float y) {
 		this.x = x;
 		this.y = y;
 		models = new Model[1];
-		models[0] = new Model(primitive,material,colors[0],x,y);		
+		models[0] = new Model(primitive,material,colors,x,y);		
 	}
 	
 	
 	public void update() {
-		applyForce(0, -1f);
-		checkEdge();
+		applyForce(0, 0.5f); //gravity
+		applyForce(0.1f, 0); //wind
+		
+		checkEdges();
+		
 		increaseVelocity(accelerationX, accelerationY);
 		increasePosition(velocityX, velocityY);
+		resetAcceleration();
 	}
 	
-	public void checkEdge() {
-		if(y<-Config.CANVAS_HEIGHT) {
-			setY(-Config.CANVAS_HEIGHT);
-			setVelocityY(-velocityY);
-		}
-	}
+	public abstract void checkEdges();
 	
 	public void applyForce(float x,float y) {
-		this.accelerationX=x;
-		this.accelerationY=y;
+		x/=mass;
+		y/=mass;
+		increaseAcceleration(x, y);
 	}
 	
 
@@ -64,6 +62,11 @@ public class GameObject {
 	public void increaseAcceleration(float dx,float dy) {
 		this.accelerationX+=dx;
 		this.accelerationY+=dy;
+	}
+	
+	public void resetAcceleration() {
+		this.accelerationX=0;
+		this.accelerationY=0;
 	}
 	
 	/**
@@ -93,14 +96,6 @@ public class GameObject {
 	
 	public void setModels(Model[] modesl) {
 		this.models = modesl;
-	}
-	
-	public float[][] getColors() {
-		return colors;
-	}
-	
-	public void setColors(float[][] colors) {
-		this.colors = colors;
 	}
 	
 	public float getX() {

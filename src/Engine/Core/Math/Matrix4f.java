@@ -522,9 +522,19 @@ public class Matrix4f {
 		 * (some multiplication lead up to 0 and are not listed here)
 		 * could also construct new Matrix as translation matrix and use the multiply method with the new matrix (worse performance)
 		*/
-		m03 += m00 * x/Config.CANVAS_WIDTH + m01 * y/Config.CANVAS_HEIGHT + m02 * z;
-		m13 += m10 * x/Config.CANVAS_WIDTH + m11 * y/Config.CANVAS_HEIGHT + m12 * z;
-		m23 += m20 * x/Config.CANVAS_WIDTH + m21 * y/Config.CANVAS_HEIGHT + m22 * z;
+		
+		//Convert x,y to top left corner
+		x=x-Config.CANVAS_WIDTH/(float)4;
+		y=-y+Config.CANVAS_HEIGHT/(float)4;
+		
+		//deivide by width and height to work with pixels as unit
+		x/=Config.CANVAS_WIDTH;
+		y/=Config.CANVAS_HEIGHT;
+		
+		
+		m03 += m00 * x + m01 * y + m02 * z;
+		m13 += m10 * x + m11 * y + m12 * z;
+		m23 += m20 * x + m21 * y + m22 * z;
 	}
 	
 

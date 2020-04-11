@@ -52,7 +52,7 @@ public class Model  {
 	 *
 	 */
 	public Model(Primitive primitive,Material material,float[] colors, float x,float y) {
-		this.mesh=primitive.getMesh();
+		mesh = new Mesh(primitive,colors);
 		scaleX=1;
 		scaleY=1;
 		scaleZ=1;

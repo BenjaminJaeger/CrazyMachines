@@ -37,9 +37,8 @@ private static boolean experimental = false;
 			GLJPanel canvas = new GLJPanel(capabilities);
 		    
 			swingNode = new SwingNode();
-			    	
+			 
 			root.getChildren().add(swingNode);
-		    	
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
 			    	swingNode.setContent(canvas);
