@@ -102,6 +102,7 @@ public class ComputerGraphics  implements GLEventListener{
 	@SuppressWarnings("unused")
 	@Override
 	public void init(GLAutoDrawable arg0) {
+		Config.BACK_FACE_CULLING = false;
 		Config.BACKGROUND_COLOR = new Vector3f(0.4f,0.5f,0.4f);
 		Config.CANVAS_HEIGHT=canvas.getHeight();
 		Config.CANVAS_WIDTH=canvas.getWidth();
@@ -154,7 +155,7 @@ public class ComputerGraphics  implements GLEventListener{
 		}
 		
 
-
+		
 		
 		test.add(new MetallBox(0f, 0f, 0f));
 			
