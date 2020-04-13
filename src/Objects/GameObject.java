@@ -8,6 +8,9 @@ public abstract class GameObject {
 
 	Model[] models;
 	
+	protected static int counter;
+	protected int id;
+	
 	protected float x,y;
 	protected float rotationX,rotationY;
 	protected float scaleX,scaleY;
@@ -24,6 +27,8 @@ public abstract class GameObject {
 		models = new Model[files.length];
 		for (int i = 0; i < models.length; i++) 
 			models[i] = new Model(files[i],material,colors[i],x,y);		
+		id=counter;
+		counter++;
 	}
 	
 	public GameObject(Primitive primitive,Material material,float[] colors, float x,float y) {
@@ -31,12 +36,18 @@ public abstract class GameObject {
 		this.y = y;
 		models = new Model[1];
 		models[0] = new Model(primitive,material,colors,x,y);		
+		id=counter;
+		counter++;
 	}
 	
 	
 	public void update() {
-		applyForce(0, 0.5f); //gravity
-		applyForce(0.1f, 0); //wind
+		//applyForce(0, 0.5f); //gravity
+		//applyForce(0,-velocityY*0.01f);
+		//applyForce(0.1f, 0); //wind
+		
+		applyForce(0.01f, 0); 
+		
 		
 		checkEdges();
 		
@@ -210,5 +221,15 @@ public abstract class GameObject {
 		this.accelerationY = accelerationY;
 	}
 	
+	public int getId() {
+		return id;
+	}
 	
+	public float getMass() {
+		return mass;
+	}
+	
+	public void setMass(float mass) {
+		this.mass=mass;
+	}
 }

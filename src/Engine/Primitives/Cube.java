@@ -9,9 +9,9 @@ public class Cube extends Primitive {
 	float depth;
 	
 	public Cube(float width,float height,float depth) {
-		this.width=width;
-		this.height=height;
-		this.depth=depth;
+		this.width=width/Config.CANVAS_WIDTH;
+		this.height=height/Config.CANVAS_HEIGHT;
+		this.depth=depth/Config.CANVAS_HEIGHT;
 		constructMesh();
 	}
 	

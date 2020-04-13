@@ -1,5 +1,7 @@
 package ComputerGraphics;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import com.jogamp.newt.opengl.GLWindow;
@@ -20,7 +22,8 @@ import Engine.Core.Renderer.Renderer;
 import Engine.Core.Shaders.Core.BasicShader;
 import Engine.Core.Shaders.Core.Material;
 import Objects.GameObject;
-import Objects.MovableObjects.Box.Box;
+import Objects.MovableObjects.Ball.Ball;
+import Objects.MovableObjects.Box.MetallBox;
 
 public class ComputerGraphics  implements GLEventListener{
 
@@ -31,10 +34,12 @@ public class ComputerGraphics  implements GLEventListener{
 	private BasicShader shader;
 	private Camera camera;
 	private Matrix4f projectionMatrix;
-	private GameObject model1; 
+	
+	private GameObject model1;
+	private GameObject model2;
 	
 	private ArrayList<GameObject> test = new ArrayList<GameObject>();
-	private ArrayList<GameObject> cubes = new ArrayList<GameObject>();
+	private ArrayList<Ball> balls = new ArrayList<Ball>();
 	
 	private float t;
 	private float tinc = 0.01f;
@@ -73,12 +78,14 @@ public class ComputerGraphics  implements GLEventListener{
 		t+=tinc;
 			
 
-		model1.update();
-		renderer.render(model1, shader); 
-		
-		for (GameObject cube : cubes) {
-			cube.update();
-			renderer.render(cube,shader);	
+//		model1.update();
+//		renderer.render(model1, shader); 
+//		model2.update();
+//		renderer.render(model2, shader); 
+
+		for (GameObject ball : balls) {
+			ball.update();
+			renderer.render(ball,shader);	
 		}
 			
 		
@@ -120,21 +127,56 @@ public class ComputerGraphics  implements GLEventListener{
 
 		
 		
-		String[] files1 = {"cube"};
-		float[] colors1 = {1f,0f,1f};
-		float[][] colors2 = {{0f,0f,1f}};
+//		model1 = new MetallBall(50f,40, 200f, 200f);
+//		model1.setAccelerationY(2);
+//		
+//		model2 = new MetallBall(100f,40, 200f, 400f);
+//		model2.setMas(2f);
+//		model2.setAccelerationY(-2);
 		
 		
-		model1 = new Box(50f, basicMaterial,colors1, 200f, 200f);
-		
-		for (int i = 0; i < 100; i++) {
-			float[] randomColor = {(float)Math.random(),(float)Math.random(),(float)Math.random()};
-			cubes.add(new Box((float)Math.random()*40f, basicMaterial,randomColor,(float)Math.random()*Config.CANVAS_WIDTH,(float)Math.random()*Config.CANVAS_HEIGHT));
+		for (int i = 0; i < 10; i++) {
+			float[] color = {(float)Math.random(),(float)Math.random(),(float)Math.random()};
+			
+			float x = (float)Math.random()*Config.CANVAS_WIDTH;
+			float y = (float)Math.random()*Config.CANVAS_HEIGHT;
+			float mass = (float)Math.random()+0.5f;
+			float radius = mass*30;
+			float velocityX = (float)Math.random()*2;
+			float velocityY = (float)Math.random()*2;
+			
+			
+			Ball ball = new Ball(radius, 40, basicMaterial, color, x, y);
+			ball.setMass(mass);
+			ball.setAccelerationX(velocityX);
+			ball.setAccelerationY(velocityY);
+			balls.add(ball);		
 		}
+		
+
 
 		
-		test.add(new Box(0f, basicMaterial, colors1, 0f, 0f));
+		test.add(new MetallBox(0f, 0f, 0f));
 			
+		canvas.addKeyListener(new KeyListener() {
+			public void keyTyped(KeyEvent e) {}
+			public void keyReleased(KeyEvent e) {}
+			
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+					for (Ball ball : balls) {
+						float x = (float)Math.random()*Config.CANVAS_WIDTH;
+						float y = (float)Math.random()*Config.CANVAS_HEIGHT;
+						float velocityX = (float)Math.random()*2;
+						float velocityY = (float)Math.random()*2;
+						ball.setY(y);
+						ball.setX(x);
+						ball.setAccelerationX(velocityX);
+						ball.setAccelerationY(velocityY);
+					}
+				}
+			}
+		});
 	}
 	
 
@@ -148,21 +190,4 @@ public class ComputerGraphics  implements GLEventListener{
 		renderer.getProjectionMatrix().changeToPerspecitveMatrix(Config.FIELD_OF_VIEW, Config.NEAR_PLANE, Config.FAR_PLANE,height,width);
 		canvas.setSize(width, height);	
 	}
-	
-	
-	//Testing
-	/*
-	public void moveModel(float x,float y) {
-		//modelX = convertX(x)/100;
-		//modelY = -convertY(y)/100;
-	}
-	
-	public float convertX(float x) {
-		return x-Config.CANVAS_WIDTH/2;
-	}
-
-	public float convertY(float y) {
-		return y-Config.CANVAS_HEIGHT/2;
-	}
-	*/
 }
