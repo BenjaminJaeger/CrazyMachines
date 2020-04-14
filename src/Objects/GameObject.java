@@ -12,13 +12,8 @@ public abstract class GameObject {
 	protected int id;
 	
 	protected float x,y;
-	protected float rotationX,rotationY;
+	protected float rotation;
 	protected float scaleX,scaleY;
-	
-	protected float velocityX,velocityY; //Geschwindigkeit
-	protected float accelerationX,accelerationY; //Beschleunigung
-	
-	protected float mass=1;
 	
 	
 	public GameObject(String[] files,Material material, float[][] colors,float x,float y) {
@@ -29,6 +24,8 @@ public abstract class GameObject {
 			models[i] = new Model(files[i],material,colors[i],x,y);		
 		id=counter;
 		counter++;
+		scaleX=1;
+		scaleX=1;
 	}
 	
 	public GameObject(Primitive primitive,Material material,float[] colors, float x,float y) {
@@ -38,47 +35,24 @@ public abstract class GameObject {
 		models[0] = new Model(primitive,material,colors,x,y);		
 		id=counter;
 		counter++;
+		scaleX=1;
+		scaleX=1;
 	}
 	
 	
-	public void update() {
-		//applyForce(0, 0.5f); //gravity
-		//applyForce(0,-velocityY*0.01f);
-		//applyForce(0.1f, 0); //wind
-		
-		applyForce(0.01f, 0); 
-		
-		
-		checkEdges();
-		
-		increaseVelocity(accelerationX, accelerationY);
-		increasePosition(velocityX, velocityY);
-		resetAcceleration();
-	}
+	public abstract void update();
 	
+	/**
+	 * checks for collision with this object and every other object
+	 */
+	protected abstract void collision();
+
+	/**
+	 * checks if the object collides with the edges of the screen
+	 */
 	public abstract void checkEdges();
 	
-	public void applyForce(float x,float y) {
-		x/=mass;
-		y/=mass;
-		increaseAcceleration(x, y);
-	}
-	
-
-	public void increaseVelocity(float dx,float dy) {
-		this.velocityX+=dx;
-		this.velocityY+=dy;
-	}
-	
-	public void increaseAcceleration(float dx,float dy) {
-		this.accelerationX+=dx;
-		this.accelerationY+=dy;
-	}
-	
-	public void resetAcceleration() {
-		this.accelerationX=0;
-		this.accelerationY=0;
-	}
+	//Getters and Setters
 	
 	/**
 	 * increases the current xyz position by dx,dy,dz
@@ -94,11 +68,10 @@ public abstract class GameObject {
 	 * increases the current xyz rotation by dx,dy,dz
 	 * rotation in angle
 	 */
-	public void increaseRotation(float dx,float dy) {
-		this.rotationX+=dx;
-		this.rotationY+=dy;
+	public void increaseRotation(float dz) {
+		this.rotation+=dz;
 		for (Model model : models) 
-			model.increaseRotation(dx, dy, 0);		
+			model.increaseRotation(0, 0, dz);		
 	}
 	
 	public Model[] getModels() {
@@ -129,24 +102,10 @@ public abstract class GameObject {
 			model.setY(y);
 	}
 	
-	public float getRotationX() {
-		return rotationX;
-	}
-	
-	public void setRotationX(float rotationX) {
-		this.rotationX = rotationX;
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
 		for (Model model : models) 
-			model.setRotationX(rotationX);
-	}
-	
-	public float getRotationY() {
-		return rotationY;
-	}
-	
-	public void setRotationY(float rotationY) {
-		this.rotationY = rotationY;
-		for (Model model : models) 
-			model.setRotationY(rotationY);
+			model.setRotationZ(rotation);
 	}
 	
 	public void setScale(float scale) {
@@ -155,8 +114,7 @@ public abstract class GameObject {
 			model.setScaleX(scale);
 		this.scaleY = scale;
 		for (Model model : models) 
-			model.setScaleY(scale);
-		
+			model.setScaleY(scale);	
 		for (Model model : models) 
 			model.setScaleZ(scale);
 	}
@@ -180,56 +138,10 @@ public abstract class GameObject {
 		for (Model model : models) 
 			model.setScaleY(scaleY);
 	}
-
-
-	public float getVelocityX() {
-		return velocityX;
-	}
-
-
-	public void setVelocityX(float velocityX) {
-		this.velocityX = velocityX;
-	}
-
-
-	public float getVelocityY() {
-		return velocityY;
-	}
-
-
-	public void setVelocityY(float velocityY) {
-		this.velocityY = velocityY;
-	}
-
-
-	public float getAccelerationX() {
-		return accelerationX;
-	}
-
-
-	public void setAccelerationX(float accelerationX) {
-		this.accelerationX = accelerationX;
-	}
-
-
-	public float getAccelerationY() {
-		return accelerationY;
-	}
-
-
-	public void setAccelerationY(float accelerationY) {
-		this.accelerationY = accelerationY;
-	}
 	
 	public int getId() {
 		return id;
 	}
 	
-	public float getMass() {
-		return mass;
-	}
 	
-	public void setMass(float mass) {
-		this.mass=mass;
-	}
 }

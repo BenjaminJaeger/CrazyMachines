@@ -22,7 +22,10 @@ import Engine.Core.Renderer.Renderer;
 import Engine.Core.Shaders.Core.BasicShader;
 import Engine.Core.Shaders.Core.Material;
 import Objects.GameObject;
+import Objects.ImmovableObjects.ImmovableObject;
+import Objects.MovableObjects.MoveableObject;
 import Objects.MovableObjects.Ball.Ball;
+import Objects.MovableObjects.Ball.MetallBall;
 import Objects.MovableObjects.Box.MetallBox;
 
 public class ComputerGraphics  implements GLEventListener{
@@ -35,8 +38,9 @@ public class ComputerGraphics  implements GLEventListener{
 	private Camera camera;
 	private Matrix4f projectionMatrix;
 	
-	private GameObject model1;
-	private GameObject model2;
+	private MoveableObject model1;
+	private MoveableObject model2;
+	private ImmovableObject model3;
 	
 	private ArrayList<GameObject> test = new ArrayList<GameObject>();
 	private ArrayList<Ball> balls = new ArrayList<Ball>();
@@ -78,10 +82,10 @@ public class ComputerGraphics  implements GLEventListener{
 		t+=tinc;
 			
 
-//		model1.update();
-//		renderer.render(model1, shader); 
-//		model2.update();
-//		renderer.render(model2, shader); 
+		model1.update();
+		renderer.render(model1, shader); 
+		model2.update();
+		renderer.render(model2, shader); 
 
 		for (GameObject ball : balls) {
 			ball.update();
@@ -112,7 +116,7 @@ public class ComputerGraphics  implements GLEventListener{
 		projectionMatrix.changeToPerspecitveMatrix(Config.FIELD_OF_VIEW, Config.NEAR_PLANE, Config.FAR_PLANE,canvas.getHeight(),canvas.getWidth());
 		
 		camera= new Camera(canvas);
-		camera.setZ(1);
+		camera.setZ(1f);
 		
 		renderer = new Renderer(camera,projectionMatrix);	
 		
@@ -128,15 +132,21 @@ public class ComputerGraphics  implements GLEventListener{
 
 		
 		
-//		model1 = new MetallBall(50f,40, 200f, 200f);
-//		model1.setAccelerationY(2);
-//		
-//		model2 = new MetallBall(100f,40, 200f, 400f);
-//		model2.setMas(2f);
-//		model2.setAccelerationY(-2);
+		model1 = new MetallBall(50f,40, 200f, 200f);
+		model1.setAccelerationX((float)Math.random()*4+2);
+		model1.setAccelerationY((float)Math.random()*4+2);
+		
+		model2 = new MetallBall(100f,40, 400f, 200f);
+		model2.setMass(9999999);
+		
+//		model2.setAccelerationY((float)Math.random()*2);
+		
+//		model2 = new MetallBox(100f, 400, 200);
+//		model2.setAccelerationX(-(float)Math.random()*2);
+//		model2.setAccelerationY(-(float)Math.random()*2);
 		
 		
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 20; i++) {
 			float[] color = {(float)Math.random(),(float)Math.random(),(float)Math.random()};
 			
 			float x = (float)Math.random()*Config.CANVAS_WIDTH;
