@@ -157,7 +157,7 @@ public class ComputerGraphics  implements GLEventListener{
 			float velocityY = (float)Math.random()*2;
 			
 			
-			Ball ball = new Ball(radius, 40, basicMaterial, color, x, y);
+			Ball ball = new Ball(radius, 36, basicMaterial, color, x, y);
 			ball.setMass(mass);
 			ball.setAccelerationX(velocityX);
 			ball.setAccelerationY(velocityY);
