@@ -29,7 +29,7 @@ public class Box extends MoveableObject{
 		this.width=width;
 		this.height=height;
 		this.depth=depth;
-		allBoxes.add(this);
+		allBoxes.add(this); 
 	}
 	
 	

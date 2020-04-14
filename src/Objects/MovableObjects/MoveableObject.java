@@ -24,7 +24,7 @@ public abstract class MoveableObject extends GameObject{
 	//		applyForce(0, 1f);
 			
 			collision();
-			
+			 
 			checkEdges();
 			
 			increaseVelocity(accelerationX, accelerationY);

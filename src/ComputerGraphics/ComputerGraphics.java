@@ -136,8 +136,8 @@ public class ComputerGraphics  implements GLEventListener{
 		model1.setAccelerationX((float)Math.random()*4+2);
 		model1.setAccelerationY((float)Math.random()*4+2);
 		
-		model2 = new MetallBall(100f,40, 400f, 200f);
-		model2.setMass(9999999);
+		model2 = new MetallBall(50f,40, 400f, 200f);
+		//model2.setMass(9999999);
 		
 //		model2.setAccelerationY((float)Math.random()*2);
 		

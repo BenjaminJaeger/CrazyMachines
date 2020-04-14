@@ -9,3 +9,4 @@ public abstract class ImmovableObject extends GameObject{
 		super(files, material, colors, x, y);
 	}
 }
+ 

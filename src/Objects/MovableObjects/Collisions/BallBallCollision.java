@@ -15,7 +15,7 @@ public class BallBallCollision {
 
 	/**
 	 * Removes collision between the balls to prevent them from stucking inside each other
-	 */
+	 */ 
 	public static void removeCollision(Ball ball1, Ball ball2) {
 		//distance between both balls
 		float distance = Util.getDistance(ball2.getX(), ball2.getY(), ball1.getX(), ball1.getY());

@@ -18,7 +18,7 @@ public class BallBoxCollision {
 		float cornerDistance = (float)Math.pow((distanceX-box.getWidth()/2),2) + (float)Math.pow((distanceY-box.getHeight()/2),2);
 		
 		return cornerDistance <= ball.getRadius()*ball.getRadius();
-	}
+	} 
 
 	public static void removeCollision(Box box, Ball ball) {
 		box.setVelocityX(-box.getVelocityX());

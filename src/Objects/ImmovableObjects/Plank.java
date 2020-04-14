@@ -16,7 +16,7 @@ public class Plank extends ImmovableObject{
 	@Override
 	public void checkEdges() {
 		
-	}
+	} 
 
 	@Override
 	public void update() {

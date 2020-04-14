@@ -33,7 +33,7 @@ public class Ball extends MoveableObject{
 		for (Box box : Box.allBoxes) 
 			if (BallBoxCollision.checkCollision(box,this)) 
 				respondToCollision(box);
-		
+		 
 	}
 
 	public void checkEdges() {

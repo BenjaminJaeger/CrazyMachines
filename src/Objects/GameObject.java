@@ -24,7 +24,7 @@ public abstract class GameObject {
 			models[i] = new Model(files[i],material,colors[i],x,y);		
 		id=counter;
 		counter++;
-		scaleX=1;
+		scaleX=1; 
 		scaleX=1;
 	}
 	
