@@ -8,8 +8,8 @@ import Engine.Core.Shaders.Core.Material;
 import Engine.Primitives.Sphere;
 import Objects.MovableObjects.MoveableObject;
 import Objects.MovableObjects.Box.Box;
-import Objects.MovableObjects.Collisions.BallBallCollision;
-import Objects.MovableObjects.Collisions.BallBoxCollision;
+import Objects.MovableObjects.Collisions.CircleCollision;
+import Objects.MovableObjects.Collisions.RectangleCollision;
 
 public class Ball extends MoveableObject{
 	
@@ -26,14 +26,13 @@ public class Ball extends MoveableObject{
 	public void collision() {
 		//Collision with Ball
 		for (Ball ball : allBalls) 
-			if(id!=ball.getId() && BallBallCollision.checkCollision(ball,this)) 
+			if(id!=ball.getId() && CircleCollision.checkCollision(ball,this)) 
 				respondToCollision(ball);
 		
 		//Collision with Box
 		for (Box box : Box.allBoxes) 
-			if (BallBoxCollision.checkCollision(box,this)) 
+			if (RectangleCollision.checkCollision(box,this)) 
 				respondToCollision(box);
-		 
 	}
 
 	public void checkEdges() {
@@ -58,15 +57,14 @@ public class Ball extends MoveableObject{
 		}
 	}
 
-
 	public void respondToCollision(Box box) {
-		BallBoxCollision.removeCollision(box,this);
-		BallBoxCollision.calculateNewVelocity(box,this);		
+		RectangleCollision.removeCollision(box,this);
+		RectangleCollision.calculateNewVelocity(box,this);		
 	}
 	
 	public void respondToCollision(Ball ball) {
-		BallBallCollision.removeCollision(ball, this);	
-		BallBallCollision.calculateNewVelocity(ball, this);
+		CircleCollision.removeCollision(ball, this);	
+		CircleCollision.calculateNewVelocity(ball, this);
 	}
 	
 	

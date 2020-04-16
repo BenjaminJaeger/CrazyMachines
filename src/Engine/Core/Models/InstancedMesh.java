@@ -1,6 +1,7 @@
 package Engine.Core.Models;
 
 import Engine.Core.Math.Vector3f;
+import Engine.Primitives.Primitive;
 
 /**
  * Represents a raw triangle mesh. The mesh will get uploaded once to the gpu but gets rendered multiple times depending on the instance amount.
@@ -44,6 +45,26 @@ public class InstancedMesh {
 		indices=parser.getIndices();
 		indexCount=indices.length;
 //		normals=parser.getNormals(); // normals dont get read properly
+		calculateNormals();
+	}
+	
+
+	
+	public InstancedMesh(Primitive primitive,int instances,float[] colors) { 
+		
+		this.colors = new float[3*instances];
+		
+		for (int i = 0; i < this.colors.length; i+=3) {
+			this.colors[i] =  colors[0];
+			this.colors[i+1] =  colors[1];
+			this.colors[i+2] =  colors[2];
+		}
+		
+		this.instances=instances;
+		baseVertices=primitive.getVertices();
+		vertices=primitive.getVertices();
+		indices=primitive.getIndices();
+		indexCount=indices.length;
 		calculateNormals();
 	}
 	

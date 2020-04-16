@@ -22,7 +22,9 @@ import Engine.Core.Lights.AmbientLight;
 import Engine.Core.Lights.DirectionalLight;
 import Engine.Core.Lights.PointLight;
 import Engine.Core.Math.Matrix4f;
+import Engine.Core.Models.InstancedModel;
 import Engine.Core.Models.Model;
+import Engine.Core.Models.loadToGPU;
 import Engine.Core.Shaders.Core.BasicShader;
 import Objects.GameObject;
 
@@ -139,12 +141,9 @@ public class Renderer {
 	 * 
 	 * @param entity
 	 */
-	/*
-	public void render(PlanetEntity entity) {
+	public void render(InstancedModel model, BasicShader shader) {
 		GL4 gl=(GL4)GLContext.getCurrentGL();
-		BasicShader shader = entity.getShader();
-		int instances = entity.getInstances();
-		float[] matrixData = new float[16*instances];
+		float[] matrixData = new float[16*model.getInstances()];
 			
 		//activate shader before rendering
 		shader.use(); 
@@ -163,36 +162,22 @@ public class Renderer {
 		//upload projection matrix
 		shader.uploadProjectionMatrix(projectionMatrix);
 		
-		for (int i = 0; i < entity.getInstancedModels().length; i++) {
-			shader.uploadMaterial(entity.getInstancedModels()[i].getMaterial());
-			InstancedModel model = entity.getInstancedModels()[i];				
-			
-			for (int j = 0; j < instances; j++) {		
-				if (entity.isPlaced(j)) {
-					//check if it got placed 
+		shader.uploadMaterial(model.getMaterial());		
+		
+			for (int j = 0; j < model.getInstances(); j++) {		
 						
-					//create matrix
-							
 					//reset matrix
 					model.getModelMatrix()[j].setIdentityMatrix();													
-						
-					//matrix stack of the instance
-					for (int m = 0; m < model.getMatrixStack()[j].size(); m++) 
-						model.getModelMatrix()[j].multiply(model.getMatrixStack()[j].pop()); 				
-					//second translation of the instance (2 translations needed to place on planet)
+										
+					//translation
 					model.getModelMatrix()[j].translate(model.getX(j),model.getY(j),model.getZ(j)); 
-					//rotation of the instance
+					
+					//rotation
 					model.getModelMatrix()[j].rotateX(model.getRotationX()[j]);
 					model.getModelMatrix()[j].rotateY(model.getRotationY()[j]);
 					model.getModelMatrix()[j].rotateZ(model.getRotationZ()[j]);
-					//first translation of the instance (2 translations needed to place on planet)
-					model.getModelMatrix()[j].translate(entity.getX1(j),entity.getY1(j),entity.getZ1(j));
-					//rotation around axis of instance  (needed to place on planet)
-					if (entity.getAxes()[j]==null) 
-						model.getModelMatrix()[j].rotate(entity.getAngles()[j], new Vector3f(0,1,0));
-					else 
-						model.getModelMatrix()[j].rotate(entity.getAngles()[j], entity.getAxes()[j]);
-					//scale of instance		
+					
+					//scale
 					model.getModelMatrix()[j].scale(model.getScaleX()[j],model.getScaleY()[j],model.getScaleZ()[j]); 				
 						
 					//save matrix into array so it can get uploaded
@@ -212,16 +197,14 @@ public class Renderer {
 					matrixData[j*16+13] = model.getModelMatrix()[j].m13; 
 					matrixData[j*16+14] = model.getModelMatrix()[j].m23; 
 					matrixData[j*16+15] = model.getModelMatrix()[j].m33; 
-				}
-			}							
+					
 			loadToGPU.updateVBO(model.getMatrixVBOID(),matrixData);
 										
 			gl.glBindVertexArray(model.getInstancedMesh().getVaoID()); //activates the specific VAO
-			gl.glDrawElementsInstanced(GL_TRIANGLES,  model.getInstancedMesh().getIndexCount(), GL_UNSIGNED_INT, 0, instances);			
+			gl.glDrawElementsInstanced(GL_TRIANGLES,  model.getInstancedMesh().getIndexCount(), GL_UNSIGNED_INT, 0, model.getInstances());			
 		}
 	}
 	
-*/
 	
 	
 	/**

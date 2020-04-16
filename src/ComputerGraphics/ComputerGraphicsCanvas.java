@@ -30,7 +30,7 @@ private static boolean experimental = false;
 			GLWindow glWindow1 = GLWindow.create(screen, capabilities);
 			NewtCanvasJFX glCanvas = new NewtCanvasJFX(glWindow1);
 			glCanvas.setWidth(800);
-		    glCanvas.setHeight(600);		     
+		    glCanvas.setHeight(800);		     
 			root.getChildren().add(glCanvas);
 			new ComputerGraphics(glWindow1);    		
 		}else {

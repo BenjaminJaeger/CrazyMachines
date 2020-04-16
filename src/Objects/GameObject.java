@@ -42,15 +42,6 @@ public abstract class GameObject {
 	
 	public abstract void update();
 	
-	/**
-	 * checks for collision with this object and every other object
-	 */
-	protected abstract void collision();
-
-	/**
-	 * checks if the object collides with the edges of the screen
-	 */
-	public abstract void checkEdges();
 	
 	//Getters and Setters
 	

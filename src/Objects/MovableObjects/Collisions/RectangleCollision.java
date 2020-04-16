@@ -3,7 +3,7 @@ package Objects.MovableObjects.Collisions;
 import Objects.MovableObjects.Ball.Ball;
 import Objects.MovableObjects.Box.Box;
 
-public class BallBoxCollision {
+public class RectangleCollision {
 	
 	public static boolean checkCollision(Box box, Ball ball) {
 		float distanceX = (float)Math.abs(ball.getX()-box.getX());
@@ -29,7 +29,7 @@ public class BallBoxCollision {
 	}
 
 	public static void calculateNewVelocity(Box box, Ball ball) {
-		
+		Collision.elasticCollision(box, ball);
 	}
 
 	

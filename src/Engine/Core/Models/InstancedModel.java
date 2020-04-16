@@ -4,6 +4,7 @@ import Engine.Core.Math.Matrix4f;
 import Engine.Core.Math.MatrixStack4f;
 import Engine.Core.Math.Vector3f;
 import Engine.Core.Shaders.Core.Material;
+import Engine.Primitives.Primitive;
 
 /**
  * representation of a virtual model that we can be moved, rotated scaled etc.
@@ -47,6 +48,23 @@ public class InstancedModel  {
 			scaleX[i]=1;
 			scaleY[i]=1;
 			scaleZ[i]=1;
+		}	
+		this.material=material;
+		loadToGPU.loadinstancedMeshToGPU(this);
+	}
+	
+	public InstancedModel(Primitive primitive,int instances,Material material,float[] colors,float x,float y) {
+		initArrays(instances);
+		instancedMesh=new InstancedMesh(primitive,instances,colors); //creates mesh out the file
+		for (int i = 0; i < instances; i++) {
+			scaleX[i]=1;
+			scaleY[i]=1;
+			scaleZ[i]=1;
+		}	
+		
+		for (int i = 0; i < instances; i++) {
+			this.x[i]=x;
+			this.y[i]=y;
 		}	
 		this.material=material;
 		loadToGPU.loadinstancedMeshToGPU(this);
@@ -279,6 +297,10 @@ public class InstancedModel  {
 
 	public void setRotationZ(float[] rotationZ) {
 		this.rotationZ = rotationZ;
+	}
+	
+	public int getInstances() {
+		return instancedMesh.getInstances();
 	}
 
 }

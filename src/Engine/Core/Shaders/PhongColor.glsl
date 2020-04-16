@@ -149,4 +149,3 @@ void main(void){
 	
 	finalColor=vec4(fragmentColor,material.alphaValue);										
 };
-
