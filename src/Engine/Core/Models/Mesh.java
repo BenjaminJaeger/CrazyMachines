@@ -65,9 +65,11 @@ public class Mesh {
 		baseVertices=primitive.getVertices();
 		vertices=primitive.getVertices();
 		indices=primitive.getIndices();
-		indexCount=indices.length;
-		this.colors=colors;
-		calculateNormals();
+		if(indices!=null) {
+			calculateNormals();
+			indexCount=indices.length;	
+		}
+		this.colors=colors;		
 		loadToGPU.loadMeshToGPU(this);
 	}
 	
@@ -75,7 +77,10 @@ public class Mesh {
 		baseVertices=primitive.getVertices();
 		vertices=primitive.getVertices();
 		indices=primitive.getIndices();
-		indexCount=indices.length;
+		if(indices!=null) {
+			calculateNormals();
+			indexCount=indices.length;	
+		}
 		this.colors=new float[vertices.length];
 		
 		for (int i = 0; i < this.colors.length; i+=3) {
@@ -83,8 +88,7 @@ public class Mesh {
 			this.colors[i+1] =  g;
 			this.colors[i+2] = b;
 		}
-		
-		calculateNormals();
+
 		loadToGPU.loadMeshToGPU(this);
 	}
 	/**

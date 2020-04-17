@@ -1,5 +1,7 @@
 package Objects.MovableObjects.Collisions;
 
+import Engine.Core.Models.LineModel;
+import Engine.Primitives.CircleLine;
 import Objects.GameObject;
 import Objects.Util;
 
@@ -10,7 +12,7 @@ public class BoundingCircle  extends Bounding{
 	public BoundingCircle(GameObject object,float offset,float radius) {
 		super(object,offset);
 		this.radius = radius;
-		//model = new LineModel(new Circle(radius, 30), null, object.getX(), object.getY());
+		model = new LineModel(new CircleLine(radius, 30), 0, 0, 1, object.getX(), object.getY());
 	}
 
 	/**

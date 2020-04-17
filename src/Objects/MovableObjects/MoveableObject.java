@@ -29,27 +29,29 @@ public abstract class MoveableObject extends GameObject{
 	public abstract void checkEdges();
 
 	public void update() {
-			
-			//applyForce(0, 0.5f);
+		
+		collisionContext.update();
+		
+		//applyForce(0, 0.5f);
 			 
-			checkEdges();
+		checkEdges();
 			
-			increaseVelocity(accelerationX, accelerationY);
+		increaseVelocity(accelerationX, accelerationY);
+		
+//		if (Math.abs(velocityX) <0.01f) 
+//			velocityX=0;
+//		if (Math.abs(velocityY)  <0.01f) 
+//			velocityY=0;
 			
-//			if (Math.abs(velocityX) <0.01f) 
-//				velocityX=0;
-//			if (Math.abs(velocityY)  <0.01f) 
-//				velocityY=0;
+		increasePosition(velocityX, velocityY);
+		increaseRotation(velocityX);
+		resetAcceleration();
 			
-			increasePosition(velocityX, velocityY);
-			increaseRotation(velocityX);
-			resetAcceleration();
+		collisionContext.checkCollisions();
 			
-			collisionContext.checkCollisions();
-			
-//			accelerationX = -velocityX*0.0005f;
-//			accelerationY = -velocityY*0.0005f;
-		}
+//		accelerationX = -velocityX*0.0005f;
+//		accelerationY = -velocityY*0.0005f;
+	}
 	
 	public void applyForce(float x,float y) {
 		x/=mass;

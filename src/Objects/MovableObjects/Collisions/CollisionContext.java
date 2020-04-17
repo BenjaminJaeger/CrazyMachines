@@ -43,6 +43,17 @@ public class CollisionContext {
 		this.object=object;
 	}
 	
+	public void update() {
+		for (BoundingCircle circle : boundingCirlces) {
+			circle.getModel().setX(object.getX());
+			circle.getModel().setY(object.getY());
+		}
+		
+		for (BoundingRectangle rectangle : boundingRectangles) {
+			
+		}
+	}
+	
 	public void checkCollisions() {
 		for (GameObject object : GameObject.allObjects) 
 			checkCollision(object.getCollisionContext());	
