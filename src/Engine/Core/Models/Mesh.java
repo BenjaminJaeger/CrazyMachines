@@ -21,7 +21,7 @@ public class Mesh {
 	
 	//mesh data 
 	private int indexCount;
-	private float[] colors; //r,g,b values for each vertex 
+	private float[] colors;
 	private float[] vertices;
 	private float[] baseVertices;
 	private int[] indices;
@@ -29,98 +29,7 @@ public class Mesh {
 	private float[] textureCoordinates;
 	private String textureFilePath;
 	
-	/**
-	 * Constructor with vertices indices and normals
-	 */
-	public Mesh(float[] vertices, int[] indices, float[] normals) {
-		baseVertices=vertices;
-		this.vertices=vertices;
-		this.indices=indices;
-		this.indexCount = indices.length;
-		this.normals=normals;
-		loadToGPU.loadMeshToGPU(this); //loads the given data into a new VAO
-	}
-	
-	/**
-	 * Constructor with vertices indices normals and colors
-	 */
-	public Mesh(float[] vertices, int[] indices, float[] normals,float[] colors) {
-		baseVertices=vertices;
-		this.colors=colors;
-		this.vertices=vertices;
-		this.indices=indices;
-		this.indexCount = indices.length;
-		this.normals=normals;
-		loadToGPU.loadMeshToGPU(this);
-	}
 
-	/**
-	 * Constructor with vertices and indices
-	 * (Normals getting calculated)
-	 */
-	public Mesh(float[] vertices, int[]indices ) {
-		baseVertices=vertices;
-		this.indexCount = indices.length;
-		this.vertices=vertices;
-		this.indices=indices;
-		calculateNormals(); //calculates normals out of given vertices and indices
-		loadToGPU.loadMeshToGPU(this);
-	}
-	
-
-	
-	/**
-	 * Constructor with vertices colors and indices 
-	 * (Normals getting calculated)
-	 */
-	public Mesh(float[] vertices, float[] colors, int[] indices) {
-		baseVertices=vertices;
-		this.indexCount = indices.length;
-		this.vertices=vertices;
-		this.indices=indices;
-		this.colors=colors;
-		calculateNormals();
-		loadToGPU.loadMeshToGPU(this);
-	}
-	
-	/**
-	 * creates a mesh with a texture on it.
-	 * @param textureCoordinates
-	 * 		-array containing the texture coordinate of each vertex
-	 * @param textureFilePath
-	 * 		-path of the texture file
-	 */
-	public Mesh(int[]indices, float[] vertices, float[] textureCoordinates,String textureFilePath) {
-		baseVertices=vertices;
-		this.indexCount = indices.length;
-		this.vertices=vertices;
-		this.indices=indices;
-		this.textureCoordinates=textureCoordinates;
-		this.textureFilePath=textureFilePath;
-		loadToGPU.loadMeshToGPU(this);
-	}
-	
-	
-	/**
-	 * Constructs Mesh out of a obj file
-	 * @param file
-	 * 			-Path to the obj file (inside the res folder)
-	 */
-	public Mesh(String file) { 
-		OBJParser parser=new OBJParser(file);
-		vertices=parser.getVertices();
-		baseVertices=parser.getVertices();
-		indices=parser.getIndices();
-		indexCount=indices.length;
-		colors=new float[0];
-		normals=parser.getNormals(); // normals dont get read properly
-		calculateNormals();
-		loadToGPU.loadMeshToGPU(this);
-	}
-	
-	/**
-	 * creates a mesh out of a obj file with a given rgb color values
-	 */
 	public Mesh(String file,float[] colors) { 
 		OBJParser parser=new OBJParser(file);
 		baseVertices=parser.getVertices();
@@ -139,10 +48,7 @@ public class Mesh {
 		calculateNormals();
 		loadToGPU.loadMeshToGPU(this);
 	}
-	
-	/**
-	 * creates a mesh out of a obj file with a given rgb color values
-	 */
+
 	public Mesh(Primitive primitive,float[] colors) { 
 		baseVertices=primitive.getVertices();
 		vertices=primitive.getVertices();
@@ -159,6 +65,25 @@ public class Mesh {
 		calculateNormals();
 		loadToGPU.loadMeshToGPU(this);
 	}
+	
+	/**
+	 * creates a mesh with a texture on it.
+	 * @param textureCoordinates
+	 * 		-array containing the texture coordinate of each vertex
+	 * @param textureFilePath
+	 * 		-path of the texture file
+	 */
+	/*
+	public Mesh(int[]indices, float[] vertices, float[] textureCoordinates,String textureFilePath) {
+		baseVertices=vertices;
+		this.indexCount = indices.length;
+		this.vertices=vertices;
+		this.indices=indices;
+		this.textureCoordinates=textureCoordinates;
+		this.textureFilePath=textureFilePath;
+		loadToGPU.loadMeshToGPU(this);
+	}
+	*/
 	
 	/**
 	 * Calculates the normals out of vertices and indices
@@ -328,12 +253,4 @@ public class Mesh {
 		return baseVertices;
 	}
 	
-	@Override
-	public String toString() {
-		for (int i = 0; i < vertices.length; i++) {
-			System.out.println(vertices[i]);
-		}
-		return "";
-	}
 }
-

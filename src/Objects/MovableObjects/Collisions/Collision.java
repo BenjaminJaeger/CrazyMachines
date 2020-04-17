@@ -3,12 +3,12 @@ package Objects.MovableObjects.Collisions;
 import Engine.Core.Math.Vector2f;
 import Objects.Util;
 import Objects.MovableObjects.MoveableObject;
+import Objects.MovableObjects.Ball.Ball;
 
 public class Collision {
 
 	public static void elasticCollision(MoveableObject object1, MoveableObject object2) {	
 		float angle = (float)Math.atan2(object2.getY()-object1.getY(), object2.getX()-object1.getX());
-		angle *=-1;
 		
 		float m1 = object1.getMass();
 		float m2 = object2.getMass();
@@ -28,6 +28,23 @@ public class Collision {
 		object1.setVelocityY(finalv1.y);
 		object2.setVelocityX(finalv2.x);
 		object2.setVelocityY(finalv2.y);	
+	}
+	
+	public static void removeCollision(Ball object1, Ball object2) {
+		//distance between both balls
+		float distance = Util.getDistance(object2.getX(), object2.getY(), object1.getX(), object1.getY());
+			
+		//the overlap of both balls = distance - radius1 - radius2
+		//move each ball away by half of the overlap 
+		float overlap = 0.6f*(distance-object1.getRadius()-object2.getRadius());
+			
+		//get the distance between each ball and divide it by the distance to get the normalized vector
+		//move along the normalized vector by half the overlap and subtract/add it from the original position
+		object1.setX(object1.getX()-overlap*(object1.getX()-object2.getX())/distance);
+		object1.setY(object1.getY()-overlap*(object1.getY()-object2.getY())/distance);
+			
+		object2.setX(object2.getX()+overlap*(object1.getX()-object2.getX())/distance);
+		object2.setY(object2.getY()+overlap*(object1.getY()-object2.getY())/distance);
 	}
 	
 }

@@ -267,5 +267,5 @@ public class Model {
 		matrixStack.addRotationArroundPoint(point, axis, angle);
 		updateMatrix=true;
 	}
-
+	
 }

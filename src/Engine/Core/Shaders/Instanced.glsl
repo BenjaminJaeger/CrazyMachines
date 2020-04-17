@@ -144,7 +144,7 @@ void main(void){
 	
 	fragmentColor+=material.emissionColor;
 	fragmentColor+=material.ambientColor*ambientLightColor;
-	//fragmentColor*=objectColor;
+	fragmentColor*=objectColor;
 	
 	finalColor=vec4(fragmentColor,material.alphaValue);										
 };

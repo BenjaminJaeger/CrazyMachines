@@ -89,9 +89,10 @@ public class loadToGPU {
 	 * 			-InstancedModel that gets stored into the VAO
 	 */
 	public static void loadinstancedMeshToGPU(InstancedModel model) {
+		Mesh mesh = model.getMesh();
+		
 		createVAO(); 
 		
-		InstancedMesh mesh = model.getInstancedMesh();
 		mesh.setVaoID(vaos[vaoCounter-1]);
 		
 		connectIndicesWithVBO(mesh.getIndices());
@@ -104,7 +105,7 @@ public class loadToGPU {
 		mesh.setNormalVBOID(vbos[vboCounter-1]);
 		
 		//create instanced ModelMatrix vbo
-		createEmptyVBO(mesh.getInstances()*16); //float count is 16(16 floats in a matrix) * the instances of instances 
+		createEmptyVBO(model.getInstances()*16); //float count is 16(16 floats in a matrix) * the instances of instances 
 		setUpEmptyVBO(2, 4, 16, 0);
 		setUpEmptyVBO(3, 4, 16, 4);
 		setUpEmptyVBO(4, 4, 16, 8);
@@ -112,9 +113,10 @@ public class loadToGPU {
 		model.setMatrixVBOID(vbos[vboCounter-1]);
 		
 		//create instanced Color vbo
-		createEmptyVBO(mesh.getInstances()*3); //3 floats for color (rgb)
+		createEmptyVBO(model.getInstances()*3); //3 floats for color (rgb)
 		setUpEmptyVBO(6, 3, 0, 0);
 		mesh.setColorVBOID(vbos[vboCounter-1]);
+		loadToGPU.updateVBO(mesh.getColorVBOID(),mesh.getColors());
 	}
 	
 	/**

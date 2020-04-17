@@ -22,11 +22,10 @@ import Engine.Core.Models.InstancedModel;
 import Engine.Core.Renderer.Renderer;
 import Engine.Core.Shaders.Core.BasicShader;
 import Engine.Core.Shaders.Core.Material;
-import Engine.Primitives.Sphere;
 import Objects.GameObject;
 import Objects.MovableObjects.MoveableObject;
 import Objects.MovableObjects.Ball.Ball;
-import Objects.MovableObjects.Box.MetallBox;
+import Objects.MovableObjects.Ball.MetallBall;
 
 public class ComputerGraphics  implements GLEventListener{
 
@@ -72,6 +71,7 @@ public class ComputerGraphics  implements GLEventListener{
 
 	@Override
 	public void display(GLAutoDrawable arg0) {
+		FPSCounter.calculateFPS();
 		
 		renderer.clear();	
 		
@@ -82,20 +82,19 @@ public class ComputerGraphics  implements GLEventListener{
 		if (t<0) 
 			tinc*=-1;
 		t+=tinc;
-			
-
+		
 //		model1.update();
 //		renderer.render(model1, shader); 
 //		model2.update();
 //		renderer.render(model2, shader); 
-
-		renderer.render(instancedModel, instancedShader);
 		
 		for (MoveableObject ball : balls) {
 			ball.update();
 			renderer.render(ball,shader);	
 		}
-				
+		
+//		renderer.render(instancedModel, instancedShader);
+		
 		for (GameObject object : test) 
 			renderer.render(object,shader);			
 	}
@@ -133,15 +132,16 @@ public class ComputerGraphics  implements GLEventListener{
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
 		
-//		model1 = new MetallBall(100f,40, 200f, 200f);
-//		model1.setVelocityX((float)Math.random()*3);
-//		model1.setVelocityY((float)Math.random()*3);
+//		float[] colors = {(float)Math.random(),(float)Math.random(),(float)Math.random()};
+//		model1 = new MetallBall(50, 50, colors, 200, 200);
+//		model1.setVelocityX(1);
+//		//model1.setVelocityY(4);
 //		
-//		model2 = new MetallBall(100f,40, 400f, 400f);
-//		model2.setVelocityX((float)Math.random()*3);
-//		model2.setVelocityY((float)Math.random()*3);
+//		model2 = new MetallBall(50, 50, colors, 400, 200);
+//		model2.setVelocityX(-20);
+//		//model2.setVelocityY(-4);
 		
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < 20; i++) {
 			float[] color = {(float)Math.random(),(float)Math.random(),(float)Math.random()};
 			
 			float x = (float)Math.random()*Config.CANVAS_WIDTH;
@@ -151,8 +151,7 @@ public class ComputerGraphics  implements GLEventListener{
 			float velocityX = (float)Math.random()*2;
 			float velocityY = (float)Math.random()*2;
 			
-			
-			Ball ball = new Ball(radius, 40, basicMaterial, color, x, y);
+			Ball ball = new MetallBall(radius, 40,color, x, y);
 			ball.setMass(mass);
 			ball.setAccelerationX(velocityX);
 			ball.setAccelerationY(velocityY);
@@ -161,23 +160,27 @@ public class ComputerGraphics  implements GLEventListener{
 		
 		
 		//instanced rendering
-		instancedShader = new BasicShader("Instanced");
+//		instancedShader = new BasicShader("Instanced");
+//		
+//		int instances = 10;
+//		float[] colors = new float[instances*3];
+//		for (int i = 0; i < instances*3; i+=3) {
+//			colors[i]=(float)Math.random();
+//			colors[i+1]=(float)Math.random();
+//			colors[i+2]=(float)Math.random();
+//		}
+//		instancedModel = new InstancedModel(new Sphere(30,20), instances, basicMaterial, colors);
+//				
+//		//random position & scale
+//		for (int i = 0; i < instancedModel.getInstances(); i++) {
+//			instancedModel.setScale(i, (float)Math.random());
+//			instancedModel.setX(i , (float)Math.random()*Config.CANVAS_WIDTH);
+//			instancedModel.setY(i ,(float)Math.random()*Config.CANVAS_HEIGHT);
+//		}
 		
-		float[] colors = {(float)Math.random(),(float)Math.random(),(float)Math.random()}; //random Color
-		instancedModel = new InstancedModel(new Sphere(30, (float)Math.random()*20), 200, basicMaterial, colors, 200, 200);
-				
-		//random position
-		for (int i = 0; i < instancedModel.getInstances(); i++) {
-			instancedModel.setX(i , (float)Math.random()*Config.CANVAS_WIDTH);
-			instancedModel.setY(i ,(float)Math.random()*Config.CANVAS_HEIGHT);
-		}
+	
 		
-		
-		
-		
-		
-		test.add(new MetallBox(0f, 0f, 0f));
-			
+		//respawn balls
 		canvas.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {}
 			public void keyReleased(KeyEvent e) {}
@@ -197,6 +200,9 @@ public class ComputerGraphics  implements GLEventListener{
 				}
 			}
 		});
+		
+		float[] color = {0,0,0};
+		test.add(new MetallBall(0, 0, color, 0, 0));
 	}
 	
 

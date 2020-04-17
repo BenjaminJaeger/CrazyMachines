@@ -164,44 +164,44 @@ public class Renderer {
 		
 		shader.uploadMaterial(model.getMaterial());		
 		
-			for (int j = 0; j < model.getInstances(); j++) {		
+		for (int j = 0; j < model.getInstances(); j++) {		
 						
-					//reset matrix
-					model.getModelMatrix()[j].setIdentityMatrix();													
+			//reset matrix
+			model.getModelMatrix()[j].setIdentityMatrix();													
 										
-					//translation
-					model.getModelMatrix()[j].translate(model.getX(j),model.getY(j),model.getZ(j)); 
+			//translation
+			model.getModelMatrix()[j].translate(model.getX(j),model.getY(j),model.getZ(j)); 
 					
-					//rotation
-					model.getModelMatrix()[j].rotateX(model.getRotationX()[j]);
-					model.getModelMatrix()[j].rotateY(model.getRotationY()[j]);
-					model.getModelMatrix()[j].rotateZ(model.getRotationZ()[j]);
+			//rotation
+			model.getModelMatrix()[j].rotateX(model.getRotationX()[j]);
+			model.getModelMatrix()[j].rotateY(model.getRotationY()[j]);
+			model.getModelMatrix()[j].rotateZ(model.getRotationZ()[j]);
 					
-					//scale
-					model.getModelMatrix()[j].scale(model.getScaleX()[j],model.getScaleY()[j],model.getScaleZ()[j]); 				
+			//scale
+			model.getModelMatrix()[j].scale(model.getScaleX()[j],model.getScaleY()[j],model.getScaleZ()[j]); 				
 						
-					//save matrix into array so it can get uploaded
-					matrixData[j*16] = model.getModelMatrix()[j].m00; 
-					matrixData[j*16+1] = model.getModelMatrix()[j].m10; 
-					matrixData[j*16+2] = model.getModelMatrix()[j].m20; 
-					matrixData[j*16+3] = model.getModelMatrix()[j].m30; 
-					matrixData[j*16+4] = model.getModelMatrix()[j].m01; 
-					matrixData[j*16+5] = model.getModelMatrix()[j].m11;  
-					matrixData[j*16+6] = model.getModelMatrix()[j].m21; 
-					matrixData[j*16+7] = model.getModelMatrix()[j].m31; 
-					matrixData[j*16+8] = model.getModelMatrix()[j].m02; 
-					matrixData[j*16+9] = model.getModelMatrix()[j].m12; 
-					matrixData[j*16+10] = model.getModelMatrix()[j].m22; 
-					matrixData[j*16+11] = model.getModelMatrix()[j].m32; 
-					matrixData[j*16+12] = model.getModelMatrix()[j].m03; 
-					matrixData[j*16+13] = model.getModelMatrix()[j].m13; 
-					matrixData[j*16+14] = model.getModelMatrix()[j].m23; 
-					matrixData[j*16+15] = model.getModelMatrix()[j].m33; 
+			//save matrix into array so it can get uploaded
+			matrixData[j*16] = model.getModelMatrix()[j].m00; 
+			matrixData[j*16+1] = model.getModelMatrix()[j].m10; 
+			matrixData[j*16+2] = model.getModelMatrix()[j].m20; 
+			matrixData[j*16+3] = model.getModelMatrix()[j].m30; 
+			matrixData[j*16+4] = model.getModelMatrix()[j].m01; 
+			matrixData[j*16+5] = model.getModelMatrix()[j].m11;  
+			matrixData[j*16+6] = model.getModelMatrix()[j].m21; 
+			matrixData[j*16+7] = model.getModelMatrix()[j].m31; 
+			matrixData[j*16+8] = model.getModelMatrix()[j].m02; 
+			matrixData[j*16+9] = model.getModelMatrix()[j].m12; 
+			matrixData[j*16+10] = model.getModelMatrix()[j].m22; 
+			matrixData[j*16+11] = model.getModelMatrix()[j].m32; 
+			matrixData[j*16+12] = model.getModelMatrix()[j].m03; 
+			matrixData[j*16+13] = model.getModelMatrix()[j].m13; 
+			matrixData[j*16+14] = model.getModelMatrix()[j].m23; 
+			matrixData[j*16+15] = model.getModelMatrix()[j].m33; 
 					
 			loadToGPU.updateVBO(model.getMatrixVBOID(),matrixData);
 										
-			gl.glBindVertexArray(model.getInstancedMesh().getVaoID()); //activates the specific VAO
-			gl.glDrawElementsInstanced(GL_TRIANGLES,  model.getInstancedMesh().getIndexCount(), GL_UNSIGNED_INT, 0, model.getInstances());			
+			gl.glBindVertexArray(model.getMesh().getVaoID()); //activates the specific VAO
+			gl.glDrawElementsInstanced(GL_TRIANGLES,  model.getMesh().getIndexCount(), GL_UNSIGNED_INT, 0, model.getInstances());			
 		}
 	}
 	

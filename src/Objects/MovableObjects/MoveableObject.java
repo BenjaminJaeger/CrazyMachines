@@ -18,11 +18,6 @@ public abstract class MoveableObject extends GameObject{
 	public MoveableObject(String[] files,Material material, float[][] colors,float x,float y) {
 		super(files, material, colors, x, y);
 	}
-	
-	/**
-	 * checks for collision with this object and every other object
-	 */
-	protected abstract void collision();
 
 	/**
 	 * checks if the object collides with the edges of the screen
@@ -32,22 +27,22 @@ public abstract class MoveableObject extends GameObject{
 	public void update() {
 			
 			//applyForce(0, 0.5f);
-			
-			collision();
 			 
 			checkEdges();
 			
 			increaseVelocity(accelerationX, accelerationY);
 			
-			if (Math.abs(velocityX) <0.01f) 
-				velocityX=0;
-			if (Math.abs(velocityY)  <0.01f) 
-				velocityY=0;
+//			if (Math.abs(velocityX) <0.01f) 
+//				velocityX=0;
+//			if (Math.abs(velocityY)  <0.01f) 
+//				velocityY=0;
 			
 			increasePosition(velocityX, velocityY);
 			increaseRotation(velocityX);
 			resetAcceleration();
+			collisionContext.update(x,y);
 			
+			collisionContext.checkCollisions();
 			
 //			accelerationX = -velocityX*0.0005f;
 //			accelerationY = -velocityY*0.0005f;

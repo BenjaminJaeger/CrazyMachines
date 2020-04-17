@@ -1,8 +1,6 @@
 package Engine.Core.Models;
 
 import Engine.Core.Math.Matrix4f;
-import Engine.Core.Math.MatrixStack4f;
-import Engine.Core.Math.Vector3f;
 import Engine.Core.Shaders.Core.Material;
 import Engine.Primitives.Primitive;
 
@@ -16,34 +14,29 @@ import Engine.Primitives.Primitive;
  * @author Simon Weck
  *
  */
-public class InstancedModel  {
+public class InstancedModel{
 	
-	protected Material material;		//material of the model
-	protected InstancedMesh instancedMesh; //raw mesh that we can transform
+	private Material material;		
+	private Mesh mesh; 
+	
+	private int instances;
 		
-	protected float[] x,y,z;						 //position (size of the instance amount)
-	protected float[] scaleX,scaleY,scaleZ;			 //scale (size of the instance amount)
-	protected float[] rotationX,rotationY,rotationZ; //rotation around all axis (size of the instance amount)
+	private float[] x,y,z;						 
+	private float[] scaleX,scaleY,scaleZ;			 
+	private float[] rotationX,rotationY,rotationZ; 
 	
-	protected Matrix4f[] modelMatrix; 				 //transformation matrix describing all transformations (size of the instance amount)
-	protected int matrixVBOID;
+	private Matrix4f[] modelMatrix; 				 
+	private int matrixVBOID;
 	
-	protected boolean updateMatrix;		//should be an array but when 1 tree moves every tree moves 
+	private boolean updateMatrix;		
 	
-	protected MatrixStack4f[] matrixStack;	//one matrix stack for every instance
+	//private MatrixStack4f[] matrixStack;	
 	
-	 /**
-	  * creates an instanceMesh out of a OBJ file. And uploads it to the gpu. Every instance is located at (0,0,0) with scale of 1 and x,y,z rotation of 0
-	  * @param file
-	  * 		-file path of the obj file
-	  * @param instances
-	  * 		-ammount of instances to be rendered
-	  * @param material
-	  * 		-material of each instance
-	  */
-	public InstancedModel(String file,int instances,Material material) {
-		initArrays(instances);
-		instancedMesh=new InstancedMesh(file,instances); //creates mesh out the file
+
+	public InstancedModel(Primitive primitive,int instances,Material material,float[] colors) {
+		this.instances = instances;	
+		initArrays();
+		mesh=new Mesh(primitive,colors); //creates mesh out the file
 		for (int i = 0; i < instances; i++) {
 			scaleX[i]=1;
 			scaleY[i]=1;
@@ -53,23 +46,20 @@ public class InstancedModel  {
 		loadToGPU.loadinstancedMeshToGPU(this);
 	}
 	
-	public InstancedModel(Primitive primitive,int instances,Material material,float[] colors,float x,float y) {
-		initArrays(instances);
-		instancedMesh=new InstancedMesh(primitive,instances,colors); //creates mesh out the file
+	public InstancedModel(String file,int instances,Material material,float[] colors) {
+		this.instances = instances;	
+		initArrays();
+		mesh=new Mesh(file,colors); //creates mesh out the file
 		for (int i = 0; i < instances; i++) {
 			scaleX[i]=1;
 			scaleY[i]=1;
 			scaleZ[i]=1;
-		}	
-		
-		for (int i = 0; i < instances; i++) {
-			this.x[i]=x;
-			this.y[i]=y;
 		}	
 		this.material=material;
 		loadToGPU.loadinstancedMeshToGPU(this);
 	}
 
+	
 	/**
 	 *increases the x,y,z position of each instance by dx,dy,dz
 	 * @param dx
@@ -80,7 +70,7 @@ public class InstancedModel  {
 	 *		-z coordinate increment
 	 */
 	public void increasePosition(float dx,float dy,float dz) {
-		for (int i = 0; i < instancedMesh.getInstances(); i++) {
+		for (int i = 0; i < instances; i++) {
 			x[i]+=dx;
 			y[i]+=dy;
 			z[i]+=dz;				
@@ -99,7 +89,7 @@ public class InstancedModel  {
 	 * 		-Rotation in angles arround the z axis
 	 */
 	public void increaseRotation(float dx,float dy,float dz) {
-		for (int i = 0; i < instancedMesh.getInstances(); i++) {
+		for (int i = 0; i < instances; i++) {
 			rotationX[i]+=dx;
 			rotationY[i]+=dy;
 			rotationZ[i]+=dz;				
@@ -107,7 +97,28 @@ public class InstancedModel  {
 		updateMatrix=true;
 	}
 	
-
+	private void initArrays() {
+		x = new float[instances];
+		y = new float[instances];
+		z = new float[instances];
+		scaleX= new float[instances];
+		scaleY= new float[instances];
+		scaleZ= new float[instances];
+		rotationX = new float[instances];
+		rotationY = new float[instances];
+		rotationZ = new float[instances];
+		
+		modelMatrix = new Matrix4f[instances];
+		for (int i = 0; i < modelMatrix.length; i++) 
+			modelMatrix[i] = new Matrix4f();
+		
+		/*
+		matrixStack = new MatrixStack4f[instances];
+		for (int i = 0; i < matrixStack.length; i++) 
+			matrixStack[i] = new MatrixStack4f();
+		*/
+	}
+	
 	public float getX(int index) {
 		return x[index];
 	}
@@ -147,10 +158,10 @@ public class InstancedModel  {
 		return scaleZ;
 	}
 
-	public void setScale(float[] scale) {
-		scaleX=scale;
-		scaleY=scale;
-		scaleZ=scale;
+	public void setScale(int index, float scale) {
+		scaleX[index]=scale;
+		scaleY[index]=scale;
+		scaleZ[index]=scale;
 		updateMatrix=true;
 	}
 
@@ -172,99 +183,6 @@ public class InstancedModel  {
 	
 	public boolean getMatrixUpdate() {
 		return updateMatrix;
-	}
-
-	public MatrixStack4f[] getMatrixStack() {
-		return matrixStack;
-	}
-
-	/**
-	 * adds translation matrix to the Matrix stack
-	 */
-	public void addTranslation(float x, float y,float z,int index) {
-		matrixStack[index].addTranslation(x, y, z);
-		updateMatrix=true;
-	}
-	/**
-	 * adds rotation matrix to the Matrix stack
-	 */
-	public void addRotation(float rotateX,float rotateY,float rotateZ,int index) {
-		matrixStack[index].addRotation(rotateX, rotateY, rotateZ);
-		updateMatrix=true;
-	}
-	
-	/**
-	 * adds uniform scale matrix to the Matrix stack
-	 */
-	public void addScale(float uniformScale,int index) {
-		matrixStack[index].addScale(uniformScale);
-		updateMatrix=true;
-	}
-	
-	/**
-	 * adds scale matrix to the Matrix stack
-	 */
-	public void addScale(float scaleX,float scaleY,float scaleZ,int index) {
-		matrixStack[index].addScale(scaleX, scaleY, scaleZ);
-		updateMatrix=true;
-	}
-	
-	public void addMatrix(Matrix4f matrix,int index) {
-		matrixStack[index].addMatrix(matrix);
-		updateMatrix=true;
-	}
-
-	/**
-	 * adds rotation around angle matrix to the Matrix stack
-	 */
-	public void addRotation(float angle,Vector3f axis,int index) {
-		matrixStack[index].addRotation(angle,axis);
-		updateMatrix=true;
-	}
-
-	/**
-	 * adds rotation around point matrix to the Matrix stack
-	 */
-	public void addRotationArroundPoint(Vector3f point, Vector3f angles,int index) {
-		matrixStack[index].addRotationArroundPoint(point,angles);
-		updateMatrix=true;
-	}
-	
-	/**
-	 * adds rotation around point with custom axis matrix to the Matrix stack
-	 */
-	public void addRotationArroundPoint(Vector3f point, Vector3f axis,float angle,int index) {
-		matrixStack[index].addRotationArroundPoint(point, axis, angle);
-		updateMatrix=true;
-	}
-
-	public InstancedMesh getInstancedMesh() {
-		return instancedMesh;
-	}
-	
-	/**
-	 * creates the arrays depending on the instance amount
-	 * @param instances
-	 * 		-ammount of instances to be rendered
-	 */
-	private void initArrays(int instances) {
-		x = new float[instances];
-		y = new float[instances];
-		z = new float[instances];
-		scaleX= new float[instances];
-		scaleY= new float[instances];
-		scaleZ= new float[instances];
-		rotationX = new float[instances];
-		rotationY = new float[instances];
-		rotationZ = new float[instances];
-		
-		modelMatrix = new Matrix4f[instances];
-		for (int i = 0; i < modelMatrix.length; i++) 
-			modelMatrix[i] = new Matrix4f();
-		
-		matrixStack = new MatrixStack4f[instances];
-		for (int i = 0; i < matrixStack.length; i++) 
-			matrixStack[i] = new MatrixStack4f();
 	}
 
 	public int getMatrixVBOID() {
@@ -300,7 +218,58 @@ public class InstancedModel  {
 	}
 	
 	public int getInstances() {
-		return instancedMesh.getInstances();
+		return instances;
+	}
+	
+	public Mesh getMesh() {
+		return mesh;
+	}
+	
+	
+
+	/*
+	public MatrixStack4f[] getMatrixStack() {
+		return matrixStack;
 	}
 
+	public void addTranslation(float x, float y,float z,int index) {
+		matrixStack[index].addTranslation(x, y, z);
+		updateMatrix=true;
+	}
+
+	public void addRotation(float rotateX,float rotateY,float rotateZ,int index) {
+		matrixStack[index].addRotation(rotateX, rotateY, rotateZ);
+		updateMatrix=true;
+	}
+	
+	public void addScale(float uniformScale,int index) {
+		matrixStack[index].addScale(uniformScale);
+		updateMatrix=true;
+	}
+	
+	public void addScale(float scaleX,float scaleY,float scaleZ,int index) {
+		matrixStack[index].addScale(scaleX, scaleY, scaleZ);
+		updateMatrix=true;
+	}
+	
+	public void addMatrix(Matrix4f matrix,int index) {
+		matrixStack[index].addMatrix(matrix);
+		updateMatrix=true;
+	}
+
+	public void addRotation(float angle,Vector3f axis,int index) {
+		matrixStack[index].addRotation(angle,axis);
+		updateMatrix=true;
+	}
+
+	public void addRotationArroundPoint(Vector3f point, Vector3f angles,int index) {
+		matrixStack[index].addRotationArroundPoint(point,angles);
+		updateMatrix=true;
+	}
+	
+	public void addRotationArroundPoint(Vector3f point, Vector3f axis,float angle,int index) {
+		matrixStack[index].addRotationArroundPoint(point, axis, angle);
+		updateMatrix=true;
+	}
+	*/
 }

@@ -1,19 +1,15 @@
 package Objects.MovableObjects.Box;
 
-import java.util.ArrayList;
-
 import Engine.Core.Config;
 import Engine.Core.Shaders.Core.Material;
 import Engine.Primitives.Cube;
 import Objects.MovableObjects.MoveableObject;
 
-public class Box extends MoveableObject{
+public abstract class Box extends MoveableObject{
 	
-	public static ArrayList<Box> allBoxes = new ArrayList<Box>();
-	
-	private float width;
-	private float height;
-	private float depth;
+	protected float width;
+	protected float height;
+	protected float depth;
 
 
 	public Box(float size, Material material, float[] colors, float x, float y) {
@@ -21,7 +17,6 @@ public class Box extends MoveableObject{
 		this.width=size;
 		this.height=size;
 		this.depth=size;
-		allBoxes.add(this);
 	}
 	
 	public Box(float width,float height ,float depth , Material material, float[] colors, float x, float y) {
@@ -29,15 +24,9 @@ public class Box extends MoveableObject{
 		this.width=width;
 		this.height=height;
 		this.depth=depth;
-		allBoxes.add(this); 
 	}
 	
-	
-	@Override
-	protected void collision() {
 
-	}
-	
 	@Override
 	public void checkEdges() {		
 		if(y-width<=0) {
@@ -59,10 +48,6 @@ public class Box extends MoveableObject{
 			setX(width);
 			velocityX*=-1;
 		}
-	}
-
-	public static ArrayList<Box> getAllBoxes() {
-		return allBoxes;
 	}
 
 

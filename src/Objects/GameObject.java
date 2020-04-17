@@ -1,12 +1,19 @@
 package Objects;
 
+import java.util.ArrayList;
+
 import Engine.Core.Models.Model;
 import Engine.Core.Shaders.Core.Material;
 import Engine.Primitives.Primitive;
+import Objects.MovableObjects.Collisions.CollisionContext;
 
 public abstract class GameObject {
 
-	Model[] models;
+	public static ArrayList<GameObject> allObjects = new ArrayList<GameObject>();
+	
+	protected Model[] models;
+	
+	protected CollisionContext collisionContext;
 	
 	protected static int counter;
 	protected int id;
@@ -26,6 +33,8 @@ public abstract class GameObject {
 		counter++;
 		scaleX=1; 
 		scaleX=1;
+		allObjects.add(this);
+		setCollissionContext();
 	}
 	
 	public GameObject(Primitive primitive,Material material,float[] colors, float x,float y) {
@@ -37,8 +46,11 @@ public abstract class GameObject {
 		counter++;
 		scaleX=1;
 		scaleX=1;
+		allObjects.add(this);
+		setCollissionContext();
 	}
 	
+	public abstract void setCollissionContext();
 	
 	public abstract void update();
 	
@@ -81,6 +93,7 @@ public abstract class GameObject {
 		this.x = x;
 		for (Model model : models) 
 			model.setX(x);	
+		//collisionContext.update(x, x);
 	}
 	
 	public float getY() {
@@ -91,6 +104,7 @@ public abstract class GameObject {
 		this.y=y;
 		for (Model model : models) 
 			model.setY(y);
+		//collisionContext.update(x, x);
 	}
 	
 	public void setRotation(float rotation) {
@@ -134,5 +148,8 @@ public abstract class GameObject {
 		return id;
 	}
 	
+	public CollisionContext getCollisionContext() {
+		return collisionContext;
+	}
 	
 }
