@@ -3,6 +3,7 @@ package Objects;
 import java.util.ArrayList;
 
 import Engine.Core.Models.Model;
+import Engine.Core.Models.TriangleModel;
 import Engine.Core.Shaders.Core.Material;
 import Engine.Primitives.Primitive;
 import Objects.MovableObjects.Collisions.CollisionContext;
@@ -11,7 +12,7 @@ public abstract class GameObject {
 
 	public static ArrayList<GameObject> allObjects = new ArrayList<GameObject>();
 	
-	protected Model[] models;
+	protected TriangleModel[] models;
 	
 	protected CollisionContext collisionContext;
 	
@@ -26,9 +27,9 @@ public abstract class GameObject {
 	public GameObject(String[] files,Material material, float[][] colors,float x,float y) {
 		this.x = x;
 		this.y = y;
-		models = new Model[files.length];
+		models = new TriangleModel[files.length];
 		for (int i = 0; i < models.length; i++) 
-			models[i] = new Model(files[i],material,colors[i],x,y);		
+			models[i] = new TriangleModel(files[i],material,colors[i],x,y);		
 		id=counter;
 		counter++;
 		scaleX=1; 
@@ -40,8 +41,21 @@ public abstract class GameObject {
 	public GameObject(Primitive primitive,Material material,float[] colors, float x,float y) {
 		this.x = x;
 		this.y = y;
-		models = new Model[1];
-		models[0] = new Model(primitive,material,colors,x,y);		
+		models = new TriangleModel[1];
+		models[0] = new TriangleModel(primitive,material,colors,x,y);		
+		id=counter;
+		counter++;
+		scaleX=1;
+		scaleX=1;
+		allObjects.add(this);
+		setCollissionContext();
+	}
+	
+	public GameObject(Primitive primitive,Material material, float r, float g,float b, float x,float y) {
+		this.x = x;
+		this.y = y;
+		models = new TriangleModel[1];
+		models[0] = new TriangleModel(primitive,material,r,g,b,x,y);		
 		id=counter;
 		counter++;
 		scaleX=1;
@@ -77,12 +91,12 @@ public abstract class GameObject {
 			model.increaseRotation(0, 0, dz);		
 	}
 	
-	public Model[] getModels() {
+	public TriangleModel[] getModels() {
 		return models;
 	}
 	
-	public void setModels(Model[] modesl) {
-		this.models = modesl;
+	public void setModels(TriangleModel[] models) {
+		this.models = models;
 	}
 	
 	public float getX() {

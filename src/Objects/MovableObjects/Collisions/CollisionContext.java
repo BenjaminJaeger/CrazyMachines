@@ -8,73 +8,61 @@ public class CollisionContext {
 
 	private MoveableObject object;
 	
-	private Circle[] cirlces;
-	private Rectangle[] rectangles;
+	private BoundingCircle[] boundingCirlces;
+	private BoundingRectangle[] boundingRectangles;
 	
-	public CollisionContext(MoveableObject object, Circle[] circles, Rectangle[] rectangles) {
-		this.cirlces= circles;
-		this.rectangles = rectangles;
+	public CollisionContext(MoveableObject object, BoundingCircle[] circles, BoundingRectangle[] rectangles) {
+		this.boundingCirlces= circles;
+		this.boundingRectangles = rectangles;
 		this.object=object;
 	}
 	
-	public CollisionContext(MoveableObject object, Circle[] circles) {
-		this.cirlces= circles;
-		this.rectangles = new Rectangle[0];
+	public CollisionContext(MoveableObject object, BoundingCircle[] circles) {
+		this.boundingCirlces= circles;
+		this.boundingRectangles = new BoundingRectangle[0];
 		this.object=object;
 	}
 	
-	public CollisionContext(MoveableObject object, Rectangle[] rectangles) {
-		this.rectangles = rectangles;
-		this.cirlces = new Circle[0];
+	public CollisionContext(MoveableObject object, BoundingRectangle[] rectangles) {
+		this.boundingRectangles = rectangles;
+		this.boundingCirlces = new BoundingCircle[0];
 		this.object=object;
 	}
 	
-	public CollisionContext(MoveableObject object, Rectangle rectangle) {
-		this.rectangles = new Rectangle[1];
-		this.rectangles[0]=rectangle;
-		this.cirlces = new Circle[0];
+	public CollisionContext(MoveableObject object, BoundingRectangle rectangle) {
+		this.boundingRectangles = new BoundingRectangle[1];
+		this.boundingRectangles[0]=rectangle;
+		this.boundingCirlces = new BoundingCircle[0];
 		this.object=object;
 	}
 	
-	public CollisionContext(MoveableObject object, Circle circle) {
-		this.cirlces = new Circle[1];
-		this.cirlces[0]=circle;
-		this.rectangles = new Rectangle[0];
+	public CollisionContext(MoveableObject object, BoundingCircle circle) {
+		this.boundingCirlces = new BoundingCircle[1];
+		this.boundingCirlces[0]=circle;
+		this.boundingRectangles = new BoundingRectangle[0];
 		this.object=object;
 	}
 	
 	public void checkCollisions() {
 		for (GameObject object : GameObject.allObjects) 
-			checkCollision(object.getCollisionContext());
-		
+			checkCollision(object.getCollisionContext());	
 	}
 	
 	public void checkCollision(CollisionContext context) {
-		for (Circle circle1 : cirlces) 
-			for (Circle circle2 : context.getCircles()) 
+		for (BoundingCircle circle1 : boundingCirlces) 
+			for (BoundingCircle circle2 : context.getBoundingCircles()) 
 				if(circle1.checkCollision(circle2) && context.getGameObject().getId()!=object.getId()) {
 					Collision.removeCollision((Ball)object, (Ball)context.getGameObject());
 					Collision.elasticCollision(object, context.getGameObject());
 				}	
 	}
 	
-	public void update(float x,float y) {
-		for (Circle circle : cirlces) {
-			circle.setX(x);
-			circle.setY(y);
-		}	
-		for (Rectangle rectangle : rectangles) {
-			rectangle.setX(x);
-			rectangle.setY(y);
-		}
+	public BoundingCircle[] getBoundingCircles() {
+		return boundingCirlces;
 	}
 	
-	public Circle[] getCircles() {
-		return cirlces;
-	}
-	
-	public Rectangle[] getRectangles() {
-		return rectangles;
+	public BoundingRectangle[] getBoundingRectangles() {
+		return boundingRectangles;
 	}
 	
 	public MoveableObject getGameObject() {

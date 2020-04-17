@@ -141,9 +141,7 @@ public class ComputerGraphics  implements GLEventListener{
 //		model2.setVelocityX(-20);
 //		//model2.setVelocityY(-4);
 		
-		for (int i = 0; i < 20; i++) {
-			float[] color = {(float)Math.random(),(float)Math.random(),(float)Math.random()};
-			
+		for (int i = 0; i < 20; i++) {			
 			float x = (float)Math.random()*Config.CANVAS_WIDTH;
 			float y = (float)Math.random()*Config.CANVAS_HEIGHT;
 			float mass = (float)Math.random()+0.5f;
@@ -151,7 +149,7 @@ public class ComputerGraphics  implements GLEventListener{
 			float velocityX = (float)Math.random()*2;
 			float velocityY = (float)Math.random()*2;
 			
-			Ball ball = new MetallBall(radius, 40,color, x, y);
+			Ball ball = new MetallBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
 			ball.setMass(mass);
 			ball.setAccelerationX(velocityX);
 			ball.setAccelerationY(velocityY);
@@ -201,8 +199,7 @@ public class ComputerGraphics  implements GLEventListener{
 			}
 		});
 		
-		float[] color = {0,0,0};
-		test.add(new MetallBall(0, 0, color, 0, 0));
+		test.add(new MetallBall(0, 0, 0,0,0, 0, 0));
 	}
 	
 

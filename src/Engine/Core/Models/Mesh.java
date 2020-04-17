@@ -36,12 +36,24 @@ public class Mesh {
 		vertices=parser.getVertices();
 		indices=parser.getIndices();
 		indexCount=indices.length;
+		this.colors=colors;
+//		normals=parser.getNormals(); // normals dont get read properly
+		calculateNormals();
+		loadToGPU.loadMeshToGPU(this);
+	}
+	
+	public Mesh(String file,float r,float g,float b) { 
+		OBJParser parser=new OBJParser(file);
+		baseVertices=parser.getVertices();
+		vertices=parser.getVertices();
+		indices=parser.getIndices();
+		indexCount=indices.length;
 		this.colors=new float[vertices.length];
 		
 		for (int i = 0; i < this.colors.length; i+=3) {
-			this.colors[i] =  colors[0];
-			this.colors[i+1] =  colors[1];
-			this.colors[i+2] =  colors[2];
+			this.colors[i] =  r;
+			this.colors[i+1] = g;
+			this.colors[i+2] =  b;
 		}
 		
 //		normals=parser.getNormals(); // normals dont get read properly
@@ -54,18 +66,27 @@ public class Mesh {
 		vertices=primitive.getVertices();
 		indices=primitive.getIndices();
 		indexCount=indices.length;
+		this.colors=colors;
+		calculateNormals();
+		loadToGPU.loadMeshToGPU(this);
+	}
+	
+	public Mesh(Primitive primitive,float r,float g,float b) { 
+		baseVertices=primitive.getVertices();
+		vertices=primitive.getVertices();
+		indices=primitive.getIndices();
+		indexCount=indices.length;
 		this.colors=new float[vertices.length];
 		
 		for (int i = 0; i < this.colors.length; i+=3) {
-			this.colors[i] =  colors[0];
-			this.colors[i+1] =  colors[1];
-			this.colors[i+2] =  colors[2];
+			this.colors[i] =  r;
+			this.colors[i+1] =  g;
+			this.colors[i+2] = b;
 		}
 		
 		calculateNormals();
 		loadToGPU.loadMeshToGPU(this);
 	}
-	
 	/**
 	 * creates a mesh with a texture on it.
 	 * @param textureCoordinates

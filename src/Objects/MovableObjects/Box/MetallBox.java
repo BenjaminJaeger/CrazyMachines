@@ -3,7 +3,7 @@ package Objects.MovableObjects.Box;
 import Engine.Core.Math.Vector3f;
 import Engine.Core.Shaders.Core.Material;
 import Objects.MovableObjects.Collisions.CollisionContext;
-import Objects.MovableObjects.Collisions.Rectangle;
+import Objects.MovableObjects.Collisions.BoundingRectangle;
 
 public class MetallBox extends Box{
 
@@ -20,7 +20,7 @@ public class MetallBox extends Box{
 
 	@Override
 	public void setCollissionContext() {
-		collisionContext = new CollisionContext(this, new Rectangle(x, y, width, height));
+		collisionContext = new CollisionContext(this, new BoundingRectangle(x, y, width, height));
 	}
 
 }

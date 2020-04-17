@@ -3,7 +3,6 @@ package Engine.Core.Models;
 import Engine.Core.Math.Matrix4f;
 import Engine.Core.Math.MatrixStack4f;
 import Engine.Core.Math.Vector3f;
-import Engine.Core.Shaders.Core.Material;
 import Engine.Primitives.Primitive;
 
 /**
@@ -13,20 +12,20 @@ import Engine.Primitives.Primitive;
  * The model can get rendered to the screen
  * @author Simon Weck
  */
-public class Model {
+public abstract class Model {
 	
-	private Material material;
-	private Mesh mesh; //raw mesh that we can transform
-		
-	private float x,y,z; //position
-	private float scaleX,scaleY,scaleZ; //scale
-	private float rotationX,rotationY,rotationZ; //rotation around all axis
-	
-	private Matrix4f modelMatrix=new Matrix4f(); //transformation matrix describing all transformations
 
-	private boolean updateMatrix;
+	protected Mesh mesh; //raw mesh that we can transform
+		
+	protected float x,y,z; //position
+	protected float scaleX,scaleY,scaleZ; //scale
+	protected float rotationX,rotationY,rotationZ; //rotation around all axis
 	
-	private MatrixStack4f matrixStack= new MatrixStack4f();
+	protected Matrix4f modelMatrix=new Matrix4f(); //transformation matrix describing all transformations
+
+	protected boolean updateMatrix;
+	
+	protected MatrixStack4f matrixStack= new MatrixStack4f();
 	
 
 	/**
@@ -34,34 +33,50 @@ public class Model {
 	 * The model has the scale 1 and is at location x,y,0 and is not rotated
 	 * 
 	 */
-	public Model(String file,Material material,float[] colors ,float x,float y) {
+	public Model(String file,float[] colors ,float x,float y) {
 		mesh=new Mesh(file,colors);
 		scaleX=1;
 		scaleY=1;
 		scaleZ=1;
 		this.x = x;
 		this.y = y;
-		this.material=material;
 		updateMatrix=true;
 	}
 	
+	public Model(String file,float r,float g,float b ,float x,float y) {
+		mesh=new Mesh(file,r,g,b);
+		scaleX=1;
+		scaleY=1;
+		scaleZ=1;
+		this.x = x;
+		this.y = y;
+		updateMatrix=true;
+	}
 	
 	/**
 	 * Created a model out of a primitive (Sphere,Cube,Plane)
 	 * The model has the scale 1 and is at location x,y,0 and is not rotated
 	 *
 	 */
-	public Model(Primitive primitive,Material material,float[] colors, float x,float y) {
+	public Model(Primitive primitive,float r,float g,float b, float x,float y) {
+		mesh = new Mesh(primitive,r,g,b);
+		scaleX=1;
+		scaleY=1;
+		scaleZ=1;
+		this.x = x;
+		this.y = y;
+		updateMatrix=true;
+	}
+	
+	public Model(Primitive primitive,float[] colors, float x,float y) {
 		mesh = new Mesh(primitive,colors);
 		scaleX=1;
 		scaleY=1;
 		scaleZ=1;
 		this.x = x;
 		this.y = y;
-		this.material=material;
 		updateMatrix=true;
 	}
-	
 	
 
 	/**
@@ -201,14 +216,6 @@ public class Model {
 
 	public Matrix4f getModelMatrix() {
 		return modelMatrix;
-	}
-	
-	public Material getMaterial() {
-		return material;
-	}
-
-	public void setMaterial(Material material) {
-		this.material=material;
 	}
 	
 	public void setMatrixUpdate(boolean updateMatrix) {

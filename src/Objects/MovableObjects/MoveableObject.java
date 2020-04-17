@@ -14,6 +14,10 @@ public abstract class MoveableObject extends GameObject{
 	public MoveableObject(Primitive primitive, Material material, float[] colors, float x, float y) {
 		super(primitive, material, colors, x, y);
 	}
+	
+	public MoveableObject(Primitive primitive, Material material,float r, float g,float b,float x, float y) {
+		super(primitive, material, r,g,b, x, y);
+	}
 
 	public MoveableObject(String[] files,Material material, float[][] colors,float x,float y) {
 		super(files, material, colors, x, y);
@@ -40,7 +44,6 @@ public abstract class MoveableObject extends GameObject{
 			increasePosition(velocityX, velocityY);
 			increaseRotation(velocityX);
 			resetAcceleration();
-			collisionContext.update(x,y);
 			
 			collisionContext.checkCollisions();
 			

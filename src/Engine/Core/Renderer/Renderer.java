@@ -23,7 +23,7 @@ import Engine.Core.Lights.DirectionalLight;
 import Engine.Core.Lights.PointLight;
 import Engine.Core.Math.Matrix4f;
 import Engine.Core.Models.InstancedModel;
-import Engine.Core.Models.Model;
+import Engine.Core.Models.TriangleModel;
 import Engine.Core.Models.loadToGPU;
 import Engine.Core.Shaders.Core.BasicShader;
 import Objects.GameObject;
@@ -92,7 +92,7 @@ public class Renderer {
 	public void render(GameObject object,BasicShader shader) {
 		GL4 gl=(GL4)GLContext.getCurrentGL();
 		
-		for (Model model : object.getModels()) {			
+		for (TriangleModel model : object.getModels()) {			
 			shader.use(); //activate shader before rendering
 			shader.uploadMaterial(model.getMaterial());		
 			shader.uploadAmbientLight(AmbientLight.getAmbientLight());
@@ -206,6 +206,36 @@ public class Renderer {
 	}
 	
 	
+//	public void render(LineModel model,BasicShader shader) {
+//		GL4 gl=(GL4)GLContext.getCurrentGL();
+//				
+//		shader.use(); //activate shader before rendering
+//		shader.uploadAmbientLight(AmbientLight.getAmbientLight());
+//		shader.uploadPointLights(PointLight.getPointLights());
+//		shader.uploadDirectionalLight(DirectionalLight.getDirectionalLights());
+//				
+//			
+//		if (model.getMatrixUpdate()) {
+//			model.getModelMatrix().changeToModelMatrix(model);
+//			model.setMatrixUpdate(false);
+//		}
+//		shader.uploadModelMatrix(model.getModelMatrix());
+//			
+//			
+//		if (camera.getMatrixUpdate()) {
+//			camera.getViewMatrix().changeToViewMatrix(camera);
+//			camera.setMatrixUpdate(false);
+//		}		
+//		shader.uploadViewMatrix(camera.getViewMatrix());
+//				
+//		Matrix4f.changeToModelViewProjectionMatrix(camera.getViewMatrix(), model.getModelMatrix(),projectionMatrix, modelViewProjectionMatrix);		
+//		shader.uploadModelViewProjectionMatrix(modelViewProjectionMatrix);
+//					
+//		shader.uploadProjectionMatrix(projectionMatrix);
+//			
+//		gl.glBindVertexArray(model.getMesh().getVaoID());//activates the specific VAO
+//		gl.glDrawElements(GL_TRIANGLES, model.getMesh().getIndexCount(), GL_UNSIGNED_INT, 0); //draws with the usage of indices 	
+//	}
 	
 	/**
 	 * sets the glPolygonMode to glLine or glFill depending on the setting inside the config class.

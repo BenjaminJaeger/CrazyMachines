@@ -1,12 +1,12 @@
 package Objects.MovableObjects.Collisions;
 
-public class Rectangle {
+public class BoundingRectangle {
 	
 	private float width,height;
 	private float x,y;
 	
 	
-	public Rectangle(float x,float y, float width,float height) {
+	public BoundingRectangle(float x,float y, float width,float height) {
 		this.x=x;
 		this.y=y;
 		this.width=width;
@@ -14,7 +14,7 @@ public class Rectangle {
 	}
 	
 	
-	public boolean checkCollision(Circle circle) {
+	public boolean checkCollision(BoundingCircle circle) {
 		float distanceX = (float)Math.abs(circle.getX()-x);
 		float distanceY = (float)Math.abs(circle.getY()-y);
 		
@@ -29,7 +29,7 @@ public class Rectangle {
 		return cornerDistance <= circle.getRadius()*circle.getRadius();
 	} 
 	
-	public boolean checkCollision(Rectangle rectangle) {
+	public boolean checkCollision(BoundingRectangle rectangle) {
 		return false;
 	} 
 

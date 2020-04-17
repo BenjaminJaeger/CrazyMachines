@@ -10,8 +10,8 @@ public abstract class Ball extends MoveableObject{
 	
 	protected float radius;
 	
-	public Ball(float radius,int resolution, Material material, float[] colors, float x, float y) {
-		super(new Sphere(resolution,radius), material, colors, x, y);
+	public Ball(float radius,int resolution, Material material, float r, float g,float b, float x, float y) {
+		super(new Sphere(resolution,radius), material, r,g,b, x, y);
 		this.radius=radius;
 	}
 	

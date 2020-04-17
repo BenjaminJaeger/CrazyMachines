@@ -36,7 +36,7 @@ public class Collision {
 			
 		//the overlap of both balls = distance - radius1 - radius2
 		//move each ball away by half of the overlap 
-		float overlap = 0.6f*(distance-object1.getRadius()-object2.getRadius());
+		float overlap = 0.5f*(distance-object1.getRadius()-object2.getRadius());
 			
 		//get the distance between each ball and divide it by the distance to get the normalized vector
 		//move along the normalized vector by half the overlap and subtract/add it from the original position
