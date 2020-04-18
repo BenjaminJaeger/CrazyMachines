@@ -14,14 +14,11 @@ public abstract class GameObject {
 	
 	protected TriangleModel[] models;
 	
-	protected CollisionContext collisionContext;
-	
-	protected static int counter;
-	protected int id;
-	
 	protected float x,y;
 	protected float rotation;
 	protected float scaleX,scaleY;
+
+	private boolean renderBounding = true;
 	
 	
 	public GameObject(String[] files,Material material, float[][] colors,float x,float y) {
@@ -30,12 +27,9 @@ public abstract class GameObject {
 		models = new TriangleModel[files.length];
 		for (int i = 0; i < models.length; i++) 
 			models[i] = new TriangleModel(files[i],material,colors[i],x,y);		
-		id=counter;
-		counter++;
 		scaleX=1; 
 		scaleX=1;
 		allObjects.add(this);
-		setCollissionContext();
 	}
 	
 	public GameObject(Primitive primitive,Material material,float[] colors, float x,float y) {
@@ -43,12 +37,9 @@ public abstract class GameObject {
 		this.y = y;
 		models = new TriangleModel[1];
 		models[0] = new TriangleModel(primitive,material,colors,x,y);		
-		id=counter;
-		counter++;
 		scaleX=1;
 		scaleX=1;
 		allObjects.add(this);
-		setCollissionContext();
 	}
 	
 	public GameObject(Primitive primitive,Material material, float r, float g,float b, float x,float y) {
@@ -56,21 +47,16 @@ public abstract class GameObject {
 		this.y = y;
 		models = new TriangleModel[1];
 		models[0] = new TriangleModel(primitive,material,r,g,b,x,y);		
-		id=counter;
-		counter++;
 		scaleX=1;
 		scaleX=1;
 		allObjects.add(this);
-		setCollissionContext();
 	}
 	
-	public abstract void setCollissionContext();
 	
 	public abstract void update();
 	
 	
-	//Getters and Setters
-	
+
 	/**
 	 * increases the current xyz position by dx,dy,dz
 	 */
@@ -158,12 +144,18 @@ public abstract class GameObject {
 			model.setScaleY(scaleY);
 	}
 	
-	public int getId() {
-		return id;
+	public abstract CollisionContext getCollisionContext();
+
+	public boolean renderBounding() {
+		return renderBounding;
 	}
 	
-	public CollisionContext getCollisionContext() {
-		return collisionContext;
+	public void renderBounding(boolean renderBounding) {
+		this.renderBounding = renderBounding;
+	}
+	
+	public float getRotation() {
+		return rotation;
 	}
 	
 }

@@ -2,17 +2,16 @@ package Objects.MovableObjects.Collisions;
 
 import Engine.Core.Models.LineModel;
 import Engine.Primitives.CircleLine;
-import Objects.GameObject;
 import Objects.Util;
 
 public class BoundingCircle  extends Bounding{
 
 	private float radius;
 
-	public BoundingCircle(GameObject object,float offset,float radius) {
-		super(object,offset);
+	public BoundingCircle(float x, float y,float offset,float radius) {
+		super(x,y,offset);
 		this.radius = radius;
-		model = new LineModel(new CircleLine(radius, 30), 0, 0, 1, object.getX(), object.getY());
+		model = new LineModel(new CircleLine(radius, 30), 0, 0, 1, x,y);
 	}
 
 	/**
@@ -21,12 +20,12 @@ public class BoundingCircle  extends Bounding{
 	public boolean checkCollision(BoundingCircle circle) {
 		// when the radii of both circles combined is smaller than the distance between
 		// both balls they collide
-		return circle.getRadius() + radius > Util.getDistance(circle.getX(), circle.getY(), object.getX(), object.getY());
+		return circle.getRadius() + radius > Util.getDistance(circle.getX(), circle.getY(), x, y);
 	}
 
 	public boolean checkCollision(BoundingRectangle rectangle) {
-		float distanceX = (float) Math.abs(object.getX() - rectangle.getX());
-		float distanceY = (float) Math.abs(object.getY() - rectangle.getY());
+		float distanceX = (float) Math.abs(x - rectangle.getX());
+		float distanceY = (float) Math.abs(y - rectangle.getY());
 
 		if (distanceX > rectangle.getWidth() / 2 + radius)
 			return false;
@@ -44,21 +43,12 @@ public class BoundingCircle  extends Bounding{
 		return cornerDistance <= radius * radius;
 	}
 
-
 	public float getRadius() {
 		return radius;
 	}
 
 	public void setRadius(float radius) {
 		this.radius = radius;
-	}
-	
-	public float getX() {
-		return object.getX();
-	}
-	
-	public float getY() {
-		return object.getY();
 	}
 
 }

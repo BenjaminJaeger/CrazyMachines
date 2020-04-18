@@ -3,9 +3,12 @@ package Objects.MovableObjects;
 import Engine.Core.Shaders.Core.Material;
 import Engine.Primitives.Primitive;
 import Objects.GameObject;
+import Objects.MovableObjects.Collisions.DynamicCollisionContext;
 
 public abstract class MoveableObject extends GameObject{
 
+	protected DynamicCollisionContext collisionContext;
+	
 	protected float velocityX,velocityY; //Geschwindigkeit
 	protected float accelerationX,accelerationY; //Beschleunigung
 	
@@ -30,7 +33,7 @@ public abstract class MoveableObject extends GameObject{
 
 	public void update() {
 		
-		collisionContext.update();
+		collisionContext.update(x,y,rotation);
 		
 		//applyForce(0, 0.5f);
 			 
@@ -120,4 +123,9 @@ public abstract class MoveableObject extends GameObject{
 	public void setMass(float mass) {
 		this.mass=mass;
 	}
+	
+	public DynamicCollisionContext getCollisionContext() {
+		return collisionContext;
+	}
+	
 }

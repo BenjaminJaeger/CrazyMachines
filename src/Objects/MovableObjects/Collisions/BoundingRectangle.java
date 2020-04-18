@@ -1,18 +1,25 @@
 package Objects.MovableObjects.Collisions;
 
-public class BoundingRectangle {
+import Engine.Core.Models.LineModel;
+import Engine.Primitives.RectangleLine;
+
+public class BoundingRectangle extends Bounding{
 	
 	private float width,height;
-	private float x,y;
-	
-	
-	public BoundingRectangle(float x,float y, float width,float height) {
-		this.x=x;
-		this.y=y;
+
+	public BoundingRectangle(float x,float y,float offset,float width,float height) {
+		super(x,y,offset);
 		this.width=width;
 		this.height=height;
+		model = new LineModel(new RectangleLine(width,height),0,1,0,x,y);
 	}
 	
+	public BoundingRectangle(float x,float y,float offset,float size) {
+		super(x,y,offset);
+		this.width=size;
+		this.height=size;
+		model = new LineModel(new RectangleLine(size),0,1,0,x,y);
+	}
 	
 	public boolean checkCollision(BoundingCircle circle) {
 		float distanceX = (float)Math.abs(circle.getX()-x);
@@ -41,28 +48,12 @@ public class BoundingRectangle {
 		return height;
 	}
 	
-	public float getX() {
-		return x;
-	}
-	
-	public float getY() {
-		return y;
-	}
-
 	public void setWidth(float width) {
 		this.width = width;
 	}
 
 	public void setHeight(float height) {
 		this.height = height;
-	}
-
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	public void setY(float y) {
-		this.y = y;
 	}
 	
 }

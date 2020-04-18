@@ -3,7 +3,7 @@ package Objects.MovableObjects.Ball;
 import Engine.Core.Math.Vector3f;
 import Engine.Core.Shaders.Core.Material;
 import Objects.MovableObjects.Collisions.BoundingCircle;
-import Objects.MovableObjects.Collisions.CollisionContext;
+import Objects.MovableObjects.Collisions.DynamicCollisionContext;
 
 public class MetallBall extends Ball{
 	
@@ -12,12 +12,7 @@ public class MetallBall extends Ball{
 
 	public MetallBall(float radius, int resolution, float r,float g,float b,float x, float y) {
 		super(radius, resolution, material, r,g,b, x, y);
-		collisionContext = new CollisionContext(this, new BoundingCircle(this,0, radius));
-	}
-
-	@Override
-	public void setCollissionContext() {
-		
+		collisionContext = new DynamicCollisionContext(this,new BoundingCircle(x, y, 0, radius));
 	}
 
 }

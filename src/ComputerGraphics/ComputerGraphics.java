@@ -132,14 +132,13 @@ public class ComputerGraphics  implements GLEventListener{
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
 		
-//		float[] colors = {(float)Math.random(),(float)Math.random(),(float)Math.random()};
-//		model1 = new MetallBall(50, 50, colors, 200, 200);
-//		model1.setVelocityX(1);
-//		//model1.setVelocityY(4);
+//		model1 = new MetallBox(30, 0, 1, 1, 200, 200);
+//		model1.setVelocityX(2);
+//		model1.setVelocityY(2);
 //		
-//		model2 = new MetallBall(50, 50, colors, 400, 200);
-//		model2.setVelocityX(-20);
-//		//model2.setVelocityY(-4);
+//		model2 = new MetallBox(100,30,30, 0, 1, 1, 400, 600);
+//		model2.setVelocityX(-2);
+//		model2.setVelocityY(-2);
 		
 		for (int i = 0; i < 10; i++) {			
 			float x = (float)Math.random()*Config.CANVAS_WIDTH;

@@ -26,6 +26,20 @@ public abstract class Box extends MoveableObject{
 		this.depth=depth;
 	}
 	
+	public Box(float size, Material material, float r,float g,float b, float x, float y) {
+		super(new Cube(size), material, r,g,b, x, y);
+		this.width=size;
+		this.height=size;
+		this.depth=size;
+	}
+	
+	public Box(float width,float height ,float depth , Material material, float r,float g,float b, float x, float y) {
+		super(new Cube(width,height,depth), material, r,g,b, x, y);
+		this.width=width;
+		this.height=height;
+		this.depth=depth;
+	}
+	
 
 	@Override
 	public void checkEdges() {		

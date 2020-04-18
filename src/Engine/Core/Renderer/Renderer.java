@@ -30,6 +30,7 @@ import Engine.Core.Models.loadToGPU;
 import Engine.Core.Shaders.Core.BasicShader;
 import Objects.GameObject;
 import Objects.MovableObjects.Collisions.BoundingCircle;
+import Objects.MovableObjects.Collisions.BoundingRectangle;
 
 /**
  * 
@@ -95,9 +96,13 @@ public class Renderer {
 	public void render(GameObject object,BasicShader shader) {
 		GL4 gl=(GL4)GLContext.getCurrentGL();
 		
-		for (BoundingCircle circle : object.getCollisionContext().getBoundingCircles()) {
-			render(circle.getModel(), circle.getShader());
+		if (object.renderBounding()) {
+			for (BoundingCircle circle : object.getCollisionContext().getBoundingCircles()) 
+				render(circle.getModel(), circle.getShader());	
+			for (BoundingRectangle rectangle : object.getCollisionContext().getBoundingRectangles()) 
+				render(rectangle.getModel(), rectangle.getShader());
 		}
+		
 		
 		for (TriangleModel model : object.getModels()) {			
 			shader.use(); //activate shader before rendering
