@@ -10,6 +10,7 @@ module jfx {
 	exports Engine.Core.Shaders.Core;
 	exports Engine.Core;
 	exports Main;
+	exports Main.Tests;
 
 	requires transitive gluegen.rt;
 	requires transitive java.desktop;

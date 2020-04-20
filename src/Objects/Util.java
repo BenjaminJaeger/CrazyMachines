@@ -10,12 +10,27 @@ public class Util {
 	}
 	
 	public static Vector2f rotate(float x,float y,float angle) {
-		float vx = (float)Math.cos(angle) * x - (float)Math.sin(angle) * y;
-		float vy = (float)Math.sin(angle) * x + (float)Math.cos(angle) * y;
+		float cos = (float)Math.cos(angle);
+		float sin = (float)Math.sin(angle);
+		float vx = cos * x - sin * y;
+		float vy = sin * x + cos * y;
 		return new Vector2f(vx, vy);
 	}
 	
+	public static Vector2f rotateArroundPoint(float cx,float cy,float angle,float rx,float ry) {
+		angle *= (float)Math.PI/(float)180;
+		
+		cx-=rx;
+		cy-=ry;
+		
+		Vector2f newP = rotate(cx, cy, angle);
+		
+		return new Vector2f(newP.x+rx, newP.y+ry);
+	}
 	
-
+	public static void copyVec2Array(Vector2f[] source,Vector2f[] dest) {
+		dest = new Vector2f[source.length];
+		for (int i = 0; i < dest.length; i++) 
+			dest[i]= new Vector2f(source[i].x, source[i].y);
+	}
 }
- 

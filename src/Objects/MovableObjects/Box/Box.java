@@ -12,6 +12,9 @@ public abstract class Box extends MoveableObject{
 	protected float depth;
 
 
+////////////////////
+////Constructors////
+////////////////////
 	public Box(float size, Material material, float[] colors, float x, float y) {
 		super(new Cube(size), material, colors, x, y);
 		this.width=size;
@@ -40,7 +43,10 @@ public abstract class Box extends MoveableObject{
 		this.depth=depth;
 	}
 	
-
+	
+///////////////
+////Methods////
+///////////////
 	@Override
 	public void checkEdges() {		
 		if(y-width<=0) {
@@ -64,7 +70,10 @@ public abstract class Box extends MoveableObject{
 		}
 	}
 
-
+	
+/////////////////////////
+////Getters & Setters////
+/////////////////////////
 	public float getWidth() {
 		return width;
 	}

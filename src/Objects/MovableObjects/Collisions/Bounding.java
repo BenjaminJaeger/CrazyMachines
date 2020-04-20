@@ -3,20 +3,28 @@ package Objects.MovableObjects.Collisions;
 import Engine.Core.Models.LineModel;
 import Engine.Core.Shaders.Core.BasicShader;
 
-public class Bounding {
+public abstract class Bounding {
 
 	protected float offset;
 	protected float x,y;
+	protected float rotation;
 	
 	protected LineModel model;
 	protected static BasicShader shader = new BasicShader("Line");
 	
+////////////////////
+////Constructors////
+////////////////////
 	public Bounding (float offset,float x, float y) {
 		this.offset=offset;
 		this.x=x;
 		this.y=y;
 	}
 	
+	
+/////////////////////////
+////Getters & Setters////
+/////////////////////////
 	public LineModel getModel() {
 		return model;
 	}
@@ -29,21 +37,10 @@ public class Bounding {
 		return offset;
 	}
 
-	public void setOffset(float offset) {
-		this.offset = offset;
-	}
-
 	public float getX() {
 		return x;
 	}
 
-	public void setXY(float x,float y) {
-		this.x = x;
-		model.setX(x);
-		this.y=y;
-		model.setY(y);
-	}
-	
 	public void setX(float x) {
 		this.x = x;
 		model.setX(x);
@@ -56,6 +53,15 @@ public class Bounding {
 	public void setY(float y) {
 		this.y = y;
 		model.setY(y);
+	}
+
+	public float getRotation() {
+		return rotation;
+	}
+
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
+		model.setRotationZ(rotation);
 	}
 	
 }

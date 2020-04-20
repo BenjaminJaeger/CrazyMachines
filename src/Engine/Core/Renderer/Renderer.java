@@ -6,7 +6,7 @@ import static com.jogamp.opengl.GL.GL_CULL_FACE;
 import static com.jogamp.opengl.GL.GL_DEPTH_BUFFER_BIT;
 import static com.jogamp.opengl.GL.GL_DEPTH_TEST;
 import static com.jogamp.opengl.GL.GL_FRONT_AND_BACK;
-import static com.jogamp.opengl.GL.GL_LINE_STRIP;
+import static com.jogamp.opengl.GL.GL_LINE_LOOP;
 import static com.jogamp.opengl.GL.GL_ONE_MINUS_SRC_ALPHA;
 import static com.jogamp.opengl.GL.GL_SRC_ALPHA;
 import static com.jogamp.opengl.GL.GL_TRIANGLES;
@@ -30,7 +30,7 @@ import Engine.Core.Models.loadToGPU;
 import Engine.Core.Shaders.Core.BasicShader;
 import Objects.GameObject;
 import Objects.MovableObjects.Collisions.BoundingCircle;
-import Objects.MovableObjects.Collisions.BoundingRectangle;
+import Objects.MovableObjects.Collisions.BoundingPolygon;
 
 /**
  * 
@@ -57,6 +57,8 @@ public class Renderer {
 		gl.glEnable(GL_DEPTH_TEST); 
 		gl.glEnable(GL_BLEND);
 		gl.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
+		gl.glLineWidth(5);
 	}
 	
 	/**
@@ -71,6 +73,21 @@ public class Renderer {
 		gl.glClear(GL_DEPTH_BUFFER_BIT);//Clears the depth buffer
 		wireframeMode(); //checks if wireframe mode is enabled
 		backFacCulling(); //checks if backfaceculling is enabled
+	}
+	
+
+	@SuppressWarnings("exports")
+	public void render(GameObject object,BasicShader shader) {
+		if (object.renderBounding()) {
+			for (BoundingCircle circle : object.getCollisionContext().getBoundingCircles()) 
+				render(circle.getModel(), circle.getShader());	
+			for (BoundingPolygon polygon : object.getCollisionContext().getBoundingPolygons()) 
+				render(polygon.getModel(), polygon.getShader());
+		}
+		
+		if(object.renderModel())
+			for (TriangleModel model : object.getModels()) 
+				render(model,shader);
 	}
 	
 	/**
@@ -92,47 +109,36 @@ public class Renderer {
 	 * @param shader
 	 * 			-Shader of the model
 	 */	
-	@SuppressWarnings("exports")
-	public void render(GameObject object,BasicShader shader) {
+	public void render(TriangleModel model,BasicShader shader) {
 		GL4 gl=(GL4)GLContext.getCurrentGL();
 		
-		if (object.renderBounding()) {
-			for (BoundingCircle circle : object.getCollisionContext().getBoundingCircles()) 
-				render(circle.getModel(), circle.getShader());	
-			for (BoundingRectangle rectangle : object.getCollisionContext().getBoundingRectangles()) 
-				render(rectangle.getModel(), rectangle.getShader());
+		shader.use(); //activate shader before rendering
+		shader.uploadMaterial(model.getMaterial());		
+		shader.uploadAmbientLight(AmbientLight.getAmbientLight());
+		shader.uploadPointLights(PointLight.getPointLights());
+		shader.uploadDirectionalLight(DirectionalLight.getDirectionalLights());
+			
+		
+		if (model.getMatrixUpdate()) {
+			model.getModelMatrix().changeToModelMatrix(model);
+			model.setMatrixUpdate(false);
 		}
+		shader.uploadModelMatrix(model.getModelMatrix());
 		
 		
-		for (TriangleModel model : object.getModels()) {			
-			shader.use(); //activate shader before rendering
-			shader.uploadMaterial(model.getMaterial());		
-			shader.uploadAmbientLight(AmbientLight.getAmbientLight());
-			shader.uploadPointLights(PointLight.getPointLights());
-			shader.uploadDirectionalLight(DirectionalLight.getDirectionalLights());
+		if (camera.getMatrixUpdate()) {
+			camera.getViewMatrix().changeToViewMatrix(camera);
+			camera.setMatrixUpdate(false);
+		}		
+		shader.uploadViewMatrix(camera.getViewMatrix());
+			
+		Matrix4f.changeToModelViewProjectionMatrix(camera.getViewMatrix(), model.getModelMatrix(),projectionMatrix, modelViewProjectionMatrix);		
+		shader.uploadModelViewProjectionMatrix(modelViewProjectionMatrix);
 				
-			
-			if (model.getMatrixUpdate()) {
-				model.getModelMatrix().changeToModelMatrix(model);
-				model.setMatrixUpdate(false);
-			}
-			shader.uploadModelMatrix(model.getModelMatrix());
-			
-			
-			if (camera.getMatrixUpdate()) {
-				camera.getViewMatrix().changeToViewMatrix(camera);
-				camera.setMatrixUpdate(false);
-			}		
-			shader.uploadViewMatrix(camera.getViewMatrix());
-				
-			Matrix4f.changeToModelViewProjectionMatrix(camera.getViewMatrix(), model.getModelMatrix(),projectionMatrix, modelViewProjectionMatrix);		
-			shader.uploadModelViewProjectionMatrix(modelViewProjectionMatrix);
-					
-			shader.uploadProjectionMatrix(projectionMatrix);
-			
-			gl.glBindVertexArray(model.getMesh().getVaoID());//activates the specific VAO
-			gl.glDrawElements(GL_TRIANGLES, model.getMesh().getIndexCount(), GL_UNSIGNED_INT, 0); //draws with the usage of indices 	
-		}
+		shader.uploadProjectionMatrix(projectionMatrix);
+		
+		gl.glBindVertexArray(model.getMesh().getVaoID());//activates the specific VAO
+		gl.glDrawElements(GL_TRIANGLES, model.getMesh().getIndexCount(), GL_UNSIGNED_INT, 0); //draws with the usage of indices 	
 	}
 	
 	
@@ -245,7 +251,7 @@ public class Renderer {
 		shader.uploadProjectionMatrix(projectionMatrix);
 			
 		gl.glBindVertexArray(model.getMesh().getVaoID());//activates the specific VAO
-		gl.glDrawArrays(GL_LINE_STRIP, 0,model.getMesh().getVertices().length/3);
+		gl.glDrawArrays(GL_LINE_LOOP, 0,model.getMesh().getVertices().length/3);
 	}
 	
 	/**

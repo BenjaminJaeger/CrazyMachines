@@ -1,59 +1,54 @@
 package Objects.MovableObjects.Collisions;
 
-import Engine.Core.Models.LineModel;
-import Engine.Primitives.RectangleLine;
+import Engine.Core.Math.Vector2f;
 
-public class BoundingRectangle extends Bounding{
+public class BoundingRectangle extends BoundingPolygon{
 	
 	private float width,height;
 
+////////////////////
+////Constructors////
+////////////////////
 	public BoundingRectangle(float x,float y,float offset,float width,float height) {
-		super(x,y,offset);
+		super(offset, x, y,new Vector2f[] {new Vector2f(width/2, height/2),new Vector2f(width/2, -height/2),new Vector2f(-width/2, -height/2),new Vector2f(-width/2, height/2)});
 		this.width=width;
-		this.height=height;
-		model = new LineModel(new RectangleLine(width,height),0,1,0,x,y);
+		this.height=height;	
 	}
 	
 	public BoundingRectangle(float x,float y,float offset,float size) {
-		super(x,y,offset);
+		super(offset, x, y,new Vector2f[] {new Vector2f(size/2, size/2),new Vector2f(size/2, -size/2),new Vector2f(-size/2, -size/2),new Vector2f(-size/2, size/2)});
 		this.width=size;
 		this.height=size;
-		model = new LineModel(new RectangleLine(size),0,1,0,x,y);
 	}
 	
-	public boolean checkCollision(BoundingCircle circle) {
-		float distanceX = (float)Math.abs(circle.getX()-x);
-		float distanceY = (float)Math.abs(circle.getY()-y);
-		
-		if(distanceX > width/2 + circle.getRadius())		return false;	
-		if(distanceY > height/2 + circle.getRadius()) 	return false;
-		
-		if(distanceX <= width/2) 	return true;
-		if(distanceY <= height/2) 	return true;
-			
-		float cornerDistance = (float)Math.pow((distanceX-height/2),2) + (float)Math.pow((distanceY-height/2),2);
-		
-		return cornerDistance <= circle.getRadius()*circle.getRadius();
-	} 
 	
-	public boolean checkCollision(BoundingRectangle rectangle) {
-		return false;
-	} 
-
+/////////////////
+////Collision////
+/////////////////
+//	public boolean checkCollision(BoundingRectangle rectangle) {	
+//		if (rotation == rectangle.getRotation()) {
+//			Vector2f r1 = Util.rotate(x, y, rotation*(float)Math.PI/(float)180);
+//			Vector2f r2 = Util.rotate(rectangle.getX(), rectangle.getY(), rectangle.getRotation()*(float)Math.PI/(float)180);
+//		
+//			return ( r2.x 	+ 	rectangle.getWidth()/2 		> 	 r1.x	-	width/2 					&&
+//					 r2.y 	+ 	rectangle.getHeight()/2 	>	 r1.y	-	height/2					&&
+//					 r1.x	+ 	width/2 					>	 r2.x 	-	rectangle.getWidth()/2 		&&
+//					 r1.y	+ 	height/2 					>	 r2.y	-	rectangle.getHeight()/2);
+//		}
+//		
+//		return false;
+//	} 
+	
+	
+/////////////////////////
+////Getters & Setters////
+/////////////////////////
 	public float getWidth() {
 		return width;
 	}
 	
 	public float getHeight() {
 		return height;
-	}
-	
-	public void setWidth(float width) {
-		this.width = width;
-	}
-
-	public void setHeight(float height) {
-		this.height = height;
 	}
 	
 }

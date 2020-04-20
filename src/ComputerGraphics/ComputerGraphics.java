@@ -18,14 +18,14 @@ import Engine.Core.Lights.AmbientLight;
 import Engine.Core.Lights.DirectionalLight;
 import Engine.Core.Math.Matrix4f;
 import Engine.Core.Math.Vector3f;
-import Engine.Core.Models.InstancedModel;
+import Engine.Core.Models.LineModel;
 import Engine.Core.Renderer.Renderer;
 import Engine.Core.Shaders.Core.BasicShader;
 import Engine.Core.Shaders.Core.Material;
-import Objects.GameObject;
+import Engine.Primitives.CircleLine;
 import Objects.MovableObjects.MoveableObject;
-import Objects.MovableObjects.Ball.Ball;
 import Objects.MovableObjects.Ball.MetallBall;
+import Objects.MovableObjects.Box.MetallBox;
 
 public class ComputerGraphics  implements GLEventListener{
 
@@ -40,11 +40,8 @@ public class ComputerGraphics  implements GLEventListener{
 	private MoveableObject model1;
 	private MoveableObject model2;
 	
-	private BasicShader instancedShader;
-	private InstancedModel instancedModel;
-
-	private ArrayList<MoveableObject> test = new ArrayList<MoveableObject>();
-	private ArrayList<Ball> balls = new ArrayList<Ball>();
+	private ArrayList<LineModel> test = new ArrayList<LineModel>();
+	private ArrayList<MoveableObject> allObjects = new ArrayList<MoveableObject>();
 	
 	private float t;
 	private float tinc = 0.01f;
@@ -70,9 +67,7 @@ public class ComputerGraphics  implements GLEventListener{
 
 
 	@Override
-	public void display(GLAutoDrawable arg0) {
-		FPSCounter.calculateFPS();
-		
+	public void display(GLAutoDrawable arg0) {	
 		renderer.clear();	
 		
 		Config.BACKGROUND_COLOR = new Vector3f(t,0.5f,0.4f);
@@ -84,18 +79,16 @@ public class ComputerGraphics  implements GLEventListener{
 		t+=tinc;
 		
 //		model1.update();
-//		renderer.render(model1, shader); 
 //		model2.update();
+//		renderer.render(model1, shader); 
 //		renderer.render(model2, shader); 
-		
-		for (MoveableObject ball : balls) {
-			ball.update();
-			renderer.render(ball,shader);	
+
+		for (MoveableObject object : allObjects) {
+			object.update();
+			renderer.render(object,shader);	
 		}
 		
-//		renderer.render(instancedModel, instancedShader);
-		
-		for (GameObject object : test) 
+		for (LineModel object : test) 
 			renderer.render(object,shader);			
 	}
 
@@ -132,73 +125,64 @@ public class ComputerGraphics  implements GLEventListener{
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
 		
-//		model1 = new MetallBox(30, 0, 1, 1, 200, 200);
-//		model1.setVelocityX(2);
-//		model1.setVelocityY(2);
-//		
-//		model2 = new MetallBox(100,30,30, 0, 1, 1, 400, 600);
-//		model2.setVelocityX(-2);
-//		model2.setVelocityY(-2);
+		
+		
+//		model1 = new MetallBox(200, 0, 1, 1, 400, 400);	
+//		model2 = new MetallBall(100, 30, 0, 1, 1, 300, 300);
 		
 		for (int i = 0; i < 10; i++) {			
 			float x = (float)Math.random()*Config.CANVAS_WIDTH;
 			float y = (float)Math.random()*Config.CANVAS_HEIGHT;
 			float mass = (float)Math.random()+0.5f;
 			float radius = mass*50;
-			float velocityX = (float)Math.random()*2;
-			float velocityY = (float)Math.random()*2;
+			float velocityX = (float)Math.random()*4;
+			float velocityY = (float)Math.random()*4;
 			
-			Ball ball = new MetallBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
+			MoveableObject ball = new MetallBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
 			ball.setMass(mass);
 			ball.setAccelerationX(velocityX);
 			ball.setAccelerationY(velocityY);
-			balls.add(ball);		
+			allObjects.add(ball);		
+			
+			x = (float)Math.random()*Config.CANVAS_WIDTH;
+			y = (float)Math.random()*Config.CANVAS_HEIGHT;
+			mass = (float)Math.random()+0.5f;
+			float size = mass*50;
+			velocityX = (float)Math.random()*4;
+			velocityY = (float)Math.random()*4;
+			float rotation =  (float)Math.random()*360;
+			
+			MoveableObject box = new MetallBox(size, (float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
+			box.renderBounding(true);
+			box.setMass(mass);
+			box.setAccelerationX(velocityX);
+			box.setAccelerationY(velocityY);
+			//box.setRotation(rotation);
+			allObjects.add(box);	
 		}
 		
-		
-		//instanced rendering
-//		instancedShader = new BasicShader("Instanced");
-//		
-//		int instances = 10;
-//		float[] colors = new float[instances*3];
-//		for (int i = 0; i < instances*3; i+=3) {
-//			colors[i]=(float)Math.random();
-//			colors[i+1]=(float)Math.random();
-//			colors[i+2]=(float)Math.random();
-//		}
-//		instancedModel = new InstancedModel(new Sphere(30,20), instances, basicMaterial, colors);
-//				
-//		//random position & scale
-//		for (int i = 0; i < instancedModel.getInstances(); i++) {
-//			instancedModel.setScale(i, (float)Math.random());
-//			instancedModel.setX(i , (float)Math.random()*Config.CANVAS_WIDTH);
-//			instancedModel.setY(i ,(float)Math.random()*Config.CANVAS_HEIGHT);
-//		}
-		
-	
-		
-		//respawn balls
+			
 		canvas.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {}
 			public void keyReleased(KeyEvent e) {}
 			
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-					for (Ball ball : balls) {
+					for (MoveableObject object : allObjects) {
 						float x = (float)Math.random()*Config.CANVAS_WIDTH;
 						float y = (float)Math.random()*Config.CANVAS_HEIGHT;
 						float velocityX = (float)Math.random()*2;
 						float velocityY = (float)Math.random()*2;
-						ball.setY(y);
-						ball.setX(x);
-						ball.setAccelerationX(velocityX);
-						ball.setAccelerationY(velocityY);
+						object.setY(y);
+						object.setX(x);
+						object.setAccelerationX(velocityX);
+						object.setAccelerationY(velocityY);
 					}
 				}
 			}
 		});
 		
-		test.add(new MetallBall(0,0,0,0,0,0,0));
+		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
 	}
 	
 

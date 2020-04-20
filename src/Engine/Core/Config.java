@@ -21,4 +21,6 @@ public class Config {
 	public static int CANVAS_WIDTH = 1920;
 	public static int CANVAS_HEIGHT = 1080;
 	public static int FRAME_RATE = 60;
+	
+	public static float BOUNDING_DISTANCE = 0.2f;
 }

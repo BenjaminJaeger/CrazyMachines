@@ -22,11 +22,10 @@ public class RectangleLine extends Primitive{
 	
 	protected void constructMesh() {
 		float[] vertices = {
-			width/2,height/2,0.05f,	
-			-width/2,height/2,0.05f,
-			-width/2,-height/2,0.05f,
-			width/2,-height/2,0.05f,
-			width/2,height/2,0.05f,	
+			width/2,height/2,Config.BOUNDING_DISTANCE,	
+			-width/2,height/2,Config.BOUNDING_DISTANCE,
+			-width/2,-height/2,Config.BOUNDING_DISTANCE,
+			width/2,-height/2,Config.BOUNDING_DISTANCE,
 		};		
 		this.vertices=vertices;
 	}

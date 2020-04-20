@@ -8,13 +8,17 @@ public class CollisionContext {
 	protected int id;
 	
 	protected BoundingCircle[] boundingCirlces;
-	protected BoundingRectangle[] boundingRectangles;
+	protected BoundingPolygon[] boundingPolygons;
 	
 	protected GameObject gameObject;
+
 	
-	public CollisionContext(GameObject gameObject,BoundingCircle[] circles, BoundingRectangle[] rectangles) {
+////////////////////
+////Constructors////
+////////////////////
+	public CollisionContext(GameObject gameObject,BoundingCircle[] circles, BoundingPolygon[] boundingPolygons) {
 		this.boundingCirlces= circles;
-		this.boundingRectangles = rectangles;
+		this.boundingPolygons = boundingPolygons;
 		id=counter;
 		counter++;
 		this.gameObject=gameObject;
@@ -22,7 +26,7 @@ public class CollisionContext {
 	
 	public CollisionContext(GameObject gameObject,BoundingCircle[] boundingCircles) {
 		this.boundingCirlces= boundingCircles;
-		this.boundingRectangles = new BoundingRectangle[0];
+		this.boundingPolygons = new BoundingRectangle[0];
 		id=counter;
 		counter++;
 		this.gameObject=gameObject;
@@ -31,35 +35,39 @@ public class CollisionContext {
 	public CollisionContext(GameObject gameObject,BoundingCircle boundingCircle) {
 		this.boundingCirlces = new BoundingCircle[1];
 		this.boundingCirlces[0]=boundingCircle;
-		this.boundingRectangles = new BoundingRectangle[0];
+		this.boundingPolygons = new BoundingRectangle[0];
 		id=counter;
 		counter++;
 		this.gameObject=gameObject;
 	}
 	
-	public CollisionContext(GameObject gameObject,BoundingRectangle[] boundingRectangles) {
-		this.boundingRectangles = boundingRectangles;
+	public CollisionContext(GameObject gameObject,BoundingPolygon[] boundingPolygons) {
+		this.boundingPolygons = boundingPolygons;
 		this.boundingCirlces = new BoundingCircle[0];
 		id=counter;
 		counter++;
 		this.gameObject=gameObject;
 	}
 	
-	public CollisionContext(GameObject gameObject,BoundingRectangle boundingRectangle) {
-		this.boundingRectangles = new BoundingRectangle[1];
-		this.boundingRectangles[0]=boundingRectangle;
+	public CollisionContext(GameObject gameObject,BoundingPolygon boundingPolygon) {
+		this.boundingPolygons = new BoundingRectangle[1];
+		this.boundingPolygons[0]=boundingPolygon;
 		this.boundingCirlces = new BoundingCircle[0];
 		id=counter;
 		counter++;
 		this.gameObject=gameObject;
 	}
 		
+	
+/////////////////////////
+////Getters & Setters////
+/////////////////////////
 	public BoundingCircle[] getBoundingCircles() {
 		return boundingCirlces;
 	}
 	
-	public BoundingRectangle[] getBoundingRectangles() {
-		return boundingRectangles;
+	public BoundingPolygon[] getBoundingPolygons() {
+		return boundingPolygons;
 	}
 	
 	public int getID() {
@@ -70,5 +78,28 @@ public class CollisionContext {
 		return gameObject;
 	}
 	
+	public void setX(float x) {
+		for (BoundingCircle circle : boundingCirlces) 
+			circle.setX(x);
+	
+		for (BoundingPolygon polygon : boundingPolygons) 
+			polygon.setX(x);	
+	}
+	
+	public void setY(float y) {
+		for (BoundingCircle circle : boundingCirlces) 
+			circle.setY(y);
+	
+		for (BoundingPolygon polygon : boundingPolygons) 
+			polygon.setY(y);	
+	}
+	
+	public void setRotation(float rotation) {
+		for (BoundingCircle circle : boundingCirlces) 
+			circle.setRotation(rotation);
+	
+		for (BoundingPolygon polygon : boundingPolygons) 
+			polygon.setRotation(rotation);
+	}
 	
 }

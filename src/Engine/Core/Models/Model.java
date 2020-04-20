@@ -83,10 +83,11 @@ public abstract class Model {
 	 * increases the current xyz position by dx,dy,dz
 	 */
 	public void increasePosition(float dx,float dy,float dz) {
-		this.x+=dx;
-		this.y+=dy;
-		this.z+=dz;	
-		updateMatrix=true;
+		if (dx!=0) this.x+=dx;
+		if (dy!=0) this.y+=dy;
+		if (dz!=0) this.z+=dz;	
+		if (dx!=0 && dy!=0 && dz!=0) 
+			updateMatrix=true;
 	}
 	
 	/**
@@ -94,10 +95,11 @@ public abstract class Model {
 	 * rotation in angle
 	 */
 	public void increaseRotation(float dx,float dy,float dz) {
-		this.rotationX+=dx;
-		this.rotationY+=dy;
-		this.rotationZ+=dz;
-		updateMatrix=true;
+		if (dx!=0) 	this.rotationX+=dx;
+		if (dy!=0) this.rotationY+=dy;
+		if (dz!=0) this.rotationZ+=dz;
+		if (dx!=0 && dy!=0 && dz!=0) 
+			updateMatrix=true;
 	}
 	
 	public Mesh getMesh() {
