@@ -1,9 +1,9 @@
 package Objects.MovableObjects.Box;
 
-import Engine.Core.Config;
-import Engine.Core.Shaders.Core.Material;
-import Engine.Primitives.Cube;
 import Objects.MovableObjects.MoveableObject;
+import RenderEngine.Core.Config;
+import RenderEngine.Core.Shaders.Core.Material;
+import RenderEngine.Primitives.Cube;
 
 public abstract class Box extends MoveableObject{
 	

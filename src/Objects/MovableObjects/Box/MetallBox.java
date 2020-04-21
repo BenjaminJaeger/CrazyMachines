@@ -1,9 +1,9 @@
 package Objects.MovableObjects.Box;
 
-import Engine.Core.Math.Vector3f;
-import Engine.Core.Shaders.Core.Material;
-import Objects.MovableObjects.Collisions.BoundingRectangle;
-import Objects.MovableObjects.Collisions.DynamicCollisionContext;
+import Collisions.BoundingRectangle;
+import Collisions.DynamicCollisionContext;
+import RenderEngine.Core.Math.Vector3f;
+import RenderEngine.Core.Shaders.Core.Material;
 
 public class MetallBox extends Box{
 

@@ -12,20 +12,19 @@ import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
-import Engine.Core.Config;
-import Engine.Core.Camera.Camera;
-import Engine.Core.Lights.AmbientLight;
-import Engine.Core.Lights.DirectionalLight;
-import Engine.Core.Math.Matrix4f;
-import Engine.Core.Math.Vector3f;
-import Engine.Core.Models.LineModel;
-import Engine.Core.Renderer.Renderer;
-import Engine.Core.Shaders.Core.BasicShader;
-import Engine.Core.Shaders.Core.Material;
-import Engine.Primitives.CircleLine;
 import Objects.MovableObjects.MoveableObject;
 import Objects.MovableObjects.Ball.MetallBall;
 import Objects.MovableObjects.Box.MetallBox;
+import RenderEngine.Core.Config;
+import RenderEngine.Core.Camera.Camera;
+import RenderEngine.Core.Lights.AmbientLight;
+import RenderEngine.Core.Lights.DirectionalLight;
+import RenderEngine.Core.Math.Vector3f;
+import RenderEngine.Core.Models.LineModel;
+import RenderEngine.Core.Renderer.Renderer;
+import RenderEngine.Core.Shaders.Core.BasicShader;
+import RenderEngine.Core.Shaders.Core.Material;
+import RenderEngine.Primitives.CircleLine;
 
 public class ComputerGraphics  implements GLEventListener{
 
@@ -35,7 +34,6 @@ public class ComputerGraphics  implements GLEventListener{
 	private Renderer renderer;
 	private BasicShader shader;
 	private Camera camera;
-	private Matrix4f projectionMatrix;
 	
 	private MoveableObject model1;
 	private MoveableObject model2;
@@ -105,14 +103,10 @@ public class ComputerGraphics  implements GLEventListener{
 		Config.CANVAS_HEIGHT = canvas.getHeight();
 		Config.CANVAS_WIDTH = canvas.getWidth();
 		
-		projectionMatrix=new Matrix4f();
-		
-		projectionMatrix.changeToPerspecitveMatrix(Config.FIELD_OF_VIEW, Config.NEAR_PLANE, Config.FAR_PLANE,canvas.getHeight(),canvas.getWidth());
-		
 		camera= new Camera(canvas);
 		camera.setZ(1f);
 		
-		renderer = new Renderer(camera,projectionMatrix);	
+		renderer = new Renderer(camera);	
 		
 		shader=new BasicShader("PhongColor");
 	
@@ -130,26 +124,27 @@ public class ComputerGraphics  implements GLEventListener{
 //		model1 = new MetallBox(200, 0, 1, 1, 400, 400);	
 //		model2 = new MetallBall(100, 30, 0, 1, 1, 300, 300);
 		
-		for (int i = 0; i < 10; i++) {			
+		for (int i = 0; i < 5; i++) {			
 			float x = (float)Math.random()*Config.CANVAS_WIDTH;
 			float y = (float)Math.random()*Config.CANVAS_HEIGHT;
 			float mass = (float)Math.random()+0.5f;
 			float radius = mass*50;
-			float velocityX = (float)Math.random()*4;
-			float velocityY = (float)Math.random()*4;
+			float velocityX = (float)Math.random()*2;
+			float velocityY = (float)Math.random()*2;
 			
 			MoveableObject ball = new MetallBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
 			ball.setMass(mass);
 			ball.setAccelerationX(velocityX);
 			ball.setAccelerationY(velocityY);
+			ball.renderBounding(true);
 			allObjects.add(ball);		
 			
 			x = (float)Math.random()*Config.CANVAS_WIDTH;
 			y = (float)Math.random()*Config.CANVAS_HEIGHT;
 			mass = (float)Math.random()+0.5f;
 			float size = mass*50;
-			velocityX = (float)Math.random()*4;
-			velocityY = (float)Math.random()*4;
+			velocityX = (float)Math.random()*2;
+			velocityY = (float)Math.random()*2;
 			float rotation =  (float)Math.random()*360;
 			
 			MoveableObject box = new MetallBox(size, (float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
@@ -157,7 +152,7 @@ public class ComputerGraphics  implements GLEventListener{
 			box.setMass(mass);
 			box.setAccelerationX(velocityX);
 			box.setAccelerationY(velocityY);
-			//box.setRotation(rotation);
+			box.setRotation(rotation);
 			allObjects.add(box);	
 		}
 		
@@ -192,9 +187,7 @@ public class ComputerGraphics  implements GLEventListener{
 		gl.glViewport(0, 0, width, height);
 		Config.CANVAS_HEIGHT=height;
 		Config.CANVAS_WIDTH=width;
-		
-		renderer.getProjectionMatrix().changeToPerspecitveMatrix(Config.FIELD_OF_VIEW, Config.NEAR_PLANE, Config.FAR_PLANE,height,width);
-		canvas.setSize(width, height);	
+		renderer.updateProjectionMatrix();
 	}
 	
 }

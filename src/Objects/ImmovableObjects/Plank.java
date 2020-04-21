@@ -1,10 +1,10 @@
 package Objects.ImmovableObjects;
 
-import Engine.Core.Math.Vector3f;
-import Engine.Core.Shaders.Core.Material;
-import Engine.Primitives.Cube;
-import Objects.MovableObjects.Collisions.BoundingRectangle;
-import Objects.MovableObjects.Collisions.CollisionContext;
+import Collisions.BoundingRectangle;
+import Collisions.CollisionContext;
+import RenderEngine.Core.Math.Vector3f;
+import RenderEngine.Core.Shaders.Core.Material;
+import RenderEngine.Primitives.Cube;
 
 public class Plank extends StaticObject{
 

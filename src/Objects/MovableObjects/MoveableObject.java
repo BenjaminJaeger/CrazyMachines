@@ -1,9 +1,9 @@
 package Objects.MovableObjects;
 
-import Engine.Core.Shaders.Core.Material;
-import Engine.Primitives.Primitive;
+import Collisions.DynamicCollisionContext;
 import Objects.GameObject;
-import Objects.MovableObjects.Collisions.DynamicCollisionContext;
+import RenderEngine.Core.Shaders.Core.Material;
+import RenderEngine.Primitives.Primitive;
 
 public abstract class MoveableObject extends GameObject{
 
@@ -53,7 +53,7 @@ public abstract class MoveableObject extends GameObject{
 //			velocityY=0;
 			
 		increasePosition(velocityX, velocityY);
-		//increaseRotation(velocityX);
+		increaseRotation(velocityX);
 		resetAcceleration();
 			
 		((DynamicCollisionContext) collisionContext).checkCollisions();

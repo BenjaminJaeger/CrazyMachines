@@ -17,20 +17,19 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
-import Engine.Core.Config;
-import Engine.Core.Camera.Camera;
-import Engine.Core.Lights.AmbientLight;
-import Engine.Core.Lights.DirectionalLight;
-import Engine.Core.Math.Matrix4f;
-import Engine.Core.Math.Vector3f;
-import Engine.Core.Models.LineModel;
-import Engine.Core.Renderer.Renderer;
-import Engine.Core.Shaders.Core.BasicShader;
-import Engine.Core.Shaders.Core.Material;
-import Engine.Primitives.CircleLine;
 import Objects.MovableObjects.MoveableObject;
 import Objects.MovableObjects.PolygonTest;
 import Objects.MovableObjects.Box.MetallBox;
+import RenderEngine.Core.Config;
+import RenderEngine.Core.Camera.Camera;
+import RenderEngine.Core.Lights.AmbientLight;
+import RenderEngine.Core.Lights.DirectionalLight;
+import RenderEngine.Core.Math.Vector3f;
+import RenderEngine.Core.Models.LineModel;
+import RenderEngine.Core.Renderer.Renderer;
+import RenderEngine.Core.Shaders.Core.BasicShader;
+import RenderEngine.Core.Shaders.Core.Material;
+import RenderEngine.Primitives.CircleLine;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Scene;
@@ -44,8 +43,7 @@ public class TestingPolygonPolygonCollision extends Application implements GLEve
 	private Renderer renderer;
 	private BasicShader shader;
 	private Camera camera;
-	private Matrix4f projectionMatrix;
-	
+
 	private MoveableObject model;
 	private MoveableObject model2;
 	private ArrayList<MoveableObject> allRectangles = new ArrayList<MoveableObject>();
@@ -64,20 +62,19 @@ public class TestingPolygonPolygonCollision extends Application implements GLEve
 		primaryStage.setScene(new Scene(root, 800, 800));
 		primaryStage.show();	
 		
+		
+		
+		//JFX Code für Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
-		canvas = new GLJPanel(capabilities);
-	    
+		canvas = new GLJPanel(capabilities);    
 		SwingNode swingNode = new SwingNode();
-		 
-		root.getChildren().add(swingNode);
+		 root.getChildren().add(swingNode);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 		    	swingNode.setContent(canvas);	
 		    }
-		});
-		
-		canvas.addGLEventListener(this);
-			
+		});	
+		canvas.addGLEventListener(this);		
 		animator = new FPSAnimator(canvas, 60);
 	  	animator.start();
 	}
@@ -114,14 +111,10 @@ public class TestingPolygonPolygonCollision extends Application implements GLEve
 		Config.CANVAS_HEIGHT = canvas.getHeight();
 		Config.CANVAS_WIDTH = canvas.getWidth();
 		
-		projectionMatrix=new Matrix4f();
-		
-		projectionMatrix.changeToPerspecitveMatrix(Config.FIELD_OF_VIEW, Config.NEAR_PLANE, Config.FAR_PLANE,canvas.getHeight(),canvas.getWidth());
-		
 		camera= new Camera(canvas);
 		camera.setZ(1f);
 		
-		renderer = new Renderer(camera,projectionMatrix);	
+		renderer = new Renderer(camera);	
 		
 		shader=new BasicShader("PhongColor");
 	
@@ -191,9 +184,7 @@ public class TestingPolygonPolygonCollision extends Application implements GLEve
 		gl.glViewport(0, 0, width, height);
 		Config.CANVAS_HEIGHT=height;
 		Config.CANVAS_WIDTH=width;
-		
-		renderer.getProjectionMatrix().changeToPerspecitveMatrix(Config.FIELD_OF_VIEW, Config.NEAR_PLANE, Config.FAR_PLANE,height,width);
-		canvas.setSize(width, height);	
+		renderer.updateProjectionMatrix();
 	}
 
 }

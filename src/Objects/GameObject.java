@@ -2,11 +2,11 @@ package Objects;
 
 import java.util.ArrayList;
 
-import Engine.Core.Models.Model;
-import Engine.Core.Models.TriangleModel;
-import Engine.Core.Shaders.Core.Material;
-import Engine.Primitives.Primitive;
-import Objects.MovableObjects.Collisions.CollisionContext;
+import Collisions.CollisionContext;
+import RenderEngine.Core.Models.Model;
+import RenderEngine.Core.Models.TriangleModel;
+import RenderEngine.Core.Shaders.Core.Material;
+import RenderEngine.Primitives.Primitive;
 
 public abstract class GameObject {
 

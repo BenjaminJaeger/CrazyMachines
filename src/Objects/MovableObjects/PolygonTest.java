@@ -1,11 +1,11 @@
 package Objects.MovableObjects;
 
-import Engine.Core.Math.Vector2f;
-import Engine.Core.Math.Vector3f;
-import Engine.Core.Shaders.Core.Material;
-import Engine.Primitives.Sphere;
-import Objects.MovableObjects.Collisions.BoundingPolygon;
-import Objects.MovableObjects.Collisions.DynamicCollisionContext;
+import Collisions.BoundingPolygon;
+import Collisions.DynamicCollisionContext;
+import RenderEngine.Core.Math.Vector2f;
+import RenderEngine.Core.Math.Vector3f;
+import RenderEngine.Core.Shaders.Core.Material;
+import RenderEngine.Primitives.Sphere;
 
 public class PolygonTest extends MoveableObject{
 

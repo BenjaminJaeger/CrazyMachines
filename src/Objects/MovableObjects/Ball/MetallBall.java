@@ -1,7 +1,7 @@
 package Objects.MovableObjects.Ball;
 
-import Engine.Core.Math.Vector3f;
-import Engine.Core.Shaders.Core.Material;
+import RenderEngine.Core.Math.Vector3f;
+import RenderEngine.Core.Shaders.Core.Material;
 
 public class MetallBall extends Ball{
 	

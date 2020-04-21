@@ -1,12 +1,12 @@
 package Objects.MovableObjects.Ball;
 
 
-import Engine.Core.Config;
-import Engine.Core.Shaders.Core.Material;
-import Engine.Primitives.Sphere;
+import Collisions.BoundingCircle;
+import Collisions.DynamicCollisionContext;
 import Objects.MovableObjects.MoveableObject;
-import Objects.MovableObjects.Collisions.BoundingCircle;
-import Objects.MovableObjects.Collisions.DynamicCollisionContext;
+import RenderEngine.Core.Config;
+import RenderEngine.Core.Shaders.Core.Material;
+import RenderEngine.Primitives.Sphere;
 
 public abstract class Ball extends MoveableObject{
 	

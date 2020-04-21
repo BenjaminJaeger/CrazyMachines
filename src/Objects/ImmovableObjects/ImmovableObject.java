@@ -1,8 +1,8 @@
 package Objects.ImmovableObjects;
 
-import Engine.Core.Shaders.Core.Material;
-import Engine.Primitives.Primitive;
 import Objects.GameObject;
+import RenderEngine.Core.Shaders.Core.Material;
+import RenderEngine.Primitives.Primitive;
 
 public abstract class ImmovableObject extends GameObject{
 

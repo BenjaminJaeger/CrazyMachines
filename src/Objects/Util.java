@@ -1,12 +1,16 @@
 package Objects;
 
-import Engine.Core.Math.Vector2f;
+import RenderEngine.Core.Math.Vector2f;
 
 public class Util {
 	
 	public static float getDistance(float x1,float y1,float x2,float y2) {
-		//pythagoras theorem
+		//pythagoras theorem a² + b² = c² -> sqrt(a² + b²) = c
 		return (float)Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
+	}
+	
+	public static float getDistance(Vector2f p1, Vector2f p2) {
+		return (float)Math.sqrt((p1.x-p2.x)*(p1.x-p2.x)+(p1.y-p2.y)*(p1.y-p2.y));
 	}
 	
 	public static Vector2f rotate(float x,float y,float angle) {
