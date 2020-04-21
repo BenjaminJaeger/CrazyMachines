@@ -26,7 +26,7 @@ public class CollisionContext {
 	
 	public CollisionContext(GameObject gameObject,BoundingCircle[] boundingCircles) {
 		this.boundingCirlces= boundingCircles;
-		this.boundingPolygons = new BoundingRectangle[0];
+		this.boundingPolygons = new BoundingPolygon[0];
 		id=counter;
 		counter++;
 		this.gameObject=gameObject;
@@ -35,7 +35,7 @@ public class CollisionContext {
 	public CollisionContext(GameObject gameObject,BoundingCircle boundingCircle) {
 		this.boundingCirlces = new BoundingCircle[1];
 		this.boundingCirlces[0]=boundingCircle;
-		this.boundingPolygons = new BoundingRectangle[0];
+		this.boundingPolygons = new BoundingPolygon[0];
 		id=counter;
 		counter++;
 		this.gameObject=gameObject;
@@ -50,7 +50,7 @@ public class CollisionContext {
 	}
 	
 	public CollisionContext(GameObject gameObject,BoundingPolygon boundingPolygon) {
-		this.boundingPolygons = new BoundingRectangle[1];
+		this.boundingPolygons = new BoundingPolygon[1];
 		this.boundingPolygons[0]=boundingPolygon;
 		this.boundingCirlces = new BoundingCircle[0];
 		id=counter;

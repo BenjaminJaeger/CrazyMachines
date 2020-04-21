@@ -212,7 +212,7 @@ public abstract class Model {
 	 */
 	public void setRotationZ(float rotationZ) {
 		this.rotationZ = rotationZ;
-		rotationZ%=360;
+		this.rotationZ%=360;
 		updateMatrix=true;
 	}
 

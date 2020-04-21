@@ -29,7 +29,7 @@ import Engine.Core.Shaders.Core.BasicShader;
 import Engine.Core.Shaders.Core.Material;
 import Engine.Primitives.CircleLine;
 import Objects.MovableObjects.MoveableObject;
-import Objects.MovableObjects.Ball.MetallBall;
+import Objects.MovableObjects.PolygonTest;
 import Objects.MovableObjects.Box.MetallBox;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
@@ -37,7 +37,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class TestingCircleRectangleCollision extends Application implements GLEventListener{
+public class TestingPolygonPolygonCollision extends Application implements GLEventListener{
 
 	private FPSAnimator animator;
 	private GLJPanel canvas;
@@ -47,6 +47,7 @@ public class TestingCircleRectangleCollision extends Application implements GLEv
 	private Matrix4f projectionMatrix;
 	
 	private MoveableObject model;
+	private MoveableObject model2;
 	private ArrayList<MoveableObject> allRectangles = new ArrayList<MoveableObject>();
 
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
@@ -84,10 +85,12 @@ public class TestingCircleRectangleCollision extends Application implements GLEv
 	@Override
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
-		
 
 		model.update();
 		renderer.render(model, shader); 
+		model2.update();
+		renderer.render(model2, shader); 
+
 
 		for (MoveableObject moveableObject : allRectangles) {
 			moveableObject.update();
@@ -131,12 +134,16 @@ public class TestingCircleRectangleCollision extends Application implements GLEv
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
 		
-		model = new MetallBall(100, 30, 0, 1, 1, 300, 300);
+		model =  new PolygonTest();		
 		model.renderBounding(true);
+		model.setRotation(123);
+		model2 =new MetallBox(150,150,100, 0, 1, 1,200,200);
+		model2.renderBounding(true);
+		model2.setRotation(453);
 
-		for (int i = 0; i < 5; i++) {
-			float width = (float)Math.random()*150+100;
-			float height = (float)Math.random()*150+100;
+		for (int i = 0; i < 0; i++) {
+			float width = +100;
+			float height = +300;
 			float x = (float)Math.random()*Config.CANVAS_WIDTH;
 			float y = (float)Math.random()*Config.CANVAS_HEIGHT;
 			float rotation = (float)Math.random()*360;
@@ -149,8 +156,10 @@ public class TestingCircleRectangleCollision extends Application implements GLEv
 		canvas.addMouseMotionListener(new MouseMotionListener() {
 			public void mouseDragged(MouseEvent e) {}
 			public void mouseMoved(MouseEvent e) {
-				model.setX(e.getX());
-				model.setY(e.getY());
+				if(model.getX()!=e.getX())
+					model.setX(e.getX());
+				if (model.getY()!=e.getY()) 
+					model.setY(e.getY());
 			}
 		});
 		
@@ -172,7 +181,7 @@ public class TestingCircleRectangleCollision extends Application implements GLEv
 			}
 		});
 		
-		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
+		test.add(new LineModel(new CircleLine(0,0),0,0,0,0,0));
 	}
 	
 

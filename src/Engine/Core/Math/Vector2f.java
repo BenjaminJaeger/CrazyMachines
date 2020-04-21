@@ -34,7 +34,7 @@ public class Vector2f {
 
 	public void rotate(float rotation) {
 		rotation *= (float)Math.PI/(float)180;
-		
+
 		float cos = (float)Math.cos(rotation);
 		float sin = (float)Math.sin(rotation);
 		

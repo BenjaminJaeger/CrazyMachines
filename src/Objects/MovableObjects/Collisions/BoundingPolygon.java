@@ -90,7 +90,7 @@ public class BoundingPolygon extends Bounding{
 			points[i]= new Vector2f(originalPoints[i].x, originalPoints[i].y);
 		
 		for (Vector2f p : points) {
-			p.rotate(rotation);
+			p.rotate(-rotation);
 			p.x+=x;		
 			p.y+=y;
 		}
@@ -105,7 +105,7 @@ public class BoundingPolygon extends Bounding{
 			points[i]= new Vector2f(originalPoints[i].x, originalPoints[i].y);
 		
 		for (Vector2f p : points) {
-			p.rotate(rotation);
+			p.rotate(-rotation);
 			p.x+=x;		
 			p.y+=y;
 		}
@@ -119,12 +119,11 @@ public class BoundingPolygon extends Bounding{
 		for (int i = 0; i < points.length; i++) 
 			points[i]= new Vector2f(originalPoints[i].x, originalPoints[i].y);
 		
-		for (Vector2f p : points) {
-			p.rotate(rotation);
+		for (Vector2f p : points) {			
+			p.rotate(-rotation);
 			p.x+=x;		
 			p.y+=y;
 		}
-
 	}
 
 }

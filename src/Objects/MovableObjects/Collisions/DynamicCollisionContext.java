@@ -10,8 +10,8 @@ public class DynamicCollisionContext extends CollisionContext{
 ////////////////////
 ////Constructors////
 ////////////////////
-	public DynamicCollisionContext(GameObject gameObject,BoundingCircle[] circles, BoundingRectangle[] rectangles) {
-		super(gameObject, circles, rectangles);
+	public DynamicCollisionContext(GameObject gameObject,BoundingCircle[] boundingCircles, BoundingPolygon[] boundingPolygons) {
+		super(gameObject, boundingCircles, boundingPolygons);
 	}
 	
 	public DynamicCollisionContext(GameObject gameObject,BoundingCircle[] boundingCircles) {
@@ -22,12 +22,12 @@ public class DynamicCollisionContext extends CollisionContext{
 		super(gameObject, boundingCircle);
 	}
 	
-	public DynamicCollisionContext(GameObject gameObject,BoundingRectangle[] boundingRectangles) {
-		super(gameObject, boundingRectangles);
+	public DynamicCollisionContext(GameObject gameObject,BoundingPolygon[] boundingPolygons) {
+		super(gameObject, boundingPolygons);
 	}
 	
-	public DynamicCollisionContext(GameObject gameObject,BoundingRectangle boundingRectangle) {
-		super(gameObject, boundingRectangle);
+	public DynamicCollisionContext(GameObject gameObject,BoundingPolygon boundingPolygon) {
+		super(gameObject, boundingPolygon);
 	}
 	
 	public void checkCollisions() {
