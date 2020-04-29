@@ -1,7 +1,7 @@
 package Objects.MovableObjects.Box;
 
-import Collisions.BoundingRectangle;
 import Collisions.DynamicCollisionContext;
+import Collisions.Boundings.BoundingRectangle;
 import RenderEngine.Core.Math.Vector3f;
 import RenderEngine.Core.Shaders.Core.Material;
 

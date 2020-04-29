@@ -45,4 +45,22 @@ public class Vector2f {
 		y = newY;
 	}
 	
+	public static Vector3f cross(Vector2f v1, Vector2f v2) {
+		return new Vector3f(0,0, v1.x*v2.y - v1.y*v2.x);
+	}
+	
+	public boolean equals(Object o) {
+		if (o instanceof Vector2f) 
+			return ((Vector2f) o).x == x && ((Vector2f) o).y == y;		
+		return false;
+	}
+	
+	public String toString() {
+		System.out.println("X: "+x);
+		System.out.println("Y: "+y);
+		System.out.println();
+		return "";
+	}
+
+	
 }

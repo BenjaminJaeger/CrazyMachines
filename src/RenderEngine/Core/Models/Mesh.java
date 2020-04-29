@@ -88,7 +88,7 @@ public class Mesh {
 			this.colors[i+1] =  g;
 			this.colors[i+2] = b;
 		}
-
+		
 		loadToGPU.loadMeshToGPU(this);
 	}
 	/**

@@ -27,8 +27,15 @@ public abstract class MoveableObject extends GameObject{
 		super(files, material, colors, x, y);
 	}
 
+	public MoveableObject(String[] files, Material material, float r, float g, float b, float x, float y) {
+		super(files, material, r,g,b, x, y);
+	}
 	
-///////////////
+	public MoveableObject(String file, Material material, float r, float g, float b, float x, float y) {
+		super(file, material, r,g,b, x, y);
+	}
+
+	///////////////
 ////Methods////
 ///////////////
 	/**
@@ -53,7 +60,7 @@ public abstract class MoveableObject extends GameObject{
 //			velocityY=0;
 			
 		increasePosition(velocityX, velocityY);
-		increaseRotation(velocityX);
+		//increaseRotation(velocityX);
 		resetAcceleration();
 			
 		((DynamicCollisionContext) collisionContext).checkCollisions();

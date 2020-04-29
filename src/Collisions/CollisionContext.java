@@ -1,5 +1,7 @@
 package Collisions;
 
+import Collisions.Boundings.BoundingCircle;
+import Collisions.Boundings.BoundingPolygon;
 import Objects.GameObject;
 
 public class CollisionContext {
@@ -16,6 +18,14 @@ public class CollisionContext {
 ////////////////////
 ////Constructors////
 ////////////////////
+	public CollisionContext(GameObject gameObject) {
+		this.boundingCirlces= new BoundingCircle[0];
+		this.boundingPolygons = new BoundingPolygon[0];
+		id=counter;
+		counter++;
+		this.gameObject=gameObject;
+	}
+
 	public CollisionContext(GameObject gameObject,BoundingCircle[] circles, BoundingPolygon[] boundingPolygons) {
 		this.boundingCirlces= circles;
 		this.boundingPolygons = boundingPolygons;
@@ -58,7 +68,7 @@ public class CollisionContext {
 		this.gameObject=gameObject;
 	}
 		
-	
+
 /////////////////////////
 ////Getters & Setters////
 /////////////////////////
@@ -70,6 +80,14 @@ public class CollisionContext {
 		return boundingPolygons;
 	}
 	
+	public void setBoundingCirlces(BoundingCircle[] boundingCirlces) {
+		this.boundingCirlces = boundingCirlces;
+	}
+
+	public void setBoundingPolygons(BoundingPolygon[] boundingPolygons) {
+		this.boundingPolygons = boundingPolygons;
+	}
+
 	public int getID() {
 		return id;
 	}

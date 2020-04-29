@@ -22,9 +22,9 @@ public class CameraControls implements KeyListener, MouseMotionListener, MouseWh
     private Camera camera; 				//camera that can be controled by this class
 			
     //increment of the specific coordinate
-    private float CameraXInc = 1f;  
-    private float CameraYInc= 1f;
-    private float CameraZInc = 0.1f;
+    private float CameraXInc = 10f;  
+    private float CameraYInc= 10f;
+    private float CameraZInc = 0.5f;
     
     //increment of the rotation
     private float CameraRotationXInc = 0.5f;

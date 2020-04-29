@@ -17,8 +17,8 @@ import static com.jogamp.opengl.GL2GL3.GL_LINE;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLContext;
 
-import Collisions.BoundingCircle;
-import Collisions.BoundingPolygon;
+import Collisions.Boundings.BoundingCircle;
+import Collisions.Boundings.BoundingPolygon;
 import Objects.GameObject;
 import RenderEngine.Core.Config;
 import RenderEngine.Core.Camera.Camera;
@@ -59,7 +59,8 @@ public class Renderer {
 		gl.glEnable(GL_BLEND);
 		gl.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
-		gl.glLineWidth(5);
+		gl.glLineWidth(Config.LINE_WIDTH);
+		gl.glPointSize(Config.POINT_SIZE);
 	}
 	
 	/**
@@ -140,6 +141,7 @@ public class Renderer {
 		
 		gl.glBindVertexArray(model.getMesh().getVaoID());//activates the specific VAO
 		gl.glDrawElements(GL_TRIANGLES, model.getMesh().getIndexCount(), GL_UNSIGNED_INT, 0); //draws with the usage of indices 	
+		//gl.glDrawElements(GL_POINTS, model.getMesh().getIndexCount(), GL_UNSIGNED_INT, 0); //draws with the usage of indices 	
 	}
 	
 	
@@ -227,7 +229,7 @@ public class Renderer {
 	
 	public void render(LineModel model,BasicShader shader) {
 		GL4 gl=(GL4)GLContext.getCurrentGL();
-				
+		
 		shader.use(); //activate shader before rendering
 		shader.uploadAmbientLight(AmbientLight.getAmbientLight());
 		shader.uploadPointLights(PointLight.getPointLights());

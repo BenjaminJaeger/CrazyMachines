@@ -1,8 +1,8 @@
 package Objects.MovableObjects.Ball;
 
 
-import Collisions.BoundingCircle;
 import Collisions.DynamicCollisionContext;
+import Collisions.Boundings.BoundingCircle;
 import Objects.MovableObjects.MoveableObject;
 import RenderEngine.Core.Config;
 import RenderEngine.Core.Shaders.Core.Material;

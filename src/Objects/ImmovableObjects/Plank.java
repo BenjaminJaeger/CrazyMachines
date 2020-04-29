@@ -1,7 +1,7 @@
 package Objects.ImmovableObjects;
 
-import Collisions.BoundingRectangle;
 import Collisions.CollisionContext;
+import Collisions.Boundings.BoundingRectangle;
 import RenderEngine.Core.Math.Vector3f;
 import RenderEngine.Core.Shaders.Core.Material;
 import RenderEngine.Primitives.Cube;

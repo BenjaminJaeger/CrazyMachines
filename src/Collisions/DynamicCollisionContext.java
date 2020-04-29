@@ -1,5 +1,7 @@
 package Collisions;
 
+import Collisions.Boundings.BoundingCircle;
+import Collisions.Boundings.BoundingPolygon;
 import Objects.GameObject;
 import Objects.MovableObjects.MoveableObject;
 import Objects.MovableObjects.Ball.Ball;
@@ -7,9 +9,14 @@ import Objects.MovableObjects.Ball.Ball;
 public class DynamicCollisionContext extends CollisionContext{
 
  static float counter;
+ 
 ////////////////////
 ////Constructors////
 ////////////////////
+ public DynamicCollisionContext(GameObject gameObject) {
+		super(gameObject);
+	}
+ 
 	public DynamicCollisionContext(GameObject gameObject,BoundingCircle[] boundingCircles, BoundingPolygon[] boundingPolygons) {
 		super(gameObject, boundingCircles, boundingPolygons);
 	}
@@ -50,9 +57,6 @@ public class DynamicCollisionContext extends CollisionContext{
 		for (BoundingCircle circle1 : boundingCirlces) 
 			for (BoundingCircle circle2 : context.getBoundingCircles()) 
 				if(circle1.checkCollision(circle2)) {
-					//circle1.getModel().changeColor(1, 0, 0);
-					
-					//System.out.println(counter++);
 					
 					//remove collision
 					//Collision.removeCollision((Ball)gameObject, (Ball)context.getGameObject());
@@ -64,18 +68,13 @@ public class DynamicCollisionContext extends CollisionContext{
 					}else {
 						//collision with static object
 					}
-				}else {
-					//circle1.getModel().changeColor(0, 1, 0);
 				}
 	}
 	
 	public void checkCollisionPolygonPolygon(CollisionContext context) {
 		for (BoundingPolygon polygon1 : boundingPolygons) 
-			for (BoundingPolygon polygon2 : context.getBoundingPolygons()) 
-				if(polygon1.checkCollision( polygon2)) {
-					//rectangle1.getModel().changeColor(1, 0, 0);
-					
-					//System.out.println(counter++);
+			for (BoundingPolygon polygon2 : context.getBoundingPolygons()) 			
+				if(polygon1.checkCollision(polygon2)) {
 					
 					//remove collision
 					//Collision.removeCollision((Ball)gameObject, (Ball)context.getGameObject());
@@ -85,19 +84,15 @@ public class DynamicCollisionContext extends CollisionContext{
 					}else {
 						//collision with static object
 					}
-				}else {
-					//rectangle1.getModel().changeColor(0, 1, 0);
 				}
+			
 	}
 	
 	public void checkCollisionPolygonCircle(CollisionContext context) {
 		for (BoundingPolygon polygon : boundingPolygons) 
 			for (BoundingCircle circle : context.getBoundingCircles()) 
 				if(circle.checkCollision(polygon)) {
-					//rectangle.getModel().changeColor(1, 0, 0);
-					
-					//System.out.println(counter++);
-					
+
 					//remove collision
 					//Collision.removeCollision((Ball)gameObject, (Ball)context.getGameObject());
 					
@@ -106,8 +101,6 @@ public class DynamicCollisionContext extends CollisionContext{
 					}else {
 						//collision with static object
 					}
-				}else {
-					//rectangle.getModel().changeColor(0, 1, 0);
 				}
 	}
 	

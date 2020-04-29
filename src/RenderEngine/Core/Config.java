@@ -23,4 +23,7 @@ public class Config {
 	public static int FRAME_RATE = 60;
 	
 	public static float BOUNDING_DISTANCE = 0.2f;
+	
+	public static float LINE_WIDTH = 8f;
+	public static float POINT_SIZE = 5f;
 }

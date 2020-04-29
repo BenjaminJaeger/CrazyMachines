@@ -153,6 +153,10 @@ public class OBJParser {
 	}
 
 	public float[] getVertices() {
+		///////////////
+//		for (int i = 0; i < verticesArray.length; i+=3) 
+//			verticesArray[i+2] = 0;
+		///////////////
 		return verticesArray;
 	}
 

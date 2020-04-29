@@ -37,6 +37,27 @@ public abstract class GameObject {
 		allObjects.add(this);
 	}
 	
+	public GameObject(String[] files,Material material, float r, float g, float b,float x,float y) {
+		this.x = x;
+		this.y = y;
+		models = new TriangleModel[files.length];
+		for (int i = 0; i < models.length; i++) 
+			models[i] = new TriangleModel(files[i],material,r,g,b,x,y);		
+		scaleX=1; 
+		scaleX=1;
+		allObjects.add(this);
+	}
+	
+	public GameObject(String file,Material material, float r, float g, float b,float x,float y) {
+		this.x = x;
+		this.y = y;
+		models = new TriangleModel[1];
+		models[0] = new TriangleModel(file,material,r,g,b,x,y);		
+		scaleX=1; 
+		scaleX=1;
+		allObjects.add(this);
+	}
+	
 	public GameObject(Primitive primitive,Material material,float[] colors, float x,float y) {
 		this.x = x;
 		this.y = y;
