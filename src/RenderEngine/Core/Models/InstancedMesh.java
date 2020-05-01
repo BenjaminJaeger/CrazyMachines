@@ -9,23 +9,23 @@ import RenderEngine.Core.Math.Vector3f;
  *
  */
 public class InstancedMesh {
-	
-	private int instances; //ammound of times the mesh gets rendered to the screen
-	
+
+	private int instances; //amount of times the mesh gets rendered to the screen
+
 	//ids to access VAO and VBOs
 	private int vaoID;
 	private int vertexVBOID;
 	private int indexVBOID;
 	private int normalVBOID;
 	private int colorVBOID; //one ID for every instance
-	
-	//mesh data 
+
+	//mesh data
 	private int indexCount;
 	private float[] baseVertices;
 	private float[] vertices; //instances share the same vertices, normals and indices
-	private int[]indices;
+	private int[] indices;
 	private float[] normals;
-	private float[] colors; 
+	private float[] colors;
 
 	/**
 	 * Creates an instancedMesh out of an OBJ file. The OBJ parser reads the file and creates a triangle mesh with normals,indices and vertices out of it.
@@ -46,35 +46,35 @@ public class InstancedMesh {
 //		normals=parser.getNormals(); // normals dont get read properly
 		calculateNormals();
 	}
-	
+
 	/**
 	 * Calculates the normals out of vertices and indices and places them in the normals[]
 	 */
 	public void calculateNormals() {
 		normals=new float[vertices.length];
-		 
+
 		for (int i = 0; i < indices.length; i+=3) {
 			Vector3f v1= new Vector3f(vertices[indices[i]*3], vertices[indices[i]*3+1], vertices[indices[i]*3+2]);
-			Vector3f v2= new Vector3f(vertices[indices[i+1]*3], vertices[indices[i+1]*3+1], vertices[indices[i+1]*3+2]);		
+			Vector3f v2= new Vector3f(vertices[indices[i+1]*3], vertices[indices[i+1]*3+1], vertices[indices[i+1]*3+2]);
 			Vector3f v3= new Vector3f(vertices[indices[i+2]*3], vertices[indices[i+2]*3+1], vertices[indices[i+2]*3+2]);
 			Vector3f v = Vector3f.subtract(v3, v1);
-			Vector3f u = Vector3f.subtract(v2, v1);				
+			Vector3f u = Vector3f.subtract(v2, v1);
 			Vector3f normal= Vector3f.cross(u, v);
-			 
+
 			normals[indices[i]*3]+=normal.x;
 			normals[indices[i]*3+1]+=normal.y;
 			normals[indices[i]*3+2]+=normal.z;
-			
+
 			normals[indices[i+1]*3]+=normal.x;
 			normals[indices[i+1]*3+1]+=normal.y;
 			normals[indices[i+1]*3+2]+=normal.z;
-			
+
 			normals[indices[i+2]*3]+=normal.x;
 			normals[indices[i+2]*3+1]+=normal.y;
-			normals[indices[i+2]*3+2]+=normal.z;	
-		}	
+			normals[indices[i+2]*3+2]+=normal.z;
+		}
 	}
-	
+
 	/**
 	 * sets the vertices of this mesh and updates the corresponding VBO
 	 * @param vertices
@@ -87,11 +87,11 @@ public class InstancedMesh {
 		if (calculateNormals) {
 			calculateNormals();
 			loadToGPU.updateVBO(normalVBOID, normals);	 //updates the normal VBO
-		}	
-		loadToGPU.updateVBO(vertexVBOID, vertices);		
+		}
+		loadToGPU.updateVBO(vertexVBOID, vertices);
 	}
 
-	
+
 	/**
 	 * Sets normals of this mesh and updates the corresponding VBO
 	 */
@@ -99,7 +99,7 @@ public class InstancedMesh {
 		this.normals = normals;
 		loadToGPU.updateVBO(normalVBOID, normals);
 	}
-	
+
 	public int getVaoID() {
 		return vaoID;
 	}
@@ -119,7 +119,7 @@ public class InstancedMesh {
 	public float[] getNormals() {
 		return normals;
 	}
-	
+
 	public int getIndexCount() {
 		return indexCount;
 	}
@@ -147,7 +147,7 @@ public class InstancedMesh {
 	public int getNormalVBOID() {
 		return normalVBOID;
 	}
-	
+
 	public void setIndexCount(int indexCount) {
 		this.indexCount=indexCount;
 	}
@@ -161,18 +161,18 @@ public class InstancedMesh {
 	 * @param colors
 	 */
 	public void setColors(float[] colors) {
-		this.colors=colors; 	
-		loadToGPU.updateVBO(colorVBOID, colors);			
+		this.colors=colors;
+		loadToGPU.updateVBO(colorVBOID, colors);
 	}
-	
+
 	public void setColorVBOID(int colorValueVBOID) {
 		this.colorVBOID = colorValueVBOID;
 	}
-	
+
 	public int getColorVBOID() {
 		return colorVBOID;
 	}
-	
+
 	public int getInstances() {
 		return instances;
 	}
@@ -180,6 +180,5 @@ public class InstancedMesh {
 	public float[] getBaseVertices() {
 		return baseVertices;
 	}
-	
-}
 
+}
