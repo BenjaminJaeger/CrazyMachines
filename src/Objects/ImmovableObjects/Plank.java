@@ -16,12 +16,12 @@ public class Plank extends StaticObject{
 ////Constructors////
 ////////////////////
 	public Plank(float width,float height,float[] colors,float x,float y) {
-		super(new Cube(width, height, width), material, colors, x, y);
+		super(new Cube(width, height, 10), material, colors, x, y);
 		collisionContext = new CollisionContext(this,new BoundingRectangle(height, height, 0, width,height));
 	}
 	
 	public Plank(float width,float height,float r,float g,float b,float x,float y) {
-		super(new Cube(width, height, width), material, r,g,b, x, y);
+		super(new Cube(width, height, 10), material, r,g,b, x, y);
 		collisionContext = new CollisionContext(this,new BoundingRectangle(height, height, 0, width,height));
 	}
 

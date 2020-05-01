@@ -13,6 +13,7 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
+import Objects.ImmovableObjects.Plank;
 import Objects.MovableObjects.MoveableObject;
 import Objects.MovableObjects.Ball.MetallBall;
 import RenderEngine.Core.Config;
@@ -54,7 +55,8 @@ public class UIConcept extends Application implements GLEventListener{
 	private Camera camera;
 	
 	private ArrayList<MoveableObject> allobjects = new ArrayList<MoveableObject>();
-
+	private ArrayList<Plank> frame = new ArrayList<Plank>();
+	
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
 
 	public static void main(String[] args) {
@@ -62,7 +64,7 @@ public class UIConcept extends Application implements GLEventListener{
 	}
 	
 	public void start(Stage primaryStage) throws Exception {
-		HBox root = new HBox(30);
+		HBox root = new HBox();
 		root.setStyle("-fx-background-color: rgb(102,127,102);");
 
 		primaryStage.setTitle("UI Test");
@@ -78,6 +80,7 @@ public class UIConcept extends Application implements GLEventListener{
 		ScrollPane s2 = new ScrollPane();
 		s2.setContent(objectDetails);
 		s2.setHbarPolicy(ScrollBarPolicy.NEVER);
+		s2.getStylesheets().add(UIConcept.class.getResource("ScrollPane.css").toExternalForm());
 		
 		for (int i = 0; i < 10; i++) {
 			HBox all = new HBox(20);
@@ -111,17 +114,21 @@ public class UIConcept extends Application implements GLEventListener{
 		
 		//Bottom Bar (Object chooser)
 		TabPane placeAbleObjects = new TabPane();
+		placeAbleObjects.setPadding(new Insets(0, 40, 0, 40));
 		placeAbleObjects.setMinHeight(170);
 		placeAbleObjects.setTabMinWidth(110);
 		placeAbleObjects.setTabMinHeight(20);
 		placeAbleObjects.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+		placeAbleObjects.getStylesheets().add(UIConcept.class.getResource("ObjectChooser.css").toExternalForm());
 		
 		for (int i = 0; i < 8; i++) {
 			Tab tab = new Tab("Category"+(i+1));
 			HBox elementsTab = new HBox(20);
+			elementsTab.setStyle(" -fx-background-color: transparent;");
 			ScrollPane s1 = new ScrollPane();
 			s1.setContent(elementsTab);
 			s1.setVbarPolicy(ScrollBarPolicy.NEVER);
+			s1.getStylesheets().add(UIConcept.class.getResource("ScrollPane.css").toExternalForm());
 			elementsTab.setPadding(new Insets(10, 10, 10, 10));
 			for (int j = 0; j < 4; j++) {
 				elementsTab.getChildren().add(new Circle(50,Color.color(Math.random(), Math.random(), Math.random())));
@@ -173,6 +180,9 @@ public class UIConcept extends Application implements GLEventListener{
 			renderer.render(moveableObject, shader); 
 		}
 		
+		for (Plank plank : frame) 
+			renderer.render(plank, shader); 
+
 		for (LineModel object : test) 
 			renderer.render(object,shader);			
 	}
@@ -221,7 +231,13 @@ public class UIConcept extends Application implements GLEventListener{
 			ball.renderBounding(true);
 			allobjects.add(ball);		
 		}
-			
+		
+		float frameWidth = 10;
+		frame.add(new Plank(frameWidth, Config.CANVAS_HEIGHT, 180, 180, 180, 0, Config.CANVAS_HEIGHT/2));
+		frame.add(new Plank(frameWidth, Config.CANVAS_HEIGHT, 180, 180, 180, Config.CANVAS_WIDTH, Config.CANVAS_HEIGHT/2));
+		frame.add(new Plank(Config.CANVAS_WIDTH, frameWidth, 180, 180, 180, Config.CANVAS_WIDTH/2, 0));
+		frame.add(new Plank(Config.CANVAS_WIDTH, frameWidth, 180, 180, 180, Config.CANVAS_WIDTH/2, Config.CANVAS_HEIGHT));
+		
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
 	}
 	

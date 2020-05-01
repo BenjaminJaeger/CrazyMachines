@@ -1,0 +1,12 @@
+.scroll-bar .thumb{
+    -fx-background-color: black;
+}
+
+
+.scroll-bar:vertical .increment-button , .scroll-bar:vertical .decrement-button {
+    -fx-background-color:transparent;
+}
+ 
+.scroll-bar .increment-arrow,.scroll-bar .decrement-arrow{
+	-fx-shape: " ";
+}
