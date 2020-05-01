@@ -1,6 +1,8 @@
 package RenderEngine.Core.Models;
 
 import RenderEngine.Core.Math.Matrix4f;
+import RenderEngine.Core.Math.Vector2f;
+import RenderEngine.Core.Math.Vector3f;
 import RenderEngine.Core.Shaders.Core.Material;
 import RenderEngine.Primitives.Primitive;
 
@@ -15,51 +17,51 @@ import RenderEngine.Primitives.Primitive;
  *
  */
 public class InstancedModel{
-	
-	private Material material;		
-	private Mesh mesh; 
-	
+
+	private Material material;
+	private Mesh mesh;
+
 	private int instances;
-		
-	private float[] x,y,z;						 
-	private float[] scaleX,scaleY,scaleZ;			 
-	private float[] rotationX,rotationY,rotationZ; 
-	
-	private Matrix4f[] modelMatrix; 				 
+
+	private float[] x,y,z;
+	private float[] scaleX,scaleY,scaleZ;
+	private float[] rotationX,rotationY,rotationZ;
+
+	private Matrix4f[] modelMatrix;
 	private int matrixVBOID;
-	
-	private boolean updateMatrix;		
-	
-	//private MatrixStack4f[] matrixStack;	
-	
+
+	private boolean updateMatrix;
+
+	//private MatrixStack4f[] matrixStack;
+
 
 	public InstancedModel(Primitive primitive,int instances,Material material,float[] colors) {
-		this.instances = instances;	
+		this.instances = instances;
 		initArrays();
 		mesh=new Mesh(primitive,colors); //creates mesh out the file
 		for (int i = 0; i < instances; i++) {
 			scaleX[i]=1;
 			scaleY[i]=1;
 			scaleZ[i]=1;
-		}	
+		}
 		this.material=material;
 		loadToGPU.loadinstancedMeshToGPU(this);
 	}
-	
+
 	public InstancedModel(String file,int instances,Material material,float[] colors) {
-		this.instances = instances;	
+		this.instances = instances;
 		initArrays();
 		mesh=new Mesh(file,colors); //creates mesh out the file
 		for (int i = 0; i < instances; i++) {
 			scaleX[i]=1;
 			scaleY[i]=1;
 			scaleZ[i]=1;
-		}	
+		}
 		this.material=material;
 		loadToGPU.loadinstancedMeshToGPU(this);
 	}
 
-	
+
 	/**
 	 *increases the x,y,z position of each instance by dx,dy,dz
 	 * @param dx
@@ -73,11 +75,11 @@ public class InstancedModel{
 		for (int i = 0; i < instances; i++) {
 			x[i]+=dx;
 			y[i]+=dy;
-			z[i]+=dz;				
+			z[i]+=dz;
 		}
 		updateMatrix=true;
 	}
-	
+
 	/**
 	 * increases the x,y,z rotation of each instance by dx,dy,dz.
 	 * Rotation in angles
@@ -92,11 +94,11 @@ public class InstancedModel{
 		for (int i = 0; i < instances; i++) {
 			rotationX[i]+=dx;
 			rotationY[i]+=dy;
-			rotationZ[i]+=dz;				
+			rotationZ[i]+=dz;
 		}
 		updateMatrix=true;
 	}
-	
+
 	private void initArrays() {
 		x = new float[instances];
 		y = new float[instances];
@@ -107,18 +109,18 @@ public class InstancedModel{
 		rotationX = new float[instances];
 		rotationY = new float[instances];
 		rotationZ = new float[instances];
-		
+
 		modelMatrix = new Matrix4f[instances];
-		for (int i = 0; i < modelMatrix.length; i++) 
+		for (int i = 0; i < modelMatrix.length; i++)
 			modelMatrix[i] = new Matrix4f();
-		
+
 		/*
 		matrixStack = new MatrixStack4f[instances];
-		for (int i = 0; i < matrixStack.length; i++) 
+		for (int i = 0; i < matrixStack.length; i++)
 			matrixStack[i] = new MatrixStack4f();
 		*/
 	}
-	
+
 	public float getX(int index) {
 		return x[index];
 	}
@@ -128,12 +130,22 @@ public class InstancedModel{
 		updateMatrix=true;
 	}
 
+	public void setXconstant(int index,float x) {
+		this.x[index]+=x;
+		updateMatrix=true;
+	}
+
 	public float getY(int index) {
 		return y[index];
 	}
 
 	public void setY(int index,float y) {
 		this.y[index]=y;
+		updateMatrix=true;
+	}
+
+	public void setYconstant(int index,float y) {
+		this.y[index] +=y;
 		updateMatrix=true;
 	}
 
@@ -153,7 +165,7 @@ public class InstancedModel{
 	public float[] getScaleY() {
 		return scaleY;
 	}
-	
+
 	public float[] getScaleZ() {
 		return scaleZ;
 	}
@@ -168,7 +180,7 @@ public class InstancedModel{
 	public Matrix4f[] getModelMatrix() {
 		return modelMatrix;
 	}
-	
+
 	public Material getMaterial() {
 		return material;
 	}
@@ -176,11 +188,11 @@ public class InstancedModel{
 	public void setMaterial(Material material) {
 		this.material=material;
 	}
-	
+
 	public void setMatrixUpdate(boolean updateMatrix) {
 		this.updateMatrix=updateMatrix;
 	}
-	
+
 	public boolean getMatrixUpdate() {
 		return updateMatrix;
 	}
@@ -201,7 +213,7 @@ public class InstancedModel{
 		this.rotationX = rotationX;
 	}
 
-	public float[] getRotationY() {		
+	public float[] getRotationY() {
 		return rotationY;
 	}
 
@@ -216,11 +228,11 @@ public class InstancedModel{
 	public void setRotationZ(float[] rotationZ) {
 		this.rotationZ = rotationZ;
 	}
-	
+
 	public int getInstances() {
 		return instances;
 	}
-	
+
 	public Mesh getMesh() {
 		return mesh;
 	}
