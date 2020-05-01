@@ -38,19 +38,13 @@ public abstract class MoveableObject extends GameObject{
 	///////////////
 ////Methods////
 ///////////////
-	/**
-	 * checks if the object collides with the edges of the screen
-	 */
-	public abstract void checkEdges();
 
-	
 	public void update() {
 		
 		//collisionContext.update(x,y,rotation);
 		
 		//applyForce(0, 0.5f);
 			 
-		checkEdges();
 			
 		increaseVelocity(accelerationX, accelerationY);
 		

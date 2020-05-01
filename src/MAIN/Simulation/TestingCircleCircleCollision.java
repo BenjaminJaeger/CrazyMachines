@@ -57,6 +57,7 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 		primaryStage.show();	
 		
 		
+		
 		//JFX Code für Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
 		canvas = new GLJPanel(capabilities);	    

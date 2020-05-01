@@ -124,7 +124,7 @@ public class UIConcept extends Application implements GLEventListener{
 		for (int i = 0; i < 8; i++) {
 			Tab tab = new Tab("Category"+(i+1));
 			HBox elementsTab = new HBox(20);
-			elementsTab.setStyle(" -fx-background-color: transparent;");
+			elementsTab.setStyle("-fx-background-color: transparent;");
 			ScrollPane s1 = new ScrollPane();
 			s1.setContent(elementsTab);
 			s1.setVbarPolicy(ScrollBarPolicy.NEVER);
@@ -147,8 +147,6 @@ public class UIConcept extends Application implements GLEventListener{
 		}
 		
 		
-		
-		
 		//Simulation Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
 		canvas = new GLJPanel(capabilities);	
@@ -161,7 +159,6 @@ public class UIConcept extends Application implements GLEventListener{
 		canvas.addGLEventListener(this);		
 		animator = new FPSAnimator(canvas, 60);
 	  	animator.start();
-	  	
 	  	
 	  	BorderPane canvasAndObjectChooser = new BorderPane();
 	  	canvasAndObjectChooser.setCenter(swingNode);
@@ -248,6 +245,17 @@ public class UIConcept extends Application implements GLEventListener{
 		gl.glViewport(0, 0, width, height);
 		Config.CANVAS_HEIGHT=height;
 		Config.CANVAS_WIDTH=width;
+		
+		frame.get(0).setY(Config.CANVAS_HEIGHT/2);
+		
+		frame.get(1).setX(Config.CANVAS_WIDTH);
+		frame.get(1).setY(Config.CANVAS_HEIGHT/2);
+		
+		frame.get(2).setX(Config.CANVAS_WIDTH/2);
+		
+		frame.get(3).setX(Config.CANVAS_WIDTH/2);
+		frame.get(3).setY(Config.CANVAS_HEIGHT);
+		
 		renderer.updateProjectionMatrix();
 	}
 

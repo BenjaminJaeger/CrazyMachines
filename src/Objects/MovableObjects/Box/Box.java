@@ -1,7 +1,6 @@
 package Objects.MovableObjects.Box;
 
 import Objects.MovableObjects.MoveableObject;
-import RenderEngine.Core.Config;
 import RenderEngine.Core.Shaders.Core.Material;
 import RenderEngine.Primitives.Cube;
 
@@ -47,28 +46,7 @@ public abstract class Box extends MoveableObject{
 ///////////////
 ////Methods////
 ///////////////
-	@Override
-	public void checkEdges() {		
-		if(y-width<=0) {
-			setY(height);
-			velocityY*=-1;
-		}
-		
-		if(y+height>=Config.CANVAS_HEIGHT) {
-			setY(Config.CANVAS_HEIGHT-height);
-			velocityY*=-1;
-		}
-		
-		if(x+width>=Config.CANVAS_WIDTH) {
-			setX(Config.CANVAS_WIDTH-width);
-			velocityX*=-1;
-		}
-		
-		if(x-width<=0) {
-			setX(width);
-			velocityX*=-1;
-		}
-	}
+
 
 	
 /////////////////////////
