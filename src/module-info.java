@@ -9,7 +9,8 @@ module jfx {
 	exports RenderEngine.Core.Shaders.Core;
 	exports RenderEngine.Core;
 	exports Collisions.BoundingCreator;
-	exports MAIN;
+	exports MAIN.Simulation;
+	exports MAIN.UI;
 
 	requires transitive gluegen.rt;
 	requires transitive java.desktop;
