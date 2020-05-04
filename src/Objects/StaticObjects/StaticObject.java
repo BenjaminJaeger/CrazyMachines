@@ -1,4 +1,4 @@
-package Objects.ImmovableObjects;
+package Objects.StaticObjects;
 
 import Objects.GameObject;
 import RenderEngine.Core.Shaders.Core.Material;

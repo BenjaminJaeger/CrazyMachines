@@ -1,5 +1,8 @@
-package Collisions.BoundingCreator;
+package BoundingCreator;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -31,34 +34,25 @@ import RenderEngine.Core.Shaders.Core.Material;
 import RenderEngine.Primitives.CircleLine;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 public class Main extends Application implements GLEventListener{
 
-	private Line line;
-	private boolean click = true;
 	ArrayList<ArrayList<Vector2f>> hulls = new ArrayList<ArrayList<Vector2f>>();
 	private ArrayList<Vector2f> currentHull = new ArrayList<Vector2f>();	
-	private boolean shapeDone = false;
 	
 	private String fileName;
 	private boolean changeModel;
 	
-	private Vector2f lastMousePosition;
+	private int state;
 	
+	//Basic 3D Scene
 	private FPSAnimator animator;
 	private GLJPanel canvas;
 	private Renderer renderer;
@@ -79,35 +73,34 @@ public class Main extends Application implements GLEventListener{
 		primaryStage.setScene(new Scene(root, 800, 800));
 		primaryStage.show();	
 		
-		Pane drawingCanvas = new Pane();
-		StackPane drawing = new StackPane();
 		HBox options = new HBox(10);
 		options.setStyle("-fx-background-color: rgb(102,127,102);");
 		
-		root.setCenter(drawing);
 		root.setTop(options);
 		
 		Button reset = new Button("Reset");
 		reset.setStyle("-fx-pref-height: 40px; -fx-pref-width: 150px;");
 		reset.setOnAction(e->{
-			currentHull = new ArrayList<Vector2f>();
 			hulls = new ArrayList<ArrayList<Vector2f>>();
-			drawingCanvas.getChildren().remove(0, drawingCanvas.getChildren().size());
+			currentHull = new ArrayList<Vector2f>();
+		});
+		
+		Button resetCamera = new Button("Reset Camera");
+		resetCamera.setStyle("-fx-pref-height: 40px; -fx-pref-width: 150px;");
+		resetCamera.setOnAction(e->{
+			camera.setRotateX(0);
+			camera.setRotateY(0);
+			camera.setRotateZ(0);
+			camera.setX(0);
+			camera.setY(0);
+			camera.setZ(1);
 		});
 		
 		Button undo = new Button("Undo");
 		undo.setStyle("-fx-pref-height: 40px; -fx-pref-width: 150px;");
 		undo.setOnAction(e->{
-			drawingCanvas.getChildren().remove(drawingCanvas.getChildren().size()-1);
-			drawingCanvas.getChildren().remove(drawingCanvas.getChildren().size()-1);
-			drawingCanvas.getChildren().remove(drawingCanvas.getChildren().size()-2);
-		
-			currentHull.remove(currentHull.size()-1);
-			
-			line = new Line(currentHull.get(currentHull.size()-1).x,currentHull.get(currentHull.size()-1).y,currentHull.get(currentHull.size()-1).x+10,currentHull.get(currentHull.size()-1).y+10);
-			line.setStroke(javafx.scene.paint.Color.CORNSILK);
-			line.setStrokeWidth(5);
-			drawingCanvas.getChildren().add(line);
+			if(currentHull.size()>0)
+				currentHull.remove(currentHull.size()-1);
 		});
 		
 		Button openFileButton = new Button("Open OBJ file");
@@ -119,8 +112,7 @@ public class Main extends Application implements GLEventListener{
 			fileChooser.setTitle("Open OBJ file");
 			fileChooser.getExtensionFilters().add(new ExtensionFilter("OBJ files","*.obj"));
 			File file = fileChooser.showOpenDialog(primaryStage);
-				
-			
+						
 			if(file!=null) {
 				fileName = file.getAbsolutePath();
 				
@@ -142,7 +134,7 @@ public class Main extends Application implements GLEventListener{
 					file.write("#New BoundingPolygon".getBytes());
 					file.write("\n".getBytes());
 					for (Vector2f p : hull) {
-						String string = p.x + " - " + p.y;
+						String string = "v "+ p.x + " / " + p.y;
 						file.write(string.getBytes());
 						file.write("\n".getBytes());
 					}
@@ -155,98 +147,15 @@ public class Main extends Application implements GLEventListener{
 		});
 		
 		options.getChildren().add(openFileButton);
+		options.getChildren().add(resetCamera);
 		options.getChildren().add(undo);
 		options.getChildren().add(reset);
 		options.getChildren().add(save);
-		
-		
-		drawingCanvas.setOnScroll(e -> {
-			camera.setZ(camera.getZ()-(float)e.getDeltaY()*0.01f);
-		});
-		
-		drawingCanvas.setOnMousePressed(e->{
-			lastMousePosition = new Vector2f((float)e.getX(), (float)e.getY());
-		});
-		
-		drawingCanvas.setOnMouseDragged(e->{
-			float deltaY = (float)e.getY() - lastMousePosition.y;
-			float deltaX = (float)e.getX() - lastMousePosition.x;
-			lastMousePosition=  new Vector2f((float)e.getX(), (float)e.getY());
-			if (e.getButton() ==  MouseButton.SECONDARY) {
-		        camera.increaseX(-deltaX*1.5f);
-		        camera.increaseY(-deltaY*1.5f);
-		    }
-		});
-		
-		drawingCanvas.setOnMouseClicked(e->{		
-			if(e.getButton() ==  MouseButton.PRIMARY) {
-				
-				if(shapeDone)
-					shapeDone=!shapeDone;
-				
-				if(currentHull.size()!=0) {
-					if(currentHull.get(0).x <=e.getX()+10 && currentHull.get(0).x >= e.getX()-10  && currentHull.get(0).y <=e.getY()+10 && currentHull.get(0).y >= e.getY()-10 ) {
-						shapeDone=true;
-						
-						line.setEndX(currentHull.get(0).x);		
-						line.setEndY(currentHull.get(0).y);	
-						
-						Circle point = new Circle(currentHull.get(0).x, currentHull.get(0).y, 5);
-						point.setFill(Color.ORANGE);
-						drawingCanvas.getChildren().add(point);						
-						
-						for (Node shape : drawingCanvas.getChildren()) {
-							if (shape instanceof Circle) 
-								((Circle) shape).setFill(Color.AQUA);
-							if (shape instanceof Line) 
-								((Line) shape).setStroke(Color.CRIMSON);
-							
-						}
-						
-						hulls.add(currentHull);
-						currentHull = new ArrayList<Vector2f>();	
-					}
-				}
-				if (!shapeDone) {
-	
-					if(click){
-						currentHull.add(new Vector2f((float)e.getX(),(float)e.getY()));
-						line = new Line(e.getX(),e.getY(),e.getX()+10,e.getY()+10);
-						line.setStroke(javafx.scene.paint.Color.CORNSILK);
-						line.setStrokeWidth(5);
-						drawingCanvas.getChildren().add(line);
-						Circle point = new Circle(e.getX(), e.getY(), 5);
-						point.setFill(Color.ORANGE);
-						drawingCanvas.getChildren().add(point);	
-					}
-					
-					if(!click) {
-						currentHull.add(new Vector2f((float)e.getX(),(float)e.getY()));
-						line = new Line(e.getX(),e.getY(),e.getX()+10,e.getY()+10);
-						line.setStroke(javafx.scene.paint.Color.CORNSILK);
-						line.setStrokeWidth(5);
-						drawingCanvas.getChildren().add(line);	
-						Circle point = new Circle(e.getX(), e.getY(), 5);
-						point.setFill(Color.ORANGE);
-						drawingCanvas.getChildren().add(point);	
-					}
-				}
-				click=!click;
-			}
-		});
-		
-		drawingCanvas.setOnMouseMoved(e->{
-			if(currentHull.size()!=0 && !shapeDone) {
-				line.setEndX(e.getX());		
-				line.setEndY(e.getY());			
-			}
-		});
 		
 		//JFX Code für Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
 		canvas = new GLJPanel(capabilities);	    
 		SwingNode swingNode = new SwingNode();		 
-		drawing.getChildren().add(swingNode);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 		    	swingNode.setContent(canvas);	
@@ -256,19 +165,105 @@ public class Main extends Application implements GLEventListener{
 		animator = new FPSAnimator(canvas, 60);
 	  	animator.start();
 	  	
-	  	drawing.getChildren().add(drawingCanvas);
+	  	root.setCenter(swingNode);
+
+
+	  	canvas.addMouseListener(new MouseListener() {
+	  		
+	  		public void mouseClicked(MouseEvent e) {
+	  			if(e.getButton() == MouseEvent.BUTTON1) {
+		  			//Convert mouse Position
+		  			float x = ((float)e.getX() - (float)canvas.getWidth()/2 +camera.getX()) / (float)canvas.getWidth();
+		  			float y = ((float)canvas.getHeight()/2 -(float)e.getY() +camera.getY()) / (float)canvas.getHeight();
+		  			
+		  			x*=camera.getZ()*0.75f;
+		  			y*=camera.getZ()*0.75f;
+		  			
+		  			if(state>0) {
+		  				currentHull.set(currentHull.size()-1,new Vector2f(x, y));
+			  			currentHull.add(new Vector2f(x, y));
+		  			}else {
+		  				currentHull.add(new Vector2f(x, y));
+		  				currentHull.add(new Vector2f(x, y));
+					}
+		  			
+		  			state++;
+		  		}
+	  			
+	  			if(e.getButton() == MouseEvent.BUTTON3) {
+	  				currentHull.remove(currentHull.size()-1);
+	  				hulls.add(currentHull);
+	  				currentHull = new ArrayList<Vector2f>();
+	  				state=0;
+	  			}
+			}
+
+			public void mouseReleased(MouseEvent e) {}
+			public void mousePressed(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {}
+		});
+	  		
+	  	canvas.addMouseMotionListener(new MouseMotionListener() {
+			
+			public void mouseMoved(MouseEvent e) {
+				if(currentHull.size()>0) {
+					float x = ((float)e.getX() - (float)canvas.getWidth()/2 +camera.getX()) / (float)canvas.getWidth();
+		  			float y = ((float)canvas.getHeight()/2 -(float)e.getY() +camera.getY()) / (float)canvas.getHeight();
+		  			
+		  			x*=camera.getZ()*0.75f;
+		  			y*=camera.getZ()*0.75f;
+		  			
+		  			currentHull.set(currentHull.size()-1, new Vector2f(x, y));
+				}
+			}
+			
+			public void mouseDragged(MouseEvent e) {}
+		});
 	}
+	
 	
 	@Override
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
 		
-		if(changeModel)
-			model = new TriangleModel(fileName, new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f), 1, 0, 0, 200, 200);
-		
+		//RENDER MODEL
+		if(changeModel) {
+			model = new TriangleModel(fileName, new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f), 1, 0, 0, 0, 0);
+			model.setScale(0.3f);
+		}	
 		if(model!=null) 
 			renderer.render(model, shader); 
+		///////////////////
 		
+		
+		//RENDER OTHER HULLS
+		for (ArrayList<Vector2f> hull : hulls) {
+			float[] vertices = new float[hull.size()*3];
+			
+			for (int i = 0; i < hull.size() ; i++) {
+				vertices[i*3] = hull.get(i).x;
+				vertices[i*3+1] = hull.get(i).y;
+				vertices[i*3+2] = 0;
+			}
+			
+			LineModel model = new LineModel(vertices, 0.5f, 0.5f, 0.5f, 0, 0);
+			renderer.render(model, shader); 
+		}
+		//////////////////
+		
+		//RENDER CURRENT HULL
+		float[] vertices = new float[currentHull.size()*3];
+		
+		for (int i = 0; i < currentHull.size() ; i++) {
+			vertices[i*3] = currentHull.get(i).x;
+			vertices[i*3+1] = currentHull.get(i).y;
+			vertices[i*3+2] = 0;	
+		}
+		LineModel model = new LineModel(vertices,0, 1, 1, 0, 0);
+		renderer.render(model, shader); 
+		//////////////////
+			
 		for (LineModel object : test) 
 			renderer.render(object,shader);			
 	}
@@ -285,10 +280,11 @@ public class Main extends Application implements GLEventListener{
 		Config.BACKGROUND_COLOR = new Vector3f(0.4f,0.5f,0.4f);
 		Config.CANVAS_HEIGHT = canvas.getHeight();
 		Config.CANVAS_WIDTH = canvas.getWidth();
+		Config.LINE_WIDTH= 10;
 		
 		
 		camera= new Camera(canvas);
-		camera.setZ(10f);
+		camera.setZ(1);
 		
 		renderer = new Renderer(camera);	
 		
@@ -302,7 +298,8 @@ public class Main extends Application implements GLEventListener{
 		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 		
-		model =   new TriangleModel("teapot", basicMaterial, 1, 0, 0, 200, 200);
+		model =   new TriangleModel("icosahedron", basicMaterial, 1, 0, 0, 0, 0);
+		model.setScale(0.1f);
 		
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
 	}

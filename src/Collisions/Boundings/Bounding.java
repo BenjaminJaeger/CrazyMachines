@@ -5,18 +5,18 @@ import RenderEngine.Core.Shaders.Core.BasicShader;
 
 public abstract class Bounding {
 
-	protected float offset;
 	protected float x,y;
 	protected float rotation;
+	protected float scale = 1;
 	
 	protected LineModel model;
+	
 	protected static BasicShader shader = new BasicShader("Line");
 	
 ////////////////////
 ////Constructors////
 ////////////////////
-	public Bounding (float offset,float x, float y) {
-		this.offset=offset;
+	public Bounding (float x, float y) {
 		this.x=x;
 		this.y=y;
 	}
@@ -31,10 +31,6 @@ public abstract class Bounding {
 
 	public BasicShader getShader() {
 		return shader;
-	}
-
-	public float getOffset() {
-		return offset;
 	}
 
 	public float getX() {
@@ -62,6 +58,11 @@ public abstract class Bounding {
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
 		model.setRotationZ(rotation);
+	}
+	
+	public void setScale(float scale) {
+		this.scale = scale;
+		model.setScale(scale);	
 	}
 	
 }

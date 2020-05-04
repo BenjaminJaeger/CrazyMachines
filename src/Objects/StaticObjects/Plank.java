@@ -1,4 +1,4 @@
-package Objects.ImmovableObjects;
+package Objects.StaticObjects;
 
 import Collisions.CollisionContext;
 import Collisions.Boundings.BoundingRectangle;
@@ -17,12 +17,12 @@ public class Plank extends StaticObject{
 ////////////////////
 	public Plank(float width,float height,float[] colors,float x,float y) {
 		super(new Cube(width, height, 10), material, colors, x, y);
-		collisionContext = new CollisionContext(this,new BoundingRectangle(height, height, 0, width,height));
+		collisionContext = new CollisionContext(this,new BoundingRectangle(x, y, width,height));
 	}
 	
 	public Plank(float width,float height,float r,float g,float b,float x,float y) {
 		super(new Cube(width, height, 10), material, r,g,b, x, y);
-		collisionContext = new CollisionContext(this,new BoundingRectangle(height, height, 0, width,height));
+		collisionContext = new CollisionContext(this,new BoundingRectangle(x, y,width,height));
 	}
 
 	

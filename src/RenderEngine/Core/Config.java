@@ -14,9 +14,9 @@ public class Config {
 	public static boolean WIREFRAME_MODE = false;
 	public static Vector3f BACKGROUND_COLOR = new Vector3f(1, 1, 1);
 	
-	public static final float FIELD_OF_VIEW=70;
+	public static final float FIELD_OF_VIEW= 40 * (float)Math.PI/180;
 	public static final float NEAR_PLANE=0.1f;
-	public static final float FAR_PLANE=1000;
+	public static final float FAR_PLANE=10;
 	
 	public static int CANVAS_WIDTH = 1920;
 	public static int CANVAS_HEIGHT = 1080;
@@ -24,6 +24,6 @@ public class Config {
 	
 	public static float BOUNDING_DISTANCE = 0.2f;
 	
-	public static float LINE_WIDTH = 8f;
+	public static float LINE_WIDTH = 3f;
 	public static float POINT_SIZE = 5f;
 }

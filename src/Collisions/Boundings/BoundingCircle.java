@@ -12,8 +12,8 @@ public class BoundingCircle  extends Bounding{
 ////////////////////
 ////Constructors////
 ////////////////////
-	public BoundingCircle(float x, float y,float offset,float radius) {
-		super(offset, x, y);
+	public BoundingCircle(float x, float y,float radius) {
+		super(x, y);
 		this.radius = radius;
 		model = new LineModel(new CircleLine(radius, 30), 0, 0, 1, x,y);
 	}
@@ -124,6 +124,11 @@ public class BoundingCircle  extends Bounding{
 /////////////////////////
 	public float getRadius() {
 		return radius;
+	}
+	
+	public void setScale(float scale) {
+		super.setScale(scale);
+		this.radius*=scale;
 	}
 
 }

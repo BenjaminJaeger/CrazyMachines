@@ -9,6 +9,10 @@ public class LineModel extends Model{
 		super(primitive, r, g, b, x, y);
 	}
 	
+	public LineModel(float[] vertices,float r,float g,float b, float x,float y) {
+		super(vertices, r, g, b, x, y);
+	}
+	
 	public void changeColor(float r, float g, float b) {
 		float[] colors = new float[mesh.getVertices().length];
 		for (int i = 0; i < colors.length; i+=3) {

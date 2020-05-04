@@ -16,22 +16,22 @@ public class MetallBox extends Box{
 ////////////////////
 	public MetallBox(float width, float height, float depth,float[] colors, float x, float y) {
 		super(width, height, depth, material, colors, x, y);
-		collisionContext = new DynamicCollisionContext(this,new BoundingRectangle(x, y, 0, width, height));
+		collisionContext = new DynamicCollisionContext(this,new BoundingRectangle(x, y, width, height));
 	}
 	
 	public MetallBox(float width, float height, float depth,float r,float g,float b, float x, float y) {
 		super(width, height, depth, material, r,g,b, x, y);
-		collisionContext = new DynamicCollisionContext(this,new BoundingRectangle(x, y, 0, width, height));
+		collisionContext = new DynamicCollisionContext(this,new BoundingRectangle(x, y,width, height));
 	}
 	
 	public MetallBox(float size,float[] colors, float x, float y) {
 		super(size, material, colors, x, y);
-		collisionContext = new DynamicCollisionContext(this,new BoundingRectangle(x, y, 0, 0, size));
+		collisionContext = new DynamicCollisionContext(this,new BoundingRectangle(x, y, size,size));
 	}
 	
 	public MetallBox(float size,float r,float g,float b, float x, float y) {
 		super(size, material, r,g,b, x, y);
-		collisionContext = new DynamicCollisionContext(this,new BoundingRectangle(x, y, 0, size));
+		collisionContext = new DynamicCollisionContext(this,new BoundingRectangle(x, y,size));
 	}
 
 }

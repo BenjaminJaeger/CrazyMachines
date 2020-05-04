@@ -91,6 +91,21 @@ public class Mesh {
 		
 		loadToGPU.loadMeshToGPU(this);
 	}
+	
+	public Mesh(float[] vertices,float r,float g,float b) {
+		baseVertices=vertices;
+		this.vertices=vertices;
+		
+		this.colors=new float[vertices.length];
+		
+		for (int i = 0; i < this.colors.length; i+=3) {
+			this.colors[i] =  r;
+			this.colors[i+1] =  g;
+			this.colors[i+2] = b;
+		}
+		loadToGPU.loadMeshToGPU(this);
+	}
+	
 	/**
 	 * creates a mesh with a texture on it.
 	 * @param textureCoordinates

@@ -19,12 +19,12 @@ import com.jogamp.opengl.awt.GLJPanel;
  */
 public class CameraControls implements KeyListener, MouseMotionListener, MouseWheelListener, MouseListener{
 
-    private Camera camera; 				//camera that can be controled by this class
+    private Camera camera;//camera that can be controled by this class
 			
     //increment of the specific coordinate
-    private float CameraXInc = 10f;  
-    private float CameraYInc= 10f;
-    private float CameraZInc = 0.5f;
+    private float CameraXInc = 0.5f;  
+    private float CameraYInc= 0.5f;
+    private float CameraZInc = 0.01f;
     
     //increment of the rotation
     private float CameraRotationXInc = 0.5f;
@@ -95,7 +95,7 @@ public class CameraControls implements KeyListener, MouseMotionListener, MouseWh
 	    // holding the right mouse button translates the scene
 	    if (rightMouseButtonPressed) {
 	        camera.increaseX(CameraXInc * -deltaX);
-	        camera.increaseY(CameraYInc * -deltaY);
+	        camera.increaseY(CameraYInc * +deltaY);
 	    }
     }
 

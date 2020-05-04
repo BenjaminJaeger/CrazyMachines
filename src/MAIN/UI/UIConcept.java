@@ -13,7 +13,6 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
-import Objects.ImmovableObjects.Plank;
 import Objects.MovableObjects.MoveableObject;
 import Objects.MovableObjects.Ball.MetallBall;
 import RenderEngine.Core.Config;
@@ -55,7 +54,6 @@ public class UIConcept extends Application implements GLEventListener{
 	private Camera camera;
 	
 	private ArrayList<MoveableObject> allobjects = new ArrayList<MoveableObject>();
-	private ArrayList<Plank> frame = new ArrayList<Plank>();
 	
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
 
@@ -177,8 +175,6 @@ public class UIConcept extends Application implements GLEventListener{
 			renderer.render(moveableObject, shader); 
 		}
 		
-		for (Plank plank : frame) 
-			renderer.render(plank, shader); 
 
 		for (LineModel object : test) 
 			renderer.render(object,shader);			
@@ -229,12 +225,6 @@ public class UIConcept extends Application implements GLEventListener{
 			allobjects.add(ball);		
 		}
 		
-		float frameWidth = 10;
-		frame.add(new Plank(frameWidth, Config.CANVAS_HEIGHT, 180, 180, 180, 0, Config.CANVAS_HEIGHT/2));
-		frame.add(new Plank(frameWidth, Config.CANVAS_HEIGHT, 180, 180, 180, Config.CANVAS_WIDTH, Config.CANVAS_HEIGHT/2));
-		frame.add(new Plank(Config.CANVAS_WIDTH, frameWidth, 180, 180, 180, Config.CANVAS_WIDTH/2, 0));
-		frame.add(new Plank(Config.CANVAS_WIDTH, frameWidth, 180, 180, 180, Config.CANVAS_WIDTH/2, Config.CANVAS_HEIGHT));
-		
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
 	}
 	
@@ -245,17 +235,7 @@ public class UIConcept extends Application implements GLEventListener{
 		gl.glViewport(0, 0, width, height);
 		Config.CANVAS_HEIGHT=height;
 		Config.CANVAS_WIDTH=width;
-		
-		frame.get(0).setY(Config.CANVAS_HEIGHT/2);
-		
-		frame.get(1).setX(Config.CANVAS_WIDTH);
-		frame.get(1).setY(Config.CANVAS_HEIGHT/2);
-		
-		frame.get(2).setX(Config.CANVAS_WIDTH/2);
-		
-		frame.get(3).setX(Config.CANVAS_WIDTH/2);
-		frame.get(3).setY(Config.CANVAS_HEIGHT);
-		
+	
 		renderer.updateProjectionMatrix();
 	}
 

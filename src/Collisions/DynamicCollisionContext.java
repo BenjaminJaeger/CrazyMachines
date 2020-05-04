@@ -4,7 +4,7 @@ import Collisions.Boundings.BoundingCircle;
 import Collisions.Boundings.BoundingPolygon;
 import Objects.GameObject;
 import Objects.MovableObjects.MoveableObject;
-import Objects.MovableObjects.Ball.Ball;
+import Objects.StaticObjects.StaticObject;
 
 public class DynamicCollisionContext extends CollisionContext{
 
@@ -40,68 +40,78 @@ public class DynamicCollisionContext extends CollisionContext{
 	public void checkCollisions() {
 		for (GameObject object : GameObject.allObjects) 
 			if (object.getCollisionContext().getID()!=id) 
-				checkCollision(object.getCollisionContext());	
+				if(checkCollision(object.getCollisionContext())) 
+					collisionResolution(object);
+				
 	}
 	
 	
 ///////////////
 ////Methods////
 ///////////////
-	public void checkCollision(CollisionContext context) {
-		checkCollisionCircleCircle(context);
-		checkCollisionPolygonCircle(context);
-		checkCollisionPolygonPolygon(context);
+	public boolean checkCollision(CollisionContext context) {	
+		if(checkCollisionPolygonCircle(context)) {
+//			System.out.println("POLYGON CIRCLE COLLISION");
+			return true;
+		}
+		
+		if(checkCollisionCircleCircle(context)) {
+//			System.out.println("CIRCLE CIRCLE COLLISION");
+			return true;
+		}
+		
+			
+		if(checkCollisionPolygonPolygon(context)) {
+//			System.out.println("POLYGON POLYGON COLLISION");
+			return true;
+		}
+		
+		return false;	
 	}
 	
-	public void checkCollisionCircleCircle(CollisionContext context) {
-		for (BoundingCircle circle1 : boundingCirlces) 
-			for (BoundingCircle circle2 : context.getBoundingCircles()) 
-				if(circle1.checkCollision(circle2)) {
-					
-					//remove collision
-					//Collision.removeCollision((Ball)gameObject, (Ball)context.getGameObject());
-					
-					Collision.removeCollision((Ball)gameObject, (Ball)context.getGameObject());
-					
-					if(context instanceof DynamicCollisionContext) {
-						Collision.elasticCollision((MoveableObject) gameObject, (MoveableObject)context.getGameObject());
-					}else {
-						//collision with static object
-					}
-				}
-	}
-	
-	public void checkCollisionPolygonPolygon(CollisionContext context) {
-		for (BoundingPolygon polygon1 : boundingPolygons) 
-			for (BoundingPolygon polygon2 : context.getBoundingPolygons()) 			
-				if(polygon1.checkCollision(polygon2)) {
-					
-					//remove collision
-					//Collision.removeCollision((Ball)gameObject, (Ball)context.getGameObject());
-					
-					if(context instanceof DynamicCollisionContext) {
-						Collision.elasticCollision((MoveableObject) gameObject, (MoveableObject)context.getGameObject());
-					}else {
-						//collision with static object
-					}
-				}
+
+	public void collisionResolution(GameObject object) {
+		if(object instanceof MoveableObject) {
+			Collision.removeCollision((MoveableObject) gameObject, (MoveableObject)object);
+			Collision.elasticCollision((MoveableObject) gameObject, (MoveableObject)object);		
+		}else {
+			Collision.removeCollision((MoveableObject) gameObject , (StaticObject)object);
+			Collision.elasticCollision((MoveableObject) gameObject , (StaticObject)object);
+		}
 			
 	}
 	
-	public void checkCollisionPolygonCircle(CollisionContext context) {
+	public boolean checkCollisionCircleCircle(CollisionContext context) {
+		for (BoundingCircle circle1 : boundingCirlces) 
+			for (BoundingCircle circle2 : context.getBoundingCircles()) 
+				if(circle1.checkCollision(circle2)) 
+					return true;
+		
+		return false;	
+	}
+	
+	public boolean checkCollisionPolygonPolygon(CollisionContext context) {
+		for (BoundingPolygon polygon1 : boundingPolygons) 
+			for (BoundingPolygon polygon2 : context.getBoundingPolygons()) 			
+				if(polygon1.checkCollision(polygon2)) 
+					return true;
+
+		return false;	
+	}
+	
+	public boolean checkCollisionPolygonCircle(CollisionContext context) {
 		for (BoundingPolygon polygon : boundingPolygons) 
 			for (BoundingCircle circle : context.getBoundingCircles()) 
-				if(circle.checkCollision(polygon)) {
+				if(circle.checkCollision(polygon)) 
+					return true;
+				
 
-					//remove collision
-					//Collision.removeCollision((Ball)gameObject, (Ball)context.getGameObject());
-					
-					if(context instanceof DynamicCollisionContext) {
-						Collision.elasticCollision((MoveableObject) gameObject, (MoveableObject)context.getGameObject());
-					}else {
-						//collision with static object
-					}
-				}
+		for (BoundingPolygon polygon : context.getBoundingPolygons()) 
+			for (BoundingCircle circle : boundingCirlces) 
+				if(circle.checkCollision(polygon)) 
+					return true;
+
+		return false;	
 	}
 	
 }

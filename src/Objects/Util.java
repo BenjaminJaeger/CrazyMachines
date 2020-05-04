@@ -1,5 +1,6 @@
 package Objects;
 
+import RenderEngine.Core.Config;
 import RenderEngine.Core.Math.Vector2f;
 
 public class Util {
@@ -37,4 +38,27 @@ public class Util {
 		for (int i = 0; i < dest.length; i++) 
 			dest[i]= new Vector2f(source[i].x, source[i].y);
 	}
+	
+	public static float getRandomVelocity(float scale) {
+		if(Math.random() < 0.5)
+			return -(float)Math.random() * scale;
+		else 
+			return (float)Math.random() * scale;
+	}
+	
+	public static float getRandomPositionX() {
+		if(Math.random() < 0.5)
+			return -(float)Math.random() * Config.CANVAS_WIDTH/4;
+		else 
+			return (float)Math.random() * Config.CANVAS_WIDTH/4;
+	}
+	
+	public static float getRandomPositionY() {
+		if(Math.random() < 0.5)
+			return -(float)Math.random() * Config.CANVAS_HEIGHT/4;
+		else 
+			return (float)Math.random() * Config.CANVAS_HEIGHT/4;
+	}
+	
+	
 }

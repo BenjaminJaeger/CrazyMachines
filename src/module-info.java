@@ -8,7 +8,7 @@ module jfx {
 	exports RenderEngine.Primitives;
 	exports RenderEngine.Core.Shaders.Core;
 	exports RenderEngine.Core;
-	exports Collisions.BoundingCreator;
+	exports BoundingCreator;
 	exports MAIN.Simulation;
 	exports MAIN.UI;
 

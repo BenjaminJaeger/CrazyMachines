@@ -312,7 +312,21 @@ public class Matrix4f {
 		m23=c;
 		m32=-1;
 		m33=0;
+		
+//		changeToOrthographicMatrix(100,100,100,100,100,100);
 	}
+	
+//	public void changeToOrthographicMatrix(float left,float right,float top,float bottom,float near,float far) {
+//		this.setIdentityMatrix();//reset
+//		
+//		m00 = 2/(right-left);
+//		m11 = 2/(top-bottom);
+//		m22 = -2/(far-near);
+//		
+////		m03 = -(right+left)/(right-left);
+////		m13 = -(top+bottom)/(top-bottom);
+////		m23 = -(far+near)/(far-near);
+//	}
 	
 	/**
 	 * Resets this matrix and stores a newly created model matrix in this matrix.
@@ -524,10 +538,10 @@ public class Matrix4f {
 		*/
 		
 		//Convert x,y to top left corner
-		x=x-Config.CANVAS_WIDTH/(float)4;
-		y=-y+Config.CANVAS_HEIGHT/(float)4;
+//		x=x-Config.CANVAS_WIDTH/(float)4;
+//		y=-y+Config.CANVAS_HEIGHT/(float)4;
 		
-		//deivide by width and height to work with pixels as unit
+		//divide by width and height to work with pixels as unit
 		x/=Config.CANVAS_WIDTH;
 		y/=Config.CANVAS_HEIGHT;
 		

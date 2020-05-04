@@ -15,6 +15,7 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
+import Objects.Util;
 import Objects.MovableObjects.MoveableObject;
 import Objects.MovableObjects.Ball.MetallBall;
 import Objects.MovableObjects.Box.MetallBox;
@@ -115,13 +116,14 @@ public class TestingCirclePolygonCollision extends Application implements GLEven
 		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
-		for (int i = 0; i < 5; i++) {			
-			float x = (float)Math.random()*Config.CANVAS_WIDTH;
-			float y = (float)Math.random()*Config.CANVAS_HEIGHT;
+	
+		for (int i = 0; i < 3; i++) {			
+			float x = Util.getRandomPositionX();
+			float y = Util.getRandomPositionY();
 			float mass = (float)Math.random()+0.5f;
-			float radius = mass*50;
-			float velocityX = (float)Math.random()*2;
-			float velocityY = (float)Math.random()*2;
+			float radius = mass*40;
+			float velocityX = Util.getRandomVelocity(4);
+			float velocityY = Util.getRandomVelocity(4);
 			
 			MoveableObject ball = new MetallBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
 			ball.setMass(mass);
@@ -130,12 +132,12 @@ public class TestingCirclePolygonCollision extends Application implements GLEven
 			ball.renderBounding(true);
 			allobjects.add(ball);		
 			
-			x = (float)Math.random()*Config.CANVAS_WIDTH;
-			y = (float)Math.random()*Config.CANVAS_HEIGHT;
+			x = Util.getRandomPositionX();
+			y = Util.getRandomPositionY();
 			mass = (float)Math.random()+0.5f;
 			float size = mass*60;
-			velocityX = (float)Math.random()*2;
-			velocityY = (float)Math.random()*2;
+			velocityX = Util.getRandomVelocity(4);
+			velocityY = Util.getRandomVelocity(4);
 			float rotation =  (float)Math.random()*360;
 			
 			MoveableObject box = new MetallBox(size, (float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
@@ -155,10 +157,10 @@ public class TestingCirclePolygonCollision extends Application implements GLEven
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
 					for (MoveableObject object : allobjects) {
-						float x = (float)Math.random()*Config.CANVAS_WIDTH;
-						float y = (float)Math.random()*Config.CANVAS_HEIGHT;
-						float velocityX = (float)Math.random()*2;
-						float velocityY = (float)Math.random()*2;
+						float x = Util.getRandomPositionX();
+						float y = Util.getRandomPositionY();
+						float velocityX = Util.getRandomVelocity(4);
+						float velocityY = Util.getRandomVelocity(4);
 						object.setY(y);
 						object.setX(x);
 						object.setAccelerationX(velocityX);

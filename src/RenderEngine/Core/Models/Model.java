@@ -78,7 +78,16 @@ public abstract class Model {
 		updateMatrix=true;
 	}
 	
-
+	public Model(float[] vertices,float r,float g,float b, float x,float y) {
+		mesh = new Mesh(vertices,r,g,b);
+		scaleX=1;
+		scaleY=1;
+		scaleZ=1;
+		this.x = x;
+		this.y = y;
+		updateMatrix=true;
+	}
+	
 	/**
 	 * increases the current xyz position by dx,dy,dz
 	 */

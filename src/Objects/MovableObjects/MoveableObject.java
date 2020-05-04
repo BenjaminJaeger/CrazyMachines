@@ -2,6 +2,7 @@ package Objects.MovableObjects;
 
 import Collisions.DynamicCollisionContext;
 import Objects.GameObject;
+import RenderEngine.Core.Config;
 import RenderEngine.Core.Shaders.Core.Material;
 import RenderEngine.Primitives.Primitive;
 
@@ -41,11 +42,10 @@ public abstract class MoveableObject extends GameObject{
 
 	public void update() {
 		
-		//collisionContext.update(x,y,rotation);
-		
+	
 		//applyForce(0, 0.5f);
-			 
-			
+		checkEdges();	
+		
 		increaseVelocity(accelerationX, accelerationY);
 		
 //		if (Math.abs(velocityX) <0.01f) 
@@ -54,7 +54,7 @@ public abstract class MoveableObject extends GameObject{
 //			velocityY=0;
 			
 		increasePosition(velocityX, velocityY);
-		//increaseRotation(velocityX);
+//		increaseRotation(velocityX);
 		resetAcceleration();
 			
 		((DynamicCollisionContext) collisionContext).checkCollisions();
@@ -63,6 +63,16 @@ public abstract class MoveableObject extends GameObject{
 //		accelerationY = -velocityY*0.0005f;
 	}
 	
+	protected void checkEdges() {
+		
+		
+		if(y>Config.CANVAS_HEIGHT/4 || y<-Config.CANVAS_HEIGHT/4)  
+			velocityY*=-1;
+		
+		if(x>Config.CANVAS_WIDTH/4 || x<-Config.CANVAS_WIDTH/4) 
+			velocityX*=-1;
+	}
+
 	public void applyForce(float x,float y) {
 		x/=mass;
 		y/=mass;

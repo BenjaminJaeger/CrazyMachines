@@ -1,4 +1,4 @@
-package Collisions.BoundingCreator;
+package BoundingCreator;
 
 import java.util.ArrayList;
 

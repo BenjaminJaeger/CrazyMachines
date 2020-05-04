@@ -4,15 +4,15 @@ import Collisions.Boundings.BoundingPolygon;
 import Collisions.Boundings.BoundingReader;
 import RenderEngine.Core.Shaders.Core.Material;
 
-public class Icosahedron extends ExternalObject{
+public class Bucket extends ExternalObject{
 
-	public Icosahedron(Material material, float r, float g, float b, float x, float y) {
-		super("icosahedron", material, r, g, b, x, y);
+	public Bucket(Material material, float r, float g, float b, float x, float y) {
+		super("Bucket", material, r, g, b, x, y);
 		calculateConvexeHull();
 	}
 
 	private void calculateConvexeHull() {
-		BoundingPolygon[] convexeHulls = BoundingReader.read("Icosahedron", x, y);
+		BoundingPolygon[] convexeHulls = BoundingReader.read("Bucket", x, y);
 		
 		collisionContext.setBoundingPolygons(convexeHulls);
 	}

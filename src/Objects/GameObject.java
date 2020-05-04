@@ -161,6 +161,8 @@ public abstract class GameObject {
 			model.setScaleY(scale);	
 		for (Model model : models) 
 			model.setScaleZ(scale);
+		
+		collisionContext.setScale(scale);
 	}
 	
 	public float getScaleX() {

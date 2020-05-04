@@ -12,8 +12,8 @@ public class BoundingPolygon extends Bounding{
 ////////////////////
 ////Constructors////
 ////////////////////
-	public BoundingPolygon(float offset, float x, float y,Vector2f[] points) {
-		super(offset, x, y);
+	public BoundingPolygon(float x, float y,Vector2f[] points) {
+		super(x, y);
 		this.originalPoints = points;
 		
 		//copy Array and add current position
@@ -89,9 +89,9 @@ public class BoundingPolygon extends Bounding{
 			points[i]= new Vector2f(originalPoints[i].x, originalPoints[i].y);
 		
 		for (Vector2f p : points) {
-			p.rotate(-rotation);
-			p.x+=x;		
-			p.y+=y;
+			p.rotate(rotation);
+			p.x=p.x*scale+x;		
+			p.y=p.y*scale+y;
 		}
 	}
 	
@@ -104,9 +104,9 @@ public class BoundingPolygon extends Bounding{
 			points[i]= new Vector2f(originalPoints[i].x, originalPoints[i].y);
 		
 		for (Vector2f p : points) {
-			p.rotate(-rotation);
-			p.x+=x;		
-			p.y+=y;
+			p.rotate(rotation);
+			p.x=p.x*scale+x;		
+			p.y=p.y*scale+y;
 		}
 	}
 	
@@ -119,9 +119,24 @@ public class BoundingPolygon extends Bounding{
 			points[i]= new Vector2f(originalPoints[i].x, originalPoints[i].y);
 		
 		for (Vector2f p : points) {			
-			p.rotate(-rotation);
-			p.x+=x;		
-			p.y+=y;
+			p.rotate(rotation);
+			p.x=p.x*scale+x;		
+			p.y=p.y*scale+y;
+		}
+	}
+	
+	public void setScale(float scale) {
+		super.setScale(scale);
+
+		//copy Array
+		points = new Vector2f[originalPoints.length];
+		for (int i = 0; i < points.length; i++) 
+			points[i]= new Vector2f(originalPoints[i].x, originalPoints[i].y);
+		
+		for (Vector2f p : points) {			
+			p.rotate(rotation);
+			p.x=p.x*scale+x;		
+			p.y=p.y*scale+y;
 		}
 	}
 

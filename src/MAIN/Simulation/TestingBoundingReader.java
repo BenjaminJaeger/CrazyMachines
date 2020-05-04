@@ -1,7 +1,6 @@
 package MAIN.Simulation;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+
 import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
@@ -17,7 +16,8 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 import Objects.Util;
 import Objects.MovableObjects.MoveableObject;
-import Objects.MovableObjects.Ball.MetallBall;
+import Objects.MovableObjects.Box.MetallBox;
+import Objects.MovableObjects.ExternalObjects.Icosahedron;
 import RenderEngine.Core.Config;
 import RenderEngine.Core.Camera.Camera;
 import RenderEngine.Core.Lights.AmbientLight;
@@ -34,7 +34,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class TestingCircleCircleCollision extends Application implements GLEventListener{
+public class TestingBoundingReader extends Application implements GLEventListener{
 
 	private FPSAnimator animator;
 	private GLJPanel canvas;
@@ -42,7 +42,8 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 	private BasicShader shader;
 	private Camera camera;
 	
-	private ArrayList<MoveableObject> allobjects = new ArrayList<MoveableObject>();
+	private MoveableObject model1;
+	private MoveableObject model2;
 	
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
 
@@ -56,8 +57,6 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 		primaryStage.setTitle("Circle-Polygon Collision");
 		primaryStage.setScene(new Scene(root, 800, 800));
 		primaryStage.show();	
-		
-		
 		
 		//JFX Code für Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
@@ -78,10 +77,11 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
 		
-		for (MoveableObject moveableObject : allobjects) {
-			moveableObject.update();
-			renderer.render(moveableObject, shader); 
-		}
+		model1.update();
+		renderer.render(model1, shader); 
+		
+		model2.update();
+		renderer.render(model2, shader); 
 		
 		for (LineModel object : test) 
 			renderer.render(object,shader);			
@@ -100,7 +100,6 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 		Config.CANVAS_HEIGHT = canvas.getHeight();
 		Config.CANVAS_WIDTH = canvas.getWidth();
 		
-		
 		camera= new Camera(canvas);
 		camera.setZ(1f);
 		
@@ -116,54 +115,25 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
-		
 
-			
-		for (int i = 0; i < 8; i++) {			
-			float x = Util.getRandomPositionX();
-			float y = Util.getRandomPositionY();
-			float rotation = (float)Math.random()*360;
-			float velocityX = Util.getRandomVelocity(4);
-			float velocityY = Util.getRandomVelocity(4);
-			float radius = (float)Math.random()*30+30;
-			float mass = radius;
-			
-			MoveableObject ball = new MetallBall(radius, 30, (float)Math.random(), (float)Math.random(),(float)Math.random(), x, y);
-			ball.setRotation(rotation);
-			ball.renderBounding(true);
-			ball.setVelocityX(velocityX);
-			ball.setVelocityY(velocityY);
-			ball.setScale(0.5f);
-			allobjects.add(ball);		
-		}
+//		model1 = new Bucket(basicMaterial, 0, 1, 1, 0, -100);
+//		model1.setAccelerationX(Util.getRandomVelocity(4));
+//		model1.setAccelerationY(Util.getRandomVelocity(4));
+//		model1.renderBounding(true);
+//		model1.setScale(0.1f);
 		
-			
-		canvas.addKeyListener(new KeyListener() {
-			public void keyTyped(KeyEvent e) {}
-			public void keyReleased(KeyEvent e) {}
-			
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-					for (MoveableObject object : allobjects) {
-						float rotation = (float)Math.random()*360;
-						float x = Util.getRandomPositionX();
-						float y = Util.getRandomPositionY();
-						
-						float velocityX = Util.getRandomVelocity(4);
-						float velocityY = Util.getRandomVelocity(4);;
-						
-						object.setVelocityX(velocityX);
-						object.setVelocityY(velocityY);
-						
-						object.setY(y);
-						object.setX(x);
-					}
-
-				}
-			}
-		});
+		model1 = new MetallBox(300,300,300, 0, 0, 1, 0, -100);
+//		model1.setAccelerationX(Util.getRandomVelocity(4));
+//		model1.setAccelerationY(Util.getRandomVelocity(4));
+		model1.renderBounding(true);
+		model1.setScale(0.1f);
 		
-//		frame = new Frame();
+		model2 = new Icosahedron(basicMaterial, 0, 1, 0, 0, 200);
+		model2.setAccelerationX(Util.getRandomVelocity(4));
+		model2.setAccelerationY(Util.getRandomVelocity(4));
+//		model2.setAccelerationY(-2);
+		model2.renderBounding(true);
+		model2.setScale(0.3f);
 		
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
 	}

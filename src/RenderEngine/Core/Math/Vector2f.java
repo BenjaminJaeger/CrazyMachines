@@ -15,6 +15,12 @@ public class Vector2f {
 		this.y=y;
 	}
 
+	public void normalize() {
+		float magnitude = (float)Math.sqrt(x*x+y*y); //Euclidean distance (magnitude=length of the vector)
+		x/=magnitude;
+		y/=magnitude;
+	}
+	
 	/**
 	 * divides each component through the devisor
 	 * @param devisor

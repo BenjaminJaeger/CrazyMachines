@@ -15,8 +15,9 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
+import Objects.Util;
 import Objects.MovableObjects.MoveableObject;
-import Objects.MovableObjects.ExternalObjects.Icosahedron;
+import Objects.MovableObjects.Box.MetallBox;
 import RenderEngine.Core.Config;
 import RenderEngine.Core.Camera.Camera;
 import RenderEngine.Core.Lights.AmbientLight;
@@ -76,6 +77,9 @@ public class TestingPolygonPolygonCollision extends Application implements GLEve
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
 
+
+		
+		
 		for (MoveableObject moveableObject : allPolygons) {
 			moveableObject.update();
 			renderer.render(moveableObject, shader); 
@@ -114,17 +118,16 @@ public class TestingPolygonPolygonCollision extends Application implements GLEve
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
 
-		for (int i = 0; i < 2; i++) {			
-			float x = (float)Math.random()*Config.CANVAS_WIDTH;
-			float y = (float)Math.random()*Config.CANVAS_HEIGHT;
+		for (int i = 0; i < 5; i++) {			
+			float x = Util.getRandomPositionX();
+			float y = Util.getRandomPositionY();
 			float mass = (float)Math.random()+0.5f;
-			float radius = mass*50;
-			float velocityX = (float)Math.random()*2;
-			float velocityY = (float)Math.random()*2;	
+			float velocityX = Util.getRandomVelocity(4);
+			float velocityY = Util.getRandomVelocity(4);
 			float size = mass*50;
 			float rotation =  (float)Math.random()*360;
 			
-			MoveableObject box = new Icosahedron( basicMaterial,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
+			MoveableObject box = new MetallBox(size, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
 			box.renderBounding(true);
 			box.setMass(mass);
 			box.setAccelerationX(velocityX);
@@ -133,7 +136,6 @@ public class TestingPolygonPolygonCollision extends Application implements GLEve
 			allPolygons.add(box);	
 		}
 		
-			
 		canvas.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {}
 			public void keyReleased(KeyEvent e) {}
@@ -141,14 +143,14 @@ public class TestingPolygonPolygonCollision extends Application implements GLEve
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
 					for (MoveableObject object : allPolygons) {
-						float x = (float)Math.random()*Config.CANVAS_WIDTH;
-						float y = (float)Math.random()*Config.CANVAS_HEIGHT;
-						float velocityX = (float)Math.random()*2;
-						float velocityY = (float)Math.random()*2;
+						float x = Util.getRandomPositionX();
+						float y = Util.getRandomPositionY();
+						float velocityX = Util.getRandomVelocity(4);
+						float velocityY = Util.getRandomVelocity(4);
 						object.setY(y);
 						object.setX(x);
-						object.setAccelerationX(velocityX);
-						object.setAccelerationY(velocityY);
+						object.setVelocityX(velocityX);
+						object.setVelocityY(velocityY);
 					}
 				}
 			}
