@@ -1,14 +1,14 @@
 module jfx {
-	exports RenderEngine.Core.Camera;
-	exports RenderEngine.Core.CatchErrors;
-	exports RenderEngine.Core.Lights;
-	exports RenderEngine.Core.Renderer;
-	exports RenderEngine.Core.Math;
-	exports RenderEngine.Core.Models;
-	exports RenderEngine.Primitives;
-	exports RenderEngine.Core.Shaders.Core;
-	exports RenderEngine.Core;
-	exports BoundingCreator;
+	exports Simulation.RenderEngine.Core.Camera;
+	exports Simulation.RenderEngine.Core.CatchErrors;
+	exports Simulation.RenderEngine.Core.Lights;
+	exports Simulation.RenderEngine.Core.Renderer;
+	exports Simulation.RenderEngine.Core.Math;
+	exports Simulation.RenderEngine.Core.Models;
+	exports Simulation.RenderEngine.Primitives;
+	exports Simulation.RenderEngine.Core.Shaders.Core;
+	exports Simulation.RenderEngine.Core;
+	exports Simulation.BoundingCreator;
 	exports MAIN.Simulation;
 	exports MAIN.UI;
 

@@ -1,18 +1,19 @@
 package MAIN.Simulation;
 
-import Particles.ParticleSystem;
-import RenderEngine.Core.Camera.Camera;
-import RenderEngine.Core.Config;
-import RenderEngine.Core.Lights.AmbientLight;
-import RenderEngine.Core.Lights.DirectionalLight;
-import RenderEngine.Core.Math.Vector2f;
-import RenderEngine.Core.Math.Vector3f;
-import RenderEngine.Core.Models.LineModel;
-import RenderEngine.Core.Renderer.Renderer;
-import RenderEngine.Core.Shaders.Core.BasicShader;
-import RenderEngine.Core.Shaders.Core.Material;
-import RenderEngine.Primitives.CircleLine;
-import RenderEngine.Primitives.Cube;
+import Simulation.Particles.ParticleSystem;
+import Simulation.RenderEngine.Core.Config;
+import Simulation.RenderEngine.Core.Camera.Camera;
+import Simulation.RenderEngine.Core.Lights.AmbientLight;
+import Simulation.RenderEngine.Core.Lights.DirectionalLight;
+import Simulation.RenderEngine.Core.Math.Vector2f;
+import Simulation.RenderEngine.Core.Math.Vector3f;
+import Simulation.RenderEngine.Core.Models.LineModel;
+import Simulation.RenderEngine.Core.Renderer.Renderer;
+import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
+import Simulation.RenderEngine.Core.Shaders.Core.Material;
+import Simulation.RenderEngine.Primitives.CircleLine;
+import Simulation.RenderEngine.Primitives.Cube;
+
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
