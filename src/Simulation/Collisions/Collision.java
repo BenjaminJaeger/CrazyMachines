@@ -41,7 +41,7 @@ public class Collision {
 		float v1x = (u1.x * (m1 - m2) ) / (m1+m2);
 		float v1y = (u1.y * (m1 - m2) ) / (m1+m2);
 		
-		Vector2f finalv1 = Util.rotate(v1x,v1y,-angle);
+		Vector2f finalv1 = Util.rotate(v1x,v1y, -angle);
 		
 		object1.setVelocityX(finalv1.x);
 		object1.setVelocityY(finalv1.y);
@@ -56,7 +56,7 @@ public class Collision {
 			
 			float distance = Util.getDistance(object2.getX(), object2.getY(), object1.getX(), object1.getY());
 			
-			float overlap = 0.1f;
+			float overlap = 1f;
 			
 			float object1X = object1.getX() + overlap*(object1.getX()-object2.getX())/distance;
 			float object1Y = object1.getY() + overlap*(object1.getY()-object2.getY())/distance;
@@ -75,7 +75,7 @@ public class Collision {
 		do {		
 			float distance = Util.getDistance(object2.getX(), object2.getY(), object1.getX(), object1.getY());
 			
-			float overlap = 0.1f;
+			float overlap = 1f;
 			
 			float object1X = object1.getX()+overlap*(object1.getX()-object2.getX())/distance;
 			float object1Y = object1.getY()+overlap*(object1.getY()-object2.getY())/distance;

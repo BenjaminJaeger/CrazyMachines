@@ -70,7 +70,7 @@ public class Main extends Application implements GLEventListener{
 	public void start(Stage primaryStage) throws Exception {
 		BorderPane root = new BorderPane();
 		primaryStage.setTitle("Bounding Creator");
-		primaryStage.setScene(new Scene(root, 800, 800));
+		primaryStage.setScene(new Scene(root, 900, 900));
 		primaryStage.show();	
 		
 		HBox options = new HBox(10);
@@ -129,7 +129,8 @@ public class Main extends Application implements GLEventListener{
 		save.setStyle("-fx-pref-height: 40px; -fx-pref-width: 150px;");
 		save.setOnAction(e->{
 			try {
-				FileOutputStream file = new FileOutputStream(System.getProperty("user.home")+ "/Desktop/"+fileName+"Bounding.txt");
+				FileOutputStream file = new FileOutputStream(System.getProperty("user.dir")+"/res/"+fileName+".txt");
+				System.out.println(System.getProperty("user.dir")+"/res/"+fileName+".txt");
 				for (ArrayList<Vector2f> hull : hulls) {
 					file.write("#New BoundingPolygon".getBytes());
 					file.write("\n".getBytes());
@@ -138,7 +139,6 @@ public class Main extends Application implements GLEventListener{
 						file.write(string.getBytes());
 						file.write("\n".getBytes());
 					}
-					file.write("\n".getBytes());
 				}
 				
 				file.close();
@@ -211,8 +211,11 @@ public class Main extends Application implements GLEventListener{
 					float x = ((float)e.getX() - (float)canvas.getWidth()/2 +camera.getX()) / (float)canvas.getWidth();
 		  			float y = ((float)canvas.getHeight()/2 -(float)e.getY() +camera.getY()) / (float)canvas.getHeight();
 		  			
+		  			
 		  			x*=camera.getZ()*0.75f;
 		  			y*=camera.getZ()*0.75f;
+		  			
+		  			
 		  			
 		  			currentHull.set(currentHull.size()-1, new Vector2f(x, y));
 				}

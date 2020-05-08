@@ -186,7 +186,7 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 	  			float y = ((float)canvas.getHeight()/2 -(float)e.getY() +camera.getY());
 	  			
 	  			model1.setX(x);
-				model1.setY(y);			
+				model1.setY(y);		
 			}
 			
 			public void mouseDragged(MouseEvent e) {}

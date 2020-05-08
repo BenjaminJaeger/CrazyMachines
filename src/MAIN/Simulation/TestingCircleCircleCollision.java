@@ -57,8 +57,7 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 		primaryStage.setScene(new Scene(root, 800, 800));
 		primaryStage.show();	
 		
-		
-		
+	
 		//JFX Code für Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
 		canvas = new GLJPanel(capabilities);	    
@@ -115,10 +114,7 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 		
 		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
-
-		
-
-			
+	
 		for (int i = 0; i < 8; i++) {			
 			float x = Util.getRandomPositionX();
 			float y = Util.getRandomPositionY();
@@ -162,8 +158,6 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 				}
 			}
 		});
-		
-//		frame = new Frame();
 		
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
 	}

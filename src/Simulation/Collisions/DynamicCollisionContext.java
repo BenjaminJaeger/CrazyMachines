@@ -40,7 +40,7 @@ public class DynamicCollisionContext extends CollisionContext{
 	public void checkCollisions() {
 		for (GameObject object : GameObject.allObjects) 
 			if (object.getCollisionContext().getID()!=id) 
-				if(checkCollision(object.getCollisionContext())) 
+				if(checkCollision(object.getCollisionContext())) 					
 					collisionResolution(object);
 				
 	}

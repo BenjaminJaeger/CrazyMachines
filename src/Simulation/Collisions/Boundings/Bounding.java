@@ -62,7 +62,8 @@ public abstract class Bounding {
 	
 	public void setScale(float scale) {
 		this.scale = scale;
-		model.setScale(scale);	
+		model.setScaleX(scale);
+		model.setScaleY(scale);
 	}
 	
 }
