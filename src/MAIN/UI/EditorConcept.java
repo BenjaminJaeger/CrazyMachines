@@ -24,7 +24,11 @@ import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
 
@@ -48,13 +52,25 @@ public class EditorConcept extends Application implements GLEventListener{
 	}
 	
 	public void start(Stage primaryStage) throws Exception {
-		BorderPane root = new BorderPane();
-		root.setStyle("-fx-background-color: rgb(102,127,102);");
+		//stackpane for switching between layouts
+		StackPane root = new StackPane ();
+
+		//pane for moving around the Image
+		Pane dragAnimator = new Pane ();
+		ImageView animateObject = new ImageView ();
+		dragAnimator.getChildren().add(animateObject);
+
+		//BorderPane for managing the general layout of the editor
+		BorderPane layout = new BorderPane();
+
+		root.getChildren().addAll(dragAnimator, layout);
+		layout.toFront();
+		layout.setStyle("-fx-background-color: rgb(102,127,102);");
 
 		//build TabPane in bottom part of UI
 		EditorTabPane etp = new EditorTabPane ();
 		TabPane tabPane = etp.buildTabPane();
-		root.setBottom(tabPane);
+		layout.setBottom(tabPane);
 
 		//window specs and show
 		primaryStage.setTitle("Editor Alpha");
@@ -75,7 +91,9 @@ public class EditorConcept extends Application implements GLEventListener{
 		animator = new FPSAnimator(canvas, 60);
 		animator.start();
 
+		//event for creating an object after releasing the drag
 		root.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
+			layout.toFront();
 			//define specs of mouse pointer and canvas size
 			double mX = e.getSceneX();
 			double mY = e.getSceneY();
@@ -88,28 +106,36 @@ public class EditorConcept extends Application implements GLEventListener{
 			if (etp.isDragging()
 			&& mX >= cX && mY >= cY
 			&& mX <= cX+cW && mY <= cY+cH) {
-				System.out.print("MouseOver-");
 				//get currently dragged object from EditorTabPane "etp"
 				MetaObject dObj = etp.getDraggedObject();
 
 				// Always check i the MetaObject dObj is an instance of a certain specific MetaObj
 				// to assure a secure type cast for the object later
 				if (dObj instanceof MetallBallMeta) {
-					System.out.print("MetallBall-");
 
 				}
 				else if (dObj instanceof PlankMeta) {
-					System.out.print("WoodenPlank-");
 				}
 			}
-			System.out.println("Mouse released");
 
 			etp.resetDrag();
 		});
 
+		//event for animating the drag
+		root.addEventFilter(MouseEvent.MOUSE_DRAGGED, e -> {
+			if (etp.isDragging()) {
+				dragAnimator.toFront();
+				animateObject.setImage(new Image(etp.getDraggedObject().getObjectImageURL()));
+				double size = 100;
+				animateObject.setFitHeight(size);
+				animateObject.setFitWidth(size);
+				animateObject.relocate(e.getX()-(size/2), e.getY()-(size/2));
+			}
+		});
+
 
 		//add canvas to ui
-		root.setCenter(canvasWrapper);
+		layout.setCenter(canvasWrapper);
 	}
 	
 	@Override

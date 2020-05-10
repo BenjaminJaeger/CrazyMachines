@@ -76,7 +76,6 @@ public class EditorTabPane {
 
         //Drag Events
         woodenPlank.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
-            System.out.print("Drag started-");
             draggedObject = woodenPlank.getMetaObject();
             isDragging=true;
         });
