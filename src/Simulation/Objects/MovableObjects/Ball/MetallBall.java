@@ -2,6 +2,8 @@ package Simulation.Objects.MovableObjects.Ball;
 
 import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 
 public class MetallBall extends Ball{
 	

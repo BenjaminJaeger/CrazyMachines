@@ -7,6 +7,8 @@ import Simulation.RenderEngine.Core.Models.Model;
 import Simulation.RenderEngine.Core.Models.TriangleModel;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Primitive;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 
 public abstract class GameObject {
 
@@ -208,5 +210,4 @@ public abstract class GameObject {
 	public void renderModel(boolean renderModel) {
 		this.renderModel  = renderModel;
 	}
-
 }
