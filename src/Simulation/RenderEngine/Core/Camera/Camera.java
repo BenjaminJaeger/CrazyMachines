@@ -76,7 +76,13 @@ public class Camera {
 		viewMatrix.changeToViewMatrix(this);			
 	}
 	
-
+	public void updateMatrix() {
+		if(updateMatrix) {
+			viewMatrix.changeToViewMatrix(this);
+			updateMatrix=false;
+		}
+	}
+	
 	public float getX() {
 		return x;
 	}
@@ -142,7 +148,6 @@ public class Camera {
 	public boolean getMatrixUpdate() {
 		return updateMatrix;
 	}
-	
 	
 	public CameraControls getCameraControls() {
 		return cameraControls;

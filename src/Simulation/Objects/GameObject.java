@@ -28,6 +28,8 @@ public abstract class GameObject {
 	
 	protected float mass = 1;
 	
+	protected boolean selected;
+	
 ////////////////////
 ////Constructors////
 ////////////////////
@@ -302,6 +304,18 @@ public abstract class GameObject {
 
 	public float getMass() {
 		return mass;
+	}
+	
+	public void selectObject() {
+		selected=true;
+	}
+	
+	public void unSelectObject() {
+		selected=false;
+	}
+	
+	public boolean isSelected() {
+		return selected;
 	}
 	
 }

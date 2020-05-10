@@ -34,6 +34,7 @@ import Simulation.RenderEngine.Primitives.CircleLine;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -64,12 +65,16 @@ public class TestingGravity extends Application implements GLEventListener{
 		primaryStage.setTitle("Circle-Polygon Collision");
 		primaryStage.setScene(new Scene(root, 800, 800));
 		primaryStage.show();	
-			
+		
+		Pane pane = new Pane();
+		pane.setOnMouseClicked(e->{
+			model2.selectObject();
+		});
+		
 		//JFX Code für Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
 		canvas = new GLJPanel(capabilities);	    
 		SwingNode swingNode = new SwingNode();		 
-		root.getChildren().add(swingNode);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 		    	swingNode.setContent(canvas);	
@@ -78,6 +83,9 @@ public class TestingGravity extends Application implements GLEventListener{
 		canvas.addGLEventListener(this);		
 		animator = new FPSAnimator(canvas, 60);
 	  	animator.start();
+	  	
+		root.getChildren().add(swingNode);
+		root.getChildren().add(pane);
 	}
 	
 	@Override

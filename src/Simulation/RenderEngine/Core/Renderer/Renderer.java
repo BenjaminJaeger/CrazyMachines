@@ -87,51 +87,28 @@ public class Renderer {
 				render(polygon.getModel(), polygon.getShader());
 		}
 		
-		if(object.renderModel())
+		if(object.renderModel()) {
+			shader.use(); //activate shader before rendering
+			shader.uploadSelectionHighlight(object.isSelected());
 			for (TriangleModel model : object.getModels()) 
 				render(model,shader);
+		}
 	}
+
 	
-	/**
-	 * Renders a model to the screen with the current active shader program.
-	 * 
-	 * 0.activate shader
-	 * 1.upload material of the model to the shader.
-	 * 2.upload all lights that are available to the shader.
-	 * 3.check if model moved. if yes recalculate model matrix using the transformations of the model. if no use unchanged model matrix from the model.
-	 * 4.upload model matrix to the shader.
-	 * 5.check if camera moved. if yes recalculate view matrix using the transformations of the camera. if no use unchanged view matrix from the camera.
-	 * 6.upload view matrix to the shader.
-	 * 7.concatenate model view and projection matrix to one matrix and upload it to the shader.
-	 * 8.check if the mesh is a triangle mesh or line mesh
-	 * 9.Activate vao of the model and render it using index buffer. (glDrawElements)
-	 * 
-	 * @param model
-	 * 			-Model to be rendered
-	 * @param shader
-	 * 			-Shader of the model
-	 */	
 	public void render(TriangleModel model,BasicShader shader) {
 		GL4 gl=(GL4)GLContext.getCurrentGL();
+	
+		model.getMesh().update();	
 		
-		shader.use(); //activate shader before rendering
+		
 		shader.uploadMaterial(model.getMaterial());		
-		shader.uploadAmbientLight(AmbientLight.getAmbientLight());
-		shader.uploadPointLights(PointLight.getPointLights());
-		shader.uploadDirectionalLight(DirectionalLight.getDirectionalLights());
-			
-		
-		if (model.getMatrixUpdate()) {
-			model.getModelMatrix().changeToModelMatrix(model);
-			model.setMatrixUpdate(false);
-		}
+		shader.uploadLights();
+					
+		model.updateMatrix();
 		shader.uploadModelMatrix(model.getModelMatrix());
 		
-		
-		if (camera.getMatrixUpdate()) {
-			camera.getViewMatrix().changeToViewMatrix(camera);
-			camera.setMatrixUpdate(false);
-		}		
+		camera.updateMatrix();
 		shader.uploadViewMatrix(camera.getViewMatrix());
 			
 		Matrix4f.changeToModelViewProjectionMatrix(camera.getViewMatrix(), model.getModelMatrix(),projectionMatrix, modelViewProjectionMatrix);		
@@ -139,29 +116,34 @@ public class Renderer {
 				
 		shader.uploadProjectionMatrix(projectionMatrix);
 		
-		gl.glBindVertexArray(model.getMesh().getVaoID());//activates the specific VAO
-		gl.glDrawElements(GL_TRIANGLES, model.getMesh().getIndexCount(), GL_UNSIGNED_INT, 0); //draws with the usage of indices 	
-		//gl.glDrawElements(GL_POINTS, model.getMesh().getIndexCount(), GL_UNSIGNED_INT, 0); //draws with the usage of indices 	
+		gl.glBindVertexArray(model.getMesh().getVaoID());
+		gl.glDrawElements(GL_TRIANGLES, model.getMesh().getIndexCount(), GL_UNSIGNED_INT, 0);  	
 	}
 	
+	public void render(LineModel model,BasicShader shader) {
+		GL4 gl=(GL4)GLContext.getCurrentGL();
+		
+		model.getMesh().update();	
+		
+		shader.use(); 
+		shader.uploadLights();
+					
+		model.updateMatrix();
+		shader.uploadModelMatrix(model.getModelMatrix());
+		
+		camera.updateMatrix();
+		shader.uploadViewMatrix(camera.getViewMatrix());
+			
+		Matrix4f.changeToModelViewProjectionMatrix(camera.getViewMatrix(), model.getModelMatrix(),projectionMatrix, modelViewProjectionMatrix);		
+		shader.uploadModelViewProjectionMatrix(modelViewProjectionMatrix);
+				
+		shader.uploadProjectionMatrix(projectionMatrix);
+			
+		gl.glBindVertexArray(model.getMesh().getVaoID());
+		gl.glDrawArrays(GL_LINE_LOOP, 0,model.getMesh().getVertices().length/3);
+	}
 	
-	
-	/**
-	 * Renders a planetEntity (rendering a instancedModel)
-	 * 
-	 * 0.activate shader of the entity
-	 * 1.upload all lights to the shader
-	 * 2.upload view and projection matrix (its the same for all models and instances)
-	 * for every model of the entity (each entity can have multiple models e.g. tree tribe and top of the tree build one tree entity) do the following:
-	 * 		3. upload material of the model (each entity could also have its own material but I decided not to)
-	 * 		for every instance (amount of times we want to render the entity) of the model do the following:
-	 * 			4.check if the instance successfully got placed on a planet. (if there is too much water a tree cant be placed) dont render if its not placed
-	 * 			5.Create model matrix out of the transformations of the current instance.
-	 * 		6.upload all matrices as huge array so the shader can access a matrix for every instance
-	 * 		7.activate vao and draw the model multiple times to the screen using the matrices with the useg of glDrawElementsInstanced
-	 * 
-	 * @param entity
-	 */
+
 	public void render(InstancedModel model, BasicShader shader) {
 		GL4 gl=(GL4)GLContext.getCurrentGL();
 		float[] matrixData = new float[16*model.getInstances()];
@@ -226,37 +208,7 @@ public class Renderer {
 		}
 	}
 	
-	
-	public void render(LineModel model,BasicShader shader) {
-		GL4 gl=(GL4)GLContext.getCurrentGL();
-		
-		shader.use(); //activate shader before rendering
-		shader.uploadAmbientLight(AmbientLight.getAmbientLight());
-		shader.uploadPointLights(PointLight.getPointLights());
-		shader.uploadDirectionalLight(DirectionalLight.getDirectionalLights());
-				
-			
-		if (model.getMatrixUpdate()) {
-			model.getModelMatrix().changeToModelMatrix(model);
-			model.setMatrixUpdate(false);
-		}
-		shader.uploadModelMatrix(model.getModelMatrix());
-						
-		if (camera.getMatrixUpdate()) {
-			camera.getViewMatrix().changeToViewMatrix(camera);
-			camera.setMatrixUpdate(false);
-		}		
-		shader.uploadViewMatrix(camera.getViewMatrix());
-				
-		Matrix4f.changeToModelViewProjectionMatrix(camera.getViewMatrix(), model.getModelMatrix(),projectionMatrix, modelViewProjectionMatrix);		
-		shader.uploadModelViewProjectionMatrix(modelViewProjectionMatrix);
-					
-		shader.uploadProjectionMatrix(projectionMatrix);
-			
-		gl.glBindVertexArray(model.getMesh().getVaoID());//activates the specific VAO
-		gl.glDrawArrays(GL_LINE_LOOP, 0,model.getMesh().getVertices().length/3);
-	}
-	
+
 	/**
 	 * sets the glPolygonMode to glLine or glFill depending on the setting inside the config class.
 	 * drawing in glline mode is the wireframe mode

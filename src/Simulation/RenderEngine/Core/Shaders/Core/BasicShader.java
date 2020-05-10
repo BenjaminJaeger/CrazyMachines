@@ -47,6 +47,8 @@ public class BasicShader extends ShaderInterface {
 	
 	protected int locationAmbientLightColor;
 	
+	protected int locationSelected;	
+	
 	/**
 	 * creates a shader program out of a given glsl file
 	 * @param shaderFile
@@ -97,6 +99,16 @@ public class BasicShader extends ShaderInterface {
 		
 		
 		locationAmbientLightColor= getUniformLocation("ambientLightColor");
+		
+		
+		locationSelected= getUniformLocation("selectionHighlight");
+	}
+	
+	public void uploadSelectionHighlight(boolean isSelected) {
+		if(isSelected)		
+			super.uploadFloat(locationSelected, 1.5f);
+		else 
+			super.uploadFloat(locationSelected, 1f);
 	}
 	
 	/**
@@ -104,6 +116,12 @@ public class BasicShader extends ShaderInterface {
 	 */
 	public void uploadModelViewProjectionMatrix(Matrix4f matrix) {
 		super.uploadMatrix(locationModelViewProjectionMatrix, matrix);
+	}
+	
+	public void uploadLights() {
+		uploadAmbientLight(AmbientLight.getAmbientLight());
+		uploadPointLights(PointLight.getPointLights());
+		uploadDirectionalLight(DirectionalLight.getDirectionalLights());
 	}
 	
 	/**
