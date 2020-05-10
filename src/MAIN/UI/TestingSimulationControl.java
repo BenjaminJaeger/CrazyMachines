@@ -1,9 +1,7 @@
-package MAIN.Simulation;
+package MAIN.UI;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
@@ -17,11 +15,10 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
+import Simulation.Simulation;
 import Simulation.Util;
-import Simulation.Objects.GameObject;
+import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.Objects.MovableObjects.Ball.MetallBall;
-import Simulation.Objects.MovableObjects.Box.MetallBox;
-import Simulation.Objects.StaticObjects.StaticBox;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -33,12 +30,19 @@ import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.CircleLine;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingNode;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class TestingRemoveCollision extends Application implements GLEventListener{
+public class TestingSimulationControl extends Application implements GLEventListener{
 
 	private FPSAnimator animator;
 	private GLJPanel canvas;
@@ -46,23 +50,72 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 	private BasicShader shader;
 	private Camera camera;
 	
-	private ArrayList<GameObject> allobjects = new ArrayList<GameObject>();
-	
-	private GameObject model1;
+	private ArrayList<MoveableObject> allobjects = new ArrayList<MoveableObject>();
 	
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
-
+	
+	private boolean playpauseBoolean;
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
 	
 	public void start(Stage primaryStage) throws Exception {
 		StackPane root = new StackPane();
+		root.setAlignment(Pos.TOP_LEFT);
 
-		primaryStage.setTitle("Circle-Polygon Collision");
+		primaryStage.setTitle("Testing Simulation controler");
 		primaryStage.setScene(new Scene(root, 800, 800));
 		primaryStage.show();	
+		
+		Button playpause = new Button("Play");
+		playpause.setOnAction(e->{
+			playpauseBoolean=!playpauseBoolean;
+			if(playpauseBoolean) {
+				playpause.setText("Pause");
+				Simulation.play();
+			}else {
+				playpause.setText("Play");
+				Simulation.pause();				
+			}
+				
+		});
+		
+		
+		Button stop = new Button("Stop");
+		stop.setOnAction(e->{
+			if (playpauseBoolean) {
+				Simulation.pause();
+				playpause.setText("Play");
+				playpauseBoolean=false;
+			}
 			
+			Simulation.restart();
+		});
+		
+		Slider slider = new Slider();
+		slider.setMin(1);
+		slider.setMax(40);
+		slider.setShowTickLabels(true);
+		slider.setShowTickMarks(true);
+		slider.setOrientation(Orientation.VERTICAL);
+		slider.setValue(Simulation.getUpdateTime());
+		slider.valueProperty().addListener(new ChangeListener<Number>() {
+			 
+	         @Override
+	         public void changed(ObservableValue<? extends Number> observable,Number oldValue, Number newValue) {
+	        	Simulation.setUpdateTime(newValue.intValue());
+	        	if(playpauseBoolean) {
+	        		Simulation.pause();
+	        		Simulation.play();
+	        	}
+	         }
+	      });
+		
+		VBox controls = new VBox(10);
+		controls.setMaxWidth(400);
+		controls.getChildren().addAll(playpause,stop,slider);
+		
 		//JFX Code für Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
 		canvas = new GLJPanel(capabilities);	    
@@ -76,20 +129,17 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 		canvas.addGLEventListener(this);		
 		animator = new FPSAnimator(canvas, 60);
 	  	animator.start();
+	  	
+	  	root.getChildren().add(controls);
 	}
 	
 	@Override
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
 		
-		for (GameObject object : allobjects) {
-			object.update();
-			renderer.render(object, shader); 
-		}
+		for (MoveableObject moveableObject : allobjects) 
+			renderer.render(moveableObject, shader); 
 			
-		model1.update();
-		renderer.render(model1, shader);
-		
 		for (LineModel object : test) 
 			renderer.render(object,shader);			
 	}
@@ -122,41 +172,24 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 		
 		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
-
-		
-		model1 = new MetallBall(50, 30, 0, 0, 1, 0, 100);
-		model1.renderBounding(true);
-			
-		for (int i = 0; i < 5; i++) {			
+	
+		for (int i = 0; i < 8; i++) {			
 			float x = Util.getRandomPositionX();
 			float y = Util.getRandomPositionY();
-			float width = (float)Math.random()*70+20;
-			float height = (float)Math.random()*70+20;
-			float rotation =(float)Math.random()*360;
+			float rotation = (float)Math.random()*360;
+			float velocityX = Util.getRandomVelocity(4);
+			float velocityY = Util.getRandomVelocity(4);
+			float radius = (float)Math.random()*30+30;
+			float mass = radius;
 			
-			GameObject box = new MetallBox(width,height,50, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
-			box.setRotation(rotation);
-			box.renderBounding(true);
-			allobjects.add(box);
-			
-			x = Util.getRandomPositionX();
-			y = Util.getRandomPositionY();
-			width = (float)Math.random()*70+20;
-			height = (float)Math.random()*70+20;
-			rotation =(float)Math.random()*360;
-			
-			GameObject staticBox = new StaticBox(width,height,(float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
-			staticBox.setRotation(rotation);
-			staticBox.renderBounding(true);
-			allobjects.add(staticBox);
-			
-			x = Util.getRandomPositionX();
-			y = Util.getRandomPositionY();
-			float radius = (float)Math.random()*30+20;
-				
-			GameObject ball = new MetallBall(radius, 40, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
+			MoveableObject ball = new MetallBall(radius, 30, (float)Math.random(), (float)Math.random(),(float)Math.random(), x, y);
+			ball.setRotation(rotation);
 			ball.renderBounding(true);
-			allobjects.add(ball);
+			ball.setVelocityX(velocityX);
+			ball.setVelocityY(velocityY);
+			ball.setScale(0.5f);
+			ball.setOriginalscale(0.5f);
+			allobjects.add(ball);		
 		}
 		
 			
@@ -166,30 +199,23 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 			
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-					for (GameObject object : allobjects) {
+					for (MoveableObject object : allobjects) {
 						float rotation = (float)Math.random()*360;
 						float x = Util.getRandomPositionX();
 						float y = Util.getRandomPositionY();
+						
+						float velocityX = Util.getRandomVelocity(4);
+						float velocityY = Util.getRandomVelocity(4);;
+						
+						object.setVelocityX(velocityX);
+						object.setVelocityY(velocityY);
+						
 						object.setY(y);
 						object.setX(x);
-						object.setRotation(rotation);
 					}
+
 				}
 			}
-		});
-			
-		
-		canvas.addMouseMotionListener(new MouseMotionListener() {
-			
-			public void mouseMoved(MouseEvent e) {
-				float x = ((float)e.getX() - (float)canvas.getWidth()/2 +camera.getX());
-	  			float y = ((float)canvas.getHeight()/2 -(float)e.getY() +camera.getY());
-	  			
-	  			model1.setX(x);
-				model1.setY(y);		
-			}
-			
-			public void mouseDragged(MouseEvent e) {}
 		});
 		
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));

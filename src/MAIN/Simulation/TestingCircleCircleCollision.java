@@ -15,6 +15,7 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
+import Simulation.Simulation;
 import Simulation.Util;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.Objects.MovableObjects.Ball.MetallBall;
@@ -77,11 +78,9 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
 		
-		for (MoveableObject moveableObject : allobjects) {
-			moveableObject.update();
+		for (MoveableObject moveableObject : allobjects) 
 			renderer.render(moveableObject, shader); 
-		}
-		
+			
 		for (LineModel object : test) 
 			renderer.render(object,shader);			
 	}
@@ -160,6 +159,8 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 		});
 		
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
+		
+		Simulation.play();
 	}
 	
 

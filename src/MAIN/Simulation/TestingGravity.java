@@ -2,8 +2,6 @@ package MAIN.Simulation;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
@@ -17,10 +15,11 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
+import Simulation.Simulation;
 import Simulation.Util;
 import Simulation.Objects.GameObject;
+import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.Objects.MovableObjects.Ball.MetallBall;
-import Simulation.Objects.MovableObjects.Box.MetallBox;
 import Simulation.Objects.StaticObjects.StaticBox;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
@@ -38,7 +37,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class TestingRemoveCollision extends Application implements GLEventListener{
+public class TestingGravity extends Application implements GLEventListener{
 
 	private FPSAnimator animator;
 	private GLJPanel canvas;
@@ -49,6 +48,9 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 	private ArrayList<GameObject> allobjects = new ArrayList<GameObject>();
 	
 	private GameObject model1;
+	private MoveableObject model2;
+	private GameObject model3;
+	private GameObject model4;
 	
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
 
@@ -82,13 +84,13 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
 		
-		for (GameObject object : allobjects) {
-			object.update();
+		for (GameObject object : allobjects) 
 			renderer.render(object, shader); 
-		}
-			
-		model1.update();
+		
 		renderer.render(model1, shader);
+		renderer.render(model2, shader);
+		renderer.render(model3, shader);
+		renderer.render(model4, shader);
 		
 		for (LineModel object : test) 
 			renderer.render(object,shader);			
@@ -123,32 +125,31 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
+		model2 = new MetallBall(30, 30,1 , 1, 1, 100, 200);
+		model2.renderBounding(true);
+		model2.setAccelerationX(-1);
 		
-		model1 = new MetallBall(50, 30, 0, 0, 1, 0, 100);
+		model1 = new StaticBox(2000, 50, 0, 1, 1, 0,0);
 		model1.renderBounding(true);
+		model1.setRotation(45);
 			
-		for (int i = 0; i < 5; i++) {			
+		model3 = new StaticBox(200, 50, 0, 1, 1, -1000,-50);
+		model3.renderBounding(true);
+		
+		model4 = new StaticBox(200, 50, 0, 1, 1, 1000,70);
+		model4.renderBounding(true);
+		
+		for (int i = 0; i < 0; i++) {			
 			float x = Util.getRandomPositionX();
 			float y = Util.getRandomPositionY();
 			float width = (float)Math.random()*70+20;
 			float height = (float)Math.random()*70+20;
 			float rotation =(float)Math.random()*360;
 			
-			GameObject box = new MetallBox(width,height,50, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
-			box.setRotation(rotation);
-			box.renderBounding(true);
-			allobjects.add(box);
-			
-			x = Util.getRandomPositionX();
-			y = Util.getRandomPositionY();
-			width = (float)Math.random()*70+20;
-			height = (float)Math.random()*70+20;
-			rotation =(float)Math.random()*360;
-			
-			GameObject staticBox = new StaticBox(width,height,(float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
-			staticBox.setRotation(rotation);
-			staticBox.renderBounding(true);
-			allobjects.add(staticBox);
+//			GameObject box = new MetallBox(width,height,50, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
+//			box.setRotation(rotation);
+//			box.renderBounding(true);
+//			allobjects.add(box);		
 			
 			x = Util.getRandomPositionX();
 			y = Util.getRandomPositionY();
@@ -177,22 +178,10 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 				}
 			}
 		});
-			
-		
-		canvas.addMouseMotionListener(new MouseMotionListener() {
-			
-			public void mouseMoved(MouseEvent e) {
-				float x = ((float)e.getX() - (float)canvas.getWidth()/2 +camera.getX());
-	  			float y = ((float)canvas.getHeight()/2 -(float)e.getY() +camera.getY());
-	  			
-	  			model1.setX(x);
-				model1.setY(y);		
-			}
-			
-			public void mouseDragged(MouseEvent e) {}
-		});
-		
+				
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
+		
+		Simulation.play();
 	}
 	
 

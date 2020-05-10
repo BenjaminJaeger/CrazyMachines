@@ -19,7 +19,7 @@ import Simulation.Util;
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.Objects.MovableObjects.Ball.MetallBall;
-import Simulation.Objects.StaticObjects.Plank;
+import Simulation.Objects.StaticObjects.StaticBox;
 import Simulation.Objects.StaticObjects.StaticObject;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
@@ -135,7 +135,7 @@ public class TestingStaticCollision extends Application implements GLEventListen
 			float height = (float)Math.random()*70+20;
 			float rotation =(float)Math.random()*360;
 			
-			StaticObject plank = new Plank(width, height, (float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
+			StaticObject plank = new StaticBox(width, height, (float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
 			plank.setRotation(rotation);
 			plank.renderBounding(true);
 			allobjects.add(plank);		

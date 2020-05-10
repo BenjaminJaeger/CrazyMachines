@@ -11,8 +11,6 @@ public abstract class MoveableObject extends GameObject{
 	protected float velocityX,velocityY; //Geschwindigkeit
 	protected float accelerationX,accelerationY; //Beschleunigung
 	
-	protected float mass=1;
-	
 ////////////////////
 ////Constructors////
 ////////////////////
@@ -42,9 +40,9 @@ public abstract class MoveableObject extends GameObject{
 
 	public void update() {
 		
-	
-		//applyForce(0, 0.5f);
-		checkEdges();	
+		applyForce(0, -0.2f);	
+		
+		((DynamicCollisionContext) collisionContext).checkCollisions();
 		
 		increaseVelocity(accelerationX, accelerationY);
 		
@@ -56,11 +54,11 @@ public abstract class MoveableObject extends GameObject{
 		increasePosition(velocityX, velocityY);
 //		increaseRotation(velocityX);
 		resetAcceleration();
-			
-		((DynamicCollisionContext) collisionContext).checkCollisions();
-			
-//		accelerationX = -velocityX*0.0005f;
-//		accelerationY = -velocityY*0.0005f;
+		
+		accelerationX = -velocityX*0.05f;
+		accelerationY = -velocityY*0.05f;
+				
+		checkEdges();
 	}
 	
 	protected void checkEdges() {
@@ -132,12 +130,13 @@ public abstract class MoveableObject extends GameObject{
 		this.accelerationY = accelerationY;
 	}
 	
-	public float getMass() {
-		return mass;
-	}
-	
 	public void setMass(float mass) {
 		this.mass=mass;
 	}
+
+	public void setOriginalscale(float scale) {
+		originalscaleX=scale;
+		originalscaleY=scale;
+	};
 	
 }
