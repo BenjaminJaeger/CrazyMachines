@@ -34,11 +34,10 @@ import Simulation.RenderEngine.Primitives.CircleLine;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class TestingGravity extends Application implements GLEventListener{
+public class Testing extends Application implements GLEventListener{
 
 	private FPSAnimator animator;
 	private GLJPanel canvas;
@@ -65,12 +64,7 @@ public class TestingGravity extends Application implements GLEventListener{
 		primaryStage.setTitle("Circle-Polygon Collision");
 		primaryStage.setScene(new Scene(root, 800, 800));
 		primaryStage.show();	
-		
-		Pane pane = new Pane();
-		pane.setOnMouseClicked(e->{
-			model2.selectObject();
-		});
-		
+
 		//JFX Code für Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
 		canvas = new GLJPanel(capabilities);	    
@@ -85,7 +79,6 @@ public class TestingGravity extends Application implements GLEventListener{
 	  	animator.start();
 	  	
 		root.getChildren().add(swingNode);
-		root.getChildren().add(pane);
 	}
 	
 	@Override
@@ -107,6 +100,7 @@ public class TestingGravity extends Application implements GLEventListener{
 	@Override
 	public void dispose(GLAutoDrawable arg0) {
 		animator.stop();
+		Simulation.pause();
 	}
 
 	@SuppressWarnings("unused")
@@ -133,19 +127,19 @@ public class TestingGravity extends Application implements GLEventListener{
 		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
-		model2 = new MetallBall(30, 30,1 , 1, 1, 100, 200);
-		model2.renderBounding(true);
+		model2 = new MetallBall(20, 30,1 , 1, 1, 150, 80);
+//		model2.renderBounding(true);
 		model2.setAccelerationX(-1);
 		
-		model1 = new StaticBox(2000, 50, 0, 1, 1, 0,0);
-		model1.renderBounding(true);
-		model1.setRotation(45);
+		model1 = new StaticBox(200, 50, 0, 1, 1, 0, 0);
+//		model1.renderBounding(true);
+		model1.setRotation(20);
 			
-		model3 = new StaticBox(200, 50, 0, 1, 1, -1000,-50);
-		model3.renderBounding(true);
+		model3 = new StaticBox(800, 50, 0, 1, 1, 0,-200);
+//		model3.renderBounding(true);
 		
-		model4 = new StaticBox(200, 50, 0, 1, 1, 1000,70);
-		model4.renderBounding(true);
+		model4 = new StaticBox(200, 50, 0, 1, 1, 180,35);
+//		model4.renderBounding(true);
 		
 		for (int i = 0; i < 0; i++) {			
 			float x = Util.getRandomPositionX();
@@ -175,21 +169,22 @@ public class TestingGravity extends Application implements GLEventListener{
 			
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-					for (GameObject object : allobjects) {
-						float rotation = (float)Math.random()*360;
-						float x = Util.getRandomPositionX();
-						float y = Util.getRandomPositionY();
-						object.setY(y);
-						object.setX(x);
-						object.setRotation(rotation);
-					}
+//					for (GameObject object : allobjects) {
+//						float rotation = (float)Math.random()*360;
+//						float x = Util.getRandomPositionX();
+//						float y = Util.getRandomPositionY();
+//						object.setY(y);
+//						object.setX(x);
+//						object.setRotation(rotation);
+//					}
+					Simulation.play();
 				}
 			}
 		});
 				
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
 		
-		Simulation.play();
+		
 	}
 	
 

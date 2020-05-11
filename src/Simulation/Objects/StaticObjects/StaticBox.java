@@ -21,7 +21,7 @@ public class StaticBox extends StaticObject{
 	}
 	
 	public StaticBox(float width,float height,float r,float g,float b,float x,float y) {
-		super(new Cube(width, height, 10), material, r,g,b, x, y);
+		super(new Cube(width, height, height), material, r,g,b, x, y);
 		collisionContext = new CollisionContext(this,new BoundingRectangle(x, y,width,height));
 	}
 

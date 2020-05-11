@@ -5,6 +5,7 @@ import Simulation.Collisions.Boundings.BoundingPolygon;
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.Objects.StaticObjects.StaticObject;
+import Simulation.RenderEngine.Core.Math.Vector2f;
 
 public class DynamicCollisionContext extends CollisionContext{
 
@@ -40,66 +41,98 @@ public class DynamicCollisionContext extends CollisionContext{
 	public void checkCollisions() {
 		for (GameObject object : GameObject.allObjects) 
 			if (object.getCollisionContext().getID()!=id) 
-				if(checkCollision(object.getCollisionContext())) 					
-					collisionResolution(object);
-				
+				checkCollision(object.getCollisionContext());							
 	}
 	
 	
 ///////////////
 ////Methods////
 ///////////////
-	public boolean checkCollision(CollisionContext context) {	
-		if(checkCollisionPolygonCircle(context)) {
-//			System.out.println("POLYGON CIRCLE COLLISION");
-			return true;
+	public void checkCollision(CollisionContext context) {	
+		checkCollisionCircleCircle(context);
+		checkCollisionPolygonCircle(context);		
+//		checkCollisionPolygonPolygon(context);
 		}
-		
-		if(checkCollisionCircleCircle(context)) {
-//			System.out.println("CIRCLE CIRCLE COLLISION");
-			return true;
-		}
-		
-			
-		if(checkCollisionPolygonPolygon(context)) {
-//			System.out.println("POLYGON POLYGON COLLISION");
-			return true;
-		}
-		
-		return false;	
-	}
 	
 
-	public void collisionResolution(GameObject object) {
+	public void collisionCircleCircle(BoundingCircle circle1 , BoundingCircle circle2, GameObject object) {
+					
+		float r1 = circle1.getRadius();
+		float r2 = circle2.getRadius();
+		
 		if(object instanceof MoveableObject) {
-			Collision.removeCollision((MoveableObject) gameObject, (MoveableObject)object);
-			Collision.elasticCollision((MoveableObject) gameObject, (MoveableObject)object);
+			CollisionCircleCircle.removeCollision((MoveableObject)gameObject, r1, (MoveableObject)object, r2);
+			CollisionCircleCircle.elasticCollision((MoveableObject)gameObject, (MoveableObject)object);
 		}else {
-			Collision.removeCollision((MoveableObject) gameObject , (StaticObject)object);
-			Collision.elasticCollision((MoveableObject) gameObject , (StaticObject)object);			
+			CollisionCircleCircle.removeCollision((MoveableObject)gameObject, r1, (StaticObject)object, r2);
+			CollisionCircleCircle.elasticCollision((MoveableObject)gameObject, (StaticObject)object);
+		}
+	}
+	
+	public void collisionCirclePolygon(BoundingPolygon polygon , BoundingCircle circle, GameObject object) {
+		Vector2f p1 = null;
+		Vector2f p2 = null;
+		
+		for (int i = 0; i < polygon.getPoints().length; i++) {
+			 Vector2f testP1 = polygon.getPoints()[i];
+			 Vector2f testP2 = polygon.getPoints()[i + 1 == polygon.getPoints().length ? 0 : i + 1];
+			
+			 if(circle.checkCollisionLineCircle(testP1,testP2)) {
+				 p1 = testP1;
+				 p2 = testP2;
+			 }
+				 
+		}
+		
+		if(object instanceof MoveableObject) {			
+			CollisionCirclePolygon.removeCollision((MoveableObject)gameObject, circle.getRadius(), (MoveableObject)object, p1, p2);
+			CollisionCirclePolygon.elasticCollision((MoveableObject)gameObject, circle.getRadius(), (MoveableObject)object, p1, p2);
+		}else {			
+			CollisionCirclePolygon.removeCollision((MoveableObject)gameObject, circle.getRadius(), (StaticObject)object, p1, p2);
+			CollisionCirclePolygon.elasticCollision((MoveableObject)gameObject, circle.getRadius(), (StaticObject)object, p1, p2);	
 		}
 			
 	}
 	
-	public boolean checkCollisionCircleCircle(CollisionContext context) {
+	public void collisionResolutionPolygonPolygon(GameObject object) {
+		if(object instanceof MoveableObject) {
+			
+		}else {
+				
+		}
+			
+	}
+	
+	public void checkCollisionCircleCircle(CollisionContext context) {
 		for (BoundingCircle circle1 : boundingCirlces) 
 			for (BoundingCircle circle2 : context.getBoundingCircles()) 
 				if(circle1.checkCollision(circle2)) 
-					return true;
-		
-		return false;	
+					collisionCircleCircle(circle1,circle2,context.getGameObject());
 	}
 	
-	public boolean checkCollisionPolygonPolygon(CollisionContext context) {
+	public void checkCollisionPolygonPolygon(CollisionContext context) {
 		for (BoundingPolygon polygon1 : boundingPolygons) 
 			for (BoundingPolygon polygon2 : context.getBoundingPolygons()) 			
 				if(polygon1.checkCollision(polygon2)) 
-					return true;
+					return;
 
-		return false;	
 	}
 	
-	public boolean checkCollisionPolygonCircle(CollisionContext context) {
+	public void checkCollisionPolygonCircle(CollisionContext context) {
+		for (BoundingPolygon polygon : boundingPolygons) 
+			for (BoundingCircle circle : context.getBoundingCircles()) 
+				if(circle.checkCollision(polygon)) 
+					collisionCirclePolygon(polygon,circle,context.getGameObject());
+				
+				
+
+		for (BoundingPolygon polygon : context.getBoundingPolygons()) 
+			for (BoundingCircle circle : boundingCirlces) 
+				if(circle.checkCollision(polygon)) 
+					collisionCirclePolygon(polygon,circle,context.getGameObject());
+	}
+	
+	public boolean checkCollisionPolygonCircle2(CollisionContext context) {
 		for (BoundingPolygon polygon : boundingPolygons) 
 			for (BoundingCircle circle : context.getBoundingCircles()) 
 				if(circle.checkCollision(polygon)) 
@@ -110,8 +143,7 @@ public class DynamicCollisionContext extends CollisionContext{
 			for (BoundingCircle circle : boundingCirlces) 
 				if(circle.checkCollision(polygon)) 
 					return true;
-
-		return false;	
+		
+		return false;
 	}
-	
 }

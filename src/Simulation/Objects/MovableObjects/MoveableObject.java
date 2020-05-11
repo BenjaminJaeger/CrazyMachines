@@ -40,9 +40,7 @@ public abstract class MoveableObject extends GameObject{
 
 	public void update() {
 		
-		applyForce(0, -0.2f);	
-		
-		((DynamicCollisionContext) collisionContext).checkCollisions();
+		applyForce(0, -0.05f);	
 		
 		increaseVelocity(accelerationX, accelerationY);
 		
@@ -55,10 +53,12 @@ public abstract class MoveableObject extends GameObject{
 //		increaseRotation(velocityX);
 		resetAcceleration();
 		
-		accelerationX = -velocityX*0.05f;
-		accelerationY = -velocityY*0.05f;
+//		accelerationX = -velocityX*0.005f;
+//		accelerationY = -velocityY*0.005f;
 				
 		checkEdges();
+		
+		((DynamicCollisionContext) collisionContext).checkCollisions();
 	}
 	
 	protected void checkEdges() {

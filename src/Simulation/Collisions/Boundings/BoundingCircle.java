@@ -40,7 +40,7 @@ public class BoundingCircle  extends Bounding{
 		return false;
 	}
 	
-	private boolean checkCollisionLineCircle(Vector2f p1, Vector2f p2) {
+	public boolean checkCollisionLineCircle(Vector2f p1, Vector2f p2) {
 		
 		 if (checkCollisionPointCircle(p1) || checkCollisionPointCircle(p1)) 
 			 return true;
