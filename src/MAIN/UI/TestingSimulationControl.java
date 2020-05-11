@@ -1,5 +1,7 @@
 package MAIN.UI;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
@@ -13,6 +15,7 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
+import Simulation.Simulation;
 import Simulation.Util;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.Objects.MovableObjects.Ball.MetallBall;
@@ -26,14 +29,20 @@ import Simulation.RenderEngine.Core.Renderer.Renderer;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.CircleLine;
-import UI.UIConceptALL;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingNode;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class UIConcept extends Application implements GLEventListener{
+public class TestingSimulationControl extends Application implements GLEventListener{
 
 	private FPSAnimator animator;
 	private GLJPanel canvas;
@@ -44,46 +53,95 @@ public class UIConcept extends Application implements GLEventListener{
 	private ArrayList<MoveableObject> allobjects = new ArrayList<MoveableObject>();
 	
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
-
+	
+	private boolean playpauseBoolean;
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
 	
 	public void start(Stage primaryStage) throws Exception {
-		HBox root = new HBox();
-		root.setStyle("-fx-background-color: rgb(102,127,102);");
+		StackPane root = new StackPane();
+		root.setAlignment(Pos.TOP_LEFT);
+
+		primaryStage.setTitle("Testing Simulation controler");
+		primaryStage.setScene(new Scene(root, 800, 800));
+		primaryStage.show();	
 		
-		primaryStage.setTitle("UI Test");
-		primaryStage.setScene(new Scene(root, 1400, 900));
-		primaryStage.show();
+		Button playpause = new Button("Play");
+		playpause.setOnAction(e->{
+			playpauseBoolean=!playpauseBoolean;
+			if(playpauseBoolean) {
+				playpause.setText("Pause");
+				Simulation.play();
+			}else {
+				playpause.setText("Play");
+				Simulation.pause();				
+			}
+				
+		});
 		
-		//Simulation Canvas
+		
+		Button stop = new Button("Stop");
+		stop.setOnAction(e->{
+			if (playpauseBoolean) {
+				Simulation.pause();
+				playpause.setText("Play");
+				playpauseBoolean=false;
+			}
+			
+			Simulation.restart();
+		});
+		
+		Slider slider = new Slider();
+		slider.setMin(1);
+		slider.setMax(40);
+		slider.setShowTickLabels(true);
+		slider.setShowTickMarks(true);
+		slider.setOrientation(Orientation.VERTICAL);
+		slider.setValue(Simulation.getUpdateTime());
+		slider.valueProperty().addListener(new ChangeListener<Number>() {
+			 
+	         @Override
+	         public void changed(ObservableValue<? extends Number> observable,Number oldValue, Number newValue) {
+	        	Simulation.setUpdateTime(newValue.intValue());
+	        	if(playpauseBoolean) {
+	        		Simulation.pause();
+	        		Simulation.play();
+	        	}
+	         }
+	      });
+		
+		VBox controls = new VBox(10);
+		controls.setMaxWidth(400);
+		controls.getChildren().addAll(playpause,stop,slider);
+		
+		//JFX Code für Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
-		canvas = new GLJPanel(capabilities);
-		SwingNode canvasNode = new SwingNode();		
+		canvas = new GLJPanel(capabilities);	    
+		SwingNode swingNode = new SwingNode();		 
+		root.getChildren().add(swingNode);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				canvasNode.setContent(canvas);	
-			}
+		    	swingNode.setContent(canvas);	
+		    }
 		});	
 		canvas.addGLEventListener(this);		
 		animator = new FPSAnimator(canvas, 60);
-		animator.start();
-	
-		UIConceptALL.addUI(root, canvasNode);
+	  	animator.start();
+	  	
+	  	root.getChildren().add(controls);
 	}
 	
 	@Override
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
 		
-		for (MoveableObject moveableObject : allobjects) {
-			moveableObject.update();
+		for (MoveableObject moveableObject : allobjects) 
 			renderer.render(moveableObject, shader); 
-		}
-		
+			
 		for (LineModel object : test) 
-			renderer.render(object,shader);		
+			renderer.render(object,shader);			
 	}
 
 	@Override
@@ -114,22 +172,51 @@ public class UIConcept extends Application implements GLEventListener{
 		
 		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
-
+	
 		for (int i = 0; i < 8; i++) {			
 			float x = Util.getRandomPositionX();
 			float y = Util.getRandomPositionY();
+			float rotation = (float)Math.random()*360;
 			float velocityX = Util.getRandomVelocity(4);
 			float velocityY = Util.getRandomVelocity(4);
 			float radius = (float)Math.random()*30+30;
 			float mass = radius;
 			
-			MoveableObject ball = new MetallBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
-			ball.setMass(mass);
-			ball.setAccelerationX(velocityX);
-			ball.setAccelerationY(velocityY);
+			MoveableObject ball = new MetallBall(radius, 30, (float)Math.random(), (float)Math.random(),(float)Math.random(), x, y);
+			ball.setRotation(rotation);
 			ball.renderBounding(true);
+			ball.setVelocityX(velocityX);
+			ball.setVelocityY(velocityY);
+			ball.setScale(0.5f);
+			ball.setOriginalscale(0.5f);
 			allobjects.add(ball);		
 		}
+		
+			
+		canvas.addKeyListener(new KeyListener() {
+			public void keyTyped(KeyEvent e) {}
+			public void keyReleased(KeyEvent e) {}
+			
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+					for (MoveableObject object : allobjects) {
+						float rotation = (float)Math.random()*360;
+						float x = Util.getRandomPositionX();
+						float y = Util.getRandomPositionY();
+						
+						float velocityX = Util.getRandomVelocity(4);
+						float velocityY = Util.getRandomVelocity(4);;
+						
+						object.setVelocityX(velocityX);
+						object.setVelocityY(velocityY);
+						
+						object.setY(y);
+						object.setX(x);
+					}
+
+				}
+			}
+		});
 		
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
 	}

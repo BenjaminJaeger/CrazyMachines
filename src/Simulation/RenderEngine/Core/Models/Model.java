@@ -111,6 +111,13 @@ public abstract class Model {
 			updateMatrix=true;
 	}
 	
+	public void updateMatrix() {
+		if(updateMatrix) {
+			modelMatrix.changeToModelMatrix(this);
+			updateMatrix=false;
+		}		
+	}
+	
 	public Mesh getMesh() {
 		return mesh;
 	}

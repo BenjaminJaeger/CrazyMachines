@@ -72,7 +72,7 @@ uniform float numberOfPointLights;
 
 uniform vec3 ambientLightColor;
 
-
+uniform float selectionHighlight;
 
 out vec4 finalColor;
 
@@ -146,6 +146,7 @@ void main(void){
 	fragmentColor+=material.emissionColor;
 	fragmentColor+=material.ambientColor*ambientLightColor;
 	fragmentColor*=objectColor;
+	fragmentColor*=selectionHighlight;
 	
 	finalColor=vec4(fragmentColor,material.alphaValue);										
 };

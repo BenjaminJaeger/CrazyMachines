@@ -3,48 +3,86 @@ package Simulation.Collisions;
 import Simulation.Util;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.Objects.StaticObjects.StaticObject;
-import Simulation.RenderEngine.Core.Math.Vector2f;
 
 public class Collision {
 
 	public static void elasticCollision(MoveableObject object1, MoveableObject object2) {	
-		float angle = (float)Math.atan2(object2.getY()-object1.getY(), object2.getX()-object1.getX());
+//		float angle = (float)Math.atan2(object2.getY()-object1.getY(), object2.getX()-object1.getX());
+//	
+//		float m1 = object1.getMass();
+//		float m2 = object2.getMass();
+//		
+//		Vector2f u1 = Util.rotate(object1.getVelocityX(),object1.getVelocityY(),angle);
+//		Vector2f u2 = Util.rotate(object2.getVelocityX(),object2.getVelocityY(),angle);
+//		
+//		float v1x = (u1.x * (m1 - m2) + 2 * m2 * u2.x) / (m1+m2);
+//		float v1y = (u1.y * (m1 - m2) + 2 * m2 * u2.y) / (m1+m2);
+//		float v2x = (u2.x * (m2 - m1) + 2 * m1 * u1.x) / (m1+m2);
+//		float v2y = (u2.y * (m2 - m1) + 2 * m1 * u1.y) / (m1+m2);
+//		
+//		Vector2f finalv1 = Util.rotate(v1x,v1y,-angle);
+//		Vector2f finalv2 = Util.rotate(v2x,v2y,-angle);
+//		
+//		object1.setVelocityX(finalv1.x);
+//		object1.setVelocityY(finalv1.y);
+//		object2.setVelocityX(finalv2.x);
+//		object2.setVelocityY(finalv2.y);	
 		
-		float m1 = object1.getMass();
-		float m2 = object2.getMass();
+		float distance = Util.getDistance(object1.getX(), object1.getY(), object2.getX(), object2.getY());
 		
-		Vector2f u1 = Util.rotate(object1.getVelocityX(),object1.getVelocityY(),-angle);
-		Vector2f u2 = Util.rotate(object2.getVelocityX(),object2.getVelocityY(),-angle);
-		
-		float v1x = (u1.x * (m1 - m2) + 2 * m2 * u2.x) / (m1+m2);
-		float v1y = (u1.y * (m1 - m2) + 2 * m2 * u2.y) / (m1+m2);
-		float v2x = (u2.x * (m2 - m1) + 2 * m1 * u1.x) / (m1+m2);
-		float v2y = (u2.y * (m2 - m1) + 2 * m1 * u1.y) / (m1+m2);
-		
-		Vector2f finalv1 = Util.rotate(v1x,v1y,angle);
-		Vector2f finalv2 = Util.rotate(v2x,v2y,angle);
-		
-		object1.setVelocityX(finalv1.x);
-		object1.setVelocityY(finalv1.y);
-		object2.setVelocityX(finalv2.x);
-		object2.setVelocityY(finalv2.y);	
+			float nx = (object2.getX()-object1.getX())/distance;
+			float ny = (object2.getY()-object1.getY())/distance;
+			
+			float tx = -ny;
+			float ty = nx;
+			
+			float dpTan1 = object1.getVelocityX()*tx + object1.getVelocityY()*ty;
+			float dpTan2 = object2.getVelocityX()*tx + object2.getVelocityY()*ty;
+			
+			float dpNorm1 = object1.getVelocityX() * nx + object1.getVelocityY()*ny;
+			float dpNorm2 = object2.getVelocityX() * nx + object2.getVelocityY()*ny;
+			
+			float m1 = (dpNorm1 * (object1.getMass() - object2.getMass()) + 2 * object2.getMass() *dpNorm2 ) / (object1.getMass() + object2.getMass());	
+			float m2 = (dpNorm2 * (object2.getMass() - object1.getMass()) + 2 * object1.getMass() *dpNorm1 ) / (object1.getMass() + object2.getMass());
+			
+//			object1.setVelocityX(tx * dpTan1 + nx * m1);
+//			object1.setVelocityY(ty * dpTan1 + ny * m1);
+//			object2.setVelocityX(tx * dpTan2 + nx * m2);
+//			object2.setVelocityY(ty * dpTan2 + ny * m2);
 	}
 	
-	public static void elasticCollision( MoveableObject object1 , StaticObject object2) {	
-		float angle = (float)Math.atan2(object2.getY()-object1.getY(), object2.getX()-object1.getX());
+	public static void elasticCollision(MoveableObject object1 , StaticObject object2) {	
+//		float angle = (float)Math.atan2(object2.getY()-object1.getY(), object2.getX()-object1.getX());
+//		
+//		float m1 = object1.getMass();
+//		float m2 = 999999;
+//		
+//		Vector2f u1 = Util.rotate(object1.getVelocityX(),object1.getVelocityY(),angle);
+//		
+//		float v1x = (u1.x * (m1 - m2) ) / (m1+m2);
+//		float v1y = (u1.y * (m1 - m2) ) / (m1+m2);
+//
+//		Vector2f finalv1 = Util.rotate(v1x,v1y, angle);
+//
+//		object1.setVelocityX(finalv1.x);
+//		object1.setVelocityY(finalv1.y);
 		
-		float m1 = object1.getMass();
-		float m2 = 999999;
+		float distance = Util.getDistance(object1.getX(), object1.getY(), object2.getX(), object2.getY());
 		
-		Vector2f u1 = Util.rotate(object1.getVelocityX(),object1.getVelocityY(),-angle);
+		float nx = (object2.getX()-object1.getX())/distance;
+		float ny = (object2.getY()-object1.getY())/distance;
 		
-		float v1x = (u1.x * (m1 - m2) ) / (m1+m2);
-		float v1y = (u1.y * (m1 - m2) ) / (m1+m2);
+		float tx = -ny;
+		float ty = nx;
 		
-		Vector2f finalv1 = Util.rotate(v1x,v1y,-angle);
+		float dpTan1 = object1.getVelocityX()*tx + object1.getVelocityY()*ty;
 		
-		object1.setVelocityX(finalv1.x);
-		object1.setVelocityY(finalv1.y);
+		float dpNorm1 = object1.getVelocityX() * nx + object1.getVelocityY()*ny;
+		
+		float m1 = (dpNorm1 * (object1.getMass() - object2.getMass())) / (object1.getMass() + object2.getMass());
+		
+//		object1.setVelocityX(tx*dpTan1 + nx*m1);
+//		object1.setVelocityY(ty*dpTan1 + ny*m1);
 	}
 	
 	
@@ -56,7 +94,7 @@ public class Collision {
 			
 			float distance = Util.getDistance(object2.getX(), object2.getY(), object1.getX(), object1.getY());
 			
-			float overlap = 0.1f;
+			float overlap = 1f;
 			
 			float object1X = object1.getX() + overlap*(object1.getX()-object2.getX())/distance;
 			float object1Y = object1.getY() + overlap*(object1.getY()-object2.getY())/distance;
@@ -75,7 +113,7 @@ public class Collision {
 		do {		
 			float distance = Util.getDistance(object2.getX(), object2.getY(), object1.getX(), object1.getY());
 			
-			float overlap = 0.1f;
+			float overlap = 1f;
 			
 			float object1X = object1.getX()+overlap*(object1.getX()-object2.getX())/distance;
 			float object1Y = object1.getY()+overlap*(object1.getY()-object2.getY())/distance;

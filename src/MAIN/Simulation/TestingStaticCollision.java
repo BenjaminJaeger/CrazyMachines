@@ -19,7 +19,7 @@ import Simulation.Util;
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.Objects.MovableObjects.Ball.MetallBall;
-import Simulation.Objects.StaticObjects.Plank;
+import Simulation.Objects.StaticObjects.StaticBox;
 import Simulation.Objects.StaticObjects.StaticObject;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
@@ -123,19 +123,19 @@ public class TestingStaticCollision extends Application implements GLEventListen
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
 		
-		model1 = new MetallBall(50, 30, 0, 0, 1, 0, 100);
+		model1 = new MetallBall(10, 30, 0, 0, 1, 0, 100);
 		model1.renderBounding(true);
 		model1.setVelocityX(Util.getRandomVelocity(6));
 		model1.setVelocityY(Util.getRandomVelocity(6));
 				
-		for (int i = 0; i < 4; i++) {			
+		for (int i = 0; i < 10; i++) {			
 			float x = Util.getRandomPositionX();
 			float y = Util.getRandomPositionY();
 			float width = (float)Math.random()*70+20;
 			float height = (float)Math.random()*70+20;
 			float rotation =(float)Math.random()*360;
 			
-			StaticObject plank = new Plank(width, height, (float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
+			StaticObject plank = new StaticBox(width, height, (float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
 			plank.setRotation(rotation);
 			plank.renderBounding(true);
 			allobjects.add(plank);		

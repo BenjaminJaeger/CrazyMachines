@@ -40,7 +40,7 @@ public class DynamicCollisionContext extends CollisionContext{
 	public void checkCollisions() {
 		for (GameObject object : GameObject.allObjects) 
 			if (object.getCollisionContext().getID()!=id) 
-				if(checkCollision(object.getCollisionContext())) 
+				if(checkCollision(object.getCollisionContext())) 					
 					collisionResolution(object);
 				
 	}
@@ -73,10 +73,10 @@ public class DynamicCollisionContext extends CollisionContext{
 	public void collisionResolution(GameObject object) {
 		if(object instanceof MoveableObject) {
 			Collision.removeCollision((MoveableObject) gameObject, (MoveableObject)object);
-			Collision.elasticCollision((MoveableObject) gameObject, (MoveableObject)object);		
+			Collision.elasticCollision((MoveableObject) gameObject, (MoveableObject)object);
 		}else {
 			Collision.removeCollision((MoveableObject) gameObject , (StaticObject)object);
-			Collision.elasticCollision((MoveableObject) gameObject , (StaticObject)object);
+			Collision.elasticCollision((MoveableObject) gameObject , (StaticObject)object);			
 		}
 			
 	}

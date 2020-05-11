@@ -1,5 +1,7 @@
-package MAIN.UI;
+package MAIN.Simulation;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
@@ -13,9 +15,12 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
+import Simulation.Simulation;
 import Simulation.Util;
+import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.Objects.MovableObjects.Ball.MetallBall;
+import Simulation.Objects.StaticObjects.StaticBox;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -26,14 +31,14 @@ import Simulation.RenderEngine.Core.Renderer.Renderer;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.CircleLine;
-import UI.UIConceptALL;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class UIConcept extends Application implements GLEventListener{
+public class TestingGravity extends Application implements GLEventListener{
 
 	private FPSAnimator animator;
 	private GLJPanel canvas;
@@ -41,7 +46,12 @@ public class UIConcept extends Application implements GLEventListener{
 	private BasicShader shader;
 	private Camera camera;
 	
-	private ArrayList<MoveableObject> allobjects = new ArrayList<MoveableObject>();
+	private ArrayList<GameObject> allobjects = new ArrayList<GameObject>();
+	
+	private GameObject model1;
+	private MoveableObject model2;
+	private GameObject model3;
+	private GameObject model4;
 	
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
 
@@ -50,40 +60,48 @@ public class UIConcept extends Application implements GLEventListener{
 	}
 	
 	public void start(Stage primaryStage) throws Exception {
-		HBox root = new HBox();
-		root.setStyle("-fx-background-color: rgb(102,127,102);");
+		StackPane root = new StackPane();
+
+		primaryStage.setTitle("Circle-Polygon Collision");
+		primaryStage.setScene(new Scene(root, 800, 800));
+		primaryStage.show();	
 		
-		primaryStage.setTitle("UI Test");
-		primaryStage.setScene(new Scene(root, 1400, 900));
-		primaryStage.show();
+		Pane pane = new Pane();
+		pane.setOnMouseClicked(e->{
+			model2.selectObject();
+		});
 		
-		//Simulation Canvas
+		//JFX Code für Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
-		canvas = new GLJPanel(capabilities);
-		SwingNode canvasNode = new SwingNode();		
+		canvas = new GLJPanel(capabilities);	    
+		SwingNode swingNode = new SwingNode();		 
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				canvasNode.setContent(canvas);	
-			}
+		    	swingNode.setContent(canvas);	
+		    }
 		});	
 		canvas.addGLEventListener(this);		
 		animator = new FPSAnimator(canvas, 60);
-		animator.start();
-	
-		UIConceptALL.addUI(root, canvasNode);
+	  	animator.start();
+	  	
+		root.getChildren().add(swingNode);
+		root.getChildren().add(pane);
 	}
 	
 	@Override
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
 		
-		for (MoveableObject moveableObject : allobjects) {
-			moveableObject.update();
-			renderer.render(moveableObject, shader); 
-		}
+		for (GameObject object : allobjects) 
+			renderer.render(object, shader); 
+		
+		renderer.render(model1, shader);
+		renderer.render(model2, shader);
+		renderer.render(model3, shader);
+		renderer.render(model4, shader);
 		
 		for (LineModel object : test) 
-			renderer.render(object,shader);		
+			renderer.render(object,shader);			
 	}
 
 	@Override
@@ -115,23 +133,63 @@ public class UIConcept extends Application implements GLEventListener{
 		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
-		for (int i = 0; i < 8; i++) {			
+		model2 = new MetallBall(30, 30,1 , 1, 1, 100, 200);
+		model2.renderBounding(true);
+		model2.setAccelerationX(-1);
+		
+		model1 = new StaticBox(2000, 50, 0, 1, 1, 0,0);
+		model1.renderBounding(true);
+		model1.setRotation(45);
+			
+		model3 = new StaticBox(200, 50, 0, 1, 1, -1000,-50);
+		model3.renderBounding(true);
+		
+		model4 = new StaticBox(200, 50, 0, 1, 1, 1000,70);
+		model4.renderBounding(true);
+		
+		for (int i = 0; i < 0; i++) {			
 			float x = Util.getRandomPositionX();
 			float y = Util.getRandomPositionY();
-			float velocityX = Util.getRandomVelocity(4);
-			float velocityY = Util.getRandomVelocity(4);
-			float radius = (float)Math.random()*30+30;
-			float mass = radius;
+			float width = (float)Math.random()*70+20;
+			float height = (float)Math.random()*70+20;
+			float rotation =(float)Math.random()*360;
 			
-			MoveableObject ball = new MetallBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
-			ball.setMass(mass);
-			ball.setAccelerationX(velocityX);
-			ball.setAccelerationY(velocityY);
+//			GameObject box = new MetallBox(width,height,50, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
+//			box.setRotation(rotation);
+//			box.renderBounding(true);
+//			allobjects.add(box);		
+			
+			x = Util.getRandomPositionX();
+			y = Util.getRandomPositionY();
+			float radius = (float)Math.random()*30+20;
+				
+			GameObject ball = new MetallBall(radius, 40, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
 			ball.renderBounding(true);
-			allobjects.add(ball);		
+			allobjects.add(ball);
 		}
 		
+			
+		canvas.addKeyListener(new KeyListener() {
+			public void keyTyped(KeyEvent e) {}
+			public void keyReleased(KeyEvent e) {}
+			
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+					for (GameObject object : allobjects) {
+						float rotation = (float)Math.random()*360;
+						float x = Util.getRandomPositionX();
+						float y = Util.getRandomPositionY();
+						object.setY(y);
+						object.setX(x);
+						object.setRotation(rotation);
+					}
+				}
+			}
+		});
+				
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
+		
+		Simulation.play();
 	}
 	
 

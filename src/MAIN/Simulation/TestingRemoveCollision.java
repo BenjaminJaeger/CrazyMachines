@@ -21,7 +21,7 @@ import Simulation.Util;
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.Ball.MetallBall;
 import Simulation.Objects.MovableObjects.Box.MetallBox;
-import Simulation.Objects.StaticObjects.Plank;
+import Simulation.Objects.StaticObjects.StaticBox;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -145,7 +145,7 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 			height = (float)Math.random()*70+20;
 			rotation =(float)Math.random()*360;
 			
-			GameObject staticBox = new Plank(width,height,(float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
+			GameObject staticBox = new StaticBox(width,height,(float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
 			staticBox.setRotation(rotation);
 			staticBox.renderBounding(true);
 			allobjects.add(staticBox);
@@ -186,7 +186,7 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 	  			float y = ((float)canvas.getHeight()/2 -(float)e.getY() +camera.getY());
 	  			
 	  			model1.setX(x);
-				model1.setY(y);			
+				model1.setY(y);		
 			}
 			
 			public void mouseDragged(MouseEvent e) {}

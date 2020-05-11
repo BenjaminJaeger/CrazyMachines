@@ -15,6 +15,7 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
+import Simulation.Simulation;
 import Simulation.Util;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.Objects.MovableObjects.Ball.MetallBall;
@@ -57,8 +58,7 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 		primaryStage.setScene(new Scene(root, 800, 800));
 		primaryStage.show();	
 		
-		
-		
+	
 		//JFX Code für Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
 		canvas = new GLJPanel(capabilities);	    
@@ -78,11 +78,9 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
 		
-		for (MoveableObject moveableObject : allobjects) {
-			moveableObject.update();
+		for (MoveableObject moveableObject : allobjects) 
 			renderer.render(moveableObject, shader); 
-		}
-		
+			
 		for (LineModel object : test) 
 			renderer.render(object,shader);			
 	}
@@ -115,10 +113,7 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 		
 		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
-
-		
-
-			
+	
 		for (int i = 0; i < 8; i++) {			
 			float x = Util.getRandomPositionX();
 			float y = Util.getRandomPositionY();
@@ -163,9 +158,9 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 			}
 		});
 		
-//		frame = new Frame();
-		
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
+		
+		Simulation.play();
 	}
 	
 

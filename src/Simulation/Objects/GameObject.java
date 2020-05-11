@@ -7,8 +7,6 @@ import Simulation.RenderEngine.Core.Models.Model;
 import Simulation.RenderEngine.Core.Models.TriangleModel;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Primitive;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 
 public abstract class GameObject {
 
@@ -24,6 +22,13 @@ public abstract class GameObject {
 	protected CollisionContext collisionContext;
 	protected boolean renderBounding = false;
 	
+	protected float originalX,originalY;
+	protected float originalrotation;
+	protected float originalscaleX,originalscaleY;
+	
+	protected float mass = 1;
+	
+	protected boolean selected;
 	
 ////////////////////
 ////Constructors////
@@ -31,53 +36,93 @@ public abstract class GameObject {
 	public GameObject(String[] files,Material material, float[][] colors,float x,float y) {
 		this.x = x;
 		this.y = y;
+		scaleX=1; 
+		scaleY=1;
+		
 		models = new TriangleModel[files.length];
 		for (int i = 0; i < models.length; i++) 
 			models[i] = new TriangleModel(files[i],material,colors[i],x,y);		
-		scaleX=1; 
-		scaleX=1;
+		
 		allObjects.add(this);
+		
+		originalX=x;
+		originalY=y;
+		originalrotation=0;
+		originalscaleX=1;
+		originalscaleY=1;
 	}
 	
 	public GameObject(String[] files,Material material, float r, float g, float b,float x,float y) {
 		this.x = x;
 		this.y = y;
+		scaleX=1; 
+		scaleY=1;
+		
 		models = new TriangleModel[files.length];
 		for (int i = 0; i < models.length; i++) 
 			models[i] = new TriangleModel(files[i],material,r,g,b,x,y);		
-		scaleX=1; 
-		scaleX=1;
+		
 		allObjects.add(this);
+		
+		originalX=x;
+		originalY=y;
+		originalrotation=0;
+		originalscaleX=1;
+		originalscaleY=1;
 	}
 	
 	public GameObject(String file,Material material, float r, float g, float b,float x,float y) {
 		this.x = x;
 		this.y = y;
+		scaleX=1; 
+		scaleY=1;
+		
 		models = new TriangleModel[1];
 		models[0] = new TriangleModel(file,material,r,g,b,x,y);		
-		scaleX=1; 
-		scaleX=1;
+		
 		allObjects.add(this);
+		
+		originalX=x;
+		originalY=y;
+		originalrotation=0;
+		originalscaleX=1;
+		originalscaleY=1;
 	}
 	
 	public GameObject(Primitive primitive,Material material,float[] colors, float x,float y) {
 		this.x = x;
 		this.y = y;
+		scaleX=1;
+		scaleY=1;
+		
 		models = new TriangleModel[1];
 		models[0] = new TriangleModel(primitive,material,colors,x,y);		
-		scaleX=1;
-		scaleX=1;
+		
 		allObjects.add(this);
+		
+		originalX=x;
+		originalY=y;
+		originalrotation=0;
+		originalscaleX=1;
+		originalscaleY=1;
 	}
 	
 	public GameObject(Primitive primitive,Material material, float r, float g,float b, float x,float y) {
 		this.x = x;
 		this.y = y;
+		scaleX=1;
+		scaleY=1;
+		
 		models = new TriangleModel[1];
 		models[0] = new TriangleModel(primitive,material,r,g,b,x,y);		
-		scaleX=1;
-		scaleX=1;
+		
 		allObjects.add(this);
+		
+		originalX=x;
+		originalY=y;
+		originalrotation=0;
+		originalscaleX=1;
+		originalscaleY=1;
 	}
 	
 	
@@ -87,7 +132,13 @@ public abstract class GameObject {
 ///////////////
 	public abstract void update();
 	
-
+	public void reset() {
+		setY(originalY);
+		setX(originalX);
+		setScale(originalscaleX);
+		setScaleY(originalscaleY);
+		setRotation(originalrotation);
+	}
 	
 /////////////////////////
 ////Getters & Setters////
@@ -210,4 +261,61 @@ public abstract class GameObject {
 	public void renderModel(boolean renderModel) {
 		this.renderModel  = renderModel;
 	}
+
+	public float getOriginalX() {
+		return originalX;
+	}
+
+	public void setOriginalX(float originalX) {
+		this.originalX = originalX;
+	}
+
+	public float getOriginalY() {
+		return originalY;
+	}
+
+	public void setOriginalY(float originalY) {
+		this.originalY = originalY;
+	}
+
+	public float getOriginalrotation() {
+		return originalrotation;
+	}
+
+	public void setOriginalrotation(float originalrotation) {
+		this.originalrotation = originalrotation;
+	}
+
+	public float getOriginalscaleX() {
+		return originalscaleX;
+	}
+
+	public void setOriginalscaleX(float originalscaleX) {
+		this.originalscaleX = originalscaleX;
+	}
+
+	public float getOriginalscaleY() {
+		return originalscaleY;
+	}
+
+	public void setOriginalscaleY(float originalscaleY) {
+		this.originalscaleY = originalscaleY;
+	}
+
+	public float getMass() {
+		return mass;
+	}
+	
+	public void selectObject() {
+		selected=true;
+	}
+	
+	public void unSelectObject() {
+		selected=false;
+	}
+	
+	public boolean isSelected() {
+		return selected;
+	}
+	
 }

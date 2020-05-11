@@ -10,6 +10,12 @@ import Simulation.RenderEngine.Primitives.Primitive;
  */
 public class Mesh {
 	
+	private boolean createMesh;
+	private boolean updateColors;
+	private boolean updateVertices;
+	private boolean updateIndices;
+	private boolean updateNormals;
+	
 	//ids to access VAO and VBOs
 	private int vaoID;
 	private int vertexVBOID;
@@ -39,7 +45,7 @@ public class Mesh {
 		this.colors=colors;
 //		normals=parser.getNormals(); // normals dont get read properly
 		calculateNormals();
-		loadToGPU.loadMeshToGPU(this);
+		createMesh=true;
 	}
 	
 	public Mesh(String file,float r,float g,float b) { 
@@ -58,7 +64,7 @@ public class Mesh {
 		
 //		normals=parser.getNormals(); // normals dont get read properly
 		calculateNormals();
-		loadToGPU.loadMeshToGPU(this);
+		createMesh=true;
 	}
 
 	public Mesh(Primitive primitive,float[] colors) { 
@@ -70,7 +76,7 @@ public class Mesh {
 			indexCount=indices.length;	
 		}
 		this.colors=colors;		
-		loadToGPU.loadMeshToGPU(this);
+		createMesh=true;
 	}
 	
 	public Mesh(Primitive primitive,float r,float g,float b) { 
@@ -89,7 +95,7 @@ public class Mesh {
 			this.colors[i+2] = b;
 		}
 		
-		loadToGPU.loadMeshToGPU(this);
+		createMesh=true;
 	}
 	
 	public Mesh(float[] vertices,float r,float g,float b) {
@@ -103,7 +109,7 @@ public class Mesh {
 			this.colors[i+1] =  g;
 			this.colors[i+2] = b;
 		}
-		loadToGPU.loadMeshToGPU(this);
+		createMesh=true;
 	}
 	
 	/**
@@ -121,7 +127,7 @@ public class Mesh {
 		this.indices=indices;
 		this.textureCoordinates=textureCoordinates;
 		this.textureFilePath=textureFilePath;
-		loadToGPU.loadMeshToGPU(this);
+		createMesh=true;
 	}
 	*/
 	
@@ -153,6 +159,23 @@ public class Mesh {
 		}	
 	}
 	
+	public void update() {
+		if (createMesh) 
+			createMesh();
+		
+		if(updateColors)
+			updateColors();
+		
+		if(updateVertices)
+			updateVertices();
+		
+		if (updateIndices) 
+			updateIndices();
+		
+		if (updateNormals) 
+			updateNormals();	
+	}
+	
 	/**
 	 * sets the vertices of this mesh and updates the corresponding VBO
 	 * @param vertices
@@ -164,9 +187,9 @@ public class Mesh {
 		this.vertices = vertices;
 		if (calculateNormals) {
 			calculateNormals();
-			loadToGPU.updateVBO(normalVBOID, normals);	 //updates the normal VBO
+			updateNormals = true;
 		}	
-		loadToGPU.updateVBO(vertexVBOID, vertices);		
+		updateVertices = true;
 	}
 
 	/**
@@ -174,7 +197,7 @@ public class Mesh {
 	 */
 	public void setIndices(int[] indices) {
 		this.indices = indices;
-		loadToGPU.updateIndexVBO(this);
+		updateIndices = true;
 	}
 	
 	/**
@@ -182,7 +205,7 @@ public class Mesh {
 	 */
 	public void setNormals(float[] normals) {
 		this.normals = normals;
-		loadToGPU.updateVBO(normalVBOID, normals);
+		updateNormals = true;
 	}
 	
 	/**
@@ -190,7 +213,19 @@ public class Mesh {
 	 */
 	public void setColorValues(float[] colors) {
 		this.colors = colors;
-		loadToGPU.updateVBO(colorVBOID, colors);
+		updateColors = true;
+	}
+	
+	public void setColorValues(float r, float g, float b) {
+		this.colors=new float[vertices.length];
+		
+		for (int i = 0; i < this.colors.length; i+=3) {
+			this.colors[i] =  r;
+			this.colors[i+1] =  g;
+			this.colors[i+2] = b;
+		}
+		
+		updateColors = true;
 	}
 	
 	public int getVaoID() {
@@ -292,5 +327,52 @@ public class Mesh {
 	public float[] getBaseVertices() {
 		return baseVertices;
 	}
+	
+	public void createMesh() {
+		loadToGPU.loadMeshToGPU(this);
+		this.createMesh = false;
+	}
+	
+	
+	public boolean isUpdateColors() {
+		return updateColors;
+	}
+
+	public void updateColors() {
+		loadToGPU.updateVBO(colorVBOID, colors);
+		updateColors = false;
+	}
+	
+	public boolean isUpdateVertices() {
+		return updateVertices;
+	}
+	
+	public void updateVertices() {
+		loadToGPU.updateVBO(vertexVBOID, vertices);
+		updateVertices = false;
+	}
+
+	public boolean isUpdateIndices() {
+		return updateIndices;
+	}
+	
+	public void updateIndices() {
+		loadToGPU.updateIndexVBO(this);
+		updateIndices = false;
+	}
+
+	public boolean isUpdateNormals() {
+		return updateNormals;
+	}
+
+	public void updateNormals() {
+		loadToGPU.updateVBO(normalVBOID, normals);
+		updateNormals = false;
+	}
+
+	public boolean isCreateMesh() {
+		return createMesh;
+	}
+	
 	
 }
