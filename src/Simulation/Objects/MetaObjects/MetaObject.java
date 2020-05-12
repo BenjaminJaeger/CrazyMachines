@@ -1,5 +1,7 @@
 package Simulation.Objects.MetaObjects;
 
+import Simulation.Objects.GameObject;
+
 public abstract class MetaObject {
     protected String objectName, objectImageURL;
 
@@ -23,4 +25,6 @@ public abstract class MetaObject {
     public void setObjectImageURL(String objectImageURL) {
         this.objectImageURL = objectImageURL;
     }
+
+    public abstract GameObject createObject (float x, float y);
 }

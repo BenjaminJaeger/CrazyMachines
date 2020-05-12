@@ -42,7 +42,7 @@ public class EditorTabPane {
 
     private void defineBalls (ScrollPane content) {
         //define TabElements as MetaObjects
-        TabElement metalBall = new TabElement (new MetallBallMeta("Metal Ball", "file:res/Images/metalBall.png", 20, 5, 255, 255, 255));
+        TabElement metalBall = new TabElement (new MetallBallMeta("Metal Ball", "file:res/Images/metalBall.png", 20, 30, 0.1f, 0.1f, 0.1f));
 
         //add TabElements to content
         HBox ballContent = new HBox (10);
@@ -54,16 +54,12 @@ public class EditorTabPane {
         content.setContent(ballContent);
 
         //Drag Events
-        metalBall.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
-            System.out.print("Drag started-");
-            draggedObject = metalBall.getMetaObject();
-            isDragging=true;
-        });
+        addDragFilter(metalBall);
     }
 
     private void defineBlocks (ScrollPane content) {
         //define TabElements as MetaObjects
-        TabElement woodenPlank = new TabElement(new PlankMeta("Wooden Plank", "file:res/Images/woodenPlank.png", 50, 100, 0, 255, 0));
+        TabElement woodenPlank = new TabElement(new PlankMeta("Wooden Plank", "file:res/Images/woodenPlank.png", 50, 100, 0.2f, 0.8f, 0.3f));
 
         //add TabElements to content
         HBox blockContent = new HBox (10);
@@ -75,8 +71,12 @@ public class EditorTabPane {
         content.setContent(blockContent);
 
         //Drag Events
-        woodenPlank.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
-            draggedObject = woodenPlank.getMetaObject();
+        addDragFilter(woodenPlank);
+    }
+
+    private void addDragFilter (TabElement draggableObject) {
+        draggableObject.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
+            draggedObject = draggableObject.getMetaObject();
             isDragging=true;
         });
     }
