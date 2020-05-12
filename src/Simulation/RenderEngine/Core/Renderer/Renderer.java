@@ -101,7 +101,6 @@ public class Renderer {
 	
 		model.getMesh().update();	
 		
-		
 		shader.uploadMaterial(model.getMaterial());		
 		shader.uploadLights();
 					
