@@ -1,30 +1,10 @@
 package MAIN.UI;
 
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
-
-import javax.swing.SwingUtilities;
-
-import com.jogamp.opengl.GL4;
-import com.jogamp.opengl.GLAutoDrawable;
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.opengl.GLEventListener;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.awt.GLJPanel;
-import com.jogamp.opengl.util.FPSAnimator;
-
-import Simulation.Simulation;
 import Simulation.Collisions.Boundings.Bounding;
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MetaObjects.MetaObject;
-import Simulation.Objects.MetaObjects.Moveable.MetallBallMeta;
-import Simulation.Objects.MetaObjects.Static.PlankMeta;
-import Simulation.Objects.MovableObjects.Ball.MetallBall;
-import Simulation.Objects.StaticObjects.StaticBox;
-import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
+import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
 import Simulation.RenderEngine.Core.Lights.DirectionalLight;
 import Simulation.RenderEngine.Core.Math.Vector3f;
@@ -33,7 +13,13 @@ import Simulation.RenderEngine.Core.Renderer.Renderer;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.CircleLine;
+import Simulation.Simulation;
 import UI.EditorTabPane;
+import UI.createTabPaneEvents;
+import UI.playPauseConcept;
+import com.jogamp.opengl.*;
+import com.jogamp.opengl.awt.GLJPanel;
+import com.jogamp.opengl.util.FPSAnimator;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;
@@ -49,7 +35,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class EditorConcept extends Application implements GLEventListener{
+import javax.swing.*;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
+
+public class EditorConceptTest extends Application implements GLEventListener{
 
 	private FPSAnimator animator;
 	private GLJPanel canvas;
@@ -68,42 +59,9 @@ public class EditorConcept extends Application implements GLEventListener{
 	}
 	
 	public void start(Stage primaryStage) throws Exception {
+		/* Start of Ui initialization*/
 		//stackpane for switching between layouts
 		StackPane root = new StackPane();
-		
-		Button playpause = new Button("Play");
-		playpause.setOnAction(e->{
-			if(Simulation.isPlaying()) {
-				playpause.setText("Play");
-				Simulation.pause();	
-			}else {
-				playpause.setText("Pause");
-				Simulation.play();			
-			}
-				
-		});
-			
-		Button stop = new Button("Restart");
-		stop.setOnAction(e->{
-			if (Simulation.isPlaying()) {
-				Simulation.pause();
-				playpause.setText("Play");
-			}
-			
-			Simulation.restart();
-		});
-		
-		Button clear = new Button("Clear");
-		clear.setOnAction(e->{
-			if (!Simulation.isPlaying()) {
-				allObjects.clear();
-				GameObject.allObjects.clear();
-			}
-		});
-		
-		HBox controls = new HBox(10);
-		controls.setAlignment(Pos.CENTER);
-		controls.getChildren().addAll(playpause,stop,clear);
 
 		//pane for moving around the Image
 		Pane dragAnimator = new Pane ();
@@ -126,7 +84,7 @@ public class EditorConcept extends Application implements GLEventListener{
 		primaryStage.setTitle("Editor Alpha");
 		primaryStage.setScene(new Scene(root, 900, 900));
 		primaryStage.show();
-		
+
 		//Simulation Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
 		canvas = new GLJPanel(capabilities);
@@ -141,53 +99,21 @@ public class EditorConcept extends Application implements GLEventListener{
 		animator = new FPSAnimator(canvas, 60);
 		animator.start();
 
+		//add remaining elements to ui
+		layout.setCenter(canvasWrapper);
+		layout.setTop(playPauseConcept.createControls(allObjects));
+		/* End of Ui initialization*/
+
+
 		//event for creating an object after releasing the drag
 		root.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
-			layout.toFront();
-			//define specs of mouse pointer and canvas size
-			double mX = e.getSceneX();
-			double mY = e.getSceneY();
-			double cX = canvasWrapper.getLayoutX();
-			double cY = canvasWrapper.getLayoutY();
-			double cH = canvas.getHeight();
-			double cW = canvas.getWidth();
-			//Check if pointer is hovering above canvas
-			if (editorTabPane.isDragging()
-					&& mX >= cX && mY >= cY
-					&& mX <= cX+cW && mY <= cY+cH) {
-				//get currently dragged object from EditorTabPane "etp"
-				MetaObject currentlyDraggedObject = editorTabPane.getDraggedObject();
-
-				//Convert Mouse Position
-				float x = ((float)e.getX() - (float)root.getWidth()/2) * 1.35f;
-				float y = ((float)root.getHeight()/2 - (float)e.getY()) * 0.55f;
-
-				allObjects.add(currentlyDraggedObject.createObject(x, y));
-
-
-				objectDragged = true;
-			}
-
-			editorTabPane.resetDrag();
+			createTabPaneEvents.dragReleased(root, layout, canvasWrapper, canvas, editorTabPane, allObjects, e);
+			if (editorTabPane.isDragging()) {editorTabPane.resetDrag();}
 		});
 		
-		canvas.addMouseMotionListener(new MouseMotionListener() {	
+		canvas.addMouseMotionListener(new MouseMotionListener() {
 			public void mouseMoved(java.awt.event.MouseEvent e) {
-				if(objectDragged) {
-					
-					float objectX = allObjects.get(allObjects.size()-1).getX() + canvas.getWidth()/2;
-					float objectY = canvas.getHeight()/2 - allObjects.get(allObjects.size()-1).getY();
-					
-					float mouseX = (float)e.getX();
-		  			float mouseY = (float)e.getY();
-					
-		  			float scale = (float)Math.sqrt(Math.pow((objectX-mouseX),2)+Math.pow((objectY-mouseY),2)) /100;
-		  			
-		  			float rotation = -(float)Math.atan2(objectY-mouseY , objectX-mouseX) * 180/(float)Math.PI;
-					
-					allObjects.get(allObjects.size()-1).setScale(scale);
-					allObjects.get(allObjects.size()-1).setRotation(rotation);
-				}
+				createTabPaneEvents.scaleObject(objectDragged, allObjects, canvas, e);
 			}
 			public void mouseDragged(java.awt.event.MouseEvent e) {}
 		});
@@ -209,20 +135,8 @@ public class EditorConcept extends Application implements GLEventListener{
 
 		//event for animating the drag
 		root.addEventFilter(MouseEvent.MOUSE_DRAGGED, e -> {
-			if (editorTabPane.isDragging()) {
-				dragAnimator.toFront();
-				animateObject.setImage(new Image(editorTabPane.getDraggedObject().getObjectImageURL()));
-				double size = 100;
-				animateObject.setFitHeight(size);
-				animateObject.setFitWidth(size);
-				animateObject.relocate(e.getX()-(size/2), e.getY()-(size/2));
-			}
+			createTabPaneEvents.onDrag(editorTabPane, dragAnimator, animateObject, e);
 		});
-
-
-		//add canvas to ui
-		layout.setCenter(canvasWrapper);
-		layout.setTop(controls);
 	}
 	
 	@Override
