@@ -11,6 +11,8 @@ import java.awt.event.MouseWheelListener;
 
 import com.jogamp.newt.opengl.GLWindow;
 import com.jogamp.opengl.awt.GLJPanel;
+
+import Simulation.RenderEngine.Core.Config;
 /**
  * Java class for handling the keyboard and mouse interaction.
  * Intented to be used for an OpenGL scene renderer.
@@ -35,8 +37,6 @@ public class CameraControls implements KeyListener, MouseMotionListener, MouseWh
     
     private Point lastMouseLocation=new Point(0, 0);
 
-    private boolean stopRotation;
-   
 	/**
 	 * creates mouselisteners to the canvas that control the camera
 	 * @param camer
@@ -82,7 +82,7 @@ public class CameraControls implements KeyListener, MouseMotionListener, MouseWh
     }
 
     public void mouseDragged(MouseEvent e) {
-    	if(!stopRotation) {
+    	if(!Config.stopCameraRotation) {
 	    	Point currentMouseLocation = e.getLocationOnScreen();
 		    float deltaX = currentMouseLocation.x - lastMouseLocation.x;
 		    float deltaY = currentMouseLocation.y - lastMouseLocation.y;
@@ -113,9 +113,5 @@ public class CameraControls implements KeyListener, MouseMotionListener, MouseWh
 	public void keyPressed(KeyEvent e) {}
 	public void mouseClicked(MouseEvent e) {}
 	public void mouseMoved(MouseEvent e) {}
-	
-	public void stopRotation(boolean stopRotation) {
-		this.stopRotation = stopRotation;
-	}
 	
 }
