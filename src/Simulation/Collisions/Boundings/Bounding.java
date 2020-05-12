@@ -11,7 +11,7 @@ public abstract class Bounding {
 	
 	protected LineModel model;
 	
-	protected static BasicShader shader = new BasicShader("Line");
+	public static BasicShader shader = new BasicShader("Line");
 	
 ////////////////////
 ////Constructors////

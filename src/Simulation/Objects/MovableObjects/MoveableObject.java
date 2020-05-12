@@ -34,12 +34,11 @@ public abstract class MoveableObject extends GameObject{
 		super(file, material, r,g,b, x, y);
 	}
 
-	///////////////
+	
+///////////////
 ////Methods////
 ///////////////
-
 	public void update() {
-		
 		applyForce(0, -0.05f);	
 		
 		increaseVelocity(accelerationX, accelerationY);
@@ -56,7 +55,7 @@ public abstract class MoveableObject extends GameObject{
 //		accelerationX = -velocityX*0.005f;
 //		accelerationY = -velocityY*0.005f;
 				
-		checkEdges();
+//		checkEdges();
 		
 		((DynamicCollisionContext) collisionContext).checkCollisions();
 	}
@@ -93,6 +92,16 @@ public abstract class MoveableObject extends GameObject{
 		this.accelerationY=0;
 	}
 	
+	public void resetVelocity() {
+		this.velocityX=0;
+		this.velocityY=0;
+	}
+	
+	public void reset() {
+		super.reset();
+		resetAcceleration();
+		resetVelocity();
+	}
 	
 /////////////////////////
 ////Getters & Setters////

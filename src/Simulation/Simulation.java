@@ -16,20 +16,25 @@ public class Simulation {
 	}
 	
 	public static void pause() {
-		isPlaying=false;
-		simulationTimer.cancel();
+		if(isPlaying) {
+			isPlaying=false;
+			simulationTimer.cancel();
+		}	
 	}
 	
 	public static void play() {
-		isPlaying=true;
-		simulationTimer = new Timer();
-		simulationTimer.scheduleAtFixedRate(new TimerTask() {
-		    public void run() {
-			      for (GameObject object : GameObject.allObjects) 
-			    	  object.update();			      
-			    	 
-			    }
-			},10,updateTime);		
+		if(!isPlaying) {
+			isPlaying=true;
+			simulationTimer = new Timer();
+			simulationTimer.scheduleAtFixedRate(new TimerTask() {
+			    public void run() {
+				      for (GameObject object : GameObject.allObjects) 
+				    	  object.update();			      
+				    	 
+				    }
+				},10,updateTime);		
+		}
+		
 	}
 	
 	public static void restart() {
