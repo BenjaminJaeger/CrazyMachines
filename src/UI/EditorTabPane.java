@@ -4,11 +4,11 @@ import Simulation.Objects.MetaObjects.MetaObject;
 import Simulation.Objects.MetaObjects.Moveable.MetallBallMeta;
 import Simulation.Objects.MetaObjects.Static.PlankMeta;
 import UI.Controls.TabElement;
-import javafx.scene.input.MouseEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 public class EditorTabPane {
@@ -42,7 +42,7 @@ public class EditorTabPane {
 
     private void defineBalls (ScrollPane content) {
         //define TabElements as MetaObjects
-        TabElement metalBall = new TabElement (new MetallBallMeta("Metal Ball", "file:res/Images/metalBall.png", 20, 30, 0.1f, 0.1f, 0.1f));
+        TabElement metalBall = new TabElement (new MetallBallMeta("Metal Ball", "file:res/Images/metalBall.png", 30, 30, (float)Math.random(),(float)Math.random(),(float)Math.random()));
 
         //add TabElements to content
         HBox ballContent = new HBox (10);
@@ -59,7 +59,7 @@ public class EditorTabPane {
 
     private void defineBlocks (ScrollPane content) {
         //define TabElements as MetaObjects
-        TabElement woodenPlank = new TabElement(new PlankMeta("Wooden Plank", "file:res/Images/woodenPlank.png", 50, 100, 0.2f, 0.8f, 0.3f));
+        TabElement woodenPlank = new TabElement(new PlankMeta("Wooden Plank", "file:res/Images/woodenPlank.png", 400, 30, (float)Math.random(),(float)Math.random(),(float)Math.random()));
 
         //add TabElements to content
         HBox blockContent = new HBox (10);

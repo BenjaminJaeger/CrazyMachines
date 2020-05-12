@@ -1,5 +1,4 @@
-package MAIN.Simulation;
-
+package TESTING.UI.old;
 
 import java.util.ArrayList;
 
@@ -16,8 +15,7 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 import Simulation.Util;
 import Simulation.Objects.MovableObjects.MoveableObject;
-import Simulation.Objects.MovableObjects.Box.MetallBox;
-import Simulation.Objects.MovableObjects.ExternalObjects.Icosahedron;
+import Simulation.Objects.MovableObjects.Ball.MetallBall;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -28,13 +26,14 @@ import Simulation.RenderEngine.Core.Renderer.Renderer;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.CircleLine;
+import UI.UIConceptALL;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class TestingBoundingReader extends Application implements GLEventListener{
+public class UIConcept extends Application implements GLEventListener{
 
 	private FPSAnimator animator;
 	private GLJPanel canvas;
@@ -42,8 +41,7 @@ public class TestingBoundingReader extends Application implements GLEventListene
 	private BasicShader shader;
 	private Camera camera;
 	
-	private MoveableObject model1;
-	private MoveableObject model2;
+	private ArrayList<MoveableObject> allobjects = new ArrayList<MoveableObject>();
 	
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
 
@@ -52,39 +50,40 @@ public class TestingBoundingReader extends Application implements GLEventListene
 	}
 	
 	public void start(Stage primaryStage) throws Exception {
-		StackPane root = new StackPane();
-
-		primaryStage.setTitle("Circle-Polygon Collision");
-		primaryStage.setScene(new Scene(root, 800, 800));
-		primaryStage.show();	
+		HBox root = new HBox();
+		root.setStyle("-fx-background-color: rgb(102,127,102);");
 		
-		//JFX Code für Canvas
+		primaryStage.setTitle("UI Test");
+		primaryStage.setScene(new Scene(root, 1400, 900));
+		primaryStage.show();
+		
+		//Simulation Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
-		canvas = new GLJPanel(capabilities);	    
-		SwingNode swingNode = new SwingNode();		 
-		root.getChildren().add(swingNode);
+		canvas = new GLJPanel(capabilities);
+		SwingNode canvasNode = new SwingNode();		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-		    	swingNode.setContent(canvas);	
-		    }
+				canvasNode.setContent(canvas);	
+			}
 		});	
 		canvas.addGLEventListener(this);		
 		animator = new FPSAnimator(canvas, 60);
-	  	animator.start();
+		animator.start();
+	
+		UIConceptALL.addUI(root, canvasNode);
 	}
 	
 	@Override
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
 		
-		model1.update();
-		renderer.render(model1, shader); 
-		
-		model2.update();
-		renderer.render(model2, shader); 
+		for (MoveableObject moveableObject : allobjects) {
+			moveableObject.update();
+			renderer.render(moveableObject, shader); 
+		}
 		
 		for (LineModel object : test) 
-			renderer.render(object,shader);			
+			renderer.render(object,shader);		
 	}
 
 	@Override
@@ -99,6 +98,7 @@ public class TestingBoundingReader extends Application implements GLEventListene
 		Config.BACKGROUND_COLOR = new Vector3f(0.4f,0.5f,0.4f);
 		Config.CANVAS_HEIGHT = canvas.getHeight();
 		Config.CANVAS_WIDTH = canvas.getWidth();
+		
 		
 		camera= new Camera(canvas);
 		camera.setZ(1f);
@@ -115,25 +115,21 @@ public class TestingBoundingReader extends Application implements GLEventListene
 		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
-
-//		model1 = new Bucket(basicMaterial, 0, 1, 1, 0, -100);
-//		model1.setAccelerationX(Util.getRandomVelocity(4));
-//		model1.setAccelerationY(Util.getRandomVelocity(4));
-//		model1.renderBounding(true);
-//		model1.setScale(0.1f);
-		
-		model1 = new MetallBox(300,300,300, 0, 0, 1, 0, -100);
-//		model1.setAccelerationX(Util.getRandomVelocity(4));
-//		model1.setAccelerationY(Util.getRandomVelocity(4));
-		model1.renderBounding(true);
-		model1.setScale(0.1f);
-		
-		model2 = new Icosahedron(basicMaterial, 0, 1, 0, 0, 200);
-		model2.setAccelerationX(Util.getRandomVelocity(4));
-		model2.setAccelerationY(Util.getRandomVelocity(4));
-//		model2.setAccelerationY(-2);
-		model2.renderBounding(true);
-		model2.setScale(0.3f);
+		for (int i = 0; i < 8; i++) {			
+			float x = Util.getRandomPositionX();
+			float y = Util.getRandomPositionY();
+			float velocityX = Util.getRandomVelocity(4);
+			float velocityY = Util.getRandomVelocity(4);
+			float radius = (float)Math.random()*30+30;
+			float mass = radius;
+			
+			MoveableObject ball = new MetallBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
+			ball.setMass(mass);
+			ball.setAccelerationX(velocityX);
+			ball.setAccelerationY(velocityY);
+			ball.renderBounding(true);
+			allobjects.add(ball);		
+		}
 		
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
 	}

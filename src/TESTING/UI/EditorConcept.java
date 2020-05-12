@@ -1,4 +1,4 @@
-package MAIN.UI;
+package TESTING.UI;
 
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -15,14 +15,10 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
-import Simulation.Simulation;
+import MAIN.Util;
+import Simulation.SimulationControler;
 import Simulation.Collisions.Boundings.Bounding;
 import Simulation.Objects.GameObject;
-import Simulation.Objects.MetaObjects.MetaObject;
-import Simulation.Objects.MetaObjects.Moveable.MetallBallMeta;
-import Simulation.Objects.MetaObjects.Static.PlankMeta;
-import Simulation.Objects.MovableObjects.Ball.MetallBall;
-import Simulation.Objects.StaticObjects.StaticBox;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -33,18 +29,16 @@ import Simulation.RenderEngine.Core.Renderer.Renderer;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.CircleLine;
+import UI.CreateTabPaneEvents;
 import UI.EditorTabPane;
+import UI.PlayPauseConcept;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -52,58 +46,21 @@ import javafx.stage.Stage;
 public class EditorConcept extends Application implements GLEventListener{
 
 	private FPSAnimator animator;
-	private GLJPanel canvas;
+	
 	private Renderer renderer;
 	private BasicShader shader;
 	private Camera camera;
 	
-	private ArrayList<GameObject> allObjects = new ArrayList<GameObject>();
-	
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
 	
-	private boolean objectDragged;
-
 	public static void main(String[] args) {
 		launch(args);
 	}
 	
 	public void start(Stage primaryStage) throws Exception {
+		/* Start of Ui initialization*/
 		//stackpane for switching between layouts
 		StackPane root = new StackPane();
-		
-		Button playpause = new Button("Play");
-		playpause.setOnAction(e->{
-			if(Simulation.isPlaying()) {
-				playpause.setText("Play");
-				Simulation.pause();	
-			}else {
-				playpause.setText("Pause");
-				Simulation.play();			
-			}
-				
-		});
-			
-		Button stop = new Button("Restart");
-		stop.setOnAction(e->{
-			if (Simulation.isPlaying()) {
-				Simulation.pause();
-				playpause.setText("Play");
-			}
-			
-			Simulation.restart();
-		});
-		
-		Button clear = new Button("Clear");
-		clear.setOnAction(e->{
-			if (!Simulation.isPlaying()) {
-				allObjects.clear();
-				GameObject.allObjects.clear();
-			}
-		});
-		
-		HBox controls = new HBox(10);
-		controls.setAlignment(Pos.CENTER);
-		controls.getChildren().addAll(playpause,stop,clear);
 
 		//pane for moving around the Image
 		Pane dragAnimator = new Pane ();
@@ -126,111 +83,68 @@ public class EditorConcept extends Application implements GLEventListener{
 		primaryStage.setTitle("Editor Alpha");
 		primaryStage.setScene(new Scene(root, 900, 900));
 		primaryStage.show();
-		
+
 		//Simulation Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
-		canvas = new GLJPanel(capabilities);
+		Util.canvas = new GLJPanel(capabilities);
 		//wrapping OpenGL into a swing component so JavaFX could run it
-		SwingNode canvasWrapper = new SwingNode();
+		Util.canvasWrapper = new SwingNode();
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				canvasWrapper.setContent(canvas);
+				Util.canvasWrapper.setContent(Util.canvas);
 			}
 		});	
-		canvas.addGLEventListener(this);		
-		animator = new FPSAnimator(canvas, 60);
+		Util.canvas.addGLEventListener(this);		
+		animator = new FPSAnimator(Util.canvas, 60);
 		animator.start();
+
+		//add remaining elements to ui
+		layout.setCenter(Util.canvasWrapper);
+		layout.setTop(PlayPauseConcept.createControls());
+		/* End of Ui initialization*/
+
 
 		//event for creating an object after releasing the drag
 		root.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
-			layout.toFront();
-			//define specs of mouse pointer and canvas size
-			double mX = e.getSceneX();
-			double mY = e.getSceneY();
-			double cX = canvasWrapper.getLayoutX();
-			double cY = canvasWrapper.getLayoutY();
-			double cH = canvas.getHeight();
-			double cW = canvas.getWidth();
-			//Check if pointer is hovering above canvas
-			if (editorTabPane.isDragging()
-					&& mX >= cX && mY >= cY
-					&& mX <= cX+cW && mY <= cY+cH) {
-				//get currently dragged object from EditorTabPane "etp"
-				MetaObject currentlyDraggedObject = editorTabPane.getDraggedObject();
-
-				//Convert Mouse Position
-				float x = ((float)e.getX() - (float)root.getWidth()/2) * 1.35f;
-				float y = ((float)root.getHeight()/2 - (float)e.getY()) * 0.55f;
-
-				allObjects.add(currentlyDraggedObject.createObject(x, y));
-
-
-				objectDragged = true;
-			}
-
-			editorTabPane.resetDrag();
+			CreateTabPaneEvents.dragReleased(root, layout, editorTabPane, e);
+			if (editorTabPane.isDragging()) {editorTabPane.resetDrag();}
 		});
 		
-		canvas.addMouseMotionListener(new MouseMotionListener() {	
+		Util.canvas.addMouseMotionListener(new MouseMotionListener() {
 			public void mouseMoved(java.awt.event.MouseEvent e) {
-				if(objectDragged) {
-					
-					float objectX = allObjects.get(allObjects.size()-1).getX() + canvas.getWidth()/2;
-					float objectY = canvas.getHeight()/2 - allObjects.get(allObjects.size()-1).getY();
-					
-					float mouseX = (float)e.getX();
-		  			float mouseY = (float)e.getY();
-					
-		  			float scale = (float)Math.sqrt(Math.pow((objectX-mouseX),2)+Math.pow((objectY-mouseY),2)) /100;
-		  			
-		  			float rotation = -(float)Math.atan2(objectY-mouseY , objectX-mouseX) * 180/(float)Math.PI;
-					
-					allObjects.get(allObjects.size()-1).setScale(scale);
-					allObjects.get(allObjects.size()-1).setRotation(rotation);
-				}
+				if(Util.objectDragged)
+					CreateTabPaneEvents.scaleObject(e);
 			}
 			public void mouseDragged(java.awt.event.MouseEvent e) {}
 		});
 
-		canvas.addMouseListener(new MouseListener() {
+		Util.canvas.addMouseListener(new MouseListener() {
 			public void mouseReleased(java.awt.event.MouseEvent e) {}
 			public void mousePressed(java.awt.event.MouseEvent e) {}
 			public void mouseExited(java.awt.event.MouseEvent e) {}
 			public void mouseEntered(java.awt.event.MouseEvent e) {}
 			public void mouseClicked(java.awt.event.MouseEvent e) {
-				if(objectDragged) {
-					objectDragged=false;
-					allObjects.get(allObjects.size()-1).setOriginalscaleX(allObjects.get(allObjects.size()-1).getScaleX());
-					allObjects.get(allObjects.size()-1).setOriginalscaleY(allObjects.get(allObjects.size()-1).getScaleY());
-					allObjects.get(allObjects.size()-1).setOriginalrotation(allObjects.get(allObjects.size()-1).getRotation());	
+				if(Util.objectDragged) {
+					Util.objectDragged=false;
+					GameObject.allObjects.get(GameObject.allObjects.size()-1).setOriginalscaleX(GameObject.allObjects.get(GameObject.allObjects.size()-1).getScaleX());
+					GameObject.allObjects.get(GameObject.allObjects.size()-1).setOriginalscaleY(GameObject.allObjects.get(GameObject.allObjects.size()-1).getScaleY());
+					GameObject.allObjects.get(GameObject.allObjects.size()-1).setOriginalrotation(GameObject.allObjects.get(GameObject.allObjects.size()-1).getRotation());	
 				}
 			}
 		});
 
 		//event for animating the drag
 		root.addEventFilter(MouseEvent.MOUSE_DRAGGED, e -> {
-			if (editorTabPane.isDragging()) {
-				dragAnimator.toFront();
-				animateObject.setImage(new Image(editorTabPane.getDraggedObject().getObjectImageURL()));
-				double size = 100;
-				animateObject.setFitHeight(size);
-				animateObject.setFitWidth(size);
-				animateObject.relocate(e.getX()-(size/2), e.getY()-(size/2));
-			}
+			CreateTabPaneEvents.onDrag(editorTabPane, dragAnimator, animateObject, e);
 		});
-
-
-		//add canvas to ui
-		layout.setCenter(canvasWrapper);
-		layout.setTop(controls);
 	}
 	
 	@Override
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
 		
-		for (GameObject moveableObject : allObjects) 
-			renderer.render(moveableObject, shader); 
+		for (GameObject object : GameObject.allObjects) 
+			renderer.render(object, shader); 
 		
 		for (LineModel object : test) 
 			renderer.render(object,shader);			
@@ -239,7 +153,7 @@ public class EditorConcept extends Application implements GLEventListener{
 	@Override
 	public void dispose(GLAutoDrawable arg0) {
 		animator.stop();
-		Simulation.pause();
+		SimulationControler.pause();
 	}
 
 	@SuppressWarnings("unused")
@@ -247,10 +161,10 @@ public class EditorConcept extends Application implements GLEventListener{
 	public void init(GLAutoDrawable arg0) {
 		Config.BACK_FACE_CULLING = false;
 		Config.BACKGROUND_COLOR = new Vector3f(0.4f,0.5f,0.4f);
-		Config.CANVAS_HEIGHT = canvas.getHeight();
-		Config.CANVAS_WIDTH = canvas.getWidth();
+		Config.CANVAS_HEIGHT = Util.canvas.getHeight();
+		Config.CANVAS_WIDTH = Util.canvas.getWidth();
 			
-		camera= new Camera(canvas);
+		camera= new Camera(Util.canvas);
 		camera.setZ(1f);
 		
 		renderer = new Renderer(camera);	

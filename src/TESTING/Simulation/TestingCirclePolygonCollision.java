@@ -1,4 +1,4 @@
-package MAIN.Simulation;
+package TESTING.Simulation;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -17,6 +17,7 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 import Simulation.Util;
 import Simulation.Objects.MovableObjects.MoveableObject;
+import Simulation.Objects.MovableObjects.Ball.MetallBall;
 import Simulation.Objects.MovableObjects.Box.MetallBox;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
@@ -34,19 +35,18 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class TestingPolygonPolygonCollision extends Application implements GLEventListener{
+public class TestingCirclePolygonCollision extends Application implements GLEventListener{
 
 	private FPSAnimator animator;
 	private GLJPanel canvas;
 	private Renderer renderer;
 	private BasicShader shader;
 	private Camera camera;
-
-	private ArrayList<MoveableObject> allPolygons = new ArrayList<MoveableObject>();
+	
+	private ArrayList<MoveableObject> allobjects = new ArrayList<MoveableObject>();
 
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
 
-	
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -54,15 +54,16 @@ public class TestingPolygonPolygonCollision extends Application implements GLEve
 	public void start(Stage primaryStage) throws Exception {
 		StackPane root = new StackPane();
 
-		primaryStage.setTitle("Polygon-Polygon Collision");
+		primaryStage.setTitle("Circle-Polygon Collision");
 		primaryStage.setScene(new Scene(root, 800, 800));
 		primaryStage.show();	
 		
+		
 		//JFX Code für Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
-		canvas = new GLJPanel(capabilities);    
-		SwingNode swingNode = new SwingNode();
-		 root.getChildren().add(swingNode);
+		canvas = new GLJPanel(capabilities);	    
+		SwingNode swingNode = new SwingNode();		 
+		root.getChildren().add(swingNode);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 		    	swingNode.setContent(canvas);	
@@ -76,11 +77,8 @@ public class TestingPolygonPolygonCollision extends Application implements GLEve
 	@Override
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
-
-
 		
-		
-		for (MoveableObject moveableObject : allPolygons) {
+		for (MoveableObject moveableObject : allobjects) {
 			moveableObject.update();
 			renderer.render(moveableObject, shader); 
 		}
@@ -102,12 +100,13 @@ public class TestingPolygonPolygonCollision extends Application implements GLEve
 		Config.CANVAS_HEIGHT = canvas.getHeight();
 		Config.CANVAS_WIDTH = canvas.getWidth();
 		
+		
 		camera= new Camera(canvas);
 		camera.setZ(1f);
 		
 		renderer = new Renderer(camera);	
 		
-		shader = new BasicShader("PhongColor");
+		shader=new BasicShader("PhongColor");
 	
 		AmbientLight ambientLight = new AmbientLight(1);    
 		
@@ -117,46 +116,61 @@ public class TestingPolygonPolygonCollision extends Application implements GLEve
 		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
-
-		for (int i = 0; i < 5; i++) {			
+	
+		for (int i = 0; i < 3; i++) {			
 			float x = Util.getRandomPositionX();
 			float y = Util.getRandomPositionY();
 			float mass = (float)Math.random()+0.5f;
+			float radius = mass*40;
 			float velocityX = Util.getRandomVelocity(4);
 			float velocityY = Util.getRandomVelocity(4);
-			float size = mass*50;
+			
+			MoveableObject ball = new MetallBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
+			ball.setMass(mass);
+			ball.setAccelerationX(velocityX);
+			ball.setAccelerationY(velocityY);
+			ball.renderBounding(true);
+			allobjects.add(ball);		
+			
+			x = Util.getRandomPositionX();
+			y = Util.getRandomPositionY();
+			mass = (float)Math.random()+0.5f;
+			float size = mass*60;
+			velocityX = Util.getRandomVelocity(4);
+			velocityY = Util.getRandomVelocity(4);
 			float rotation =  (float)Math.random()*360;
 			
-			MoveableObject box = new MetallBox(size, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
+			MoveableObject box = new MetallBox(size, (float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
 			box.renderBounding(true);
 			box.setMass(mass);
 			box.setAccelerationX(velocityX);
 			box.setAccelerationY(velocityY);
 			box.setRotation(rotation);
-			allPolygons.add(box);	
+			allobjects.add(box);	
 		}
 		
+			
 		canvas.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {}
 			public void keyReleased(KeyEvent e) {}
 			
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-					for (MoveableObject object : allPolygons) {
+					for (MoveableObject object : allobjects) {
 						float x = Util.getRandomPositionX();
 						float y = Util.getRandomPositionY();
 						float velocityX = Util.getRandomVelocity(4);
 						float velocityY = Util.getRandomVelocity(4);
 						object.setY(y);
 						object.setX(x);
-						object.setVelocityX(velocityX);
-						object.setVelocityY(velocityY);
+						object.setAccelerationX(velocityX);
+						object.setAccelerationY(velocityY);
 					}
 				}
 			}
 		});
 		
-		test.add(new LineModel(new CircleLine(0,0),0,0,0,0,0));
+		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
 	}
 	
 

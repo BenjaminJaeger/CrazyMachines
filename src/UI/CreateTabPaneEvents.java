@@ -1,10 +1,8 @@
 package UI;
 
+import MAIN.Util;
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MetaObjects.MetaObject;
-import com.jogamp.opengl.awt.GLJPanel;
-import javafx.embed.swing.SwingNode;
-import javafx.event.Event;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -12,18 +10,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-import java.util.ArrayList;
-
-public class createTabPaneEvents {
-    public static void dragReleased (StackPane root, BorderPane layout, SwingNode canvasWrapper, GLJPanel canvas, EditorTabPane editorTabPane, ArrayList<GameObject> allObjects, MouseEvent e) {
+public class CreateTabPaneEvents {
+    public static void dragReleased (StackPane root, BorderPane layout, EditorTabPane editorTabPane, MouseEvent e) {
         layout.toFront();
         //define specs of mouse pointer and canvas size
         double mX = e.getSceneX();
         double mY = e.getSceneY();
-        double cX = canvasWrapper.getLayoutX();
-        double cY = canvasWrapper.getLayoutY();
-        double cH = canvas.getHeight();
-        double cW = canvas.getWidth();
+        double cX = Util.canvasWrapper.getLayoutX();
+        double cY = Util.canvasWrapper.getLayoutY();
+        double cH = Util.canvas.getHeight();
+        double cW = Util.canvas.getWidth();
         //Check if pointer is hovering above canvas
         if (editorTabPane.isDragging()
                 && mX >= cX && mY >= cY
@@ -35,7 +31,9 @@ public class createTabPaneEvents {
             float x = ((float)e.getX() - (float)root.getWidth()/2) * 1.35f;
             float y = ((float)root.getHeight()/2 - (float)e.getY()) * 0.55f;
 
-            allObjects.add(currentlyDraggedObject.createObject(x, y));
+           currentlyDraggedObject.createObject(x, y);
+           
+           Util.objectDragged = true;
         }
     }
 
@@ -50,11 +48,9 @@ public class createTabPaneEvents {
         }
     }
 
-    public static void scaleObject (boolean objectDragged, ArrayList<GameObject> allObjects,  GLJPanel canvas, java.awt.event.MouseEvent e) {
-        if(objectDragged) {
-
-            float objectX = allObjects.get(allObjects.size()-1).getX() + canvas.getWidth()/2;
-            float objectY = canvas.getHeight()/2 - allObjects.get(allObjects.size()-1).getY();
+    public static void scaleObject (java.awt.event.MouseEvent e) {
+           float objectX = GameObject.allObjects.get( GameObject.allObjects.size()-1).getX() + Util.canvas.getWidth()/2;
+           float objectY = Util.canvas.getHeight()/2 -  GameObject.allObjects.get( GameObject.allObjects.size()-1).getY();
 
             float mouseX = (float)e.getX();
             float mouseY = (float)e.getY();
@@ -63,8 +59,8 @@ public class createTabPaneEvents {
 
             float rotation = -(float)Math.atan2(objectY-mouseY , objectX-mouseX) * 180/(float)Math.PI;
 
-            allObjects.get(allObjects.size()-1).setScale(scale);
-            allObjects.get(allObjects.size()-1).setRotation(rotation);
-        }
+            GameObject.allObjects.get( GameObject.allObjects.size()-1).setScale(scale);
+            GameObject.allObjects.get( GameObject.allObjects.size()-1).setRotation(rotation);  
     }
+
 }

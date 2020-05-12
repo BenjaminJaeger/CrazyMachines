@@ -5,14 +5,14 @@ import java.util.TimerTask;
 
 import Simulation.Objects.GameObject;
 
-public class Simulation {
+public class SimulationControler {
 
 	private static int updateTime = 10; //10
 	private static Timer simulationTimer;
 	private static boolean isPlaying;
 	
 	public static void setUpdateTime(int updateTime) {
-		Simulation.updateTime=updateTime;
+		SimulationControler.updateTime=updateTime;
 	}
 	
 	public static void pause() {

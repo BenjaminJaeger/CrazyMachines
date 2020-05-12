@@ -1,6 +1,5 @@
 package Simulation.Objects.MetaObjects.Static;
 
-import Simulation.Objects.GameObject;
 import Simulation.Objects.MetaObjects.MetaObject;
 import Simulation.Objects.StaticObjects.StaticBox;
 
@@ -18,8 +17,8 @@ public class PlankMeta extends MetaObject {
     }
 
     @Override
-    public GameObject createObject (float x, float y) {
-        return new StaticBox(height, width,  r, g, b, x, y);
+    public void createObject (float x, float y) {
+       new StaticBox(height, width,  r, g, b, x, y);
     }
 
     public float getHeight() {

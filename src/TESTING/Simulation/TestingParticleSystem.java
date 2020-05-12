@@ -1,4 +1,4 @@
-package MAIN.Simulation;
+package TESTING.Simulation;
 
 import Simulation.Particles.ParticleSystem;
 import Simulation.RenderEngine.Core.Config;

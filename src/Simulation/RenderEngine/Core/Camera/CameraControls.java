@@ -35,6 +35,7 @@ public class CameraControls implements KeyListener, MouseMotionListener, MouseWh
     
     private Point lastMouseLocation=new Point(0, 0);
 
+    private boolean stopRotation;
    
 	/**
 	 * creates mouselisteners to the canvas that control the camera
@@ -81,30 +82,30 @@ public class CameraControls implements KeyListener, MouseMotionListener, MouseWh
     }
 
     public void mouseDragged(MouseEvent e) {
-    	Point currentMouseLocation = e.getLocationOnScreen();
-	    float deltaX = currentMouseLocation.x - lastMouseLocation.x;
-	    float deltaY = currentMouseLocation.y - lastMouseLocation.y;
-	    lastMouseLocation = currentMouseLocation;
-	        
-	     // holding the left mouse button rotates the scene
-	     if (leftMouseButtonPressed) {	
-	        camera.increaseRotationX(CameraRotationXInc * -deltaY);
-	        camera.increaseRotationY(CameraRotationYInc * -deltaX);
-	     }
-	        
-	    // holding the right mouse button translates the scene
-	    if (rightMouseButtonPressed) {
-	        camera.increaseX(CameraXInc * -deltaX);
-	        camera.increaseY(CameraYInc * +deltaY);
-	    }
+    	if(!stopRotation) {
+	    	Point currentMouseLocation = e.getLocationOnScreen();
+		    float deltaX = currentMouseLocation.x - lastMouseLocation.x;
+		    float deltaY = currentMouseLocation.y - lastMouseLocation.y;
+		    lastMouseLocation = currentMouseLocation;
+		        
+		     // holding the left mouse button rotates the scene
+		     if (leftMouseButtonPressed) {	
+		        camera.increaseRotationX(CameraRotationXInc * -deltaY);
+		        camera.increaseRotationY(CameraRotationYInc * -deltaX);
+		     }
+		        
+		    // holding the right mouse button translates the scene
+		    if (rightMouseButtonPressed) {
+		        camera.increaseX(CameraXInc * -deltaX);
+		        camera.increaseY(CameraYInc * +deltaY);
+		    }
+    	}
     }
 
     public void mouseWheelMoved(MouseWheelEvent e) {
 		camera.increaseZ(CameraZInc * (float)e.getPreciseWheelRotation());
     }
-
-    
-    
+  
 	public void keyReleased(KeyEvent e) {}
 	public void mouseEntered(MouseEvent e) {}
 	public void mouseExited(MouseEvent e) {}
@@ -112,5 +113,9 @@ public class CameraControls implements KeyListener, MouseMotionListener, MouseWh
 	public void keyPressed(KeyEvent e) {}
 	public void mouseClicked(MouseEvent e) {}
 	public void mouseMoved(MouseEvent e) {}
+	
+	public void stopRotation(boolean stopRotation) {
+		this.stopRotation = stopRotation;
+	}
 	
 }

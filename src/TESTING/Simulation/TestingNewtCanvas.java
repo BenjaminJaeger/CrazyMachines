@@ -1,9 +1,14 @@
-package MAIN.Simulation;
+package TESTING.Simulation;
 
 import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
+import com.jogamp.newt.Display;
+import com.jogamp.newt.NewtFactory;
+import com.jogamp.newt.Screen;
+import com.jogamp.newt.javafx.NewtCanvasJFX;
+import com.jogamp.newt.opengl.GLWindow;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLCapabilities;
@@ -13,11 +18,8 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
-import Simulation.Util;
-import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
-import Simulation.Objects.MovableObjects.Ball.MetallBall;
-import Simulation.Objects.StaticObjects.StaticBucket;
+import Simulation.Objects.MovableObjects.ExternalObjects.Teapot;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -27,23 +29,26 @@ import Simulation.RenderEngine.Core.Models.LineModel;
 import Simulation.RenderEngine.Core.Renderer.Renderer;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
+import Simulation.RenderEngine.Primitives.CircleLine;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class TestingExternalObjects extends Application implements GLEventListener{
+public class TestingNewtCanvas extends Application implements GLEventListener{
 
+	private boolean experimental = true;
+	private GLJPanel canvas1;
+	private GLWindow canvas2;
+	
 	private FPSAnimator animator;
-	private GLJPanel canvas;
 	private Renderer renderer;
 	private BasicShader shader;
 	private Camera camera;
 	
-	private MoveableObject model1;
-	private GameObject model2;
-	
+	private MoveableObject teapot;
+
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
 
 	public static void main(String[] args) {
@@ -53,33 +58,47 @@ public class TestingExternalObjects extends Application implements GLEventListen
 	public void start(Stage primaryStage) throws Exception {
 		StackPane root = new StackPane();
 
-		primaryStage.setTitle("Circle-Polygon Collision");
-		primaryStage.setScene(new Scene(root, 900, 900));
+		primaryStage.setTitle("Newt Canvas Test");
+		primaryStage.setScene(new Scene(root, 800, 800));
 		primaryStage.show();	
-			
-		//JFX Code für Canvas
+		
+		
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
-		canvas = new GLJPanel(capabilities);	    
-		SwingNode swingNode = new SwingNode();		 
-		root.getChildren().add(swingNode);
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-		    	swingNode.setContent(canvas);	
-		    }
-		});	
-		canvas.addGLEventListener(this);		
-		animator = new FPSAnimator(canvas, 60);
-	  	animator.start();
+	    
+		if(experimental) {
+			Display jfxNewtDisplay = NewtFactory.createDisplay(null, false);
+			Screen screen = NewtFactory.createScreen(jfxNewtDisplay, 0);
+			canvas2 = GLWindow.create(screen, capabilities);
+			NewtCanvasJFX glCanvas = new NewtCanvasJFX(canvas2);
+			glCanvas.setWidth(800);
+		    glCanvas.setHeight(800);		     
+			root.getChildren().add(glCanvas);
+			
+			canvas2.addGLEventListener(this);		
+			animator = new FPSAnimator(canvas1, 60);
+		  	animator.start();
+			
+		}else {
+			canvas1 = new GLJPanel(capabilities);	    
+			SwingNode swingNode = new SwingNode();		 
+			root.getChildren().add(swingNode);
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+			    	swingNode.setContent(canvas1);	
+			    }
+			});	
+			canvas1.addGLEventListener(this);		
+			animator = new FPSAnimator(canvas1, 60);
+		  	animator.start();
+		}	
 	}
 	
 	@Override
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
 		
-		model1.update();
-		renderer.render(model1, shader);
-		model2.update();
-		renderer.render(model2, shader);
+		teapot.update();
+		renderer.render(teapot, shader); 
 		
 		for (LineModel object : test) 
 			renderer.render(object,shader);			
@@ -95,12 +114,18 @@ public class TestingExternalObjects extends Application implements GLEventListen
 	public void init(GLAutoDrawable arg0) {
 		Config.BACK_FACE_CULLING = false;
 		Config.BACKGROUND_COLOR = new Vector3f(0.4f,0.5f,0.4f);
-		Config.CANVAS_HEIGHT = canvas.getHeight();
-		Config.CANVAS_WIDTH = canvas.getWidth();
 		
+		if (experimental) {
+			Config.CANVAS_HEIGHT = canvas2.getHeight();
+			Config.CANVAS_WIDTH = canvas2.getWidth();
+			camera= new Camera(canvas2);
+		}else {
+			Config.CANVAS_HEIGHT = canvas1.getHeight();
+			Config.CANVAS_WIDTH = canvas1.getWidth();
+			camera= new Camera(canvas1);
+		}
 		
-		camera= new Camera(canvas);
-		camera.setZ(1f);
+		camera.setZ(10f);
 		
 		renderer = new Renderer(camera);	
 		
@@ -114,14 +139,9 @@ public class TestingExternalObjects extends Application implements GLEventListen
 		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
-		model1 = new MetallBall(10, 30, 0, 0, 1, 0, 100);
-		model1.renderBounding(true);
-		model1.setVelocityY(Util.getRandomVelocity(10));
-		model1.setVelocityX(Util.getRandomVelocity(10));
-				
-		model2 = new StaticBucket(basicMaterial, 0.8f, 0.5f, 0.2f, 0, 0);
-		model2.renderBounding(true);
-		model2.setScale(0.2f);
+		teapot = new Teapot(basicMaterial, 1, 0, 0, 200, 2000);
+	
+		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
 	}
 	
 

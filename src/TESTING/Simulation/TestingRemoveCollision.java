@@ -1,7 +1,9 @@
-package MAIN.Simulation;
+package TESTING.Simulation;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
@@ -19,8 +21,7 @@ import Simulation.Util;
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.Objects.MovableObjects.Ball.MetallBall;
-import Simulation.Objects.StaticObjects.StaticBox;
-import Simulation.Objects.StaticObjects.StaticObject;
+import Simulation.Objects.MovableObjects.Box.MetallBox;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -37,7 +38,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class TestingStaticCollision extends Application implements GLEventListener{
+public class TestingRemoveCollision extends Application implements GLEventListener{
 
 	private FPSAnimator animator;
 	private GLJPanel canvas;
@@ -59,7 +60,7 @@ public class TestingStaticCollision extends Application implements GLEventListen
 		StackPane root = new StackPane();
 
 		primaryStage.setTitle("Circle-Polygon Collision");
-		primaryStage.setScene(new Scene(root, 800, 800));
+		primaryStage.setScene(new Scene(root, 1000, 1000));
 		primaryStage.show();	
 			
 		//JFX Code für Canvas
@@ -123,22 +124,41 @@ public class TestingStaticCollision extends Application implements GLEventListen
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
 		
-		model1 = new MetallBall(10, 30, 0, 0, 1, 0, 100);
-		model1.renderBounding(true);
-		model1.setVelocityX(Util.getRandomVelocity(6));
-		model1.setVelocityY(Util.getRandomVelocity(6));
-				
-		for (int i = 0; i < 10; i++) {			
+		model1 = new MetallBall(50, 30, 0, 0, 1, 0, 200);
+//		model1.renderBounding(true);
+			
+		for (int i = 0; i < 2; i++) {			
 			float x = Util.getRandomPositionX();
 			float y = Util.getRandomPositionY();
 			float width = (float)Math.random()*70+20;
 			float height = (float)Math.random()*70+20;
 			float rotation =(float)Math.random()*360;
 			
-			StaticObject plank = new StaticBox(width, height, (float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
-			plank.setRotation(rotation);
-			plank.renderBounding(true);
-			allobjects.add(plank);		
+			GameObject box = new MetallBox(width,height,50, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
+			box.setRotation(rotation);
+			box.renderBounding(true);
+			allobjects.add(box);
+			
+//			x = Util.getRandomPositionX();
+//			y = Util.getRandomPositionY();
+//			width = (float)Math.random()*70+20;
+//			height = (float)Math.random()*70+20;
+//			rotation =(float)Math.random()*360;
+//			
+//			GameObject staticBox = new StaticBox(width,height,(float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
+//			staticBox.setRotation(rotation);
+//			staticBox.renderBounding(true);
+//			allobjects.add(staticBox);
+//			
+//			x = Util.getRandomPositionX();
+//			y = Util.getRandomPositionY();
+//			float radius = (float)Math.random()*30+20;
+//				
+//			MoveableObject ball = new MetallBall(radius, 40, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
+////			ball.renderBounding(true);
+//			ball.setVelocityX(Util.getRandomVelocity(4));
+//			ball.setVelocityY(Util.getRandomVelocity(4));
+//			allobjects.add(ball);
 		}
 		
 			
@@ -156,14 +176,23 @@ public class TestingStaticCollision extends Application implements GLEventListen
 						object.setX(x);
 						object.setRotation(rotation);
 					}
-					
-					model1.setY(100);
-					model1.setVelocityX(Util.getRandomVelocity(6));
-					model1.setVelocityY(Util.getRandomVelocity(6));
 				}
 			}
 		});
 			
+		
+		canvas.addMouseMotionListener(new MouseMotionListener() {
+			
+			public void mouseMoved(MouseEvent e) {
+				float x = ((float)e.getX() - (float)canvas.getWidth()/2 +camera.getX());
+	  			float y = ((float)canvas.getHeight()/2 -(float)e.getY() +camera.getY());
+	  			
+	  			model1.setX(x);
+				model1.setY(y);		
+			}
+			
+			public void mouseDragged(MouseEvent e) {}
+		});
 		
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
 	}

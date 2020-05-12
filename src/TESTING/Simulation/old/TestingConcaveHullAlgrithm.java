@@ -1,9 +1,5 @@
-package MAIN.Simulation;
+package TESTING.Simulation.old;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
@@ -17,11 +13,8 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
-import Simulation.Util;
-import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
-import Simulation.Objects.MovableObjects.Ball.MetallBall;
-import Simulation.Objects.MovableObjects.Box.MetallBox;
+import Simulation.Objects.MovableObjects.ExternalObjects.Icosahedron;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -38,7 +31,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class TestingRemoveCollision extends Application implements GLEventListener{
+public class TestingConcaveHullAlgrithm extends Application implements GLEventListener{
 
 	private FPSAnimator animator;
 	private GLJPanel canvas;
@@ -46,10 +39,8 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 	private BasicShader shader;
 	private Camera camera;
 	
-	private ArrayList<GameObject> allobjects = new ArrayList<GameObject>();
-	
-	private MoveableObject model1;
-	
+	private MoveableObject model;
+
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
 
 	public static void main(String[] args) {
@@ -59,10 +50,10 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 	public void start(Stage primaryStage) throws Exception {
 		StackPane root = new StackPane();
 
-		primaryStage.setTitle("Circle-Polygon Collision");
-		primaryStage.setScene(new Scene(root, 1000, 1000));
+		primaryStage.setTitle("Concave Hull");
+		primaryStage.setScene(new Scene(root, 800, 800));
 		primaryStage.show();	
-			
+		
 		//JFX Code für Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
 		canvas = new GLJPanel(capabilities);	    
@@ -80,16 +71,12 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 	
 	@Override
 	public void display(GLAutoDrawable arg0) {
+//		System.exit(0);
 		renderer.clear();	
 		
-		for (GameObject object : allobjects) {
-			object.update();
-			renderer.render(object, shader); 
-		}
-			
-		model1.update();
-		renderer.render(model1, shader);
-		
+		model.update();
+		renderer.render(model, shader); 
+	
 		for (LineModel object : test) 
 			renderer.render(object,shader);			
 	}
@@ -109,7 +96,7 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 		
 		
 		camera= new Camera(canvas);
-		camera.setZ(1f);
+		camera.setZ(10f);
 		
 		renderer = new Renderer(camera);	
 		
@@ -124,76 +111,9 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
 		
-		model1 = new MetallBall(50, 30, 0, 0, 1, 0, 200);
-//		model1.renderBounding(true);
-			
-		for (int i = 0; i < 2; i++) {			
-			float x = Util.getRandomPositionX();
-			float y = Util.getRandomPositionY();
-			float width = (float)Math.random()*70+20;
-			float height = (float)Math.random()*70+20;
-			float rotation =(float)Math.random()*360;
-			
-			GameObject box = new MetallBox(width,height,50, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
-			box.setRotation(rotation);
-			box.renderBounding(true);
-			allobjects.add(box);
-			
-//			x = Util.getRandomPositionX();
-//			y = Util.getRandomPositionY();
-//			width = (float)Math.random()*70+20;
-//			height = (float)Math.random()*70+20;
-//			rotation =(float)Math.random()*360;
-//			
-//			GameObject staticBox = new StaticBox(width,height,(float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
-//			staticBox.setRotation(rotation);
-//			staticBox.renderBounding(true);
-//			allobjects.add(staticBox);
-//			
-//			x = Util.getRandomPositionX();
-//			y = Util.getRandomPositionY();
-//			float radius = (float)Math.random()*30+20;
-//				
-//			MoveableObject ball = new MetallBall(radius, 40, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
-////			ball.renderBounding(true);
-//			ball.setVelocityX(Util.getRandomVelocity(4));
-//			ball.setVelocityY(Util.getRandomVelocity(4));
-//			allobjects.add(ball);
-		}
-		
-			
-		canvas.addKeyListener(new KeyListener() {
-			public void keyTyped(KeyEvent e) {}
-			public void keyReleased(KeyEvent e) {}
-			
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-					for (GameObject object : allobjects) {
-						float rotation = (float)Math.random()*360;
-						float x = Util.getRandomPositionX();
-						float y = Util.getRandomPositionY();
-						object.setY(y);
-						object.setX(x);
-						object.setRotation(rotation);
-					}
-				}
-			}
-		});
-			
-		
-		canvas.addMouseMotionListener(new MouseMotionListener() {
-			
-			public void mouseMoved(MouseEvent e) {
-				float x = ((float)e.getX() - (float)canvas.getWidth()/2 +camera.getX());
-	  			float y = ((float)canvas.getHeight()/2 -(float)e.getY() +camera.getY());
-	  			
-	  			model1.setX(x);
-				model1.setY(y);		
-			}
-			
-			public void mouseDragged(MouseEvent e) {}
-		});
-		
+		model = new Icosahedron(basicMaterial, 1,0,0, 400, 400);
+		model.renderBounding(true);
+
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
 	}
 	

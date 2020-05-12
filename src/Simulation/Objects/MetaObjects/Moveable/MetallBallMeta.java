@@ -1,6 +1,5 @@
 package Simulation.Objects.MetaObjects.Moveable;
 
-import Simulation.Objects.GameObject;
 import Simulation.Objects.MetaObjects.MetaObject;
 import Simulation.Objects.MovableObjects.Ball.MetallBall;
 
@@ -18,8 +17,8 @@ public class MetallBallMeta extends MetaObject {
     }
 
     @Override
-    public GameObject createObject (float x, float y) {
-        return new MetallBall(radius, resolution, r, g, b, x, y);
+    public void createObject (float x, float y) {
+        new MetallBall(radius, resolution, r, g, b, x, y);
     }
 
     public float getR() {

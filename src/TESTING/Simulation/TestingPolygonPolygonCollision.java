@@ -1,14 +1,11 @@
-package MAIN.Simulation;
+package TESTING.Simulation;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
-import com.jogamp.newt.Display;
-import com.jogamp.newt.NewtFactory;
-import com.jogamp.newt.Screen;
-import com.jogamp.newt.javafx.NewtCanvasJFX;
-import com.jogamp.newt.opengl.GLWindow;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLCapabilities;
@@ -18,8 +15,9 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
+import Simulation.Util;
 import Simulation.Objects.MovableObjects.MoveableObject;
-import Simulation.Objects.MovableObjects.ExternalObjects.Teapot;
+import Simulation.Objects.MovableObjects.Box.MetallBox;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -36,21 +34,19 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class TestingNewtCanvas extends Application implements GLEventListener{
+public class TestingPolygonPolygonCollision extends Application implements GLEventListener{
 
-	private boolean experimental = true;
-	private GLJPanel canvas1;
-	private GLWindow canvas2;
-	
 	private FPSAnimator animator;
+	private GLJPanel canvas;
 	private Renderer renderer;
 	private BasicShader shader;
 	private Camera camera;
-	
-	private MoveableObject teapot;
+
+	private ArrayList<MoveableObject> allPolygons = new ArrayList<MoveableObject>();
 
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
 
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -58,47 +54,36 @@ public class TestingNewtCanvas extends Application implements GLEventListener{
 	public void start(Stage primaryStage) throws Exception {
 		StackPane root = new StackPane();
 
-		primaryStage.setTitle("Newt Canvas Test");
+		primaryStage.setTitle("Polygon-Polygon Collision");
 		primaryStage.setScene(new Scene(root, 800, 800));
 		primaryStage.show();	
 		
-		
+		//JFX Code für Canvas
 		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
-	    
-		if(experimental) {
-			Display jfxNewtDisplay = NewtFactory.createDisplay(null, false);
-			Screen screen = NewtFactory.createScreen(jfxNewtDisplay, 0);
-			canvas2 = GLWindow.create(screen, capabilities);
-			NewtCanvasJFX glCanvas = new NewtCanvasJFX(canvas2);
-			glCanvas.setWidth(800);
-		    glCanvas.setHeight(800);		     
-			root.getChildren().add(glCanvas);
-			
-			canvas2.addGLEventListener(this);		
-			animator = new FPSAnimator(canvas1, 60);
-		  	animator.start();
-			
-		}else {
-			canvas1 = new GLJPanel(capabilities);	    
-			SwingNode swingNode = new SwingNode();		 
-			root.getChildren().add(swingNode);
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-			    	swingNode.setContent(canvas1);	
-			    }
-			});	
-			canvas1.addGLEventListener(this);		
-			animator = new FPSAnimator(canvas1, 60);
-		  	animator.start();
-		}	
+		canvas = new GLJPanel(capabilities);    
+		SwingNode swingNode = new SwingNode();
+		 root.getChildren().add(swingNode);
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+		    	swingNode.setContent(canvas);	
+		    }
+		});	
+		canvas.addGLEventListener(this);		
+		animator = new FPSAnimator(canvas, 60);
+	  	animator.start();
 	}
 	
 	@Override
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
+
+
 		
-		teapot.update();
-		renderer.render(teapot, shader); 
+		
+		for (MoveableObject moveableObject : allPolygons) {
+			moveableObject.update();
+			renderer.render(moveableObject, shader); 
+		}
 		
 		for (LineModel object : test) 
 			renderer.render(object,shader);			
@@ -114,22 +99,15 @@ public class TestingNewtCanvas extends Application implements GLEventListener{
 	public void init(GLAutoDrawable arg0) {
 		Config.BACK_FACE_CULLING = false;
 		Config.BACKGROUND_COLOR = new Vector3f(0.4f,0.5f,0.4f);
+		Config.CANVAS_HEIGHT = canvas.getHeight();
+		Config.CANVAS_WIDTH = canvas.getWidth();
 		
-		if (experimental) {
-			Config.CANVAS_HEIGHT = canvas2.getHeight();
-			Config.CANVAS_WIDTH = canvas2.getWidth();
-			camera= new Camera(canvas2);
-		}else {
-			Config.CANVAS_HEIGHT = canvas1.getHeight();
-			Config.CANVAS_WIDTH = canvas1.getWidth();
-			camera= new Camera(canvas1);
-		}
-		
-		camera.setZ(10f);
+		camera= new Camera(canvas);
+		camera.setZ(1f);
 		
 		renderer = new Renderer(camera);	
 		
-		shader=new BasicShader("PhongColor");
+		shader = new BasicShader("PhongColor");
 	
 		AmbientLight ambientLight = new AmbientLight(1);    
 		
@@ -139,9 +117,46 @@ public class TestingNewtCanvas extends Application implements GLEventListener{
 		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
-		teapot = new Teapot(basicMaterial, 1, 0, 0, 200, 2000);
-	
-		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
+
+		for (int i = 0; i < 5; i++) {			
+			float x = Util.getRandomPositionX();
+			float y = Util.getRandomPositionY();
+			float mass = (float)Math.random()+0.5f;
+			float velocityX = Util.getRandomVelocity(4);
+			float velocityY = Util.getRandomVelocity(4);
+			float size = mass*50;
+			float rotation =  (float)Math.random()*360;
+			
+			MoveableObject box = new MetallBox(size, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
+			box.renderBounding(true);
+			box.setMass(mass);
+			box.setAccelerationX(velocityX);
+			box.setAccelerationY(velocityY);
+			box.setRotation(rotation);
+			allPolygons.add(box);	
+		}
+		
+		canvas.addKeyListener(new KeyListener() {
+			public void keyTyped(KeyEvent e) {}
+			public void keyReleased(KeyEvent e) {}
+			
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+					for (MoveableObject object : allPolygons) {
+						float x = Util.getRandomPositionX();
+						float y = Util.getRandomPositionY();
+						float velocityX = Util.getRandomVelocity(4);
+						float velocityY = Util.getRandomVelocity(4);
+						object.setY(y);
+						object.setX(x);
+						object.setVelocityX(velocityX);
+						object.setVelocityY(velocityY);
+					}
+				}
+			}
+		});
+		
+		test.add(new LineModel(new CircleLine(0,0),0,0,0,0,0));
 	}
 	
 

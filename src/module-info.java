@@ -9,8 +9,9 @@ module jfx {
 	exports Simulation.RenderEngine.Core.Shaders.Core;
 	exports Simulation.RenderEngine.Core;
 	exports Simulation.BoundingCreator;
-	exports MAIN.Simulation;
-	exports MAIN.UI;
+	exports TESTING.Simulation;
+	exports TESTING.UI;
+	exports MAIN;
 
 	requires transitive gluegen.rt;
 	requires transitive java.desktop;

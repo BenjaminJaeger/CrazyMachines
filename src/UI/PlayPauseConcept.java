@@ -1,41 +1,38 @@
 package UI;
 
+import Simulation.SimulationControler;
 import Simulation.Objects.GameObject;
-import Simulation.Simulation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
-import java.util.ArrayList;
-
-public class playPauseConcept {
-    public static HBox createControls (ArrayList<GameObject> allObjects) {
+public class PlayPauseConcept {
+    public static HBox createControls () {
         Button playpause = new Button("Play");
         playpause.setOnAction(e->{
-            if(Simulation.isPlaying()) {
+            if(SimulationControler.isPlaying()) {
                 playpause.setText("Play");
-                Simulation.pause();
+                SimulationControler.pause();
             }else {
                 playpause.setText("Pause");
-                Simulation.play();
+                SimulationControler.play();
             }
 
         });
 
         Button stop = new Button("Restart");
         stop.setOnAction(e->{
-            if (Simulation.isPlaying()) {
-                Simulation.pause();
+            if (SimulationControler.isPlaying()) {
+                SimulationControler.pause();
                 playpause.setText("Play");
             }
 
-            Simulation.restart();
+            SimulationControler.restart();
         });
 
         Button clear = new Button("Clear");
         clear.setOnAction(e->{
-            if (!Simulation.isPlaying()) {
-                allObjects.clear();
+            if (!SimulationControler.isPlaying()) {
                 GameObject.allObjects.clear();
             }
         });
