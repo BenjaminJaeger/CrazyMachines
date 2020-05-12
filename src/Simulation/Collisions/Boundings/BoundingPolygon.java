@@ -93,6 +93,8 @@ public class BoundingPolygon extends Bounding{
 			p.x=p.x*scale+x;		
 			p.y=p.y*scale+y;
 		}
+		
+		model = new LineModel(new PolygonLine(points),0,1,0,x,y);
 	}
 	
 	public void setY(float y) {
@@ -108,6 +110,8 @@ public class BoundingPolygon extends Bounding{
 			p.x=p.x*scale+x;		
 			p.y=p.y*scale+y;
 		}
+		
+		model = new LineModel(new PolygonLine(points),0,1,0,x,y);
 	}
 	
 	public void setRotation(float rotation) {
@@ -123,6 +127,9 @@ public class BoundingPolygon extends Bounding{
 			p.x=p.x*scale+x;		
 			p.y=p.y*scale+y;
 		}
+		
+		model.setRotationZ(rotation);
+//		model = new LineModel(new PolygonLine(points),0,1,0,x,y);
 	}
 	
 	public void setScale(float scale) {
@@ -138,6 +145,8 @@ public class BoundingPolygon extends Bounding{
 			p.x=p.x*scale+x;		
 			p.y=p.y*scale+y;
 		}
+		model.setScale(scale);
+//		model = new LineModel(new PolygonLine(points),0,1,0,x,y);
 	}
 
 }

@@ -1,5 +1,7 @@
 package MAIN.UI;
 
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
@@ -58,6 +60,8 @@ public class EditorConcept extends Application implements GLEventListener{
 	private ArrayList<GameObject> allObjects = new ArrayList<GameObject>();
 	
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
+	
+	private boolean objectDragged;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -91,8 +95,10 @@ public class EditorConcept extends Application implements GLEventListener{
 		
 		Button clear = new Button("Clear");
 		clear.setOnAction(e->{
-			if (!Simulation.isPlaying()) 
+			if (!Simulation.isPlaying()) {
 				allObjects.clear();
+				GameObject.allObjects.clear();
+			}
 		});
 		
 		HBox controls = new HBox(10);
@@ -118,7 +124,7 @@ public class EditorConcept extends Application implements GLEventListener{
 
 		//window specs and show
 		primaryStage.setTitle("Editor Alpha");
-		primaryStage.setScene(new Scene(root, 1400, 900));
+		primaryStage.setScene(new Scene(root, 900, 900));
 		primaryStage.show();
 		
 		//Simulation Canvas
@@ -165,9 +171,47 @@ public class EditorConcept extends Application implements GLEventListener{
 				else if (dObj instanceof PlankMeta) {
 					allObjects.add(new StaticBox(200, 20,  (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y));
 				}
+				
+				objectDragged = true;
 			}
 
 			etp.resetDrag();
+		});
+		
+		canvas.addMouseMotionListener(new MouseMotionListener() {	
+			public void mouseMoved(java.awt.event.MouseEvent e) {
+				if(objectDragged) {
+					
+					float objectX = allObjects.get(allObjects.size()-1).getX() + canvas.getWidth()/2;
+					float objectY = canvas.getHeight()/2 - allObjects.get(allObjects.size()-1).getY();
+					
+					float mouseX = (float)e.getX();
+		  			float mouseY = (float)e.getY();
+					
+		  			float scale = (float)Math.sqrt(Math.pow((objectX-mouseX),2)+Math.pow((objectY-mouseY),2)) /100;
+		  			
+		  			float rotation = -(float)Math.atan2(objectY-mouseY , objectX-mouseX) * 180/(float)Math.PI;
+					
+					allObjects.get(allObjects.size()-1).setScale(scale);
+					allObjects.get(allObjects.size()-1).setRotation(rotation);
+				}
+			}
+			public void mouseDragged(java.awt.event.MouseEvent e) {}
+		});
+
+		canvas.addMouseListener(new MouseListener() {
+			public void mouseReleased(java.awt.event.MouseEvent e) {}
+			public void mousePressed(java.awt.event.MouseEvent e) {}
+			public void mouseExited(java.awt.event.MouseEvent e) {}
+			public void mouseEntered(java.awt.event.MouseEvent e) {}
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				if(objectDragged) {
+					objectDragged=false;
+					allObjects.get(allObjects.size()-1).setOriginalscaleX(allObjects.get(allObjects.size()-1).getScaleX());
+					allObjects.get(allObjects.size()-1).setOriginalscaleY(allObjects.get(allObjects.size()-1).getScaleY());
+					allObjects.get(allObjects.size()-1).setOriginalrotation(allObjects.get(allObjects.size()-1).getRotation());	
+				}
+			}
 		});
 
 		//event for animating the drag

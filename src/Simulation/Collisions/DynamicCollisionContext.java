@@ -81,7 +81,6 @@ public class DynamicCollisionContext extends CollisionContext{
 				 p1 = testP1;
 				 p2 = testP2;
 			 }
-				 
 		}
 		
 		if(object instanceof MoveableObject) {			

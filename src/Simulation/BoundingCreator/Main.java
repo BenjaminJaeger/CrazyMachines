@@ -173,11 +173,8 @@ public class Main extends Application implements GLEventListener{
 	  		public void mouseClicked(MouseEvent e) {
 	  			if(e.getButton() == MouseEvent.BUTTON1) {
 		  			//Convert mouse Position
-		  			float x = ((float)e.getX() - (float)canvas.getWidth()/2 +camera.getX()) / (float)canvas.getWidth();
-		  			float y = ((float)canvas.getHeight()/2 -(float)e.getY() +camera.getY()) / (float)canvas.getHeight();
-		  			
-		  			x*=camera.getZ()*0.75f;
-		  			y*=camera.getZ()*0.75f;
+		  			float x = (camera.getZ()*(float)e.getX() - (float)canvas.getWidth()/2 +camera.getX()) / (float)canvas.getWidth();
+		  			float y = ((float)canvas.getHeight()/2 -camera.getZ()*(float)e.getY() +camera.getY()) / (float)canvas.getHeight();
 		  			
 		  			if(state>0) {
 		  				currentHull.set(currentHull.size()-1,new Vector2f(x, y));

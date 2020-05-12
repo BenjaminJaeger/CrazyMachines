@@ -8,6 +8,7 @@ import Simulation.RenderEngine.Primitives.CircleLine;
 public class BoundingCircle  extends Bounding{
 
 	private float radius;
+	private float originalRadius;
 
 ////////////////////
 ////Constructors////
@@ -15,6 +16,7 @@ public class BoundingCircle  extends Bounding{
 	public BoundingCircle(float x, float y,float radius) {
 		super(x, y);
 		this.radius = radius;
+		originalRadius=radius;
 		model = new LineModel(new CircleLine(radius, 30), 0, 0, 1, x,y);
 	}
 	
@@ -126,9 +128,25 @@ public class BoundingCircle  extends Bounding{
 		return radius;
 	}
 	
+	public void setX(float x) { 
+		super.setX(x);
+		model = new LineModel(new CircleLine(radius, 30), 0, 0, 1, x,y);
+	}
+	
+	public void setY(float y) { 
+		super.setY(y);
+		model = new LineModel(new CircleLine(radius, 30), 0, 0, 1, x,y);
+	}
+	
+	public void setRotation(float rotation) {
+		super.setRotation(rotation);
+		model.setRotationZ(rotation);
+	}
+	
 	public void setScale(float scale) {
 		super.setScale(scale);
-		this.radius*=scale;
+		this.radius=originalRadius*scale;
+		model = new LineModel(new CircleLine(radius, 30), 0, 0, 1, x,y);
 	}
 
 }

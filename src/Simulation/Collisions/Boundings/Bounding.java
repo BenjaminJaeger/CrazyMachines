@@ -39,7 +39,6 @@ public abstract class Bounding {
 
 	public void setX(float x) {
 		this.x = x;
-		model.setX(x);
 	}
 
 	public float getY() {
@@ -48,7 +47,6 @@ public abstract class Bounding {
 
 	public void setY(float y) {
 		this.y = y;
-		model.setY(y);
 	}
 
 	public float getRotation() {
@@ -57,13 +55,10 @@ public abstract class Bounding {
 
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
-		model.setRotationZ(rotation);
 	}
 	
 	public void setScale(float scale) {
 		this.scale = scale;
-		model.setScaleX(scale);
-		model.setScaleY(scale);
 	}
 	
 }
