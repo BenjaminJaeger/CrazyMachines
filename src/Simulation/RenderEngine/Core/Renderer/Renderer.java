@@ -93,6 +93,11 @@ public class Renderer {
 			for (TriangleModel model : object.getModels()) 
 				render(model,shader);
 		}
+
+		if (object.isSelected()) {
+			render(object.getObjectTransformer().getCircleUI().getCircleModel(), object.getObjectTransformer().getCircleUI().getShader());
+			render(object.getObjectTransformer().getSquareUI().getRectangleLine(), object.getObjectTransformer().getSquareUI().getShader());
+		}
 	}
 
 	

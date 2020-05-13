@@ -81,6 +81,14 @@ public class CollisionContext {
 	public BoundingPolygon[] getBoundingPolygons() {
 		return boundingPolygons;
 	}
+
+	public BoundingPolygon getBoundingPolygon (int index) {
+			return boundingPolygons[index];
+	}
+
+	public BoundingCircle getBoundingCircle(int index) {
+		return boundingCirlces[index];
+	}
 	
 	public void setBoundingCirlces(BoundingCircle[] boundingCirlces) {
 		this.boundingCirlces = boundingCirlces;
