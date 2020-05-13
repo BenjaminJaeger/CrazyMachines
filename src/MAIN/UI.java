@@ -19,41 +19,25 @@ public class UI {
 		dragAnimator.getChildren().add(animateObject);
 		root.getChildren().add(dragAnimator);
 		
-		
-		
-		
+
 		//BorderPane settings
 		layout.toFront();
 		layout.setStyle("-fx-background-color: rgb(102,127,102);");
 		root.getChildren().add(layout);
 		
-		
-		
-		
+
 		//build TabPane
 		EditorTabPane editorTabPane = new EditorTabPane();
 		TabPane tabPane = editorTabPane.buildTabPane();
 		layout.setBottom(tabPane);
 
-		
-		
-		
+
 		//Simulation Control Buttons
 		layout.setTop(PlayPauseConcept.createControls());
 
-		
-		
-		
-		//event for creating and animating objects drag and drop
-		root.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
-			CreateTabPaneEvents.dragReleased(root, layout, editorTabPane, e);
-			if (editorTabPane.isDragging()) 
-				editorTabPane.resetDrag();
-		});
-		root.addEventFilter(MouseEvent.MOUSE_DRAGGED, e -> {
-			CreateTabPaneEvents.onDrag(editorTabPane, dragAnimator, animateObject, e);
-		});
 
+		//initialize events
+		CreateTabPaneEvents.initializeMouseRelease(root, layout, editorTabPane, dragAnimator, animateObject);
 	}
 	
 }
