@@ -100,7 +100,7 @@ public class EditorConcept extends Application implements GLEventListener{
 
 		//add remaining elements to ui
 		layout.setCenter(Util.canvasWrapper);
-		layout.setTop(PlayPauseConcept.createControls());
+		layout.setLeft(PlayPauseConcept.createControls());
 		/* End of Ui initialization*/
 
 
