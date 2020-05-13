@@ -37,6 +37,7 @@ public class EditorTabPane {
         defineBlocks(blockScroller);
 
         //return fully build TabPane to UI
+        objChooser.getStylesheets().add("file:res/css/ObjectChooser.css");
         return objChooser;
     }
 
@@ -93,4 +94,5 @@ public class EditorTabPane {
         draggedObject = null;
         isDragging = false;
     }
+
 }

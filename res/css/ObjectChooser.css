@@ -12,7 +12,7 @@
 }
 
 .tab:selected {
-	-fx-background-color: transparent, transparent , rgb(100,100,100);
+	-fx-background-color: transparent, transparent , #f77949;
 }
 
 .tab:selected .tab-label {
@@ -20,4 +20,8 @@
 }
 .tab-pane .tab-header-background{
 	-fx-background-color: transparent;
+}
+
+.tab-content-area{
+	-fx-background-color: #f77949;
 }

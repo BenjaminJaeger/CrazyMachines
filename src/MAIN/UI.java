@@ -33,7 +33,7 @@ public class UI {
 
 
 		//Simulation Control Buttons
-		layout.setTop(PlayPauseConcept.createControls());
+		layout.setLeft(PlayPauseConcept.createControls());
 
 
 		//initialize events
