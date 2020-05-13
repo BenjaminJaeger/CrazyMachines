@@ -13,7 +13,7 @@ public class Util {
 	
 	public static float canvasX;
 	public static float canvasY;
-	
+		
 	public static GLJPanel canvas;
 	public static SwingNode canvasWrapper;
 	

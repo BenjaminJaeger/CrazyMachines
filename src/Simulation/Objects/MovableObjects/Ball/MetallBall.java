@@ -2,13 +2,11 @@ package Simulation.Objects.MovableObjects.Ball;
 
 import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 
 public class MetallBall extends Ball{
 	
 	//private static float[] colors = {(float)Math.random(),(float)Math.random(),(float)Math.random()};
-	private static Material material = new Material(new Vector3f(0.2f), new Vector3f(0.5f), new Vector3f(1f), 64f);
+	private static Material material = new Material(new Vector3f(0.2f), new Vector3f(0.5f), new Vector3f(1f), 0f);
 
 	
 ////////////////////
