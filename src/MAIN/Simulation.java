@@ -25,7 +25,6 @@ import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Models.LineModel;
 import Simulation.RenderEngine.Core.Renderer.Renderer;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
-import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import UI.CreateTabPaneEvents;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.layout.BorderPane;
@@ -118,9 +117,6 @@ public class Simulation implements GLEventListener{
 		
 		//								    new DirectionalLight(lightDirection,         diffuseColor,          speculaColor)
 		DirectionalLight directionalLight = new DirectionalLight(new Vector3f(0, 0, -1), new Vector3f(1, 1, 1), new Vector3f(1, 1, 1));
-		
-		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
-		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 	}
 	
 

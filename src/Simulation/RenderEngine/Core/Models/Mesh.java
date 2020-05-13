@@ -1,5 +1,6 @@
 package Simulation.RenderEngine.Core.Models;
 
+import Simulation.RenderEngine.Core.Math.Vector2f;
 import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Primitives.Primitive;
 
@@ -238,6 +239,10 @@ public class Mesh {
 
 	public float[] getVertices() {
 		return vertices;
+	}
+
+	public Vector2f getVertex(int index) {
+		return new Vector2f(vertices[index], vertices[index +1]);
 	}
 
 	public int[] getIndices() {

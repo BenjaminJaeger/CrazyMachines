@@ -9,7 +9,7 @@ import Simulation.RenderEngine.Primitives.Cube;
 public class StaticBox extends StaticObject{
 
 	
-	private static Material material = new Material(new Vector3f(0.2f), new Vector3f(0.5f), new Vector3f(1f), 64f);
+	private static Material material = new Material(new Vector3f(0.2f), new Vector3f(0.5f), new Vector3f(1f), 0f);
 	
 	
 ////////////////////
