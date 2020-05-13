@@ -11,5 +11,7 @@
     <orderEntry type="library" exported="" name="JavaFX 11" level="application" />
     <orderEntry type="library" exported="" name="JavaFX 14" level="application" />
     <orderEntry type="library" exported="" name="JOGL" level="application" />
+    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="gluegen-rt" level="project" />
   </component>
 </module>

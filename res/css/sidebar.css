@@ -1,0 +1,9 @@
+.VBox{
+-fx-background-color: #f00; -fx-min-width: 50px;
+}
+.button {
+    -fx-font: 16px "Serif";
+    -fx-text-fill: #fff;
+    -fx-padding: 10;
+    -fx-background-color: transparent;
+}
