@@ -1,7 +1,11 @@
 package UI;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import Simulation.SimulationControler;
 import Simulation.Objects.GameObject;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -9,8 +13,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PlayPauseConcept {
 
@@ -76,6 +78,18 @@ public class PlayPauseConcept {
 
         Slider slider = new Slider();
         slider.setOrientation(Orientation.VERTICAL);
+        slider.setMin(1);
+        slider.setMax(30);
+        slider.setValue(SimulationControler.getUpdateTime());
+        slider.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+         	
+            	SimulationControler.setUpdateTime(newValue.intValue());
+            	SimulationControler.pause();
+            	SimulationControler.play();
+            }
+         });
+        
 
         Button close = new Button();
         close.setGraphic(new ImageView(closeImg));
