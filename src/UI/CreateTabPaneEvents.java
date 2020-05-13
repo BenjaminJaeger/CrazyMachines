@@ -63,4 +63,15 @@ public class CreateTabPaneEvents {
             GameObject.allObjects.get( GameObject.allObjects.size()-1).setRotation(rotation);  
     }
 
+    public static void initializeMouseRelease (StackPane root, BorderPane layout, EditorTabPane editorTabPane, Pane dragAnimator, ImageView animateObject) {
+        root.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
+            CreateTabPaneEvents.dragReleased(root, layout, editorTabPane, e);
+            if (editorTabPane.isDragging())
+                editorTabPane.resetDrag();
+        });
+        root.addEventFilter(MouseEvent.MOUSE_DRAGGED, e -> {
+            CreateTabPaneEvents.onDrag(editorTabPane, dragAnimator, animateObject, e);
+        });
+    }
+
 }
