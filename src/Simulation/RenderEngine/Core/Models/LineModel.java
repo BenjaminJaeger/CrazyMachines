@@ -4,9 +4,12 @@ import Simulation.RenderEngine.Primitives.Primitive;
 
 
 public class LineModel extends Model{
-	
+
+	private float [] vertices;
+
 	public LineModel(Primitive primitive,float r,float g,float b, float x,float y) {
 		super(primitive, r, g, b, x, y);
+		vertices = primitive.getVertices();
 	}
 	
 	public LineModel(float[] vertices,float r,float g,float b, float x,float y) {
@@ -21,5 +24,13 @@ public class LineModel extends Model{
 			colors[i+2] = b;
 		}
 		mesh.setColorValues(colors);
+	}
+
+	public float [] getVertices () {
+		return vertices;
+	}
+
+	public float getVertex (int index) {
+		return vertices [index];
 	}
 }

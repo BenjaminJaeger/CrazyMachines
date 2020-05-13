@@ -2,9 +2,11 @@ package Simulation.Objects;
 
 import java.util.ArrayList;
 
+import MAIN.Controller.ObjectTransformer;
 import Simulation.Collisions.CollisionContext;
 import Simulation.RenderEngine.Core.Models.Model;
 import Simulation.RenderEngine.Core.Models.TriangleModel;
+import Simulation.RenderEngine.Core.Renderer.Renderer;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Primitive;
 
@@ -29,7 +31,8 @@ public abstract class GameObject {
 	protected float mass = 1;
 	
 	protected boolean selected;
-	
+
+	private ObjectTransformer objectTransformer;
 ////////////////////
 ////Constructors////
 ////////////////////
@@ -316,6 +319,14 @@ public abstract class GameObject {
 	
 	public boolean isSelected() {
 		return selected;
+	}
+
+	public ObjectTransformer getObjectTransformer() {
+		return objectTransformer;
+	}
+
+	public void setObjectTransformer(ObjectTransformer objectTransformer) {
+		this.objectTransformer = objectTransformer;
 	}
 	
 }
