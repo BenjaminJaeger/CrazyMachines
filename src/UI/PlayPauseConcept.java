@@ -97,7 +97,7 @@ public class PlayPauseConcept {
         controls.setStyle("-fx-background-color: #000; -fx-min-width: 50px;");
 
         controls.setAlignment(Pos.CENTER);
-        controls.getChildren().addAll(expand,playpause,stop,clear,slider,close);
+        controls.getChildren().addAll(expand,playpause,stop,clear,slider);
         controls.getStylesheets().add("file:res/css/sidebar.css");
 
         return controls;
