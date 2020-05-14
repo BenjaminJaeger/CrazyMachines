@@ -15,7 +15,6 @@ import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
 import Simulation.SimulationControler;
-import Simulation.Collisions.Boundings.Bounding;
 import Simulation.Objects.GameObject;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
@@ -35,8 +34,10 @@ public class Simulation implements GLEventListener{
 	private FPSAnimator animator;
 	
 	private Renderer renderer;
-	private BasicShader shader;
 	private Camera camera;
+	
+	private LineModel tmp;
+	private BasicShader tmpShader;
 	
 	public void initialize(StackPane root,BorderPane layout) {	
 		Util.canvas = new GLJPanel(new GLCapabilities(GLProfile.getDefault()));
@@ -85,9 +86,9 @@ public class Simulation implements GLEventListener{
 		renderer.clear();	
 		
 		for (GameObject object : GameObject.allObjects) 
-			renderer.render(object, shader); 
-			
-		renderer.render(new LineModel(new float[]{0,0,0}, 0, 0, 0, 0, 0), Bounding.shader); 
+			renderer.render(object, object.getShader()); 
+		
+		renderer.render(tmp,tmpShader);
 	}
 
 	@Override
@@ -109,14 +110,14 @@ public class Simulation implements GLEventListener{
 		camera.setZ(1f);
 		
 		renderer = new Renderer(camera);	
-		
-		shader=new BasicShader("PhongColor");
-		Bounding.shader = new BasicShader("Line");
-	
+
 		AmbientLight ambientLight = new AmbientLight(1);    
 		
 		//								    new DirectionalLight(lightDirection,         diffuseColor,          speculaColor)
 		DirectionalLight directionalLight = new DirectionalLight(new Vector3f(0, 0, -1), new Vector3f(1, 1, 1), new Vector3f(1, 1, 1));
+		
+		tmp = new LineModel(new float[]{0,0,0}, 0, 0, 0, 0, 0); 
+		tmpShader= new BasicShader("Line");
 	}
 	
 

@@ -17,7 +17,7 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 import Simulation.Util;
 import Simulation.Objects.MovableObjects.MoveableObject;
-import Simulation.Objects.MovableObjects.Box.MetallBox;
+import Simulation.Objects.MovableObjects.Box.TestBox;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -127,7 +127,7 @@ public class TestingPolygonPolygonCollision extends Application implements GLEve
 			float size = mass*50;
 			float rotation =  (float)Math.random()*360;
 			
-			MoveableObject box = new MetallBox(size, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
+			MoveableObject box = new TestBox(size, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
 			box.renderBounding(true);
 			box.setMass(mass);
 			box.setAccelerationX(velocityX);

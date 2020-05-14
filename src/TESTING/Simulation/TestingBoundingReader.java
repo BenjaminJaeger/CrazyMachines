@@ -16,7 +16,7 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 import Simulation.Util;
 import Simulation.Objects.MovableObjects.MoveableObject;
-import Simulation.Objects.MovableObjects.Box.MetallBox;
+import Simulation.Objects.MovableObjects.Box.TestBox;
 import Simulation.Objects.MovableObjects.ExternalObjects.Icosahedron;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
@@ -122,7 +122,7 @@ public class TestingBoundingReader extends Application implements GLEventListene
 //		model1.renderBounding(true);
 //		model1.setScale(0.1f);
 		
-		model1 = new MetallBox(300,300,300, 0, 0, 1, 0, -100);
+		model1 = new TestBox(300,300,300, 0, 0, 1, 0, -100);
 //		model1.setAccelerationX(Util.getRandomVelocity(4));
 //		model1.setAccelerationY(Util.getRandomVelocity(4));
 		model1.renderBounding(true);

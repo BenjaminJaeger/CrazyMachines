@@ -55,7 +55,7 @@ public class CreateTabPaneEvents {
             float mouseX = (float)e.getX();
             float mouseY = (float)e.getY();
 
-            float scale = (float)Math.sqrt(Math.pow((objectX-mouseX),2)+Math.pow((objectY-mouseY),2)) /50;
+            float scale = (float)Math.sqrt(Math.pow((objectX-mouseX),2)+Math.pow((objectY-mouseY),2)) /500;
 
             float rotation = -(float)Math.atan2(objectY-mouseY , objectX-mouseX) * 180/(float)Math.PI;
 

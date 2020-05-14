@@ -41,8 +41,7 @@ public class BoundingReader {
 					}
 				}else {
 					String[] v = scannedLine.substring(2).split("/");
-					currentHull.add(new Vector2f(Float.parseFloat(v[0]) *Config.CANVAS_WIDTH *2.8f , Float.parseFloat(v[1]) * Config.CANVAS_HEIGHT *2.8f )); 			
-					System.out.println(currentHull.get(currentHull.size()-1));
+					currentHull.add(new Vector2f(Float.parseFloat(v[0]) *Config.CANVAS_WIDTH , Float.parseFloat(v[1]) * Config.CANVAS_HEIGHT )); 			
 				}
 			
 				counter++;

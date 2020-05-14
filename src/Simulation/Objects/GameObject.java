@@ -6,13 +6,15 @@ import MAIN.Controller.ObjectTransformer;
 import Simulation.Collisions.CollisionContext;
 import Simulation.RenderEngine.Core.Models.Model;
 import Simulation.RenderEngine.Core.Models.TriangleModel;
-import Simulation.RenderEngine.Core.Renderer.Renderer;
+import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Primitive;
 
 public abstract class GameObject {
 
 	public static ArrayList<GameObject> allObjects = new ArrayList<GameObject>();
+
+	private static BasicShader shader = new BasicShader("GameObject");
 	
 	protected TriangleModel[] models;
 	private boolean renderModel = true;
@@ -36,7 +38,7 @@ public abstract class GameObject {
 ////////////////////
 ////Constructors////
 ////////////////////
-	public GameObject(String[] files,Material material, float[][] colors,float x,float y) {
+	public GameObject(String[] files,Material material, float r, float g, float b,float x,float y) {
 		this.x = x;
 		this.y = y;
 		scaleX=1; 
@@ -44,7 +46,7 @@ public abstract class GameObject {
 		
 		models = new TriangleModel[files.length];
 		for (int i = 0; i < models.length; i++) 
-			models[i] = new TriangleModel(files[i],material,colors[i],x,y);		
+			models[i] = new TriangleModel(files[i],material,r,g,b,x,y);		
 		
 		allObjects.add(this);
 		
@@ -55,7 +57,7 @@ public abstract class GameObject {
 		originalscaleY=1;
 	}
 	
-	public GameObject(String[] files,Material material, float r, float g, float b,float x,float y) {
+	public GameObject(String[] files , String[] textures, Material material, float x,float y) {
 		this.x = x;
 		this.y = y;
 		scaleX=1; 
@@ -63,7 +65,25 @@ public abstract class GameObject {
 		
 		models = new TriangleModel[files.length];
 		for (int i = 0; i < models.length; i++) 
-			models[i] = new TriangleModel(files[i],material,r,g,b,x,y);		
+			models[i] = new TriangleModel(files[i],textures[i],material,x,y);		
+		
+		allObjects.add(this);
+		
+		originalX=x;
+		originalY=y;
+		originalrotation=0;
+		originalscaleX=1;
+		originalscaleY=1;
+	}
+	
+	public GameObject(String file , String texture, Material material, float x,float y) {
+		this.x = x;
+		this.y = y;
+		scaleX=1; 
+		scaleY=1;
+		
+		models = new TriangleModel[1];
+		models[0] = new TriangleModel(file,texture,material,x,y);		
 		
 		allObjects.add(this);
 		
@@ -92,24 +112,6 @@ public abstract class GameObject {
 		originalscaleY=1;
 	}
 	
-	public GameObject(Primitive primitive,Material material,float[] colors, float x,float y) {
-		this.x = x;
-		this.y = y;
-		scaleX=1;
-		scaleY=1;
-		
-		models = new TriangleModel[1];
-		models[0] = new TriangleModel(primitive,material,colors,x,y);		
-		
-		allObjects.add(this);
-		
-		originalX=x;
-		originalY=y;
-		originalrotation=0;
-		originalscaleX=1;
-		originalscaleY=1;
-	}
-	
 	public GameObject(Primitive primitive,Material material, float r, float g,float b, float x,float y) {
 		this.x = x;
 		this.y = y;
@@ -128,6 +130,23 @@ public abstract class GameObject {
 		originalscaleY=1;
 	}
 	
+	public GameObject(Primitive primitive,Material material, String texture, float x,float y) {
+		this.x = x;
+		this.y = y;
+		scaleX=1;
+		scaleY=1;
+		
+		models = new TriangleModel[1];
+		models[0] = new TriangleModel(primitive,material,texture,x,y);		
+		
+		allObjects.add(this);
+		
+		originalX=x;
+		originalY=y;
+		originalrotation=0;
+		originalscaleX=1;
+		originalscaleY=1;
+	}
 	
 	
 ///////////////
@@ -327,6 +346,10 @@ public abstract class GameObject {
 
 	public void setObjectTransformer(ObjectTransformer objectTransformer) {
 		this.objectTransformer = objectTransformer;
+	}
+
+	public BasicShader getShader() {
+		return shader;
 	}
 	
 }

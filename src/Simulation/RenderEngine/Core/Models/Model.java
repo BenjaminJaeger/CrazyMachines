@@ -53,6 +53,17 @@ public abstract class Model {
 		updateMatrix=true;
 	}
 	
+	public Model(String file,String texture,float x,float y) {
+		mesh=new Mesh(file,texture);
+		scaleX=1;
+		scaleY=1;
+		scaleZ=1;
+		this.x = x;
+		this.y = y;
+		updateMatrix=true;
+	}
+	
+	
 	/**
 	 * Created a model out of a primitive (Sphere,Cube,Plane)
 	 * The model has the scale 1 and is at location x,y,0 and is not rotated
@@ -60,6 +71,16 @@ public abstract class Model {
 	 */
 	public Model(Primitive primitive,float r,float g,float b, float x,float y) {
 		mesh = new Mesh(primitive,r,g,b);
+		scaleX=1;
+		scaleY=1;
+		scaleZ=1;
+		this.x = x;
+		this.y = y;
+		updateMatrix=true;
+	}
+	
+	public Model(Primitive primitive,String texture, float x,float y) {
+		mesh = new Mesh(primitive,texture);
 		scaleX=1;
 		scaleY=1;
 		scaleZ=1;

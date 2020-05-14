@@ -20,6 +20,7 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
+import Simulation.Objects.GameObject;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -27,7 +28,6 @@ import Simulation.RenderEngine.Core.Lights.DirectionalLight;
 import Simulation.RenderEngine.Core.Math.Vector2f;
 import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Models.LineModel;
-import Simulation.RenderEngine.Core.Models.TriangleModel;
 import Simulation.RenderEngine.Core.Renderer.Renderer;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
@@ -59,7 +59,7 @@ public class Main extends Application implements GLEventListener{
 	private BasicShader shader;
 	private Camera camera;
 	
-	private TriangleModel model;
+	private GameObject model;
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
 	
 
@@ -173,8 +173,10 @@ public class Main extends Application implements GLEventListener{
 	  		public void mouseClicked(MouseEvent e) {
 	  			if(e.getButton() == MouseEvent.BUTTON1) {
 		  			//Convert mouse Position
-		  			float x = (camera.getZ()*(float)e.getX() - (float)canvas.getWidth()/2 +camera.getX()) / (float)canvas.getWidth();
-		  			float y = ((float)canvas.getHeight()/2 -camera.getZ()*(float)e.getY() +camera.getY()) / (float)canvas.getHeight();
+		  			float x = ((float)e.getX() - (float)canvas.getWidth()/2 +camera.getX()) / (float)canvas.getWidth();
+		  			float y = ((float)canvas.getHeight()/2 -(float)e.getY() +camera.getY()) / (float)canvas.getHeight();
+		  			x*=camera.getZ()*0.75f;
+		  			y*=camera.getZ()*0.75f;
 		  			
 		  			if(state>0) {
 		  				currentHull.set(currentHull.size()-1,new Vector2f(x, y));
@@ -229,8 +231,9 @@ public class Main extends Application implements GLEventListener{
 		
 		//RENDER MODEL
 		if(changeModel) {
-			model = new TriangleModel(fileName, new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f), 1, 0, 0, 0, 0);
-			model.setScale(0.3f);
+			model = new GameObject(fileName, new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f), 1, 0, 0, 0, 0) {
+				public void update() {}
+			};
 		}	
 		if(model!=null) 
 			renderer.render(model, shader); 
@@ -281,8 +284,7 @@ public class Main extends Application implements GLEventListener{
 		Config.CANVAS_HEIGHT = canvas.getHeight();
 		Config.CANVAS_WIDTH = canvas.getWidth();
 		Config.LINE_WIDTH= 10;
-		
-		
+				
 		camera= new Camera(canvas);
 		camera.setZ(1);
 		
@@ -296,10 +298,12 @@ public class Main extends Application implements GLEventListener{
 		DirectionalLight directionalLight = new DirectionalLight(new Vector3f(0, 0, -1), new Vector3f(1, 1, 1), new Vector3f(1, 1, 1));
 		
 		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
-		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
+		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 0, 1f);
 		
-		model =   new TriangleModel("icosahedron", basicMaterial, 1, 0, 0, 0, 0);
-		model.setScale(0.1f);
+		model = new GameObject("PlaneTriangles", new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f), 1, 0, 0, 0, 0) {
+			public void update() {}
+		};
+//		model.setScale(0.1f);
 		
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
 	}

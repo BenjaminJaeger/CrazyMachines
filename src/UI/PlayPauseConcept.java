@@ -16,8 +16,7 @@ import javafx.scene.layout.VBox;
 
 public class PlayPauseConcept {
 
-
-
+	
     public static VBox createControls () {
 
         VBox controls = new VBox(10);
@@ -83,7 +82,6 @@ public class PlayPauseConcept {
         slider.setValue(SimulationControler.getUpdateTime());
         slider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-         	
             	SimulationControler.setUpdateTime(newValue.intValue());
             	SimulationControler.pause();
             	SimulationControler.play();
@@ -97,7 +95,7 @@ public class PlayPauseConcept {
         controls.setStyle("-fx-background-color: #000; -fx-min-width: 50px;");
 
         controls.setAlignment(Pos.CENTER);
-        controls.getChildren().addAll(expand,playpause,stop,clear,slider);
+        controls.getChildren().addAll(playpause,stop,clear,slider);
         controls.getStylesheets().add("file:res/css/sidebar.css");
 
         return controls;

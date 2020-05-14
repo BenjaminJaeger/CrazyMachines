@@ -6,9 +6,12 @@ import static com.jogamp.opengl.GL.GL_CULL_FACE;
 import static com.jogamp.opengl.GL.GL_DEPTH_BUFFER_BIT;
 import static com.jogamp.opengl.GL.GL_DEPTH_TEST;
 import static com.jogamp.opengl.GL.GL_FRONT_AND_BACK;
+import static com.jogamp.opengl.GL.GL_LINEAR;
+import static com.jogamp.opengl.GL.GL_LINEAR_MIPMAP_LINEAR;
 import static com.jogamp.opengl.GL.GL_LINE_LOOP;
 import static com.jogamp.opengl.GL.GL_ONE_MINUS_SRC_ALPHA;
 import static com.jogamp.opengl.GL.GL_SRC_ALPHA;
+import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
 import static com.jogamp.opengl.GL.GL_TRIANGLES;
 import static com.jogamp.opengl.GL.GL_UNSIGNED_INT;
 import static com.jogamp.opengl.GL2GL3.GL_FILL;
@@ -61,6 +64,8 @@ public class Renderer {
 		
 		gl.glLineWidth(Config.LINE_WIDTH);
 		gl.glPointSize(Config.POINT_SIZE);
+		
+		gl.glTexParameteri(GL_TEXTURE_2D, GL_LINEAR_MIPMAP_LINEAR , GL_LINEAR);
 	}
 	
 	/**
@@ -119,6 +124,9 @@ public class Renderer {
 		shader.uploadModelViewProjectionMatrix(modelViewProjectionMatrix);
 				
 		shader.uploadProjectionMatrix(projectionMatrix);
+		
+		if(model.getMesh().getTextureFilePath().length()>0)
+			gl.glBindTexture(GL_TEXTURE_2D, model.getMesh().getTextureID());
 		
 		gl.glBindVertexArray(model.getMesh().getVaoID());
 		gl.glDrawElements(GL_TRIANGLES, model.getMesh().getIndexCount(), GL_UNSIGNED_INT, 0);  	
