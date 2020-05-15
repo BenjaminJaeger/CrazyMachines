@@ -1,7 +1,9 @@
 package MAIN;
 
+import java.awt.Dimension;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ConcurrentModificationException;
 
 import javax.swing.SwingUtilities;
 
@@ -26,8 +28,8 @@ import Simulation.RenderEngine.Core.Renderer.Renderer;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import UI.CreateTabPaneEvents;
 import javafx.embed.swing.SwingNode;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 public class Simulation implements GLEventListener{
 
@@ -39,9 +41,10 @@ public class Simulation implements GLEventListener{
 	private LineModel tmp;
 	private BasicShader tmpShader;
 	
-	public void initialize(StackPane root,BorderPane layout) {	
+	public void initialize(StackPane root,VBox layout2) {	
 		Util.canvas = new GLJPanel(new GLCapabilities(GLProfile.getDefault()));
-		Util.canvas.addGLEventListener(this);		
+		Util.canvas.addGLEventListener(this);	
+		Util.canvas.setMinimumSize(new Dimension(600, 600));
 		Util.trackCanvasMouse();
 		
 		Util.canvas.addMouseMotionListener(new MouseMotionListener() {
@@ -68,14 +71,16 @@ public class Simulation implements GLEventListener{
 		});
 		
 		Util.canvasWrapper = new SwingNode();
+		Util.canvasWrapper.minWidth(600);
+		Util.canvasWrapper.maxWidth(600);
+		Util.canvasWrapper.minHeight(600);
+		Util.canvasWrapper.maxHeight(600);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				Util.canvasWrapper.setContent(Util.canvas);
 			}
 		});	
-			
-		layout.setCenter(Util.canvasWrapper);
-				
+
 		animator = new FPSAnimator(Util.canvas, 60);
 		animator.start();
 	}
@@ -85,8 +90,13 @@ public class Simulation implements GLEventListener{
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
 		
-		for (GameObject object : GameObject.allObjects) 
-			renderer.render(object, object.getShader()); 
+		try {
+			for (GameObject object : GameObject.allObjects) 
+				renderer.render(object, object.getShader()); 
+		} catch (ConcurrentModificationException e) {
+			
+		}
+		
 		
 		renderer.render(tmp,tmpShader);
 	}

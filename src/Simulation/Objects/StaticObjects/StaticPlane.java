@@ -12,7 +12,7 @@ public class StaticPlane extends StaticObject{
 	public StaticPlane(float x, float y) {
 		super("PlaneTriangles","PlaneTexture.jpg", material, x, y);
 		
-		BoundingPolygon[] convexeHulls = BoundingReader.read("Plane", x, y);
+		BoundingPolygon[] convexeHulls = BoundingReader.read("PlaneBounding", x, y);
 		collisionContext.setBoundingPolygons(convexeHulls);
 		models[0].setScale(0.1f);
 	}

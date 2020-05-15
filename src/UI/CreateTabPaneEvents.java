@@ -28,7 +28,7 @@ public class CreateTabPaneEvents {
             MetaObject currentlyDraggedObject = editorTabPane.getDraggedObject();
 
             //Convert Mouse Position
-            float x = ((float)e.getX() - (float)root.getWidth()/2) * 1.35f;
+            float x = ((float)e.getX() - (float)root.getWidth()/2) ;
             float y = ((float)root.getHeight()/2 - (float)e.getY()) * 0.55f;
 
            currentlyDraggedObject.createObject(x, y);
@@ -55,8 +55,10 @@ public class CreateTabPaneEvents {
             float mouseX = (float)e.getX();
             float mouseY = (float)e.getY();
 
-            float scale = (float)Math.sqrt(Math.pow((objectX-mouseX),2)+Math.pow((objectY-mouseY),2)) /500;
-
+            float scale = (float)Math.sqrt(Math.pow((objectX-mouseX),2)+Math.pow((objectY-mouseY),2)) /300;
+            scale = scale < 0.4f ? 0.4f: scale;
+            scale = scale > 1.3f ? 1.3f: scale;
+            
             float rotation = -(float)Math.atan2(objectY-mouseY , objectX-mouseX) * 180/(float)Math.PI;
 
             GameObject.allObjects.get( GameObject.allObjects.size()-1).setScale(scale);

@@ -3,15 +3,15 @@ package MAIN;
 import UI.CreateTabPaneEvents;
 import UI.EditorTabPane;
 import UI.PlayPauseConcept;
-import javafx.scene.control.TabPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 public class UI {
 
-	public void initialize(StackPane root,BorderPane layout) {
+	public void initialize(StackPane root,BorderPane layout,VBox layout2) {
 		//pane for moving around the Image
 		Pane dragAnimator = new Pane();
 		ImageView animateObject = new ImageView();
@@ -27,13 +27,11 @@ public class UI {
 
 		//build TabPane
 		EditorTabPane editorTabPane = new EditorTabPane();
-		TabPane tabPane = editorTabPane.buildTabPane();
-		layout.setBottom(tabPane);
-
+		Util.tabPane = editorTabPane.buildTabPane();
 
 		//Simulation Control Buttons
 		layout.setLeft(PlayPauseConcept.createControls());
-
+		
 
 		//initialize events
 		CreateTabPaneEvents.initializeMouseRelease(root, layout, editorTabPane, dragAnimator, animateObject);

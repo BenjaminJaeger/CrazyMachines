@@ -11,7 +11,8 @@ public class StaticPlaneMeta extends MetaObject {
 
     @Override
     public void createObject (float x, float y) {
-       new StaticPlane(x, y);
+       StaticPlane plane = new StaticPlane(x, y);
+       plane.setScale(1.1f);
     }
 
 }

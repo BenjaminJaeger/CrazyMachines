@@ -351,5 +351,5 @@ public abstract class GameObject {
 	public BasicShader getShader() {
 		return shader;
 	}
-	
+
 }

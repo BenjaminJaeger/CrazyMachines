@@ -1,18 +1,18 @@
 package Simulation.Objects.MetaObjects.Moveable;
 
 import Simulation.Objects.MetaObjects.MetaObject;
-import Simulation.Objects.MovableObjects.Ball.TestBall;
+import Simulation.Objects.MovableObjects.Ball.BastetBall;
 
-public class TestBallMeta extends MetaObject {
+public class BasketBall extends MetaObject {
 	
 
-    public TestBallMeta(String objName, String objImgURL) {
+    public BasketBall(String objName, String objImgURL) {
         super(objName, objImgURL);
     }
 
     @Override
     public void createObject (float x, float y) {
-        new TestBall( x, y);
+        new BastetBall( x, y);
     }
 
 }

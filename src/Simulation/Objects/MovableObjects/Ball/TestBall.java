@@ -13,10 +13,6 @@ public class TestBall extends Ball{
 	public TestBall(float radius,float x, float y) {
 		super(radius, 30, material,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
 	}
-
-	public TestBall(float x, float y) {
-		super(30, 30, material,"basketball.png", x, y);
-	}
 	
 }
  

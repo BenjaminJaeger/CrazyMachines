@@ -1,7 +1,7 @@
 package UI;
 
 import Simulation.Objects.MetaObjects.MetaObject;
-import Simulation.Objects.MetaObjects.Moveable.TestBallMeta;
+import Simulation.Objects.MetaObjects.Moveable.BasketBall;
 import Simulation.Objects.MetaObjects.Static.StaticPlaneMeta;
 import UI.Controls.TabElement;
 import javafx.geometry.Pos;
@@ -43,7 +43,7 @@ public class EditorTabPane {
 
     private void defineBalls (ScrollPane content) {
         //define TabElements as MetaObjects
-        TabElement metalBall = new TabElement (new TestBallMeta("Metal Ball", "file:res/Images/metalBall.png"));
+        TabElement metalBall = new TabElement (new BasketBall("Basketball", "file:res/Images/metalBasketBall.png"));
 
         //add TabElements to content
         HBox ballContent = new HBox (10);
@@ -60,7 +60,7 @@ public class EditorTabPane {
 
     private void defineBlocks (ScrollPane content) {
         //define TabElements as MetaObjects
-        TabElement woodenPlank = new TabElement(new StaticPlaneMeta("Wooden Plank", "file:res/Images/woodenPlank.png"));
+        TabElement woodenPlank = new TabElement(new StaticPlaneMeta("Metall Plane", "file:res/Images/StaticPlank.png"));
 
         //add TabElements to content
         HBox blockContent = new HBox (10);

@@ -99,16 +99,17 @@ public class Renderer {
 				render(model,shader);
 		}
 
-		if (object.isSelected()) {
-			render(object.getObjectTransformer().getCircleUI().getCircleModel(), object.getObjectTransformer().getCircleUI().getShader());
-			render(object.getObjectTransformer().getSquareUI().getRectangleLine(), object.getObjectTransformer().getSquareUI().getShader());
-		}
+//		if (object.isSelected()) {
+//			render(object.getObjectTransformer().getCircleUI().getCircleModel(), object.getObjectTransformer().getCircleUI().getShader());
+//			render(object.getObjectTransformer().getSquareUI().getRectangleLine(), object.getObjectTransformer().getSquareUI().getShader());
+//		}
 	}
 
 	
 	public void render(TriangleModel model,BasicShader shader) {
 		GL4 gl=(GL4)GLContext.getCurrentGL();
-	
+//		shader.use();
+		
 		model.getMesh().update();	
 		
 		shader.uploadMaterial(model.getMaterial());		
@@ -125,7 +126,7 @@ public class Renderer {
 				
 		shader.uploadProjectionMatrix(projectionMatrix);
 		
-		if(model.getMesh().getTextureFilePath().length()>0)
+		if(model.getMesh().getTextureFilePath() != null)
 			gl.glBindTexture(GL_TEXTURE_2D, model.getMesh().getTextureID());
 		
 		gl.glBindVertexArray(model.getMesh().getVaoID());

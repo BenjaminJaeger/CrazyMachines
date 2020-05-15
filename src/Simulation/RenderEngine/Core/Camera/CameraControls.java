@@ -103,7 +103,8 @@ public class CameraControls implements KeyListener, MouseMotionListener, MouseWh
     }
 
     public void mouseWheelMoved(MouseWheelEvent e) {
-		camera.increaseZ(CameraZInc * (float)e.getPreciseWheelRotation());
+    	if(!Config.stopCameraZoom)
+    		camera.increaseZ(CameraZInc * (float)e.getPreciseWheelRotation());
     }
   
 	public void keyReleased(KeyEvent e) {}
