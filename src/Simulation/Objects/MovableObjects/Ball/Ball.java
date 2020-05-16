@@ -21,6 +21,12 @@ public abstract class Ball extends MoveableObject{
 		collisionContext = new DynamicCollisionContext(this,new BoundingCircle(x, y,radius));
 	}
 	
+	public Ball(float radius,int resolution, Material material, String texture, float x, float y) {
+		super(new Sphere(resolution,radius), material,texture, x, y);
+		this.radius=radius;
+		collisionContext = new DynamicCollisionContext(this,new BoundingCircle(x, y,radius));
+	}
+	
 	
 ///////////////
 ////Methods////

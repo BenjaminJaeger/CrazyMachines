@@ -71,6 +71,8 @@ public class Sphere extends Primitive {
 		for (Float n : textureList) {
 			textureCoordinates[m++] = (n != null ? n : Float.NaN);
 		}
+		
+		this.textureCords = textureCoordinates;
 
 		int k1, k2;
 		for(int k = 0; k < stacks; ++k)  {

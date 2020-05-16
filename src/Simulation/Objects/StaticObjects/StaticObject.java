@@ -10,12 +10,6 @@ public abstract class StaticObject extends GameObject{
 ////////////////////
 ////Constructors////
 ////////////////////
-	public StaticObject(Primitive primitive, Material material, float[] colors, float x, float y) {
-		super(primitive, material, colors, x, y);
-		collisionContext = new CollisionContext(this);
-		mass = 999999999;
-	}
-	
 	public StaticObject(Primitive primitive, Material material,float r,float g,float b, float x, float y) {
 		super(primitive, material, r,g,b, x, y);
 		collisionContext = new CollisionContext(this);
@@ -24,6 +18,12 @@ public abstract class StaticObject extends GameObject{
 
 	public StaticObject(String file, Material material, float r, float g, float b, float x, float y) {
 		super(file, material, r,g,b, x, y);
+		collisionContext = new CollisionContext(this);
+		mass = 999999999;
+	}
+	
+	public StaticObject(String file, String texture,Material material, float x, float y) {
+		super(file,texture, material, x, y);
 		collisionContext = new CollisionContext(this);
 		mass = 999999999;
 	}

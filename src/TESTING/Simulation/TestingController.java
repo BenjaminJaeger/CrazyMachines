@@ -5,10 +5,8 @@ import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
-import MAIN.Controller.ObjectPickingMethods;
-import MAIN.Controller.ObjectTransformer;
 import Simulation.Objects.MovableObjects.Ball.Ball;
-import Simulation.Objects.MovableObjects.Box.MetallBox;
+import Simulation.Objects.MovableObjects.Box.TestBox;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLCapabilities;
@@ -20,7 +18,7 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 import Simulation.Util;
 import Simulation.Objects.MovableObjects.MoveableObject;
-import Simulation.Objects.MovableObjects.Ball.MetallBall;
+import Simulation.Objects.MovableObjects.Ball.TestBall;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -31,6 +29,8 @@ import Simulation.RenderEngine.Core.Renderer.Renderer;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.CircleLine;
+import UI.BenjaminController.ObjectPickingMethods;
+import UI.BenjaminController.ObjectTransformer;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Scene;
@@ -230,7 +230,7 @@ public class TestingController extends Application implements GLEventListener{
             float mass = 1;
             float size = mass*50;
 
-            MoveableObject box = new MetallBox(size, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
+            MoveableObject box = new TestBox(size, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
             //box.renderBounding(true);
             box.setMass(mass);
             //box.setAccelerationX(velocityX);
@@ -248,7 +248,7 @@ public class TestingController extends Application implements GLEventListener{
             //float velocityX = Util.getRandomVelocity(4);
             //float velocityY = Util.getRandomVelocity(4);
 
-            MoveableObject ball = new MetallBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
+            MoveableObject ball = new TestBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
             ball.setMass(mass);
             //ball.setAccelerationX(velocityX);
             //ball.setAccelerationY(velocityY);

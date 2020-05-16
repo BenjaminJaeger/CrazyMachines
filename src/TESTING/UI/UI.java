@@ -1,33 +1,39 @@
-package TESTING.UI;
+package MAIN;
 
-import UI.CreateTabPaneEvents;
-import UI.EditorTabPane;
-import UI.PlayPauseConcept;
-import javafx.scene.control.TabPane;
-import javafx.scene.image.ImageView;
+import UI.Util;
+import UI.EditorTabPane.EditorTabPane;
+import UI.LeftSideUI.SimulationControls;
+import javafx.embed.swing.SwingNode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 public class UI {
 
-    /**
-     * Builds UI
-     * @param root StackPane for managing the two states (editing and drag-drop), needed for event initialization
-     * @param layout Main editor layout need for event initialization
-     */
-	public void initialize(StackPane root,BorderPane layout) {
-		//BorderPane settings
-		layout.toFront();
-		layout.setStyle("-fx-background-color: rgb(102,127,102);");
-		root.getChildren().add(layout);
+	public UI(StackPane root) {
+		Pane glassPane = new Pane();
 		
-
-		//build TabPane
-		layout.setBottom(EditorTabPane.buildTabPane(root, layout));
-
-		//Simulation Control Buttons
-		layout.setLeft(PlayPauseConcept.createControls());
+		//EDITORPANE
+		EditorTabPane editorTabPane = new EditorTabPane(glassPane);
+		//CANVAS
+		Util.canvasWrapper = new SwingNode();
+		//WRAPPER for canvas and EditorPane
+		VBox canvasEditorWrapper = new VBox();
+		canvasEditorWrapper.getChildren().addAll(Util.canvasWrapper,editorTabPane);
+		
+		
+//		LeftSideUI leftSideUI = new LeftSideUI();
+//		root.setLeft(leftSideUI);
+		SimulationControls simulationControls = new SimulationControls();
+		
+		
+		BorderPane layout = new BorderPane();
+		layout.setStyle("-fx-background-color: rgb(102,127,102);");
+		layout.setCenter(canvasEditorWrapper);
+		layout.setLeft(simulationControls);
+		
+		root.getChildren().addAll(glassPane,layout);
 	}
 	
 }

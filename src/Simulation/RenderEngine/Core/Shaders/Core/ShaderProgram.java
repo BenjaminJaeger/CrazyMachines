@@ -37,6 +37,8 @@ import Simulation.RenderEngine.Core.Math.Vector3f;
  */
 public abstract class ShaderProgram {
 	
+	private String shaderFile;
+	
 	//IDs for the shader
 	private int programID;
 	private int vertexShaderID; 
@@ -51,6 +53,8 @@ public abstract class ShaderProgram {
 	private String[] tesselationEvaluationSource;
 	private String[] geometrySource;
 	private String[] fragmentSource; 
+	
+	private boolean create;
 
 	/**
 	 * Reads a shaderfile and creates a OpenGL program containing the shaders that are specified by the file.
@@ -60,6 +64,11 @@ public abstract class ShaderProgram {
 	 * 				-File path of the shaders
 	 */
 	protected ShaderProgram(String shaderFile){	
+		this.shaderFile = shaderFile;
+		create = true;
+	}
+	
+	private void createShader() {
 		GL4 gl = (GL4) GLContext.getCurrentGL();
 		programID = gl.glCreateProgram(); //creates an empty program object and returns an integer ID for referencing later
 		loadShaderFromFile(shaderFile); //Reads GLSL shader code from a file
@@ -76,7 +85,6 @@ public abstract class ShaderProgram {
 		finalizeProgram(programID);
 		cleanUp();
 		getAllUniformLocations();
-		use();
 	}
 	
 	/**
@@ -252,6 +260,8 @@ public abstract class ShaderProgram {
 	 *loads the program containing the shaders into the OpenGL pipeline stages(onto the GPU)
 	 */
 	public void use() {
+		if(create)
+			createShader();
 		GL4 gl = (GL4) GLContext.getCurrentGL();
 		gl.glUseProgram(programID);
 	}
@@ -343,4 +353,5 @@ public abstract class ShaderProgram {
 	 * gets called in the constructor and retrieves all uniform locations that a shader needs
 	 */
 	protected abstract void getAllUniformLocations();
+
 }

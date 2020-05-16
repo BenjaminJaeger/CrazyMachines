@@ -15,7 +15,6 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
-import MAIN.Util;
 import Simulation.SimulationControler;
 import Simulation.Collisions.Boundings.Bounding;
 import Simulation.Objects.GameObject;
@@ -30,8 +29,9 @@ import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.CircleLine;
 import UI.CreateTabPaneEvents;
-import UI.EditorTabPane;
-import UI.PlayPauseConcept;
+import UI.EditorTabPaneOLD;
+import UI.Util;
+import UI.LeftSideUI.PlayPauseConcept;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Scene;
@@ -75,9 +75,9 @@ public class EditorConcept extends Application implements GLEventListener{
 		layout.setStyle("-fx-background-color: rgb(102,127,102);");
 
 		//build TabPane in bottom part of UI
-		EditorTabPane editorTabPane = new EditorTabPane ();
-		//TabPane tabPane = editorTabPane.buildTabPane();  !!!METHODS GOT CHANGED!!!!!!!!!
-		//layout.setBottom(tabPane);
+		EditorTabPaneOLD editorTabPane = new EditorTabPaneOLD ();
+		TabPane tabPane = editorTabPane.buildTabPane();
+		layout.setBottom(tabPane);
 
 		//window specs and show
 		primaryStage.setTitle("Editor Alpha");
@@ -106,7 +106,7 @@ public class EditorConcept extends Application implements GLEventListener{
 
 		//event for creating an object after releasing the drag
 		root.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
-			CreateTabPaneEvents.dragReleased(root, layout, e);
+			CreateTabPaneEvents.dragReleased(root, layout, editorTabPane, e);
 			if (editorTabPane.isDragging()) {editorTabPane.resetDrag();}
 		});
 		
@@ -135,7 +135,7 @@ public class EditorConcept extends Application implements GLEventListener{
 
 		//event for animating the drag
 		root.addEventFilter(MouseEvent.MOUSE_DRAGGED, e -> {
-			CreateTabPaneEvents.onDrag(dragAnimator, animateObject, e);
+			CreateTabPaneEvents.onDrag(editorTabPane, dragAnimator, animateObject, e);
 		});
 	}
 	

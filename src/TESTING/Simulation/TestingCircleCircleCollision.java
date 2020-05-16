@@ -18,7 +18,7 @@ import com.jogamp.opengl.util.FPSAnimator;
 import Simulation.SimulationControler;
 import Simulation.Util;
 import Simulation.Objects.MovableObjects.MoveableObject;
-import Simulation.Objects.MovableObjects.Ball.MetallBall;
+import Simulation.Objects.MovableObjects.Ball.TestBall;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -60,8 +60,7 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 		
 	
 		//JFX Code für Canvas
-		final GLCapabilities capabilities = new GLCapabilities( GLProfile.getDefault());
-		canvas = new GLJPanel(capabilities);	    
+		canvas = new GLJPanel(new GLCapabilities( GLProfile.getDefault()));	    
 		SwingNode swingNode = new SwingNode();		 
 		root.getChildren().add(swingNode);
 		SwingUtilities.invokeLater(new Runnable() {
@@ -123,7 +122,7 @@ public class TestingCircleCircleCollision extends Application implements GLEvent
 			float radius = (float)Math.random()*30+30;
 			float mass = radius;
 			
-			MoveableObject ball = new MetallBall(radius, 30, (float)Math.random(), (float)Math.random(),(float)Math.random(), x, y);
+			MoveableObject ball = new TestBall(30, x, y);
 			ball.setRotation(rotation);
 			ball.renderBounding(true);
 			ball.setVelocityX(velocityX);

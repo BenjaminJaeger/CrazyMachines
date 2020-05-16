@@ -32,4 +32,5 @@ public class Config {
 	
 	//Camera Settings
 	public static boolean stopCameraRotation;
+	public static boolean stopCameraZoom;
 }

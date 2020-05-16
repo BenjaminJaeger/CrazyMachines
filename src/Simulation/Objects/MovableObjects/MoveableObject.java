@@ -14,18 +14,14 @@ public abstract class MoveableObject extends GameObject{
 ////////////////////
 ////Constructors////
 ////////////////////
-	public MoveableObject(Primitive primitive, Material material, float[] colors, float x, float y) {
-		super(primitive, material, colors, x, y);
-	}
-	
 	public MoveableObject(Primitive primitive, Material material,float r, float g,float b,float x, float y) {
 		super(primitive, material, r,g,b, x, y);
 	}
-
-	public MoveableObject(String[] files,Material material, float[][] colors,float x,float y) {
-		super(files, material, colors, x, y);
+	
+	public MoveableObject(Primitive primitive, Material material,String texture,float x, float y) {
+		super(primitive, material, texture, x, y);
 	}
-
+	
 	public MoveableObject(String[] files, Material material, float r, float g, float b, float x, float y) {
 		super(files, material, r,g,b, x, y);
 	}
@@ -33,6 +29,7 @@ public abstract class MoveableObject extends GameObject{
 	public MoveableObject(String file, Material material, float r, float g, float b, float x, float y) {
 		super(file, material, r,g,b, x, y);
 	}
+	
 
 	
 ///////////////
@@ -44,13 +41,13 @@ public abstract class MoveableObject extends GameObject{
 		
 		increaseVelocity(accelerationX, accelerationY);
 		
-//		if (Math.abs(velocityX) <0.01f) 
-//			velocityX=0;
-//		if (Math.abs(velocityY)  <0.01f) 
-//			velocityY=0;
+		if (Math.abs(velocityX) <0.01f) 
+			velocityX=0;
+		if (Math.abs(velocityY)  <0.01f) 
+			velocityY=0;
 			
 		increasePosition(velocityX, velocityY);
-//		increaseRotation(velocityX);
+		increaseRotation(-velocityX);
 		resetAcceleration();
 		
 		accelerationX = -velocityX*0.005f;

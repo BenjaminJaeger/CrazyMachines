@@ -44,8 +44,7 @@ public class Mesh {
 		indices=parser.getIndices();
 		indexCount=indices.length;
 		this.colors=colors;
-//		normals=parser.getNormals(); // normals dont get read properly
-		calculateNormals();
+		normals=parser.getNormals();
 		createMesh=true;
 	}
 	
@@ -55,6 +54,7 @@ public class Mesh {
 		vertices=parser.getVertices();
 		indices=parser.getIndices();
 		indexCount=indices.length;
+		normals=parser.getNormals(); 
 		this.colors=new float[vertices.length];
 		
 		for (int i = 0; i < this.colors.length; i+=3) {
@@ -63,8 +63,6 @@ public class Mesh {
 			this.colors[i+2] =  b;
 		}
 		
-//		normals=parser.getNormals(); // normals dont get read properly
-		calculateNormals();
 		createMesh=true;
 	}
 
@@ -77,6 +75,20 @@ public class Mesh {
 			indexCount=indices.length;	
 		}
 		this.colors=colors;		
+		
+		createMesh=true;
+	}
+	
+	public Mesh(Primitive primitive,String texture) { 
+		baseVertices=primitive.getVertices();
+		vertices=primitive.getVertices();
+		indices=primitive.getIndices();
+		textureCoordinates = primitive.getTextureCords();
+		textureFilePath = "res/"+texture;	
+		if(indices!=null) {
+			calculateNormals();
+			indexCount=indices.length;	
+		}	
 		createMesh=true;
 	}
 	
@@ -101,8 +113,7 @@ public class Mesh {
 	
 	public Mesh(float[] vertices,float r,float g,float b) {
 		baseVertices=vertices;
-		this.vertices=vertices;
-		
+		this.vertices=vertices;	
 		this.colors=new float[vertices.length];
 		
 		for (int i = 0; i < this.colors.length; i+=3) {
@@ -110,6 +121,7 @@ public class Mesh {
 			this.colors[i+1] =  g;
 			this.colors[i+2] = b;
 		}
+		
 		createMesh=true;
 	}
 	
@@ -120,17 +132,19 @@ public class Mesh {
 	 * @param textureFilePath
 	 * 		-path of the texture file
 	 */
-	/*
-	public Mesh(int[]indices, float[] vertices, float[] textureCoordinates,String textureFilePath) {
-		baseVertices=vertices;
-		this.indexCount = indices.length;
-		this.vertices=vertices;
-		this.indices=indices;
-		this.textureCoordinates=textureCoordinates;
-		this.textureFilePath=textureFilePath;
+	public Mesh(String file,String textureFilePath) {
+		OBJParser parser=new OBJParser(file);
+		baseVertices=parser.getVertices();
+		vertices=parser.getVertices();
+		indices=parser.getIndices();
+		indexCount=indices.length;
+		textureCoordinates=parser.getTextures();
+		this.textureFilePath="res/"+textureFilePath;	
+		normals=parser.getNormals(); 
+		
 		createMesh=true;
 	}
-	*/
+	
 	
 	/**
 	 * Calculates the normals out of vertices and indices

@@ -17,8 +17,8 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 import Simulation.Util;
 import Simulation.Objects.MovableObjects.MoveableObject;
-import Simulation.Objects.MovableObjects.Ball.MetallBall;
-import Simulation.Objects.MovableObjects.Box.MetallBox;
+import Simulation.Objects.MovableObjects.Ball.TestBall;
+import Simulation.Objects.MovableObjects.Box.TestBox;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -125,7 +125,7 @@ public class TestingCirclePolygonCollision extends Application implements GLEven
 			float velocityX = Util.getRandomVelocity(4);
 			float velocityY = Util.getRandomVelocity(4);
 			
-			MoveableObject ball = new MetallBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
+			MoveableObject ball = new TestBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
 			ball.setMass(mass);
 			ball.setAccelerationX(velocityX);
 			ball.setAccelerationY(velocityY);
@@ -140,7 +140,7 @@ public class TestingCirclePolygonCollision extends Application implements GLEven
 			velocityY = Util.getRandomVelocity(4);
 			float rotation =  (float)Math.random()*360;
 			
-			MoveableObject box = new MetallBox(size, (float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
+			MoveableObject box = new TestBox(size, (float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
 			box.renderBounding(true);
 			box.setMass(mass);
 			box.setAccelerationX(velocityX);

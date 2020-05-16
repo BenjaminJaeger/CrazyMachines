@@ -11,7 +11,7 @@ public abstract class Bounding {
 	
 	protected LineModel model;
 	
-	public static BasicShader shader = new BasicShader("Line");
+	private static BasicShader shader = new BasicShader("Line");
 	
 ////////////////////
 ////Constructors////
@@ -60,5 +60,5 @@ public abstract class Bounding {
 	public void setScale(float scale) {
 		this.scale = scale;
 	}
-	
+
 }

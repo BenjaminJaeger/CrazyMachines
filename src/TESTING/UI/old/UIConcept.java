@@ -15,7 +15,7 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 import Simulation.Util;
 import Simulation.Objects.MovableObjects.MoveableObject;
-import Simulation.Objects.MovableObjects.Ball.MetallBall;
+import Simulation.Objects.MovableObjects.Ball.TestBall;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -123,7 +123,7 @@ public class UIConcept extends Application implements GLEventListener{
 			float radius = (float)Math.random()*30+30;
 			float mass = radius;
 			
-			MoveableObject ball = new MetallBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
+			MoveableObject ball = new TestBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
 			ball.setMass(mass);
 			ball.setAccelerationX(velocityX);
 			ball.setAccelerationY(velocityY);
