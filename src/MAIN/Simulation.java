@@ -62,7 +62,6 @@ public class Simulation implements GLEventListener{
 			for (GameObject object : GameObject.allObjects) 
 				renderer.render(object, object.getShader()); 
 		} catch (ConcurrentModificationException e) {}
-	
 		
 		renderer.render(tmp,tmpShader);
 	}

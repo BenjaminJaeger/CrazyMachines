@@ -14,10 +14,7 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
-import Simulation.Util;
 import Simulation.Objects.MovableObjects.MoveableObject;
-import Simulation.Objects.MovableObjects.Box.TestBox;
-import Simulation.Objects.MovableObjects.ExternalObjects.Icosahedron;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -117,24 +114,9 @@ public class TestingBoundingReader extends Application implements GLEventListene
 
 
 //		model1 = new Bucket(basicMaterial, 0, 1, 1, 0, -100);
-//		model1.setAccelerationX(Util.getRandomVelocity(4));
-//		model1.setAccelerationY(Util.getRandomVelocity(4));
-//		model1.renderBounding(true);
-//		model1.setScale(0.1f);
 		
-		model1 = new TestBox(300,300,300, 0, 0, 1, 0, -100);
-//		model1.setAccelerationX(Util.getRandomVelocity(4));
-//		model1.setAccelerationY(Util.getRandomVelocity(4));
-		model1.renderBounding(true);
-		model1.setScale(0.1f);
-		
-		model2 = new Icosahedron(basicMaterial, 0, 1, 0, 0, 200);
-		model2.setAccelerationX(Util.getRandomVelocity(4));
-		model2.setAccelerationY(Util.getRandomVelocity(4));
-//		model2.setAccelerationY(-2);
-		model2.renderBounding(true);
-		model2.setScale(0.3f);
-		
+//		model2 = new Icosahedron(basicMaterial, 0, 1, 0, 0, 200);
+
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
 	}
 	

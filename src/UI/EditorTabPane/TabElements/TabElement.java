@@ -1,5 +1,6 @@
 package UI.EditorTabPane.TabElements;
 
+import UI.Util;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -9,41 +10,69 @@ import javafx.scene.layout.VBox;
 
 public abstract class TabElement extends VBox {
 
+	 ImageView icon;
+	 String name;
+	 String imageURL;
+	 
     public TabElement(Pane glass,String name, String imageURL) {
         super(10);
         this.setAlignment(Pos.BOTTOM_CENTER);
 
+        this.name = name;
+        this.imageURL = imageURL;
+        
         Label nameLabel = new Label(name);
         
-        ImageView image = new ImageView(new Image("file:res/TabImages/"+imageURL));
-        image.setFitWidth(100);
-        image.setFitHeight(100);
+        ImageView icon = new ImageView(new Image("file:res/TabImages/"+imageURL));
+        icon.setFitWidth(100);
+        icon.setFitHeight(100);
         
-        this.getChildren().addAll(image, nameLabel);
+        this.getChildren().addAll(icon, nameLabel);
         
-        //DRAG AND DROP
+        addDragAndDrop(glass);         
+    }
+    
+    protected void addDragAndDrop(Pane glass) {
+    	  //DRAG AND DROP
     	ImageView clone = new ImageView(new Image("file:res/TabImages/"+imageURL));
     	double size = 100;
 		clone.setFitHeight(size);
 		clone.setFitWidth(size);
 		this.getChildren().add(clone);
 		
-        image.setOnDragDetected(e->{      	
+		icon.setOnDragDetected(e->{      	
         	clone.relocate(e.getSceneX()-(size/2),e.getSceneY()-(size/2));
         	glass.getChildren().add(clone);
         	glass.toFront(); 
         });
         
-    	image.setOnMouseDragged(e->{
+		icon.setOnMouseDragged(e->{
     		clone.relocate(e.getSceneX()-(size/2),e.getSceneY()-(size/2));
     	});
     	
-        image.setOnMouseReleased(e->{
+    	icon.setOnMouseReleased(e1->{
         	glass.toBack();
         	glass.getChildren().clear();    
-        	createObject(0, 0);
+        	
+	
+    		Util.canvasWrapper.setOnMouseEntered(e2->{
+    				
+            	float x = Util.convertMouseX(e2.getX());
+            	float y = Util.convertMouseY(e2.getY());
+            	
+//            	System.out.println("e.x = "+e2.getX());
+//    			System.out.println("e.y = "+e2.getY());
+//    			System.out.println("canvasSizeX = "+Config.CANVAS_WIDTH);
+//    			System.out.println("canvasSizeY = "+Config.CANVAS_HEIGHT);
+//            	System.out.println("converted.x = "+x);
+//            	System.out.println("converted.y = "+y);
+//            	System.out.println();
+            	
+            	createObject(x, y);
+    		});
+    		
+        	
         });
-            
     }
 
     protected abstract void createObject(float x, float y);

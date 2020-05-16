@@ -124,7 +124,7 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
 		
-		model1 = new TestBall(50, 30, 0, 0, 1, 0, 200);
+		model1 = new TestBall(30, 0, 200);
 //		model1.renderBounding(true);
 			
 		for (int i = 0; i < 2; i++) {			
@@ -134,7 +134,7 @@ public class TestingRemoveCollision extends Application implements GLEventListen
 			float height = (float)Math.random()*70+20;
 			float rotation =(float)Math.random()*360;
 			
-			GameObject box = new TestBox(width,height,50, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
+			GameObject box = new TestBox(width,height, x, y);
 			box.setRotation(rotation);
 			box.renderBounding(true);
 			allobjects.add(box);

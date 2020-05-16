@@ -127,7 +127,7 @@ public class TestingPolygonPolygonCollision extends Application implements GLEve
 			float size = mass*50;
 			float rotation =  (float)Math.random()*360;
 			
-			MoveableObject box = new TestBox(size, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
+			MoveableObject box = new TestBox(size, x, y);
 			box.renderBounding(true);
 			box.setMass(mass);
 			box.setAccelerationX(velocityX);

@@ -22,11 +22,9 @@ public class UI {
 		VBox canvasEditorWrapper = new VBox();
 		canvasEditorWrapper.getChildren().addAll(Util.canvasWrapper,editorTabPane);
 		
-		
 //		LeftSideUI leftSideUI = new LeftSideUI();
 //		root.setLeft(leftSideUI);
 		SimulationControls simulationControls = new SimulationControls();
-		
 		
 		BorderPane layout = new BorderPane();
 		layout.setStyle("-fx-background-color: rgb(102,127,102);");
