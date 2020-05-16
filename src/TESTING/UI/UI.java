@@ -1,4 +1,4 @@
-package MAIN;
+package TESTING.UI;
 
 import UI.CreateTabPaneEvents;
 import UI.EditorTabPane;
@@ -11,14 +11,12 @@ import javafx.scene.layout.StackPane;
 
 public class UI {
 
+    /**
+     * Builds UI
+     * @param root StackPane for managing the two states (editing and drag-drop), needed for event initialization
+     * @param layout Main editor layout need for event initialization
+     */
 	public void initialize(StackPane root,BorderPane layout) {
-		//pane for moving around the Image
-		Pane dragAnimator = new Pane();
-		ImageView animateObject = new ImageView();
-		dragAnimator.getChildren().add(animateObject);
-		root.getChildren().add(dragAnimator);
-		
-
 		//BorderPane settings
 		layout.toFront();
 		layout.setStyle("-fx-background-color: rgb(102,127,102);");
@@ -26,17 +24,10 @@ public class UI {
 		
 
 		//build TabPane
-		EditorTabPane editorTabPane = new EditorTabPane();
-		TabPane tabPane = editorTabPane.buildTabPane();
-		layout.setBottom(tabPane);
-
+		layout.setBottom(EditorTabPane.buildTabPane(root, layout));
 
 		//Simulation Control Buttons
 		layout.setLeft(PlayPauseConcept.createControls());
-
-
-		//initialize events
-		CreateTabPaneEvents.initializeMouseRelease(root, layout, editorTabPane, dragAnimator, animateObject);
 	}
 	
 }

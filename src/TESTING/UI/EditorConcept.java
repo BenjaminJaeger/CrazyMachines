@@ -76,8 +76,8 @@ public class EditorConcept extends Application implements GLEventListener{
 
 		//build TabPane in bottom part of UI
 		EditorTabPane editorTabPane = new EditorTabPane ();
-		TabPane tabPane = editorTabPane.buildTabPane();
-		layout.setBottom(tabPane);
+		//TabPane tabPane = editorTabPane.buildTabPane();  !!!METHODS GOT CHANGED!!!!!!!!!
+		//layout.setBottom(tabPane);
 
 		//window specs and show
 		primaryStage.setTitle("Editor Alpha");
@@ -106,7 +106,7 @@ public class EditorConcept extends Application implements GLEventListener{
 
 		//event for creating an object after releasing the drag
 		root.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
-			CreateTabPaneEvents.dragReleased(root, layout, editorTabPane, e);
+			CreateTabPaneEvents.dragReleased(root, layout, e);
 			if (editorTabPane.isDragging()) {editorTabPane.resetDrag();}
 		});
 		
@@ -135,7 +135,7 @@ public class EditorConcept extends Application implements GLEventListener{
 
 		//event for animating the drag
 		root.addEventFilter(MouseEvent.MOUSE_DRAGGED, e -> {
-			CreateTabPaneEvents.onDrag(editorTabPane, dragAnimator, animateObject, e);
+			CreateTabPaneEvents.onDrag(dragAnimator, animateObject, e);
 		});
 	}
 	

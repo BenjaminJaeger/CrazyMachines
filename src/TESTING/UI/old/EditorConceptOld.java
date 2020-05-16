@@ -112,8 +112,8 @@ public class EditorConceptOld extends Application implements GLEventListener{
 
 		//build TabPane in bottom part of UI
 		EditorTabPane editorTabPane = new EditorTabPane ();
-		TabPane tabPane = editorTabPane.buildTabPane();
-		layout.setBottom(tabPane);
+		//TabPane tabPane = editorTabPane.buildTabPane();  !!!!METHODS GOT CHANGED!!!!!!!!!
+		//layout.setBottom(tabPane);
 
 		//window specs and show
 		primaryStage.setTitle("Editor Alpha");

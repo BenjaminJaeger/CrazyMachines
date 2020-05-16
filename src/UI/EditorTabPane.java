@@ -8,40 +8,69 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 public class EditorTabPane {
 
-    private MetaObject draggedObject;
-    private boolean isDragging = false;
+    private static MetaObject draggedObject;
+    private static boolean isDragging = false;
 
-    public TabPane buildTabPane () {
-        //initializing TabPane Element and Tabs
+    /**
+     * Constructor for EditorTabPane. The EditorTabPane is the Drag-and-Drop TabPane in the bottom of the standard editor
+     * window and is used for placing objects from multiple categories. The categories may ne declared in new methods below
+     * @param root StackPane used for animating the Drag-And-Drop
+     * @param layout BorderPane used for structure in the editor mode
+     * @return
+     */
+    public static TabPane buildTabPane (StackPane root, BorderPane layout) {
+        Pane dragAnimator = new Pane();
+        ImageView animateObject = new ImageView();
+        dragAnimator.getChildren().add(animateObject);
+        root.getChildren().add(dragAnimator);
+
+        //initializing TabPane Element and Tabs, do not change if not necessary
         TabPane objChooser = new TabPane ();
         objChooser.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        //tabs
+        //Adding Tabs to TabPane, create new Tab with preferred name and add in "addAll()" brackets
         Tab balls = new Tab ("Balls");
         Tab blocks = new Tab ("Blocks");
         objChooser.getTabs().addAll(balls, blocks);
 
-        //set tab content
+        //Create a new ScrollPane and set it as content for the corresponding Tab
         ScrollPane ballScroller = new ScrollPane();
         balls.setContent(ballScroller);
         ScrollPane blockScroller = new ScrollPane();
         blocks.setContent(blockScroller);
 
-        //define elements in tab content
+        //Copy-Paste "defineBalls" method below and edit
         defineBalls(ballScroller);
         defineBlocks(blockScroller);
 
-        //return fully build TabPane to UI
+        //add CSS from file
         objChooser.getStylesheets().add("file:res/css/ObjectChooser.css");
+
+        //initialize mouse release, do not change if not necessary
+        CreateTabPaneEvents.initializeMouseReleaseAndDrag(root, layout,  dragAnimator, animateObject);
+
+        //return TabPane object
         return objChooser;
     }
 
-    private void defineBalls (ScrollPane content) {
+    /////////////////////////////////////////////////////////////////////////////
+    //Methods below needed for new Elements, copy-and-paste and edit afterwards//
+    /////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Defines elements inside of "balls" tab
+     * @param content ScrollPane defined in "buildTabPane"
+     */
+    private static void defineBalls (ScrollPane content) {
         //define TabElements as MetaObjects
         TabElement metalBall = new TabElement (new MetallBallMeta("Metal Ball", "file:res/Images/metalBall.png", 30, 30, (float)Math.random(),(float)Math.random(),(float)Math.random()));
 
@@ -58,7 +87,11 @@ public class EditorTabPane {
         addDragFilter(metalBall);
     }
 
-    private void defineBlocks (ScrollPane content) {
+    /**
+     * Defines elements inside of "blocks" tab
+     * @param content ScrollPane defined in "buildTabPane"
+     */
+    private static void defineBlocks (ScrollPane content) {
         //define TabElements as MetaObjects
         TabElement woodenPlank = new TabElement(new PlankMeta("Wooden Plank", "file:res/Images/woodenPlank.png", 400, 30, (float)Math.random(),(float)Math.random(),(float)Math.random()));
 
@@ -75,22 +108,30 @@ public class EditorTabPane {
         addDragFilter(woodenPlank);
     }
 
-    private void addDragFilter (TabElement draggableObject) {
+    /////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Makes a TabElement object draggable
+     * @param draggableObject
+     */
+    private static void addDragFilter (TabElement draggableObject) {
         draggableObject.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
             draggedObject = draggableObject.getMetaObject();
             isDragging=true;
         });
     }
 
-    public MetaObject getDraggedObject () {
+    //getter and setter methods below
+
+    public static MetaObject getDraggedObject () {
         return draggedObject;
     }
 
-    public boolean isDragging () {
+    public static boolean isDragging () {
         return isDragging;
     }
 
-    public void resetDrag () {
+    public static void resetDrag () {
         draggedObject = null;
         isDragging = false;
     }
