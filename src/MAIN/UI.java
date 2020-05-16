@@ -1,9 +1,9 @@
 package MAIN;
 
-import UI.CreateTabPaneEvents;
-import UI.EditorTabPane;
-import UI.PlayPauseConcept;
-import javafx.scene.image.ImageView;
+import UI.Util;
+import UI.EditorTabPane.EditorTabPane;
+import UI.LeftSideUI.SimulationControls;
+import javafx.embed.swing.SwingNode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -11,30 +11,29 @@ import javafx.scene.layout.VBox;
 
 public class UI {
 
-	public void initialize(StackPane root,BorderPane layout,VBox layout2) {
-		//pane for moving around the Image
-		Pane dragAnimator = new Pane();
-		ImageView animateObject = new ImageView();
-		dragAnimator.getChildren().add(animateObject);
-		root.getChildren().add(dragAnimator);
+	public UI(StackPane root) {
+		Pane glassPane = new Pane();
 		
-
-		//BorderPane settings
-		layout.toFront();
+		//EDITORPANE
+		EditorTabPane editorTabPane = new EditorTabPane(glassPane);
+		//CANVAS
+		Util.canvasWrapper = new SwingNode();
+		//WRAPPER for canvas and EditorPane
+		VBox canvasEditorWrapper = new VBox();
+		canvasEditorWrapper.getChildren().addAll(Util.canvasWrapper,editorTabPane);
+		
+		
+//		LeftSideUI leftSideUI = new LeftSideUI();
+//		root.setLeft(leftSideUI);
+		SimulationControls simulationControls = new SimulationControls();
+		
+		
+		BorderPane layout = new BorderPane();
 		layout.setStyle("-fx-background-color: rgb(102,127,102);");
-		root.getChildren().add(layout);
+		layout.setCenter(canvasEditorWrapper);
+		layout.setLeft(simulationControls);
 		
-
-		//build TabPane
-		EditorTabPane editorTabPane = new EditorTabPane();
-		Util.tabPane = editorTabPane.buildTabPane();
-
-		//Simulation Control Buttons
-		layout.setLeft(PlayPauseConcept.createControls());
-		
-
-		//initialize events
-		CreateTabPaneEvents.initializeMouseRelease(root, layout, editorTabPane, dragAnimator, animateObject);
+		root.getChildren().addAll(glassPane,layout);
 	}
 	
 }

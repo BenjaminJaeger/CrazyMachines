@@ -7,7 +7,7 @@ import Simulation.Objects.GameObject;
 
 public class SimulationControler {
 
-	private static int updateTime = 10; //10
+	private static int updateTime = 10; 
 	private static Timer simulationTimer;
 	private static boolean isPlaying;
 	

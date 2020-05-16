@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
-import MAIN.Controller.ObjectPickingMethods;
-import MAIN.Controller.ObjectTransformer;
 import Simulation.Objects.MovableObjects.Ball.Ball;
 import Simulation.Objects.MovableObjects.Box.TestBox;
 import com.jogamp.opengl.GL4;
@@ -31,6 +29,8 @@ import Simulation.RenderEngine.Core.Renderer.Renderer;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.CircleLine;
+import UI.BenjaminController.ObjectPickingMethods;
+import UI.BenjaminController.ObjectTransformer;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Scene;

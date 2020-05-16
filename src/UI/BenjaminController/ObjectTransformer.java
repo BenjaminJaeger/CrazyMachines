@@ -1,4 +1,4 @@
-package MAIN.Controller;
+package UI.BenjaminController;
 
 import Simulation.Objects.GameObject;
 import Simulation.RenderEngine.Core.Math.Vector2f;

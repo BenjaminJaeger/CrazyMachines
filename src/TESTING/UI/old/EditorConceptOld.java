@@ -29,7 +29,7 @@ import Simulation.RenderEngine.Core.Renderer.Renderer;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.CircleLine;
-import UI.EditorTabPane;
+import UI.EditorTabPaneOLD;
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;
@@ -111,7 +111,7 @@ public class EditorConceptOld extends Application implements GLEventListener{
 		layout.setStyle("-fx-background-color: rgb(102,127,102);");
 
 		//build TabPane in bottom part of UI
-		EditorTabPane editorTabPane = new EditorTabPane ();
+		EditorTabPaneOLD editorTabPane = new EditorTabPaneOLD ();
 		TabPane tabPane = editorTabPane.buildTabPane();
 		layout.setBottom(tabPane);
 

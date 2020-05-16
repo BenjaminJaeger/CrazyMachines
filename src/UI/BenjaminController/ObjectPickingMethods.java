@@ -1,4 +1,4 @@
-package MAIN.Controller;
+package UI.BenjaminController;
 
 import Simulation.Collisions.Boundings.BoundingPolygon;
 import Simulation.Objects.GameObject;

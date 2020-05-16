@@ -2,13 +2,13 @@ package Simulation.Objects;
 
 import java.util.ArrayList;
 
-import MAIN.Controller.ObjectTransformer;
 import Simulation.Collisions.CollisionContext;
 import Simulation.RenderEngine.Core.Models.Model;
 import Simulation.RenderEngine.Core.Models.TriangleModel;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Primitive;
+import UI.BenjaminController.ObjectTransformer;
 
 public abstract class GameObject {
 

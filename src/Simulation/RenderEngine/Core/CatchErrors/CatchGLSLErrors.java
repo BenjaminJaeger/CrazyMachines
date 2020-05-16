@@ -5,7 +5,7 @@ import static com.jogamp.opengl.GL2ES2.GL_INFO_LOG_LENGTH;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLContext;
 
-/**
+/** 
  * 
  * Modules to catch GLSL code errors and printing out information logs about errors
  * @author Simon Weck

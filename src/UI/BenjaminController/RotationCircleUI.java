@@ -1,4 +1,4 @@
-package MAIN.Controller;
+package UI.BenjaminController;
 
 import Simulation.RenderEngine.Core.Models.LineModel;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
