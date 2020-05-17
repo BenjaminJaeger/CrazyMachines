@@ -10,20 +10,19 @@ import javafx.scene.layout.VBox;
 
 public abstract class TabElement extends VBox {
 
-	 ImageView icon;
-	 String name;
-	 String imageURL;
+	 private ImageView icon;
+	 private String imageURL;
+	 private double size = 100;
 	 
     public TabElement(Pane glass,String name, String imageURL) {
         super(10);
         this.setAlignment(Pos.BOTTOM_CENTER);
 
-        this.name = name;
         this.imageURL = imageURL;
         
         Label nameLabel = new Label(name);
         
-       this.icon = new ImageView(new Image("file:res/TabImages/"+imageURL));
+        this.icon = new ImageView(new Image("file:res/TabImages/"+imageURL));
         icon.setFitWidth(100);
         icon.setFitHeight(100);
         
@@ -35,10 +34,8 @@ public abstract class TabElement extends VBox {
     protected void addDragAndDrop(Pane glass) {
     	  //DRAG AND DROP
     	ImageView clone = new ImageView(new Image("file:res/TabImages/"+imageURL));
-    	double size = 100;
 		clone.setFitHeight(size);
 		clone.setFitWidth(size);
-		this.getChildren().add(clone);
 		
 		icon.setOnDragDetected(e->{      	
         	clone.relocate(e.getSceneX()-(size/2),e.getSceneY()-(size/2));
