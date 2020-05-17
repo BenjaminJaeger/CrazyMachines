@@ -18,8 +18,8 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
-import Simulation.Objects.MovableObjects.MoveableObject;
-import Simulation.Objects.MovableObjects.ExternalObjects.Teapot;
+import Simulation.Objects.GameObject;
+import Simulation.Objects.MovableObjects.Ball.TestBall;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -47,7 +47,7 @@ public class TestingNewtCanvas extends Application implements GLEventListener{
 	private BasicShader shader;
 	private Camera camera;
 	
-	private MoveableObject teapot;
+	private GameObject model;
 
 	private ArrayList<LineModel> test = new ArrayList<LineModel>();
 
@@ -97,8 +97,8 @@ public class TestingNewtCanvas extends Application implements GLEventListener{
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
 		
-		teapot.update();
-		renderer.render(teapot, shader); 
+		model.update();
+		renderer.render(model, shader); 
 		
 		for (LineModel object : test) 
 			renderer.render(object,shader);			
@@ -139,7 +139,7 @@ public class TestingNewtCanvas extends Application implements GLEventListener{
 		//                       new Material(ambientColor, 				diffuseColor, 				  specularColor, 		   shininess, alpha)
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
-		teapot = new Teapot(basicMaterial, 1, 0, 0, 200, 2000);
+		model = new TestBall(30, 0, 0);
 	
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
 	}

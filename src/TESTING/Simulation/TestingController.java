@@ -1,12 +1,14 @@
 package TESTING.Simulation;
 
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
-import Simulation.Objects.MovableObjects.Ball.Ball;
-import Simulation.Objects.MovableObjects.Box.TestBox;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLCapabilities;
@@ -19,6 +21,7 @@ import com.jogamp.opengl.util.FPSAnimator;
 import Simulation.Util;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.Objects.MovableObjects.Ball.TestBall;
+import Simulation.Objects.MovableObjects.Box.TestBox;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -230,7 +233,7 @@ public class TestingController extends Application implements GLEventListener{
             float mass = 1;
             float size = mass*50;
 
-            MoveableObject box = new TestBox(size, (float)Math.random(), (float)Math.random(), (float)Math.random(), x, y);
+            MoveableObject box = new TestBox(size, x, y);
             //box.renderBounding(true);
             box.setMass(mass);
             //box.setAccelerationX(velocityX);
@@ -248,7 +251,7 @@ public class TestingController extends Application implements GLEventListener{
             //float velocityX = Util.getRandomVelocity(4);
             //float velocityY = Util.getRandomVelocity(4);
 
-            MoveableObject ball = new TestBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
+            MoveableObject ball = new TestBall(radius, x, y);
             ball.setMass(mass);
             //ball.setAccelerationX(velocityX);
             //ball.setAccelerationY(velocityY);

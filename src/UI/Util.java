@@ -23,4 +23,14 @@ public class Util {
 		return y;
 	}
 	
+	public static float convertMouseX(double ex) {
+		float x = (float)ex - Config.CANVAS_WIDTH/2;		  			
+		return x;
+	}
+	
+	public static float convertMouseY(double ey) {		
+		float y = Config.CANVAS_WIDTH/2 - (float)ey;	
+		return y;
+	}
+	
 }

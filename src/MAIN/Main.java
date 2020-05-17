@@ -15,7 +15,6 @@ public class Main extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		StackPane root = new StackPane();
 		
-
 		primaryStage.setTitle("Editor Alpha");
 		primaryStage.setScene(new Scene(root, 900, 763));
 		

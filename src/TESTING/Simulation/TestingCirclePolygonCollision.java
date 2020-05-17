@@ -125,7 +125,7 @@ public class TestingCirclePolygonCollision extends Application implements GLEven
 			float velocityX = Util.getRandomVelocity(4);
 			float velocityY = Util.getRandomVelocity(4);
 			
-			MoveableObject ball = new TestBall(radius, 40,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
+			MoveableObject ball = new TestBall(radius, x, y);
 			ball.setMass(mass);
 			ball.setAccelerationX(velocityX);
 			ball.setAccelerationY(velocityY);
@@ -140,7 +140,7 @@ public class TestingCirclePolygonCollision extends Application implements GLEven
 			velocityY = Util.getRandomVelocity(4);
 			float rotation =  (float)Math.random()*360;
 			
-			MoveableObject box = new TestBox(size, (float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
+			MoveableObject box = new TestBox(size, x, y);
 			box.renderBounding(true);
 			box.setMass(mass);
 			box.setAccelerationX(velocityX);

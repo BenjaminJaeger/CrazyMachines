@@ -15,5 +15,9 @@ public class TestBox extends Box{
 		super(width, height, depth, material, (float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
 	}
 	
+	public TestBox(float size, float x, float y) {
+		super(size, material, (float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
+	}
+	
 }
  
