@@ -23,7 +23,7 @@ public abstract class TabElement extends VBox {
         
         Label nameLabel = new Label(name);
         
-        ImageView icon = new ImageView(new Image("file:res/TabImages/"+imageURL));
+       this.icon = new ImageView(new Image("file:res/TabImages/"+imageURL));
         icon.setFitWidth(100);
         icon.setFitHeight(100);
         
