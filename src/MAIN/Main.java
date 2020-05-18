@@ -1,9 +1,12 @@
 package MAIN;
 
+import TESTING.UI.UI;
 import javafx.application.Application;
+import javafx.embed.swing.SwingNode;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import UI.Util;
 
 public class Main extends Application{
 
@@ -16,10 +19,10 @@ public class Main extends Application{
 		
 		primaryStage.setTitle("Editor Alpha");
 		primaryStage.setScene(new Scene(root, 900, 763));
-		
-		new UI(root);
-		new Simulation();
-		
+
+		new UI(root, 0);
+        new Simulation();
+
 		primaryStage.show();
 	}
 	

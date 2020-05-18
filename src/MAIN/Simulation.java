@@ -25,7 +25,7 @@ import Simulation.RenderEngine.Core.Models.LineModel;
 import Simulation.RenderEngine.Core.Renderer.Renderer;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import UI.Util;
-
+import javafx.scene.layout.StackPane;
 
 
 public class Simulation implements GLEventListener{
@@ -43,8 +43,8 @@ public class Simulation implements GLEventListener{
 		canvas = new GLJPanel(new GLCapabilities( GLProfile.getDefault()));	   
 		canvas.setMinimumSize(new Dimension(600, 600));
 		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				Util.canvasWrapper.setContent(canvas);	
+				public void run() {
+				Util.canvasWrapper.setContent(canvas);
 		    }
 		});	
 	
@@ -88,7 +88,7 @@ public class Simulation implements GLEventListener{
 
 		AmbientLight ambientLight = new AmbientLight(1);    
 		
-		//								    new DirectionalLight(lightDirection,         diffuseColor,          speculaColor)
+		//								    new DirectionalLight(lightDirection,         diffuseColor,          specularColor)
 		DirectionalLight directionalLight = new DirectionalLight(new Vector3f(0, 0, -1), new Vector3f(1, 1, 1), new Vector3f(1, 1, 1));
 		
 		tmp = new LineModel(new float[]{0,0,0}, 0, 0, 0, 0, 0); 
@@ -98,11 +98,15 @@ public class Simulation implements GLEventListener{
 
 	@Override
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+		if (width != height) {
+			if (width < height) { width = height; }
+			else { height = width; }
+		}
 		GL4 gl=(GL4)GLContext.getCurrentGL();
 		gl.glViewport(0, 0, width, height);
 		Config.CANVAS_HEIGHT=height;
 		Config.CANVAS_WIDTH=width;
+		System.out.println(true);
 		renderer.updateProjectionMatrix();
 	}
-	
 }
