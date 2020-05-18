@@ -1,5 +1,6 @@
 package MAIN;
 
+import java.awt.Dimension;
 import java.util.ConcurrentModificationException;
 
 import javax.swing.SwingUtilities;
@@ -40,6 +41,7 @@ public class Simulation implements GLEventListener{
 	
 	public Simulation() {
 		canvas = new GLJPanel(new GLCapabilities( GLProfile.getDefault()));	   
+		canvas.setMinimumSize(new Dimension(600, 600));
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				Util.canvasWrapper.setContent(canvas);	
