@@ -108,7 +108,7 @@ public class Renderer {
 	
 	public void render(TriangleModel model,BasicShader shader) {
 		GL4 gl=(GL4)GLContext.getCurrentGL();
-//		shader.use();
+		shader.use();
 		
 		model.getMesh().update();	
 		
