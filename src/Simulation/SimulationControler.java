@@ -30,7 +30,6 @@ public class SimulationControler {
 			    public void run() {
 				      for (GameObject object : GameObject.allObjects) 
 				    	  object.update();			      
-				    	 
 				    }
 				},10,updateTime);		
 		}

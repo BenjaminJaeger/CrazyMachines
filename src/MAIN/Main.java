@@ -2,7 +2,6 @@ package MAIN;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Main extends Application{
@@ -12,13 +11,21 @@ public class Main extends Application{
 	}
 	
 	public void start(Stage primaryStage) throws Exception {
-		StackPane root = new StackPane();
+		UI ui = new UI();
+        Simulation simulation = new Simulation();
+        simulation.initialize();
+        
+        primaryStage.setTitle("Editor Alpha");
+		primaryStage.setScene(new Scene(ui, 900, 900));
 		
-		primaryStage.setTitle("Editor Alpha");
-		primaryStage.setScene(new Scene(root, 900, 900));
-
-		new UI(root, 0);
-        new Simulation();
+//        primaryStage.setMinWidth(700);
+//        primaryStage.setMinHeight(830);
+//		primaryStage.widthProperty().addListener( e -> {
+//			primaryStage.setHeight(primaryStage.getWidth()*1.19);
+//		});
+//		primaryStage.heightProperty().addListener( e -> {
+//			primaryStage.setWidth(primaryStage.getHeight()/1.19);
+//		});
 
 		primaryStage.show();
 	}

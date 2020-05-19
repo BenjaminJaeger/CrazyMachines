@@ -32,12 +32,13 @@ public abstract class TabElement extends VBox {
     }
     
     protected void addDragAndDrop(Pane glass) {
-    	  //DRAG AND DROP
+    	//DRAG AND DROP
     	ImageView clone = new ImageView(new Image("file:res/TabImages/"+imageURL));
 		clone.setFitHeight(size);
 		clone.setFitWidth(size);
 		
-		icon.setOnDragDetected(e->{      	
+		icon.setOnDragDetected(e->{   
+			Util.dragMode = true;
         	clone.relocate(e.getSceneX()-(size/2),e.getSceneY()-(size/2));
         	glass.getChildren().add(clone);
         	glass.toFront(); 
@@ -46,29 +47,18 @@ public abstract class TabElement extends VBox {
 		icon.setOnMouseDragged(e->{
     		clone.relocate(e.getSceneX()-(size/2),e.getSceneY()-(size/2));
     	});
-    	
+    			
     	icon.setOnMouseReleased(e1->{
         	glass.toBack();
         	glass.getChildren().clear();    
-        	
-	
-    		Util.canvasWrapper.setOnMouseEntered(e2->{
-    				
-            	float x = Util.convertMouseX(e2.getX());
-            	float y = Util.convertMouseY(e2.getY());
-            	
-//            	System.out.println("e.x = "+e2.getX());
-//    			System.out.println("e.y = "+e2.getY());
-//    			System.out.println("canvasSizeX = "+Config.CANVAS_WIDTH);
-//    			System.out.println("canvasSizeY = "+Config.CANVAS_HEIGHT);
-//            	System.out.println("converted.x = "+x);
-//            	System.out.println("converted.y = "+y);
-//            	System.out.println();
-            	
-            	createObject(x, y);
-    		});
-    		
-        	
+	    	Util.canvasWrapper.setOnMouseEntered(e2->{    	
+	    		if(Util.dragMode) {
+		            float x = Util.convertMouseX(e2.getX());
+		            float y = Util.convertMouseY(e2.getY());
+		            createObject(x, y);
+		            Util.dragMode = false;
+	    		}
+	    	});			
         });
     }
 

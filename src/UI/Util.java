@@ -6,8 +6,7 @@ import javafx.embed.swing.SwingNode;
 
 public class Util {
 
-	public static float canvasX;
-	public static float canvasY;
+	public static boolean dragMode;
 	
 	public static SwingNode canvasWrapper;
 	
@@ -24,12 +23,14 @@ public class Util {
 	}
 	
 	public static float convertMouseX(double ex) {
-		float x = (float)ex - Config.CANVAS_WIDTH/2;		  			
+		float x = (float)ex - Config.CANVAS_WIDTH/2;	
+		x*=0.75f;
 		return x;
 	}
 	
 	public static float convertMouseY(double ey) {		
 		float y = Config.CANVAS_WIDTH/2 - (float)ey;	
+		y*=0.75f;
 		return y;
 	}
 	

@@ -39,19 +39,21 @@ public abstract class MoveableObject extends GameObject{
 		
 		applyForce(0, -0.05f);	
 		
-		accelerationX = -velocityX*0.005f;
-		accelerationY = -velocityY*0.005f;
+		
 		
 		increaseVelocity(accelerationX, accelerationY);
 			
-		increasePosition(velocityX, velocityY);
-		increaseRotation(-velocityX);
-		resetAcceleration();
-				
 		if (Math.abs(velocityX) <0.01f) 
 			velocityX=0;
 		if (Math.abs(velocityY)  <0.01f) 
 			velocityY=0;
+		
+		increasePosition(velocityX, velocityY);
+		increaseRotation(-velocityX);
+		resetAcceleration();
+				
+		accelerationX = -velocityX*0.005f;
+		accelerationY = -velocityY*0.005f;
 		
 //		checkEdges();
 		

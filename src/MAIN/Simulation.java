@@ -1,6 +1,5 @@
 package MAIN;
 
-import java.awt.Dimension;
 import java.util.ConcurrentModificationException;
 
 import javax.swing.SwingUtilities;
@@ -31,7 +30,6 @@ import UI.Util;
 public class Simulation implements GLEventListener{
 
 	private FPSAnimator animator;
-	
 	private GLJPanel canvas;
 	private Renderer renderer;
 	private Camera camera;
@@ -39,9 +37,8 @@ public class Simulation implements GLEventListener{
 	private LineModel tmp;
 	private BasicShader tmpShader;
 	
-	public Simulation() {
+	public void initialize() {
 		canvas = new GLJPanel(new GLCapabilities( GLProfile.getDefault()));	   
-		canvas.setMinimumSize(new Dimension(600, 600));
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				Util.canvasWrapper.setContent(canvas);	
@@ -49,7 +46,7 @@ public class Simulation implements GLEventListener{
 		});	
 	
 		canvas.addGLEventListener(this);		
-		animator = new FPSAnimator(canvas, 60);
+		animator = new FPSAnimator(canvas, Config.FRAME_RATE);
 	  	animator.start();
 	}
 	
@@ -98,10 +95,18 @@ public class Simulation implements GLEventListener{
 
 	@Override
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+		if (width != height) {
+			if (width < height) 
+				height = width;		
+			else
+				width = height; 
+		}
+		
 		GL4 gl=(GL4)GLContext.getCurrentGL();
 		gl.glViewport(0, 0, width, height);
 		Config.CANVAS_HEIGHT=height;
 		Config.CANVAS_WIDTH=width;
+		canvas.setSize(width, height);
 		renderer.updateProjectionMatrix();
 	}
 	
