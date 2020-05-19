@@ -23,8 +23,8 @@ public abstract class TabElement extends VBox {
         Label nameLabel = new Label(name);
         
         this.icon = new ImageView(new Image("file:res/TabImages/"+imageURL));
-        icon.setFitWidth(100);
-        icon.setFitHeight(100);
+        icon.setFitWidth(size);
+        icon.setFitHeight(size);
         
         this.getChildren().addAll(icon, nameLabel);
         
@@ -37,18 +37,18 @@ public abstract class TabElement extends VBox {
 		clone.setFitHeight(size);
 		clone.setFitWidth(size);
 		
-		icon.setOnDragDetected(e->{   
+		this.setOnDragDetected(e->{   
 			Util.dragMode = true;
         	clone.relocate(e.getSceneX()-(size/2),e.getSceneY()-(size/2));
         	glass.getChildren().add(clone);
         	glass.toFront(); 
         });
         
-		icon.setOnMouseDragged(e->{
+		this.setOnMouseDragged(e->{
     		clone.relocate(e.getSceneX()-(size/2),e.getSceneY()-(size/2));
     	});
     			
-    	icon.setOnMouseReleased(e1->{
+		this.setOnMouseReleased(e1->{
         	glass.toBack();
         	glass.getChildren().clear();    
 	    	Util.canvasWrapper.setOnMouseEntered(e2->{    	
