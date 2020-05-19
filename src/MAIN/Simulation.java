@@ -97,14 +97,14 @@ public class Simulation implements GLEventListener{
 	@Override
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
 		if (width != height) {
-			if (width < height) { width = height; }
-			else { height = width; }
+			if (width < height) { height = width;}
+			else { width = height; }
 		}
 		GL4 gl=(GL4)GLContext.getCurrentGL();
 		gl.glViewport(0, 0, width, height);
 		Config.CANVAS_HEIGHT=height;
 		Config.CANVAS_WIDTH=width;
-		System.out.println(true);
+		canvas.setSize(width, height);
 		renderer.updateProjectionMatrix();
 	}
 }
