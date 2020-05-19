@@ -93,7 +93,6 @@ public class SimulationControls extends VBox{
 	     close.setGraphic(new ImageView(closeImg));
 
 	     this.setStyle("-fx-background-color: #000; -fx-min-width: 50px;");
-
 	     this.setAlignment(Pos.CENTER);
 	     this.getChildren().addAll(playpause,stop,clear,slider);
 	     this.getStylesheets().add("file:res/css/sidebar.css");        

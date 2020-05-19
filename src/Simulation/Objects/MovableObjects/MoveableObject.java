@@ -58,9 +58,7 @@ public abstract class MoveableObject extends GameObject{
 		((DynamicCollisionContext) collisionContext).checkCollisions();
 	}
 	
-	protected void checkEdges() {
-		
-		
+	protected void checkEdges() {		
 		if(y>Config.CANVAS_HEIGHT/4 || y<-Config.CANVAS_HEIGHT/4)  
 			velocityY*=-1;
 		
