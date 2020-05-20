@@ -1,4 +1,3 @@
-
 *{
 	-fx-focus-color: transparent;
 }
@@ -7,8 +6,8 @@
 	-fx-text-fill: rgb(0,0,0);
 	-fx-background-radius: 10 10 0 0;
 	-fx-background-color: transparent, transparent , rgb(255,255,255);
-    -fx-background-insets: 0, 0 5 0 0, 1 6 0 0 ;
-    -fx-padding: 4 10 4 4 ;
+    -fx-background-insets: 0, 0 5 0 0, 1 6 0 0;
+    -fx-padding: 4 10 4 4;
 }
 
 .tab:selected {
@@ -18,6 +17,7 @@
 .tab:selected .tab-label {
 	-fx-text-fill: rgb(255,255,255);
 }
+
 .tab-pane .tab-header-background{
 	-fx-background-color: transparent;
 }

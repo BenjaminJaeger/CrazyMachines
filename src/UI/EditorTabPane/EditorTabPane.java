@@ -9,7 +9,7 @@ public class EditorTabPane extends TabPane{
 
    public EditorTabPane(Pane glass) {
 	   this.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-	   this.getStylesheets().add("file:res/css/ObjectChooser.css");
+	   this.getStylesheets().add("file:res/css/EditorTabPane.css");
 	   addTabs(glass);
    }
    

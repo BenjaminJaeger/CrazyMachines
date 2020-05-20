@@ -9,7 +9,6 @@ public class StaticPlane extends StaticExternalObject{
 	
 	public StaticPlane(float x, float y) {
 		super("PlaneTriangles","PlaneBounding","PlaneTexture.jpg", material, x, y);
-		models[0].setScale(0.1f);
 	}
 
 	@Override

@@ -12,7 +12,7 @@ public class StaticPlaneTabElement extends TabElement{
 	@Override
 	public void createObject(float x, float y) {
 		StaticPlane plane = new StaticPlane(x, y);
-		plane.setScale(1.1f);
+		plane.setScale(0.4f);
 	}
 
 }

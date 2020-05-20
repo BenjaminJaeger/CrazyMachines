@@ -1,0 +1,17 @@
+.button{
+    -fx-font: 16px "Serif";
+    -fx-text-fill: black;
+    -fx-padding: 10;
+    -fx-background-color: white;
+    -fx-max-width:120px;
+}
+
+.button:hover{
+     -fx-text-fill: white;
+     -fx-background-color: gray;
+}
+
+.label{
+	-fx-font: 16px "Serif";
+	-fx-text-fill: #fff;
+}

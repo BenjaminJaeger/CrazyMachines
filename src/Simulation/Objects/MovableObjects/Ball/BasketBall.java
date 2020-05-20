@@ -11,7 +11,7 @@ public class BasketBall extends Ball{
 ////Constructors////
 ////////////////////
 	public BasketBall(float x, float y) {
-		super(30, 30, material,"basketball.png", x, y);
+		super(20, 30, material,"basketball.png", x, y);
 	}
 	
 }
