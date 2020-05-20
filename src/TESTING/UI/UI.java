@@ -2,7 +2,7 @@ package TESTING.UI;
 
 import UI.Util;
 import UI.EditorTabPane.EditorTabPane;
-import UI.LeftSideUI.SimulationControls;
+import UI.SideBar.SimulationControls;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;

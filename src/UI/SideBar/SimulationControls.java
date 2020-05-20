@@ -1,4 +1,4 @@
-package UI.LeftSideUI;
+package UI.SideBar;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
