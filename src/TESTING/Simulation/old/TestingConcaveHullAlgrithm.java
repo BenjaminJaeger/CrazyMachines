@@ -14,7 +14,6 @@ import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
 import Simulation.Objects.MovableObjects.MoveableObject;
-import Simulation.Objects.MovableObjects.ExternalObjects.Icosahedron;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -111,7 +110,7 @@ public class TestingConcaveHullAlgrithm extends Application implements GLEventLi
 		Material basicMaterial = new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 10, 1f);
 
 		
-		model = new Icosahedron(basicMaterial, 1,0,0, 400, 400);
+		//model = new Icosahedron(basicMaterial, 1,0,0, 400, 400);
 		model.renderBounding(true);
 
 		test.add(new LineModel(new CircleLine(0, 0), 0,0,0,0, 0));
