@@ -99,10 +99,10 @@ public class Renderer {
 				render(model,shader);
 		}
 
-//		if (object.isSelected()) {
-//			render(object.getObjectTransformer().getCircleUI().getCircleModel(), object.getObjectTransformer().getCircleUI().getShader());
-//			render(object.getObjectTransformer().getSquareUI().getRectangleLine(), object.getObjectTransformer().getSquareUI().getShader());
-//		}
+		if (object.isSelected()) {
+			render(object.getObjectTransformer().getCircleUI().getCircleModel(), object.getObjectTransformer().getCircleUI().getShader());
+			render(object.getObjectTransformer().getSquareUI().getRectangleLine(), object.getObjectTransformer().getSquareUI().getShader());
+		}
 	}
 
 	

@@ -14,13 +14,14 @@ import Simulation.RenderEngine.Primitives.Primitive;
 import com.jogamp.opengl.awt.GLJPanel;
 
 import java.awt.event.MouseEvent;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
 
 public class ObjectPickingMethods {
 
-    public static void chooseSphere(MouseEvent e, GLJPanel canvas, Camera camera, MoveableObject object) {
+    public static float calculateSphereDistance (MouseEvent e, GLJPanel canvas, Camera camera, MoveableObject object) {
         float x = ((float)e.getX() - (float)canvas.getWidth()/2 +camera.getX());
         float y = ((float)canvas.getHeight()/2 -(float)e.getY() +camera.getY());
 
@@ -31,7 +32,10 @@ public class ObjectPickingMethods {
         float distY = y - object.getY();
 
         float distance = (float) Math.sqrt((distX*distX) + (distY*distY));
+        return distance;
+    }
 
+    public static void chooseSphere(MoveableObject object, float distance) {
         if (object.isSelected()) {
             if (!(distance <= object.getObjectTransformer().getCircleUI().getRadius())) {
                 object.unSelectObject();
@@ -47,6 +51,21 @@ public class ObjectPickingMethods {
             }
         }
     }
+
+    public static boolean mouseInSphere(MoveableObject object, float distance) {
+        boolean mouseInSphere;
+
+        if (distance <= ((Ball)object).getRadius())
+        {
+            mouseInSphere = true;
+        }
+        else {
+            mouseInSphere = false;
+        }
+
+        return mouseInSphere;
+    }
+
 
     //auf GameObject casten
     public static void choosePolygon (MouseEvent e, GLJPanel canvas, Camera camera, MoveableObject object) {
@@ -121,27 +140,13 @@ public class ObjectPickingMethods {
         return dragged;
     }
 
-    public static boolean chooseSquareUI (MouseEvent e, GLJPanel canvas, Camera camera, ScaleSquareUI object) {
-        boolean dragged = false;
+    //ArrayList als Parameter übernehmen
+    public static boolean chooseSquareUI (MouseEvent e, GLJPanel canvas, Camera camera, ScaleSquareUI object, ArrayList <Vector2f> vertices) {
+        boolean clicked = false;
 
-        float px = ((float)e.getX() - (float)canvas.getWidth()/2 +camera.getX());
-        float py = ((float)canvas.getHeight()/2 -(float)e.getY() +camera.getY());
-
-        px *= camera.getZ() * 0.75;
-        py *= camera.getZ() * 0.75;
-
-        ArrayList <Vector2f> vertices = new ArrayList<Vector2f>();
+        float px = UI.Util.convertMouseX(e.getX());
+        float py = UI.Util.convertMouseY(e.getY());
         int next = 0;
-
-        vertices.add(new Vector2f(object.getRectangleLine().getX()-object.getRadius()/2,object.getRectangleLine().getY()-object.getRadius()/2 ));
-        vertices.add(new Vector2f(object.getRectangleLine().getX()+object.getRadius()/2,object.getRectangleLine().getY()-object.getRadius()/2 ));
-        vertices.add(new Vector2f(object.getRectangleLine().getX()+object.getRadius()/2,object.getRectangleLine().getY()+object.getRadius()/2 ));
-        vertices.add(new Vector2f(object.getRectangleLine().getX()-object.getRadius()/2,object.getRectangleLine().getY()+object.getRadius()/2 ));
-
-
-        for(int i = 0; i < vertices.size(); i++) {
-            System.out.println(vertices.get(i));
-        }
 
         for (int current = 0; current < vertices.size(); current++) {
             next = current + 1;
@@ -153,15 +158,17 @@ public class ObjectPickingMethods {
             Vector2f vc = vertices.get(current);
             Vector2f vn = vertices.get(next);
 
+            //Datensatz verändern
             //a bissl größer als das Originalrechteck, a bissl kleiner als das Originalrechteck
             if (((vc.y*1.1 > py) != (vn.y+1.1 > py)) && (px < (vn.x*1.1 - vc.x*1.1) * (py - vc.y*1.1) / (vn.y*1.1 - vc.y*1.1) + vc.x*1.1 ))
             {
+                System.out.println("True1");
                 if (!(((vc.y*0.9 > py) != (vn.y+0.9 > py)) && (px < (vn.x*0.9 - vc.x*0.9) * (py - vc.y*0.9) / (vn.y*0.9 - vc.y*0.9) + vc.x*0.9))){
                     System.out.println("True");
-                    dragged = !dragged;
+                    clicked = !clicked;
                 }
             }
         }
-        return dragged;
+        return clicked;
     }
 }
