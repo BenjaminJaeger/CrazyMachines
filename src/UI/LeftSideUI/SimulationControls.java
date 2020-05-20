@@ -9,9 +9,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class SimulationControls extends VBox{
@@ -72,7 +75,6 @@ public class SimulationControls extends VBox{
 	         }
 	     });
 
-	       
 	     Slider slider = new Slider();
 	     slider.setOrientation(Orientation.VERTICAL);
 	     slider.setMin(1);
@@ -87,14 +89,13 @@ public class SimulationControls extends VBox{
 	           }
 	         }
 	      });
-	        
 
 	     Button close = new Button();
 	     close.setGraphic(new ImageView(closeImg));
 
 	     this.setAlignment(Pos.CENTER);
-	     this.getChildren().addAll(playpause,stop,clear,slider);
-	     this.getStylesheets().add("file:res/css/SimulationControls.css");        
+		this.getChildren().addAll(playpause,stop,clear,slider);
+	     this.getStylesheets().add("file:res/css/SimulationControls.css");
 	}
 	
 }

@@ -4,3 +4,7 @@
     -fx-padding: 10;
     -fx-background-color: transparent;
 }
+
+.label {
+    -fx-text-fill: #fff;
+}
