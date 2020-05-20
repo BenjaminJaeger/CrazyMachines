@@ -10,6 +10,8 @@ public abstract class MoveableObject extends GameObject{
 
 	protected float velocityX,velocityY; //Geschwindigkeit
 	protected float accelerationX,accelerationY; //Beschleunigung
+	protected float originalAccelerationX;
+	protected float originalAccelerationY;
 	
 ////////////////////
 ////Constructors////
@@ -40,10 +42,10 @@ public abstract class MoveableObject extends GameObject{
 		
 		increaseVelocity(accelerationX, accelerationY);
 			
-		if (Math.abs(velocityX) <0.1f) 
-			velocityX=0;
-		if (Math.abs(velocityY)  <0.1f) 
-			velocityY=0;
+//		if (Math.abs(velocityX) <0.1f) 
+//			velocityX=0;
+//		if (Math.abs(velocityY)  <0.1f) 
+//			velocityY=0;
 		
 		increasePosition(velocityX, velocityY);
 		increaseRotation(-velocityX);
@@ -94,7 +96,8 @@ public abstract class MoveableObject extends GameObject{
 	
 	public void reset() {
 		super.reset();
-		resetAcceleration();
+		setAccelerationX(originalAccelerationX);
+		setAccelerationY(originalAccelerationY);
 		resetVelocity();
 	}
 	
@@ -138,9 +141,20 @@ public abstract class MoveableObject extends GameObject{
 		this.mass=mass;
 	}
 
-	public void setOriginalscale(float scale) {
-		originalscaleX=scale;
-		originalscaleY=scale;
-	};
+	public float getOriginalAccelerationX() {
+		return originalAccelerationX;
+	}
+
+	public void setOriginalAccelerationX(float originalAccelerationX) {
+		this.originalAccelerationX = originalAccelerationX;
+	}
+
+	public float getOriginalAccelerationY() {
+		return originalAccelerationY;
+	}
+
+	public void setOriginalAccelerationY(float originalAccelerationY) {
+		this.originalAccelerationY = originalAccelerationY;
+	}
 	
 }
