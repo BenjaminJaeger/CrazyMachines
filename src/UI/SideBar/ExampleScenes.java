@@ -21,9 +21,7 @@ public class ExampleScenes extends VBox{
 		ballPit.setOnAction(e->{
 			if(!SimulationControler.isPlaying()) {
 				GameObject.allObjects.clear();
-				new StaticPlane(0, -200);
-				new StaticPlane(-150, -200);
-				new StaticPlane(150, -200);
+			
 				StaticPlane plane1 = new StaticPlane(-220, -120);
 				plane1.setRotation(90);
 				plane1.setOriginalrotation(90);
@@ -31,12 +29,17 @@ public class ExampleScenes extends VBox{
 				StaticPlane plane2 = new StaticPlane(220, -120);
 				plane2.setRotation(90);
 				plane2.setOriginalrotation(90);
+				
+				StaticPlane plane3 = new StaticPlane(0, -220);
+				plane3.setScale(1.2f);
+				plane3.setOriginalscale(1.2f);
+				
+				for (int i = 0; i < 4; i++) {
+					new BasketBall((float)Math.random()*200, (float)Math.random()*200);
+					new BasketBall(-(float)Math.random()*200, (float)Math.random()*200);
+				}		
 			}
-			
-			for (int i = 0; i < 4; i++) {
-				new BasketBall((float)Math.random()*200, (float)Math.random()*200);
-				new BasketBall(-(float)Math.random()*200, (float)Math.random()*200);
-			}			
+						
 		});
 		
 		Button inclinedPlane = new Button("Schiefe Ebene");

@@ -42,10 +42,10 @@ public abstract class MoveableObject extends GameObject{
 		
 		increaseVelocity(accelerationX, accelerationY);
 			
-//		if (Math.abs(velocityX) <0.1f) 
-//			velocityX=0;
-//		if (Math.abs(velocityY)  <0.1f) 
-//			velocityY=0;
+		if (Math.abs(velocityX) <0.1f) 
+			velocityX=0;
+		if (Math.abs(velocityY)  <0.1f) 
+			velocityY=0;
 		
 		increasePosition(velocityX, velocityY);
 		increaseRotation(-velocityX);
