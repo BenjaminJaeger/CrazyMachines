@@ -2,7 +2,7 @@ package MAIN;
 
 import UI.Util;
 import UI.EditorTabPane.EditorTabPane;
-import UI.LeftSideUI.SideBar;
+import UI.SideBar.SideBar;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;

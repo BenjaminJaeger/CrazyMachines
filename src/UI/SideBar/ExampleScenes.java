@@ -1,4 +1,4 @@
-package UI.LeftSideUI;
+package UI.SideBar;
 
 import Simulation.SimulationControler;
 import Simulation.Objects.GameObject;

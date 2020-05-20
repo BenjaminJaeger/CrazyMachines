@@ -34,7 +34,7 @@ public abstract class GameObject {
 	
 	protected boolean selected;
 
-	protected ObjectTransformer objectTransformer;
+	private ObjectTransformer objectTransformer;
 ////////////////////
 ////Constructors////
 ////////////////////
@@ -153,7 +153,7 @@ public abstract class GameObject {
 ////Methods////
 ///////////////
 	public abstract void update();
-
+	
 	public void reset() {
 		setY(originalY);
 		setX(originalX);
