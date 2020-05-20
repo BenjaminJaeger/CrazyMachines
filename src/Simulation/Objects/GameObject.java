@@ -21,28 +21,29 @@ public abstract class GameObject {
 	
 	protected float x,y;
 	protected float rotation;
-	protected float scaleX,scaleY;
+	protected float scale;
 
 	protected CollisionContext collisionContext;
 	protected boolean renderBounding = false;
 	
 	protected float originalX,originalY;
 	protected float originalrotation;
-	protected float originalscaleX,originalscaleY;
+	protected float originalscale;
 	
 	protected float mass = 1;
 	
 	protected boolean selected;
 
-	private ObjectTransformer objectTransformer;
+	protected ObjectTransformer objectTransformer;
+	
+	
 ////////////////////
 ////Constructors////
 ////////////////////
 	public GameObject(String[] files,Material material, float r, float g, float b,float x,float y) {
 		this.x = x;
 		this.y = y;
-		scaleX=1; 
-		scaleY=1;
+		scale=1;
 		
 		models = new TriangleModel[files.length];
 		for (int i = 0; i < models.length; i++) 
@@ -53,15 +54,13 @@ public abstract class GameObject {
 		originalX=x;
 		originalY=y;
 		originalrotation=0;
-		originalscaleX=1;
-		originalscaleY=1;
+		originalscale=1;
 	}
 	
 	public GameObject(String[] files , String[] textures, Material material, float x,float y) {
 		this.x = x;
 		this.y = y;
-		scaleX=1; 
-		scaleY=1;
+		scale=1;
 		
 		models = new TriangleModel[files.length];
 		for (int i = 0; i < models.length; i++) 
@@ -72,15 +71,13 @@ public abstract class GameObject {
 		originalX=x;
 		originalY=y;
 		originalrotation=0;
-		originalscaleX=1;
-		originalscaleY=1;
+		originalscale=1;
 	}
 	
 	public GameObject(String file , String texture, Material material, float x,float y) {
 		this.x = x;
 		this.y = y;
-		scaleX=1; 
-		scaleY=1;
+		scale=1;
 		
 		models = new TriangleModel[1];
 		models[0] = new TriangleModel(file,texture,material,x,y);		
@@ -90,15 +87,13 @@ public abstract class GameObject {
 		originalX=x;
 		originalY=y;
 		originalrotation=0;
-		originalscaleX=1;
-		originalscaleY=1;
+		originalscale=1;
 	}
 	
 	public GameObject(String file,Material material, float r, float g, float b,float x,float y) {
 		this.x = x;
 		this.y = y;
-		scaleX=1; 
-		scaleY=1;
+		scale=1;
 		
 		models = new TriangleModel[1];
 		models[0] = new TriangleModel(file,material,r,g,b,x,y);		
@@ -108,15 +103,13 @@ public abstract class GameObject {
 		originalX=x;
 		originalY=y;
 		originalrotation=0;
-		originalscaleX=1;
-		originalscaleY=1;
+		originalscale=1;
 	}
 	
 	public GameObject(Primitive primitive,Material material, float r, float g,float b, float x,float y) {
 		this.x = x;
 		this.y = y;
-		scaleX=1;
-		scaleY=1;
+		scale=1;
 		
 		models = new TriangleModel[1];
 		models[0] = new TriangleModel(primitive,material,r,g,b,x,y);		
@@ -126,15 +119,13 @@ public abstract class GameObject {
 		originalX=x;
 		originalY=y;
 		originalrotation=0;
-		originalscaleX=1;
-		originalscaleY=1;
+		originalscale=1;
 	}
 	
 	public GameObject(Primitive primitive,Material material, String texture, float x,float y) {
 		this.x = x;
 		this.y = y;
-		scaleX=1;
-		scaleY=1;
+		scale=1;
 		
 		models = new TriangleModel[1];
 		models[0] = new TriangleModel(primitive,material,texture,x,y);		
@@ -144,8 +135,7 @@ public abstract class GameObject {
 		originalX=x;
 		originalY=y;
 		originalrotation=0;
-		originalscaleX=1;
-		originalscaleY=1;
+		originalscale=1;
 	}
 	
 	
@@ -157,8 +147,7 @@ public abstract class GameObject {
 	public void reset() {
 		setY(originalY);
 		setX(originalX);
-		setScale(originalscaleX);
-		setScaleY(originalscaleY);
+		setScale(originalscale);
 		setRotation(originalrotation);
 	}
 	
@@ -228,10 +217,9 @@ public abstract class GameObject {
 	}
 	
 	public void setScale(float scale) {
-		this.scaleX = scale;
+		this.scale = scale;
 		for (Model model : models) 
 			model.setScaleX(scale);
-		this.scaleY = scale;
 		for (Model model : models) 
 			model.setScaleY(scale);	
 		for (Model model : models) 
@@ -240,26 +228,11 @@ public abstract class GameObject {
 		collisionContext.setScale(scale);
 	}
 	
-	public float getScaleX() {
-		return scaleX;
+	public float getScale() {
+		return scale;
 	}
 	
-	public void setScaleX(float scaleX) {
-		this.scaleX = scaleX;
-		for (Model model : models) 
-			model.setScaleX(scaleX);
-	}
-	
-	public float getScaleY() {
-		return scaleY;
-	}
-	
-	public void setScaleY(float scaleY) {
-		this.scaleY = scaleY;
-		for (Model model : models) 
-			model.setScaleY(scaleY);
-	}
-	
+
 	public CollisionContext getCollisionContext() {
 		return collisionContext;
 	}
@@ -308,20 +281,12 @@ public abstract class GameObject {
 		this.originalrotation = originalrotation;
 	}
 
-	public float getOriginalscaleX() {
-		return originalscaleX;
+	public float getOriginalscale() {
+		return originalscale;
 	}
 
-	public void setOriginalscaleX(float originalscaleX) {
-		this.originalscaleX = originalscaleX;
-	}
-
-	public float getOriginalscaleY() {
-		return originalscaleY;
-	}
-
-	public void setOriginalscaleY(float originalscaleY) {
-		this.originalscaleY = originalscaleY;
+	public void setOriginalscale(float originalscale) {
+		this.originalscale = originalscale;
 	}
 
 	public float getMass() {

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
-import UI.BenjaminController.ObjectTransformationModes;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLCapabilities;
@@ -18,7 +17,6 @@ import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
-
 
 import Simulation.Util;
 import Simulation.Objects.MovableObjects.MoveableObject;
@@ -110,33 +108,33 @@ public class TestingController extends Application implements GLEventListener{
                     }
                 }
 
-                for (int objectCounter = 0; objectCounter < allobjects.size(); objectCounter++) {
-                    if(allobjects.get(objectCounter).isSelected() && ObjectPickingMethods.chooseCircleLine(e, canvas, camera, allobjects.get(objectCounter).getObjectTransformer().getCircleUI()) == true)
-                    {
-                        allobjects.get(objectCounter).setScalable(false);
-                        allobjects.get(objectCounter).setRotatable(true);
-                        allobjects.get(objectCounter).setMoveable(false);
-                    }
-                    else if (allobjects.get(objectCounter).isSelected() && ObjectPickingMethods.chooseSquareUI(e, canvas, camera, allobjects.get(objectCounter).getObjectTransformer().getSquareUI(),
-                            allobjects.get(objectCounter).getObjectTransformer().getSquareUI().getVertices()) == true)
-                    {
-                        allobjects.get(objectCounter).setScalable(true);
-                        allobjects.get(objectCounter).setRotatable(false);
-                        allobjects.get(objectCounter).setMoveable(false);
-                    }
-                    else if (allobjects.get(objectCounter).isSelected() &&
-                            ObjectPickingMethods.mouseInSphere(allobjects.get(objectCounter), ObjectPickingMethods.calculateSphereDistance(e, canvas, camera, allobjects.get(objectCounter)))) {
-                        allobjects.get(objectCounter).setScalable(false);
-                        allobjects.get(objectCounter).setRotatable(false);
-                        allobjects.get(objectCounter).setMoveable(true);
-                    }
-                    else {
-                        allobjects.get(objectCounter).setScalable(false);
-                        allobjects.get(objectCounter).setRotatable(false);
-                        allobjects.get(objectCounter).setMoveable(false);
-                    }
-
-                }
+//                for (int objectCounter = 0; objectCounter < allobjects.size(); objectCounter++) {
+//                    if(allobjects.get(objectCounter).isSelected() && ObjectPickingMethods.chooseCircleLine(e, canvas, camera, allobjects.get(objectCounter).getObjectTransformer().getCircleUI()) == true)
+//                    {
+//                        allobjects.get(objectCounter).setScalable(false);
+//                        allobjects.get(objectCounter).setRotatable(true);
+//                        allobjects.get(objectCounter).setMoveable(false);
+//                    }
+//                    else if (allobjects.get(objectCounter).isSelected() && ObjectPickingMethods.chooseSquareUI(e, canvas, camera, allobjects.get(objectCounter).getObjectTransformer().getSquareUI(),
+//                            allobjects.get(objectCounter).getObjectTransformer().getSquareUI().getVertices()) == true)
+//                    {
+//                        allobjects.get(objectCounter).setScalable(true);
+//                        allobjects.get(objectCounter).setRotatable(false);
+//                        allobjects.get(objectCounter).setMoveable(false);
+//                    }
+//                    else if (allobjects.get(objectCounter).isSelected() &&
+//                            ObjectPickingMethods.mouseInSphere(allobjects.get(objectCounter), ObjectPickingMethods.calculateSphereDistance(e, canvas, camera, allobjects.get(objectCounter)))) {
+//                        allobjects.get(objectCounter).setScalable(false);
+//                        allobjects.get(objectCounter).setRotatable(false);
+//                        allobjects.get(objectCounter).setMoveable(true);
+//                    }
+//                    else {
+//                        allobjects.get(objectCounter).setScalable(false);
+//                        allobjects.get(objectCounter).setRotatable(false);
+//                        allobjects.get(objectCounter).setMoveable(false);
+//                    }
+//
+//                }
             }
 
 
@@ -165,19 +163,19 @@ public class TestingController extends Application implements GLEventListener{
         canvas.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                for (int objectCounter = 0; objectCounter < allobjects.size(); objectCounter++) {
-                    if(allobjects.get(objectCounter).isRotatable() == true)
-                    {
-                        ObjectTransformationModes.rotateObject(objectCounter, allobjects, canvas, e);
-                    }
-                    else if (allobjects.get(objectCounter).isScalable() == true)
-                    {
-                        ObjectTransformationModes.scaleObject(objectCounter, allobjects, canvas, e);
-                    }
-                    else if (allobjects.get(objectCounter).isMoveable() == true) {
-                        ObjectTransformationModes.moveObject(objectCounter, allobjects, e);
-                    }
-                }
+//                for (int objectCounter = 0; objectCounter < allobjects.size(); objectCounter++) {
+//                    if(allobjects.get(objectCounter).isRotatable() == true)
+//                    {
+//                        ObjectTransformationModes.rotateObject(objectCounter, allobjects, canvas, e);
+//                    }
+//                    else if (allobjects.get(objectCounter).isScalable() == true)
+//                    {
+//                        ObjectTransformationModes.scaleObject(objectCounter, allobjects, canvas, e);
+//                    }
+//                    else if (allobjects.get(objectCounter).isMoveable() == true) {
+//                        ObjectTransformationModes.moveObject(objectCounter, allobjects, e);
+//                    }
+//                }
             }
 
             @Override
