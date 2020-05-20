@@ -5,6 +5,7 @@ import Simulation.Collisions.Boundings.BoundingRectangle;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Cube;
+import UI.BenjaminController.ObjectTransformer;
 
 public abstract class Box extends MoveableObject{
 	
@@ -22,6 +23,7 @@ public abstract class Box extends MoveableObject{
 		this.height=size;
 		this.depth=size;
 		collisionContext = new DynamicCollisionContext(this,new BoundingRectangle(x, y,width, height));
+		objectTransformer = new ObjectTransformer(this);
 	}
 	
 	public Box(float width,float height ,float depth , Material material, float r,float g,float b, float x, float y) {
@@ -30,15 +32,9 @@ public abstract class Box extends MoveableObject{
 		this.height=height;
 		this.depth=depth;
 		collisionContext = new DynamicCollisionContext(this,new BoundingRectangle(x, y,width, height));
+		objectTransformer = new ObjectTransformer(this);
 	}
-	
-	
-///////////////
-////Methods////
-///////////////
-
-
-	
+		
 /////////////////////////
 ////Getters & Setters////
 /////////////////////////

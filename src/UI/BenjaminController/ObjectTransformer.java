@@ -2,8 +2,6 @@ package UI.BenjaminController;
 
 import Simulation.Objects.GameObject;
 import Simulation.RenderEngine.Core.Math.Vector2f;
-import Simulation.RenderEngine.Core.Models.LineModel;
-import Simulation.RenderEngine.Core.Models.Model;
 import javafx.scene.transform.Scale;
 
 import java.util.ArrayList;
@@ -17,7 +15,6 @@ public class ObjectTransformer {
         float radius = calculateRadius(gameObject);
         circleUI = new RotationCircleUI(radius + 20, 30, 0,0,0, gameObject.getX(), gameObject.getY());
         squareUI = new ScaleSquareUI(radius*2+10, 0,0,0,gameObject.getX(), gameObject.getY());
-
     }
 
     //Radius des Kreises bestimmen, der um das GameObject gezogen wird
@@ -87,17 +84,5 @@ public class ObjectTransformer {
 
     public void setSquareUI(ScaleSquareUI squareUI) {
         this.squareUI = squareUI;
-    }
-
-    public void setX(float x) {
-        circleUI.getCircleModel().setX(x);
-        squareUI.getRectangleLine().setX(x);
-
-        squareUI.calculateVertices();
-    }
-
-    public void setY(float y) {
-        circleUI.getCircleModel().setY(y);
-        squareUI.getRectangleLine().setY(y);
     }
 }

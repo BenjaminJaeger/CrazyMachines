@@ -1,6 +1,6 @@
 package UI.EditorTabPane.TabElements;
 
-import Simulation.Objects.StaticObjects.StaticPlane;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.StaticPlane;
 import javafx.scene.layout.Pane;
 
 public class StaticPlaneTabElement extends TabElement{
@@ -12,7 +12,7 @@ public class StaticPlaneTabElement extends TabElement{
 	@Override
 	public void createObject(float x, float y) {
 		StaticPlane plane = new StaticPlane(x, y);
-		plane.setScale(1.1f);
+		plane.setScale(0.4f);
 	}
 
 }

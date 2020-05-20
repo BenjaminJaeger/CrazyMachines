@@ -2,7 +2,7 @@ package MAIN;
 
 import UI.Util;
 import UI.EditorTabPane.EditorTabPane;
-import UI.LeftSideUI.SimulationControls;
+import UI.LeftSideUI.SideBar;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
@@ -17,9 +17,9 @@ public class UI extends StackPane{
 		//Editorpane
 		EditorTabPane editorTabPane = new EditorTabPane(glassPane);
 		//Canvas
-		Util.canvasWrapper = new SwingNode ();
+		Util.canvasWrapper = new SwingNode();
 		//Simulation controls
-		SimulationControls simulationControls = new SimulationControls();
+		SideBar leftSideUI = new SideBar();
 
 		BorderPane outer = new BorderPane();
 		BorderPane inner = new BorderPane ();
@@ -30,7 +30,7 @@ public class UI extends StackPane{
 		inner.setCenter(Util.canvasWrapper);
 		BorderPane.setAlignment(inner.getCenter(), Pos.CENTER);
 		inner.setBottom(editorTabPane);
-		outer.setLeft(simulationControls);
+		outer.setLeft(leftSideUI);
 		outer.setCenter(inner);
 
 		this.getChildren().addAll(glassPane,outer);
