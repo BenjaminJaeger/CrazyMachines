@@ -1,6 +1,6 @@
 package UI.EditorTabPane.TabElements;
 
-import Simulation.Objects.StaticObjects.StaticPlane;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.StaticPlane;
 import javafx.scene.layout.Pane;
 
 public class StaticPlaneTabElement extends TabElement{

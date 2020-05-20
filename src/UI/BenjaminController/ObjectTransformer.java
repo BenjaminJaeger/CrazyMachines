@@ -1,11 +1,10 @@
 package UI.BenjaminController;
 
-import Simulation.Objects.GameObject;
-import Simulation.RenderEngine.Core.Math.Vector2f;
-import javafx.scene.transform.Scale;
-
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import Simulation.Objects.GameObject;
+import Simulation.RenderEngine.Core.Math.Vector2f;
 
 public class ObjectTransformer {
     private RotationCircleUI circleUI;
