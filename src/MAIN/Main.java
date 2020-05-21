@@ -15,18 +15,9 @@ public class Main extends Application{
         Simulation simulation = new Simulation();
         simulation.initialize();
         
-        primaryStage.setTitle("Editor Alpha");
-		primaryStage.setScene(new Scene(ui, 900, 900));
-		
-//      primaryStage.setMinWidth(700);
-//      primaryStage.setMinHeight(830);
-//		primaryStage.widthProperty().addListener( e -> {
-//			primaryStage.setHeight(primaryStage.getWidth()*1.19);
-//		});
-//		primaryStage.heightProperty().addListener( e -> {
-//			primaryStage.setWidth(primaryStage.getHeight()/1.19);
-//		});
-
+        primaryStage.setTitle("Visual Computing 2 Prototype");
+		primaryStage.setScene(new Scene(ui, 1088, 1000));
+		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
 	
