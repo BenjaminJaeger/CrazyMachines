@@ -2,7 +2,6 @@ package Simulation.Objects.MovableObjects;
 
 import Simulation.Collisions.DynamicCollisionContext;
 import Simulation.Objects.GameObject;
-import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Primitive;
 
@@ -10,8 +9,8 @@ public abstract class MoveableObject extends GameObject{
 
 	protected float velocityX,velocityY; //Geschwindigkeit
 	protected float accelerationX,accelerationY; //Beschleunigung
-	protected float originalAccelerationX;
-	protected float originalAccelerationY;
+	
+	protected float originalAccelerationX,originalAccelerationY;
 	
 ////////////////////
 ////Constructors////
@@ -38,9 +37,8 @@ public abstract class MoveableObject extends GameObject{
 ///////////////
 	public void update() {	
 		applyForce(0, -0.1f);	
-		
 		increaseVelocity(accelerationX, accelerationY);
-			
+		
 		if (Math.abs(velocityX) <0.1f) 
 			velocityX=0;
 		if (Math.abs(velocityY)  <0.1f) 
@@ -52,27 +50,16 @@ public abstract class MoveableObject extends GameObject{
 				
 		accelerationX = -velocityX*0.005f;
 		accelerationY = -velocityY*0.005f;
-			
-//		checkEdges();
-		
+
 		((DynamicCollisionContext) collisionContext).checkCollisions();
 	}
 	
-	protected void checkEdges() {		
-		if(y>Config.CANVAS_HEIGHT/4 || y<-Config.CANVAS_HEIGHT/4)  
-			velocityY*=-1;
-		
-		if(x>Config.CANVAS_WIDTH/4 || x<-Config.CANVAS_WIDTH/4) 
-			velocityX*=-1;
-	}
-
 	public void applyForce(float x,float y) {
 		x/=mass;
 		y/=mass;
 		increaseAcceleration(x, y);
 	}
 	
-
 	public void increaseVelocity(float dx,float dy) {
 		this.velocityX+=dx;
 		this.velocityY+=dy;
@@ -95,9 +82,9 @@ public abstract class MoveableObject extends GameObject{
 	
 	public void reset() {
 		super.reset();
-		setAccelerationX(originalAccelerationX);
-		setAccelerationY(originalAccelerationY);
 		resetVelocity();
+		setAccelerationX(originalAccelerationX);
+		setAccelerationY(originalAccelerationY);		
 	}
 	
 /////////////////////////
@@ -134,10 +121,6 @@ public abstract class MoveableObject extends GameObject{
 
 	public void setAccelerationY(float accelerationY) {
 		this.accelerationY = accelerationY;
-	}
-	
-	public void setMass(float mass) {
-		this.mass=mass;
 	}
 
 	public float getOriginalAccelerationX() {

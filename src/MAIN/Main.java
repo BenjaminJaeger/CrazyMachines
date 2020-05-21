@@ -15,7 +15,7 @@ public class Main extends Application{
         Simulation simulation = new Simulation();
         simulation.initialize();
         
-        primaryStage.setTitle("Visual Computing 2 Prototype");
+        primaryStage.setTitle("Visual Computing 2 Prototyp");
 		primaryStage.setScene(new Scene(ui, 1088, 1000));
 		primaryStage.setResizable(false);
 		primaryStage.show();

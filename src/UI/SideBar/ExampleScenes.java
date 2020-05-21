@@ -46,7 +46,7 @@ public class ExampleScenes extends VBox{
 		inclinedPlane.setOnAction(e->{
 			if(!SimulationControler.isPlaying()) {
 				GameObject.allObjects.clear();
-				BasketBall ball = new BasketBall(200, 115);
+				BasketBall ball = new BasketBall(200, 120);
 				ball.setScale(0.5f);
 				ball.setOriginalscale(0.5f);
 				ball.setAccelerationX(-1);
@@ -54,11 +54,11 @@ public class ExampleScenes extends VBox{
 				
 				new StaticPlane(200, 100);
 				
-				StaticPlane plane1 = new StaticPlane(60, 85);
+				StaticPlane plane1 = new StaticPlane(28, 84);
 				plane1.setRotation(10);
 				plane1.setOriginalrotation(10);
 				
-				StaticPlane plane2 = new StaticPlane(-80,0);
+				StaticPlane plane2 = new StaticPlane(-85,0);
 				plane2.setRotation(-10);
 				plane2.setOriginalrotation(-10);
 				
@@ -69,14 +69,14 @@ public class ExampleScenes extends VBox{
 				StaticPlane plane4 = new StaticPlane(-200,-150);
 				plane4.setRotation(90);
 				plane4.setOriginalrotation(90);
+						
+				StaticPlane plane5 = new StaticPlane(0,-250);
+				plane5.setScale(0.9f);
+				plane5.setOriginalscale(0.9f);
 				
-				new StaticPlane(-150,-230);				
-				new StaticPlane(0,-230);
-				new StaticPlane(150,-230);
-				
-				StaticPlane plane5 = new StaticPlane(200,-150);
-				plane5.setRotation(90);
-				plane5.setOriginalrotation(90);
+				StaticPlane plane6 = new StaticPlane(200,-150);
+				plane6.setRotation(90);
+				plane6.setOriginalrotation(90);
 			}			
 		});
 		

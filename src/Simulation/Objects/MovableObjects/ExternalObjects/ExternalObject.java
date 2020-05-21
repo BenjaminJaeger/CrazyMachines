@@ -5,7 +5,7 @@ import Simulation.Collisions.Boundings.BoundingPolygon;
 import Simulation.Collisions.Boundings.BoundingReader;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
-import UI.BenjaminController.ObjectTransformer;
+import UI.ObjectTransformer.ObjectTransformer;
 
 public abstract class ExternalObject extends MoveableObject{
 

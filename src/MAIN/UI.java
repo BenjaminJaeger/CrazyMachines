@@ -1,8 +1,8 @@
 package MAIN;
 
-import UI.ObjectTransformationListeners;
 import UI.Util;
 import UI.EditorTabPane.EditorTabPane;
+import UI.ObjectTransformer.ObjectTransformationListeners;
 import UI.SideBar.SideBar;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;

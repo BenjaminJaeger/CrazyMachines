@@ -5,7 +5,7 @@ import Simulation.Collisions.Boundings.BoundingRectangle;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Cube;
-import UI.BenjaminController.ObjectTransformer;
+import UI.ObjectTransformer.ObjectTransformer;
 
 public abstract class Box extends MoveableObject{
 	

@@ -6,7 +6,7 @@ import Simulation.Collisions.Boundings.BoundingCircle;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Sphere;
-import UI.BenjaminController.ObjectTransformer;
+import UI.ObjectTransformer.ObjectTransformer;
 
 public abstract class Ball extends MoveableObject{
 	

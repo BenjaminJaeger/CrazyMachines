@@ -6,7 +6,7 @@ import Simulation.Collisions.Boundings.BoundingReader;
 import Simulation.Objects.StaticObjects.StaticObject;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Primitive;
-import UI.BenjaminController.ObjectTransformer;
+import UI.ObjectTransformer.ObjectTransformer;
 
 public abstract class StaticExternalObject extends StaticObject{
 

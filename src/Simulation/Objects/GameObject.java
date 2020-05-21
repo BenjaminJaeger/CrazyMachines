@@ -8,7 +8,7 @@ import Simulation.RenderEngine.Core.Models.TriangleModel;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Primitive;
-import UI.BenjaminController.ObjectTransformer;
+import UI.ObjectTransformer.ObjectTransformer;
 
 public abstract class GameObject {
 

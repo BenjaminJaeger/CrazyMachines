@@ -19,7 +19,7 @@ import javafx.scene.layout.VBox;
 public class SimulationControls extends VBox{
 
 	public SimulationControls() {
-		super(10);
+		 super(10);
 		
 		 Image expandImg= new Image("file:res/Images/expand.png");
 	     Image playImg  = new Image("file:res/Images/play.png");
@@ -63,6 +63,7 @@ public class SimulationControls extends VBox{
 	         if (SimulationControler.isPlaying()) {
 	             SimulationControler.pause();
 	             playpause.setGraphic(new ImageView(playImg));
+	             playpause.setText(" Play");
 	         }
 	         SimulationControler.restart();
 	     });
@@ -74,7 +75,6 @@ public class SimulationControls extends VBox{
 	             GameObject.allObjects.clear();
 	         }
 	     });
-
 
 
 	     Slider slider = new Slider();
