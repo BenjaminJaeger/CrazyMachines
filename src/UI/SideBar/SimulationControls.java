@@ -27,7 +27,6 @@ public class SimulationControls extends VBox{
 	     Image resetImg = new Image("file:res/Images/reset.png");
 	     Image clearImg = new Image("file:res/Images/clear.png");
 	     Image closeImg = new Image("file:res/Images/close.png");
-
 	     
 	     Button expand = new Button();
 	     expand.setGraphic(new ImageView(expandImg));
@@ -49,14 +48,16 @@ public class SimulationControls extends VBox{
 	     playpause.setOnAction(e->{
 	         if(SimulationControler.isPlaying()) {
 	             playpause.setGraphic(new ImageView(playImg));
+				 playpause.setText(" Play");
 	             SimulationControler.pause();
 	         }else {
 	             playpause.setGraphic(new ImageView(pauseImg));
+	             playpause.setText(" Pause");
 	             SimulationControler.play();
 	         }
 	     });
 
-	     Button stop = new Button(" Stop");
+	     Button stop = new Button(" Reset");
 	     stop.setGraphic(new ImageView(resetImg));
 	     stop.setOnAction(e->{
 	         if (SimulationControler.isPlaying()) {

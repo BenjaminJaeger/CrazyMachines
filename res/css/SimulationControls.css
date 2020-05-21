@@ -18,7 +18,7 @@
 }
 
 .hbox {
-    -fx-padding: 20;
+
 }
 
 .hbox>* {
@@ -31,5 +31,5 @@
     -fx-text-fill: #fff;
     -fx-padding: 0;
     -fx-text-alignment: right;
-    -fx-max-width: 20;
+    -fx-max-width: 40;
 }

@@ -13,7 +13,7 @@ public class SideBar extends VBox{
 		SimulationControls simulationControls = new SimulationControls();
 		objectSettings = new ObjectSettings();
 
-		this.getChildren().addAll(simulationControls,objectSettings,exampleScenes);
+		this.getChildren().addAll(exampleScenes,simulationControls,objectSettings);
 		this.getStyleClass().add("vbox");
 		this.getStylesheets().add("file:res/css/SideBar.css");
 	}

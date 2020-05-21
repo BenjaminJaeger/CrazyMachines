@@ -1,5 +1,7 @@
 .vbox{
 	-fx-background-color: black;
 	-fx-min-width: 130px;
-	-fx-alignment: center-right;
+	-fx-alignment: top-right;
+	-fx-min-width: 240px;
+	-fx-padding: 30;
 }
