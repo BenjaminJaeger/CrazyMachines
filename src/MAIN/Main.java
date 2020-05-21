@@ -18,8 +18,8 @@ public class Main extends Application{
         primaryStage.setTitle("Editor Alpha");
 		primaryStage.setScene(new Scene(ui, 900, 900));
 		
-//        primaryStage.setMinWidth(700);
-//        primaryStage.setMinHeight(830);
+//      primaryStage.setMinWidth(700);
+//      primaryStage.setMinHeight(830);
 //		primaryStage.widthProperty().addListener( e -> {
 //			primaryStage.setHeight(primaryStage.getWidth()*1.19);
 //		});

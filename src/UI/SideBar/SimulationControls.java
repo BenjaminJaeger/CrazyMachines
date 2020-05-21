@@ -9,9 +9,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
  
 public class SimulationControls extends VBox{
@@ -19,7 +21,7 @@ public class SimulationControls extends VBox{
 	public SimulationControls() {
 		super(10);
 		
-		 Image expandImg = new Image("file:res/Images/expand.png");
+		 Image expandImg= new Image("file:res/Images/expand.png");
 	     Image playImg  = new Image("file:res/Images/play.png");
 	     Image pauseImg = new Image("file:res/Images/pause.png");
 	     Image resetImg = new Image("file:res/Images/reset.png");
@@ -42,7 +44,7 @@ public class SimulationControls extends VBox{
 	     });
 
 
-	     Button playpause = new Button();
+	     Button playpause = new Button(" Play");
 	     playpause.setGraphic(new ImageView(playImg));
 	     playpause.setOnAction(e->{
 	         if(SimulationControler.isPlaying()) {
@@ -54,7 +56,7 @@ public class SimulationControls extends VBox{
 	         }
 	     });
 
-	     Button stop = new Button();
+	     Button stop = new Button(" Stop");
 	     stop.setGraphic(new ImageView(resetImg));
 	     stop.setOnAction(e->{
 	         if (SimulationControler.isPlaying()) {
@@ -64,7 +66,7 @@ public class SimulationControls extends VBox{
 	         SimulationControler.restart();
 	     });
 
-	    Button clear = new Button();
+	    Button clear = new Button(" Clear");
 	    clear.setGraphic(new ImageView(clearImg));
 	    clear.setOnAction(e->{
 	         if (!SimulationControler.isPlaying()) {
@@ -72,12 +74,23 @@ public class SimulationControls extends VBox{
 	         }
 	     });
 
+
+
 	     Slider slider = new Slider();
 	     slider.setOrientation(Orientation.VERTICAL);
 	     slider.setMin(1);
 	     slider.setMax(30);
+		//slider.setMin(1);
+		//slider.setMax(2);
 	     slider.setValue((int)slider.getMax()-SimulationControler.getUpdateTime());
-	     slider.valueProperty().addListener(new ChangeListener<Number>() {
+
+		slider.setShowTickMarks(true);
+		slider.setShowTickLabels(true);
+		slider.setMajorTickUnit(10f);
+		slider.setBlockIncrement(10f);
+		slider.setSnapToTicks(true);
+
+		slider.valueProperty().addListener(new ChangeListener<Number>() {
 	         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 	         	SimulationControler.setUpdateTime((int)slider.getMax()-newValue.intValue()+1);
 	          	if (SimulationControler.isPlaying()) {
@@ -85,13 +98,14 @@ public class SimulationControls extends VBox{
 	 	             SimulationControler.play();
 	           }
 	         }
-	      });
+		});
+		Label speed = new Label("speed");
+		HBox speedbox = new HBox(slider,speed);
 
 	     Button close = new Button();
 	     close.setGraphic(new ImageView(closeImg));
-
 	     this.setAlignment(Pos.CENTER);
-		this.getChildren().addAll(playpause,stop,clear,slider);
+	     this.getChildren().addAll(playpause,stop,clear,speedbox);
 	     this.getStylesheets().add("file:res/css/SimulationControls.css");
 	}
 	
