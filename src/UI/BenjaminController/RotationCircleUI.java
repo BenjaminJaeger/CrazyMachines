@@ -7,8 +7,8 @@ import Simulation.RenderEngine.Primitives.CircleLine;
 //Bounding Klassen haben bereits Shader, einfach übernehmen
 
 public class RotationCircleUI {
+	
     private LineModel circleModel;
-    private float rotation;
     private static BasicShader shader = new BasicShader("Line");
 
     float radius;

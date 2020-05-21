@@ -9,7 +9,6 @@ import javafx.scene.input.MouseEvent;
 public class ObjectTransformationModes {
 	
     public static void rotateObject (int objectCounter, ArrayList<GameObject> allobjects, MouseEvent e) {
-        System.out.println(objectCounter);
         float objectX = allobjects.get(objectCounter).getX() + Config.CANVAS_WIDTH/2;
         float objectY = Config.CANVAS_HEIGHT/2 - allobjects.get(objectCounter).getY();
 
@@ -18,6 +17,7 @@ public class ObjectTransformationModes {
 
         float rotation = -(float)Math.atan2(objectY-mouseY , objectX-mouseX) * 180/(float)Math.PI;
         allobjects.get(objectCounter).setRotation(rotation);
+        allobjects.get(objectCounter).setOriginalrotation(rotation);
     }
 
     public static void scaleObject(int objectCounter, ArrayList<GameObject> allobjects, MouseEvent e) {
@@ -29,11 +29,16 @@ public class ObjectTransformationModes {
 
         float scale = (float)Math.sqrt(Math.pow((objectX-mouseX),2)+Math.pow((objectY-mouseY),2)) /100; //Skalierungsvektor
         allobjects.get(objectCounter).setScale(scale);
+        allobjects.get(objectCounter).setOriginalscale(scale);
     }
 
     public static void moveObject (int objectCounter, ArrayList<GameObject> allobjects, MouseEvent e) {
-        allobjects.get(objectCounter).setX(UI.Util.convertMouseX(e.getX()));
-        allobjects.get(objectCounter).setY(UI.Util.convertMouseY(e.getY()));
+    	float x = UI.Util.convertMouseX(e.getX());
+    	float y = UI.Util.convertMouseY(e.getY());
+        allobjects.get(objectCounter).setX(x);
+        allobjects.get(objectCounter).setY(y);
+        allobjects.get(objectCounter).setOriginalX(x);
+        allobjects.get(objectCounter).setOriginalY(y);
     }
     
 }

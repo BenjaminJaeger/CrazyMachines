@@ -36,12 +36,14 @@ public class ObjectSettings extends VBox {
         xPosition = new TextField (Float.toString(object.getX()));
         xPosition.setOnAction(e->{
         	object.setX(Float.parseFloat(xPosition.getText()));
+        	object.setOriginalX(Float.parseFloat(xPosition.getText()));
         });
         
         Label yp = new Label("y");
         yPosition = new TextField (Float.toString(object.getY()));
         yPosition.setOnAction(e->{
         	object.setY(Float.parseFloat(yPosition.getText()));
+        	object.setOriginalY(Float.parseFloat(yPosition.getText()));
         });
         
         HBox xPositionB = new HBox(xPositionL,xp,xPosition,yp,yPosition);
@@ -52,6 +54,7 @@ public class ObjectSettings extends VBox {
 //      scale.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
         scale.setOnAction(e->{
         	object.setScale(Float.parseFloat(scale.getText()));
+        	object.setOriginalscale(Float.parseFloat(scale.getText()));
         });
         
         HBox scaleB = new HBox(scaleL,scale);
@@ -60,6 +63,7 @@ public class ObjectSettings extends VBox {
         rotation = new TextField (Float.toString(object.getRotation()));
         rotation.setOnAction(e->{
         	object.setRotation(Float.parseFloat(rotation.getText()));
+        	object.setOriginalrotation(Float.parseFloat(rotation.getText()));
         });
         
         HBox rotationB = new HBox(rotationL,rotation);
@@ -68,6 +72,7 @@ public class ObjectSettings extends VBox {
         weight = new TextField (Float.toString(object.getMass()));
         weight.setOnAction(e->{
         	object.setMass(Float.parseFloat(weight.getText()));
+        	object.setOriginalMass(Float.parseFloat(weight.getText()));
         });
         HBox weightB = new HBox(weightL,weight);
 
@@ -82,6 +87,8 @@ public class ObjectSettings extends VBox {
 	        speed.setOnAction(e->{
 	        	((MoveableObject) object).setAccelerationX(Float.parseFloat(xdirection.getText())*Float.parseFloat(speed.getText()));
 	        	((MoveableObject) object).setAccelerationY(Float.parseFloat(ydirection.getText())*Float.parseFloat(speed.getText()));
+	        	((MoveableObject) object).setOriginalAccelerationX(Float.parseFloat(xdirection.getText())*Float.parseFloat(speed.getText()));
+	        	((MoveableObject) object).setOriginalAccelerationY(Float.parseFloat(ydirection.getText())*Float.parseFloat(speed.getText()));
 	        });
 	        HBox speedB = new HBox(speedL,speed);
 	        
@@ -90,12 +97,14 @@ public class ObjectSettings extends VBox {
 	        
 	        xdirection.setOnAction(e->{
 	        	((MoveableObject) object).setAccelerationX(Float.parseFloat(xdirection.getText())*Float.parseFloat(speed.getText()));
+	        	((MoveableObject) object).setOriginalAccelerationX(Float.parseFloat(xdirection.getText())*Float.parseFloat(speed.getText()));
 	        });
 	        
 	        Label yd = new Label("y");
 	       
 	        ydirection.setOnAction(e->{
 	        	((MoveableObject) object).setAccelerationY(Float.parseFloat(ydirection.getText())*Float.parseFloat(speed.getText()));
+	        	((MoveableObject) object).setOriginalAccelerationY(Float.parseFloat(ydirection.getText())*Float.parseFloat(speed.getText()));
 	        });	       	       
 	        HBox xdirectionB = new HBox(xdirectionL,xd,xdirection,yd,ydirection);
 	  

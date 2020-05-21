@@ -20,15 +20,16 @@ public abstract class GameObject {
 	private boolean renderModel = true;
 	
 	protected float x,y;
-	protected float rotation;
-	protected float scale;
+	protected float rotation=0;
+	protected float scale=1;
 
 	protected CollisionContext collisionContext;
 	protected boolean renderBounding = false;
 	
 	protected float originalX,originalY;
-	protected float originalrotation;
-	protected float originalscale;
+	protected float originalrotation=0;
+	protected float originalscale= 1;
+	protected float originalMass= 1;
 	
 	protected float mass = 1;
 	
@@ -40,7 +41,7 @@ public abstract class GameObject {
 	private boolean scalable = false;
 	private boolean rotatable = false;
 	private boolean moveable = false;
-	
+
 	
 ////////////////////
 ////Constructors////
@@ -48,99 +49,75 @@ public abstract class GameObject {
 	public GameObject(String[] files,Material material, float r, float g, float b,float x,float y) {
 		this.x = x;
 		this.y = y;
-		scale=1;
+		originalX=x;
+		originalY=y;
 		
 		models = new TriangleModel[files.length];
 		for (int i = 0; i < models.length; i++) 
 			models[i] = new TriangleModel(files[i],material,r,g,b,x,y);		
 		
 		allObjects.add(this);
-		
-		originalX=x;
-		originalY=y;
-		originalrotation=0;
-		originalscale=1;
 	}
 	
 	public GameObject(String[] files , String[] textures, Material material, float x,float y) {
 		this.x = x;
 		this.y = y;
-		scale=1;
+		originalX=x;
+		originalY=y;
 		
 		models = new TriangleModel[files.length];
 		for (int i = 0; i < models.length; i++) 
 			models[i] = new TriangleModel(files[i],textures[i],material,x,y);		
 		
 		allObjects.add(this);
-		
-		originalX=x;
-		originalY=y;
-		originalrotation=0;
-		originalscale=1;
 	}
 	
 	public GameObject(String file , String texture, Material material, float x,float y) {
 		this.x = x;
 		this.y = y;
-		scale=1;
+		originalX=x;
+		originalY=y;
 		
 		models = new TriangleModel[1];
 		models[0] = new TriangleModel(file,texture,material,x,y);		
 		
-		allObjects.add(this);
-		
-		originalX=x;
-		originalY=y;
-		originalrotation=0;
-		originalscale=1;
+		allObjects.add(this);		
 	}
 	
 	public GameObject(String file,Material material, float r, float g, float b,float x,float y) {
 		this.x = x;
 		this.y = y;
-		scale=1;
+		originalX=x;
+		originalY=y;
 		
 		models = new TriangleModel[1];
 		models[0] = new TriangleModel(file,material,r,g,b,x,y);		
 		
 		allObjects.add(this);
-		
-		originalX=x;
-		originalY=y;
-		originalrotation=0;
-		originalscale=1;
 	}
 	
 	public GameObject(Primitive primitive,Material material, float r, float g,float b, float x,float y) {
 		this.x = x;
 		this.y = y;
-		scale=1;
+		originalX=x;
+		originalY=y;
 		
 		models = new TriangleModel[1];
 		models[0] = new TriangleModel(primitive,material,r,g,b,x,y);		
 		
 		allObjects.add(this);
-		
-		originalX=x;
-		originalY=y;
-		originalrotation=0;
-		originalscale=1;
 	}
 	
 	public GameObject(Primitive primitive,Material material, String texture, float x,float y) {
 		this.x = x;
 		this.y = y;
-		scale=1;
+		originalX=x;
+		originalY=y;
 		
 		models = new TriangleModel[1];
 		models[0] = new TriangleModel(primitive,material,texture,x,y);		
 		
 		allObjects.add(this);
-		
-		originalX=x;
-		originalY=y;
-		originalrotation=0;
-		originalscale=1;
 	}
 	
 	
@@ -154,6 +131,7 @@ public abstract class GameObject {
 		setX(originalX);
 		setScale(originalscale);
 		setRotation(originalrotation);
+		setMass(originalMass);
 	}
 	
 /////////////////////////
@@ -361,6 +339,10 @@ public abstract class GameObject {
 	
 	public boolean getHighlighted() {
 		return highlighted;
+	}
+
+	public void setOriginalMass(float mass) {
+		this.originalMass = mass;
 	}
 
 }
