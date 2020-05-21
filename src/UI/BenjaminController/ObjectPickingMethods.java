@@ -13,7 +13,8 @@ import Simulation.RenderEngine.Primitives.CircleLine;
 import Simulation.RenderEngine.Primitives.Primitive;
 import com.jogamp.opengl.awt.GLJPanel;
 
-import java.awt.event.MouseEvent;
+import javafx.embed.swing.SwingNode;
+import javafx.scene.input.MouseEvent;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,12 +22,9 @@ import java.util.Vector;
 
 public class ObjectPickingMethods {
 
-    public static float calculateSphereDistance (MouseEvent e, GLJPanel canvas, Camera camera, MoveableObject object) {
-        float x = ((float)e.getX() - (float)canvas.getWidth()/2 +camera.getX());
-        float y = ((float)canvas.getHeight()/2 -(float)e.getY() +camera.getY());
-
-        x *= camera.getZ() * 0.75;
-        y *= camera.getZ() * 0.75;
+    public static float calculateSphereDistance (MouseEvent e, GameObject object) {
+        float x = UI.Util.convertMouseX(e.getX());
+        float y = UI.Util.convertMouseY(e.getY());
 
         float distX = x - object.getX();
         float distY = y - object.getY();
@@ -35,7 +33,7 @@ public class ObjectPickingMethods {
         return distance;
     }
 
-    public static void chooseSphere(MoveableObject object, float distance) {
+    public static void chooseSphere(GameObject object, float distance) {
         if (object.isSelected()) {
             if (!(distance <= object.getObjectTransformer().getCircleUI().getRadius())) {
                 object.unSelectObject();
@@ -52,7 +50,7 @@ public class ObjectPickingMethods {
         }
     }
 
-    public static boolean mouseInSphere(MoveableObject object, float distance) {
+    public static boolean mouseInSphere(GameObject object, float distance) {
         boolean mouseInSphere;
 
         if (distance <= ((Ball)object).getRadius())
@@ -67,13 +65,9 @@ public class ObjectPickingMethods {
     }
 
 
-    //auf GameObject casten
-    public static void choosePolygon (MouseEvent e, GLJPanel canvas, Camera camera, MoveableObject object) {
-        float px = ((float)e.getX() - (float)canvas.getWidth()/2 +camera.getX());
-        float py = ((float)canvas.getHeight()/2 -(float)e.getY() +camera.getY());
-
-        px *= camera.getZ() * 0.75;
-        py *= camera.getZ() * 0.75;
+    public static boolean detectPolygonMouseCollision (MouseEvent e, GameObject object) {
+        float px = UI.Util.convertMouseX(e.getX());
+        float py = UI.Util.convertMouseY(e.getY());
 
         boolean collision = false;
         ArrayList <Vector2f> vertices = new ArrayList<Vector2f>();
@@ -98,6 +92,13 @@ public class ObjectPickingMethods {
             }
         }
 
+        return collision;
+    }
+
+    public static void choosePolygon(MouseEvent e, GameObject object, boolean collision) {
+        float px = UI.Util.convertMouseX(e.getX());
+        float py = UI.Util.convertMouseY(e.getY());
+
         float distX = px - object.getX();
         float distY = py - object.getY();
 
@@ -119,21 +120,18 @@ public class ObjectPickingMethods {
         }
     }
 
-    public static boolean chooseCircleLine(MouseEvent e, GLJPanel canvas, Camera camera, RotationCircleUI object) {
+    public static boolean chooseCircleLine(MouseEvent e, RotationCircleUI object) {
         boolean dragged = false;
 
-        float x = ((float)e.getX() - (float)canvas.getWidth()/2 +camera.getX());
-        float y = ((float)canvas.getHeight()/2 -(float)e.getY() +camera.getY());
-
-        x *= camera.getZ() * 0.75;
-        y *= camera.getZ() * 0.75;
+        float x = UI.Util.convertMouseX(e.getX());
+        float y = UI.Util.convertMouseY(e.getY());
 
         float distX = x - object.getCircleModel().getX();
         float distY = y - object.getCircleModel().getY();
 
         float distance = (float) Math.sqrt((distX*distX) + (distY*distY));
 
-        if (distance >= (object.getRadius())*0.8 && distance <= (object.getRadius()) + (object.getRadius()) * 0.2) {
+        if (distance >= (object.getRadius())*0.7 && distance <= (object.getRadius()) * 1.3) {
             dragged = true;
         }
 
@@ -141,34 +139,21 @@ public class ObjectPickingMethods {
     }
 
     //ArrayList als Parameter übernehmen
-    public static boolean chooseSquareUI (MouseEvent e, GLJPanel canvas, Camera camera, ScaleSquareUI object, ArrayList <Vector2f> vertices) {
-        boolean clicked = false;
-
+    public static boolean chooseSquareUI (MouseEvent e, SwingNode canvas, ScaleSquareUI object, ArrayList <Vector2f> verticesSmaller, ArrayList <Vector2f> verticesBigger ) {
         float px = UI.Util.convertMouseX(e.getX());
         float py = UI.Util.convertMouseY(e.getY());
-        int next = 0;
 
-        for (int current = 0; current < vertices.size(); current++) {
-            next = current + 1;
+        float rx = verticesBigger.get(1).x;
+        float rx2 = verticesBigger.get(0).x;
+        float ry = verticesBigger.get(1).y;
+        float ry2 = verticesBigger.get(2).y;
 
-            if (next == vertices.size()) {
-                next = 0;
-            }
-
-            Vector2f vc = vertices.get(current);
-            Vector2f vn = vertices.get(next);
-
-            //Datensatz verändern
-            //a bissl größer als das Originalrechteck, a bissl kleiner als das Originalrechteck
-            if (((vc.y*1.1 > py) != (vn.y+1.1 > py)) && (px < (vn.x*1.1 - vc.x*1.1) * (py - vc.y*1.1) / (vn.y*1.1 - vc.y*1.1) + vc.x*1.1 ))
-            {
-                System.out.println("True1");
-                if (!(((vc.y*0.9 > py) != (vn.y+0.9 > py)) && (px < (vn.x*0.9 - vc.x*0.9) * (py - vc.y*0.9) / (vn.y*0.9 - vc.y*0.9) + vc.x*0.9))){
-                    System.out.println("True");
-                    clicked = !clicked;
-                }
-            }
+        if (px >= rx &&         // right of the left edge AND
+                px <= rx2 &&    // left of the right edge AND
+                py >= ry &&         // below the top AND
+                py <= ry2) {    // above the bottom
+            return true;
         }
-        return clicked;
+        return false;
     }
 }

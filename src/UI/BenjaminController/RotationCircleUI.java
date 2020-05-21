@@ -37,4 +37,9 @@ public class RotationCircleUI {
     public void setRadius(float radius) {
         this.radius = radius;
     }
+
+    public void setScale(float scale) {
+        circleModel.setScale(scale);
+        radius *= scale;
+    }
 }

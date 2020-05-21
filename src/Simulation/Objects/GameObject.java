@@ -35,6 +35,10 @@ public abstract class GameObject {
 	protected boolean selected;
 
 	protected ObjectTransformer objectTransformer;
+
+	private boolean scalable = false;
+	private boolean rotatable = false;
+	private boolean moveable = false;
 	
 	
 ////////////////////
@@ -196,6 +200,8 @@ public abstract class GameObject {
 		for (Model model : models) 
 			model.setX(x);	
 		collisionContext.setX(x);
+
+		objectTransformer.setX(x);
 	}
 	
 	public float getY() {
@@ -207,6 +213,8 @@ public abstract class GameObject {
 		for (Model model : models) 
 			model.setY(y);
 		collisionContext.setY(y);
+
+		objectTransformer.setY(y);
 	}
 	
 	public void setRotation(float rotation) {
@@ -224,7 +232,8 @@ public abstract class GameObject {
 			model.setScaleY(scale);	
 		for (Model model : models) 
 			model.setScaleZ(scale);
-		
+
+		objectTransformer.setScale(scale);
 		collisionContext.setScale(scale);
 	}
 	
@@ -316,5 +325,30 @@ public abstract class GameObject {
 	public BasicShader getShader() {
 		return shader;
 	}
+
+	public boolean isScalable() {
+		return scalable;
+	}
+
+	public void setScalable(boolean scalable) {
+		this.scalable = scalable;
+	}
+
+	public boolean isRotatable() {
+		return rotatable;
+	}
+
+	public void setRotatable(boolean rotatable) {
+		this.rotatable = rotatable;
+	}
+
+	public boolean isMoveable() {
+		return moveable;
+	}
+
+	public void setMoveable(boolean moveable) {
+		this.moveable = moveable;
+	}
+
 
 }

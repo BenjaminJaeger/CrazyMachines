@@ -13,8 +13,8 @@ public class ObjectTransformer {
 
     public ObjectTransformer(GameObject gameObject) {
         float radius = calculateRadius(gameObject);
-        circleUI = new RotationCircleUI(radius + 20, 30, 0,0,0, gameObject.getX(), gameObject.getY());
-        squareUI = new ScaleSquareUI(radius*2+10, 0,0,0,gameObject.getX(), gameObject.getY());
+        circleUI = new RotationCircleUI(radius + 30, 30, 0,0,0, gameObject.getX(), gameObject.getY());
+        squareUI = new ScaleSquareUI(radius+40, 0,0,0,gameObject.getX(), gameObject.getY());
     }
 
     //Radius des Kreises bestimmen, der um das GameObject gezogen wird
@@ -53,6 +53,7 @@ public class ObjectTransformer {
             }
 
             distance = temporaryLongestDistance;
+
             return distance;
         }
 
@@ -84,5 +85,25 @@ public class ObjectTransformer {
 
     public void setSquareUI(ScaleSquareUI squareUI) {
         this.squareUI = squareUI;
+    }
+
+    public void setX(float x) {
+        squareUI.getRectangleLine().setX(x);
+        circleUI.getCircleModel().setX(x);
+
+        squareUI.calculateVertices();
+        System.out.println(x);
+    }
+
+    public void setY(float y) {
+        squareUI.getRectangleLine().setY(y);
+        circleUI.getCircleModel().setY(y);
+
+        System.out.println(y);
+    }
+
+    public void setScale(float scale) {
+        squareUI.setScale(scale);
+        circleUI.setScale(scale);
     }
 }

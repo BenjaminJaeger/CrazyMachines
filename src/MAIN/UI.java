@@ -3,6 +3,7 @@ package MAIN;
 import UI.Util;
 import UI.EditorTabPane.EditorTabPane;
 import UI.SideBar.SideBar;
+import UI.ObjectTransformationListeners;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
@@ -18,6 +19,8 @@ public class UI extends StackPane{
 		EditorTabPane editorTabPane = new EditorTabPane(glassPane);
 		//Canvas
 		Util.canvasWrapper = new SwingNode();
+
+		ObjectTransformationListeners.addListeners();
 		//Simulation controls
 		SideBar leftSideUI = new SideBar();
 
