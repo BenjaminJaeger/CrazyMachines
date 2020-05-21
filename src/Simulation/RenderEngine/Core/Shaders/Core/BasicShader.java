@@ -106,7 +106,7 @@ public class BasicShader extends ShaderInterface {
 	
 	public void uploadSelectionHighlight(boolean isSelected,boolean isHighlighted) {
 		if(isSelected || isHighlighted)		
-			super.uploadFloat(locationSelected, 1.5f);
+			super.uploadFloat(locationSelected, 3f);
 		else 
 			super.uploadFloat(locationSelected, 1f);
 	}

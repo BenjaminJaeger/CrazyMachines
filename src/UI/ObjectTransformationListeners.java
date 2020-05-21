@@ -11,21 +11,19 @@ public class ObjectTransformationListeners {
     public static void addListeners(ObjectSettings objectSettings) {
     	
         Util.canvasWrapper.setOnMouseClicked(e-> {
+        	boolean noObjectSelected = true;
         	
             for (int first = 0; first < GameObject.allObjects.size(); first++) {
-            	
-            	boolean noObjectSelected = true;
+            	           
             	float distance = ObjectPickingMethods.calculateCircleDistance(e,GameObject.allObjects.get(first));
             	
             	if (GameObject.allObjects.get(first).isSelected()) { 
                     if (!(distance <= GameObject.allObjects.get(first).getObjectTransformer().getCircleUI().getRadius())) {
                     	GameObject.allObjects.get(first).unSelectObject();
                 		objectSettings.removeUI(GameObject.allObjects.get(first));
-                    }else {
-                    	noObjectSelected=false;
-					}
-                    if(noObjectSelected)
-                    	Config.stopCameraRotation = false;  
+                		Config.stopCameraRotation = false;
+                    }else
+                    	noObjectSelected = false;
                     continue;
             	}	
          	     	          	
@@ -46,10 +44,10 @@ public class ObjectTransformationListeners {
                 		objectSettings.addUI(GameObject.allObjects.get(first));
                 		break;
                 	}
-                
-                if(noObjectSelected)
-                	Config.stopCameraRotation = false;  
+                            	
             }
+            
+            Config.stopCameraRotation = !noObjectSelected;
             
             
             for (int objectCounter = 0; objectCounter < GameObject.allObjects.size(); objectCounter++) {
