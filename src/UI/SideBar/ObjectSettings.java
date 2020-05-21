@@ -83,7 +83,7 @@ public class ObjectSettings extends VBox {
         	xdirection = new TextField ("0");
         	 
         	Label speedL = new Label("speed");
-	        speed = new TextField ("0");
+	        speed = new TextField (Float.toString(((MoveableObject) object).getAccelerationX()));
 	        speed.setOnAction(e->{
 	        	((MoveableObject) object).setAccelerationX(Float.parseFloat(xdirection.getText())*Float.parseFloat(speed.getText()));
 	        	((MoveableObject) object).setAccelerationY(Float.parseFloat(ydirection.getText())*Float.parseFloat(speed.getText()));
@@ -100,7 +100,7 @@ public class ObjectSettings extends VBox {
 	        	((MoveableObject) object).setOriginalAccelerationX(Float.parseFloat(xdirection.getText())*Float.parseFloat(speed.getText()));
 	        });
 	        
-	        Label yd = new Label("y");
+	        Label yd = new Label(Float.toString(((MoveableObject) object).getAccelerationY()));
 	       
 	        ydirection.setOnAction(e->{
 	        	((MoveableObject) object).setAccelerationY(Float.parseFloat(ydirection.getText())*Float.parseFloat(speed.getText()));

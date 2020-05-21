@@ -140,12 +140,12 @@ public abstract class GameObject {
 	public void increasePosition(float dx,float dy) {
 		
 		if (dx!=0) {
-			this.x+=dx;
+			setX(this.x+=dx);
 			collisionContext.setX(x);
 		}
 		
 		if (dy!=0) {
-			this.y+=dy;
+			setY(this.y+=dy);		
 			collisionContext.setY(y);
 		}
 		
