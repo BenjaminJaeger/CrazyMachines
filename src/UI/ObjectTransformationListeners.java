@@ -51,12 +51,14 @@ public class ObjectTransformationListeners {
                     GameObject.allObjects.get(objectCounter).setRotatable(true);
                     GameObject.allObjects.get(objectCounter).setMoveable(false);
                 }
+                /*
                 else if (GameObject.allObjects.get(objectCounter).isSelected() && ObjectPickingMethods.chooseSquareUI(e, GameObject.allObjects.get(objectCounter).getObjectTransformer().getSquareUI()))
                 {
                     GameObject.allObjects.get(objectCounter).setScalable(true);
                     GameObject.allObjects.get(objectCounter).setRotatable(false);
                     GameObject.allObjects.get(objectCounter).setMoveable(false);
                 }
+                 */
                 else {
                     GameObject.allObjects.get(objectCounter).setScalable(false);
                     GameObject.allObjects.get(objectCounter).setRotatable(false);
