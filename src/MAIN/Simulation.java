@@ -1,5 +1,7 @@
 package MAIN;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ConcurrentModificationException;
 
 import javax.swing.SwingUtilities;
@@ -90,6 +92,22 @@ public class Simulation implements GLEventListener{
 		
 		tmp = new LineModel(new float[]{0,0,0}, 0, 0, 0, 0, 0); 
 		tmpShader= new BasicShader("Line");
+		
+		canvas.addKeyListener(new KeyListener() {
+			public void keyTyped(KeyEvent e) {}
+			public void keyReleased(KeyEvent e) {}
+			
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+					camera.setRotateX(0);
+					camera.setRotateY(0);
+					camera.setRotateZ(0);
+					camera.setZ(1);
+					camera.setX(0);
+					camera.setY(0);
+				}
+			}
+		});
 	}
 	
 
