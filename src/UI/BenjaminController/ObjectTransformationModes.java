@@ -1,15 +1,13 @@
 package UI.BenjaminController;
 
-import Simulation.Objects.GameObject;
-import Simulation.Objects.MovableObjects.MoveableObject;
-import Simulation.RenderEngine.Core.Config;
-import com.jogamp.opengl.awt.GLJPanel;
-
-import java.awt.*;
-import javafx.scene.input.MouseEvent;
 import java.util.ArrayList;
 
+import Simulation.Objects.GameObject;
+import Simulation.RenderEngine.Core.Config;
+import javafx.scene.input.MouseEvent;
+
 public class ObjectTransformationModes {
+	
     public static void rotateObject (int objectCounter, ArrayList<GameObject> allobjects, MouseEvent e) {
         System.out.println(objectCounter);
         float objectX = allobjects.get(objectCounter).getX() + Config.CANVAS_WIDTH/2;
@@ -36,11 +34,6 @@ public class ObjectTransformationModes {
     public static void moveObject (int objectCounter, ArrayList<GameObject> allobjects, MouseEvent e) {
         allobjects.get(objectCounter).setX(UI.Util.convertMouseX(e.getX()));
         allobjects.get(objectCounter).setY(UI.Util.convertMouseY(e.getY()));
-
-        System.out.println(UI.Util.convertMouseX(e.getX()));
-        System.out.println(UI.Util.convertMouseY(e.getY()));
-
-        System.out.println(allobjects.get(objectCounter).getX());
-        System.out.println(allobjects.get(objectCounter).getY());
     }
+    
 }

@@ -44,9 +44,6 @@ public class ScaleSquareUI {
         verticesBigger.set(1, new Vector2f((rectangleLine.getMesh().getVertices()[3] * Config.CANVAS_WIDTH)*1.2f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[4]*Config.CANVAS_HEIGHT)*1.2f+rectangleLine.getY()));
         verticesBigger.set(2, new Vector2f((rectangleLine.getMesh().getVertices()[6] * Config.CANVAS_WIDTH)*1.2f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[7]*Config.CANVAS_HEIGHT)*1.2f+rectangleLine.getY()));
         verticesBigger.set(3, new Vector2f((rectangleLine.getMesh().getVertices()[9] * Config.CANVAS_WIDTH)*1.2f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[10]*Config.CANVAS_HEIGHT)*1.2f+rectangleLine.getY()));
-
-        System.out.println(verticesSmaller);
-        System.out.println(verticesBigger);
     }
 
     public LineModel getRectangleLine() {

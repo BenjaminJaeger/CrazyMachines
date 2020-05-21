@@ -121,14 +121,18 @@ public class ObjectTransformationListeners {
                 if(GameObject.allObjects.get(objectCounter).isRotatable())
                 {
                     ObjectTransformationModes.rotateObject(objectCounter, GameObject.allObjects, e);
+                    objectSettings.updateUI(GameObject.allObjects.get(objectCounter));
                 }
                 else if (GameObject.allObjects.get(objectCounter).isScalable())
                 {
                     ObjectTransformationModes.scaleObject(objectCounter, GameObject.allObjects, e);
+                    objectSettings.updateUI(GameObject.allObjects.get(objectCounter));
                 }
                 else if (GameObject.allObjects.get(objectCounter).isMoveable()) {
                     ObjectTransformationModes.moveObject(objectCounter, GameObject.allObjects, e);
+                    objectSettings.updateUI(GameObject.allObjects.get(objectCounter));
                 }
+                
             }
         });
     }

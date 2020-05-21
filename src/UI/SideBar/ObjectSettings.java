@@ -18,8 +18,8 @@ public class ObjectSettings extends VBox {
 	 private TextField xdirection;
 	 private TextField ydirection;
 	 private TextField speed;
-	 private float size;
-	    
+
+	 
     public ObjectSettings() {
         super(5);
         
@@ -113,7 +113,7 @@ public class ObjectSettings extends VBox {
    	
     }
     
-    public void changeUI(GameObject object) {
+    public void updateUI(GameObject object) {
     	xPosition.setText(Float.toString(object.getX()));
     	yPosition.setText(Float.toString(object.getY()));
     	scale.setText(Float.toString(object.getScale()));
