@@ -94,7 +94,7 @@ public class Renderer {
 		
 		if(object.renderModel()) {
 			shader.use(); //activate shader before rendering
-			shader.uploadSelectionHighlight(object.isSelected());
+			shader.uploadSelectionHighlight(object.isSelected(),object.getHighlighted());
 			for (TriangleModel model : object.getModels()) 
 				render(model,shader);
 		}

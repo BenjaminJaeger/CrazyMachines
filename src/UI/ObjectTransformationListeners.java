@@ -14,21 +14,25 @@ public class ObjectTransformationListeners {
         	
             for (int first = 0; first < GameObject.allObjects.size(); first++) {
             	
+            	boolean noObjectSelected = true;
             	float distance = ObjectPickingMethods.calculateCircleDistance(e,GameObject.allObjects.get(first));
             	
             	if (GameObject.allObjects.get(first).isSelected()) { 
-                    if (distance <= GameObject.allObjects.get(first).getObjectTransformer().getCircleUI().getRadius()) 
-                    	GameObject.allObjects.get(first).selectObject();
-                    else {
+                    if (!(distance <= GameObject.allObjects.get(first).getObjectTransformer().getCircleUI().getRadius())) {
                     	GameObject.allObjects.get(first).unSelectObject();
-                    	objectSettings.removeUI(GameObject.allObjects.get(first));
-                    }
+                		objectSettings.removeUI(GameObject.allObjects.get(first));
+                    }else {
+                    	noObjectSelected=false;
+					}
+                    if(noObjectSelected)
+                    	Config.stopCameraRotation = false;  
                     continue;
             	}	
          	     	          	
                 for (int second = 0; second < GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons().length; second++)
                 	if(ObjectPickingMethods.detectPolygonMouseCollision(e,GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons()[second])) {
-                		Config.stopCameraRotation = true;       
+                		Config.stopCameraRotation = true;  
+                		noObjectSelected=false;
                 		GameObject.allObjects.get(first).selectObject();
                 		objectSettings.addUI(GameObject.allObjects.get(first));
                 		break;
@@ -36,11 +40,15 @@ public class ObjectTransformationListeners {
      
                 for (int third = 0; third < GameObject.allObjects.get(first).getCollisionContext().getBoundingCircles().length; third++)  
                 	if(ObjectPickingMethods.detectCircleMouseCollision(GameObject.allObjects.get(first).getCollisionContext().getBoundingCircles()[third],distance)) {
-                		Config.stopCameraRotation = true;       
+                		Config.stopCameraRotation = true;  
+                		noObjectSelected=false;
                 		GameObject.allObjects.get(first).selectObject();
                 		objectSettings.addUI(GameObject.allObjects.get(first));
                 		break;
-                	}           
+                	}
+                
+                if(noObjectSelected)
+                	Config.stopCameraRotation = false;  
             }
             
             
@@ -88,6 +96,25 @@ public class ObjectTransformationListeners {
                 }
                 
             }
+            
+            for (int first = 0; first < GameObject.allObjects.size(); first++) {
+            	
+            	float distance = ObjectPickingMethods.calculateCircleDistance(e,GameObject.allObjects.get(first));
+            	     	     	          	
+                for (int second = 0; second < GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons().length; second++)
+                	if(ObjectPickingMethods.detectPolygonMouseCollision(e,GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons()[second]))      
+                		GameObject.allObjects.get(first).highlight(true);
+                	else 
+                		GameObject.allObjects.get(first).highlight(false);
+					
+     
+                for (int third = 0; third < GameObject.allObjects.get(first).getCollisionContext().getBoundingCircles().length; third++)  
+                	if(ObjectPickingMethods.detectCircleMouseCollision(GameObject.allObjects.get(first).getCollisionContext().getBoundingCircles()[third],distance)) 
+                		GameObject.allObjects.get(first).highlight(true);
+                    else 
+                    	GameObject.allObjects.get(first).highlight(false);
+            }
+  
         });
 
         

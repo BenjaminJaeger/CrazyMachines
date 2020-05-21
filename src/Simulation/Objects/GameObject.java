@@ -33,6 +33,7 @@ public abstract class GameObject {
 	protected float mass = 1;
 	
 	protected boolean selected;
+	protected boolean highlighted;
 
 	protected ObjectTransformer objectTransformer;
 
@@ -354,5 +355,12 @@ public abstract class GameObject {
 		this.moveable = moveable;
 	}
 
+	public void highlight(boolean highlighted) {
+		this.highlighted = highlighted;
+	}
+	
+	public boolean getHighlighted() {
+		return highlighted;
+	}
 
 }

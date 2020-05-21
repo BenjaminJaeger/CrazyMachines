@@ -27,8 +27,8 @@ public class UI extends StackPane{
 		BorderPane outer = new BorderPane();
 		BorderPane inner = new BorderPane ();
 
-		//outer.setStyle("-fx-background-color: rgb(102,127,102);");
-		//inner.setStyle("-fx-background-color: rgb(102,127,102);");
+		outer.setStyle("-fx-background-color: rgb(102,127,102);");
+		inner.setStyle("-fx-background-color: rgb(102,127,102);");
 		
 		inner.setCenter(Util.canvasWrapper);
 		BorderPane.setAlignment(inner.getCenter(), Pos.CENTER);
@@ -36,6 +36,7 @@ public class UI extends StackPane{
 		outer.setLeft(leftSideUI);
 		outer.setCenter(inner);
 
+		this.setStyle("-fx-background-color: rgb(102,127,102);");
 		this.getChildren().addAll(glassPane,outer);
 	}
 
