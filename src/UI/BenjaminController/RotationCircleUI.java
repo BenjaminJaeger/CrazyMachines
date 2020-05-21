@@ -42,4 +42,13 @@ public class RotationCircleUI {
         circleModel.setScale(scale);
         radius *= scale;
     }
+    
+    public void setX(float x) {
+    	circleModel.setX(x);   	
+    }
+    
+    public void setY(float y) {
+    	circleModel.setY(y);   	
+    }
+    
 }

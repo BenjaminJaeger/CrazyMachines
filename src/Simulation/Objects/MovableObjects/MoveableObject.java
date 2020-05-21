@@ -32,7 +32,6 @@ public abstract class MoveableObject extends GameObject{
 		super(file, material, r,g,b, x, y);
 	}
 	
-
 	
 ///////////////
 ////Methods////

@@ -302,6 +302,10 @@ public abstract class GameObject {
 		return mass;
 	}
 	
+	public void setMass(float mass) {
+		this.mass = mass;
+	}
+	
 	public void selectObject() {
 		selected=true;
 	}

@@ -1,13 +1,13 @@
 package UI.BenjaminController;
 
-import Simulation.Objects.GameObject;
-import Simulation.RenderEngine.Core.Math.Vector2f;
-import javafx.scene.transform.Scale;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import Simulation.Objects.GameObject;
+import Simulation.RenderEngine.Core.Math.Vector2f;
+
 public class ObjectTransformer {
+	
     private RotationCircleUI circleUI;
     private ScaleSquareUI squareUI;
 
@@ -88,18 +88,13 @@ public class ObjectTransformer {
     }
 
     public void setX(float x) {
-        squareUI.getRectangleLine().setX(x);
-        circleUI.getCircleModel().setX(x);
-
-        squareUI.calculateVertices();
-        System.out.println(x);
+        squareUI.setX(x);
+        circleUI.setX(x); 
     }
 
     public void setY(float y) {
-        squareUI.getRectangleLine().setY(y);
-        circleUI.getCircleModel().setY(y);
-
-        System.out.println(y);
+        squareUI.setY(y);
+        circleUI.setY(y);
     }
 
     public void setScale(float scale) {

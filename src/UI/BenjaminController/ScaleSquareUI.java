@@ -1,16 +1,16 @@
 package UI.BenjaminController;
 
 
+import java.util.ArrayList;
+
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Math.Vector2f;
 import Simulation.RenderEngine.Core.Models.LineModel;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Primitives.RectangleLine;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 public class ScaleSquareUI {
+	
     private LineModel rectangleLine;
     public static BasicShader shader = new BasicShader("Line");
 
@@ -22,18 +22,6 @@ public class ScaleSquareUI {
     public ScaleSquareUI (float size, float r, float g, float b, float x, float y) {
         this.radius = size;
         rectangleLine = new LineModel(new RectangleLine(size, 0), r, g, b, x, y);
-
-        System.out.println(rectangleLine.getMesh().getVertices()[0]);
-        System.out.println(rectangleLine.getMesh().getVertices()[1]);
-        System.out.println();
-        System.out.println(rectangleLine.getMesh().getVertices()[3]);
-        System.out.println(rectangleLine.getMesh().getVertices()[4]);
-        System.out.println();
-        System.out.println(rectangleLine.getMesh().getVertices()[6]);
-        System.out.println(rectangleLine.getMesh().getVertices()[7]);
-        System.out.println();
-        System.out.println(rectangleLine.getMesh().getVertices()[9]);
-        System.out.println(rectangleLine.getMesh().getVertices()[10]);
 
         verticesSmaller.add(0, new Vector2f((rectangleLine.getMesh().getVertices()[0] * Config.CANVAS_WIDTH)*0.8f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[1]*Config.CANVAS_HEIGHT)*0.8f+rectangleLine.getY()));
         verticesSmaller.add(1, new Vector2f((rectangleLine.getMesh().getVertices()[3] * Config.CANVAS_WIDTH)*0.8f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[4]*Config.CANVAS_HEIGHT)*0.8f+rectangleLine.getY()));
@@ -98,4 +86,15 @@ public class ScaleSquareUI {
         rectangleLine.setScale(scale);
         calculateVertices();
     }
+    
+    public void setX(float x) {
+    	rectangleLine.setX(x);
+    	calculateVertices();
+    }
+    
+    public void setY(float y) {
+    	rectangleLine.setY(y);
+    	calculateVertices();
+    }
+    
 }
