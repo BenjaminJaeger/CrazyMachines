@@ -1,0 +1,8 @@
+.TabElement .label{
+	-fx-font: 16px "Serif";
+	-fx-text-fill: white;
+}
+
+.circle{
+	-fx-fill: grey;
+}

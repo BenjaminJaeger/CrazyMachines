@@ -11,7 +11,7 @@ public class BallTab extends EditorTab{
 
 	@Override
 	protected void createContent(Pane glass) {
-		 BasketballTabElement basketBall = new BasketballTabElement(glass);
+		 BasketballTabElement basketBall = new BasketballTabElement(glass,5);
 		 content.getChildren().add(basketBall);
 	}
 	

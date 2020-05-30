@@ -11,7 +11,7 @@ public class BlockTab extends EditorTab{
 
 	@Override
 	protected void createContent(Pane glass) {
-		StaticPlaneTabElement plane = new StaticPlaneTabElement(glass);
+		StaticPlaneTabElement plane = new StaticPlaneTabElement(glass,5);
 		content.getChildren().add(plane);
 	}
 	
