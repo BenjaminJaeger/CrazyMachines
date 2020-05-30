@@ -14,7 +14,7 @@ public class Main extends Application{
 	
 	public void start(Stage primaryStage) throws Exception {	
 	
-		Scene mainScene = new Scene(new Pane(),800, 800);
+		Scene mainScene = new Scene(new Pane(),1400, 900);
 		
 		MainMenue menue = new MainMenue(mainScene);
 		

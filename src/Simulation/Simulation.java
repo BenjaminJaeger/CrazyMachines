@@ -55,7 +55,7 @@ public class Simulation implements GLEventListener{
 	@Override
 	public void display(GLAutoDrawable arg0) {
 		renderer.clear();	
-		
+	
 		try {
 			for (GameObject object : GameObject.allObjects) 
 				renderer.render(object, object.getShader()); 

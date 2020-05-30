@@ -4,3 +4,21 @@
 	-fx-min-width: 250px;
 	-fx-padding: 30;
 }
+
+.button {
+    -fx-font: 16px "sans-Serif";
+    -fx-text-fill: #fff;
+    -fx-padding: 10;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-border-color: #000;
+    -fx-min-width: 100;
+}
+
+.button:hover{
+    -fx-border-color: #fff;
+}
+
+.label {
+    -fx-text-fill: #fff;
+}

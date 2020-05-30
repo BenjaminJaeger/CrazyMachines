@@ -23,7 +23,7 @@ public class EditorMenue extends StackPane{
 		Util.canvasWrapper = new SwingNode();
 		
 		//Simulation controls
-		SideBar leftSideUI = new SideBar();
+		SideBar leftSideUI = new SideBar(mainScene);
 		ObjectTransformationListeners.addListeners(leftSideUI.getObjectSettings());
 		
 		BorderPane outer = new BorderPane();

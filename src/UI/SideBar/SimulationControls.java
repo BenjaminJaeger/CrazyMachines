@@ -4,10 +4,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import Simulation.SimulationControler;
 import Simulation.Objects.GameObject;
+import UI.MainMenue.MainMenue;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -18,7 +20,7 @@ import javafx.scene.layout.VBox;
  
 public class SimulationControls extends VBox{
 
-	public SimulationControls() {
+	public SimulationControls(Scene mainScene) {
 		 super(10);
 		
 		 Image expandImg= new Image("file:res/Images/expand.png");
@@ -26,7 +28,6 @@ public class SimulationControls extends VBox{
 	     Image pauseImg = new Image("file:res/Images/pause.png");
 	     Image resetImg = new Image("file:res/Images/reset.png");
 	     Image clearImg = new Image("file:res/Images/clear.png");
-	     Image closeImg = new Image("file:res/Images/close.png");
 	     
 	     Button expand = new Button();
 	     expand.setGraphic(new ImageView(expandImg));
@@ -77,37 +78,57 @@ public class SimulationControls extends VBox{
 	     });
 
 
-	     Slider slider = new Slider();
-	     slider.setOrientation(Orientation.VERTICAL);
-	     slider.setMin(1);
-	     slider.setMax(30);
-		//slider.setMin(1);
-		//slider.setMax(2);
-	     slider.setValue((int)slider.getMax()-SimulationControler.getUpdateTime());
-
-		slider.setShowTickMarks(true);
-		slider.setShowTickLabels(true);
-		slider.setMajorTickUnit(10f);
-		slider.setBlockIncrement(10f);
-		slider.setSnapToTicks(true);
-
-		slider.valueProperty().addListener(new ChangeListener<Number>() {
+	    Label ammount = new Label(Integer.toString(30-SimulationControler.getUpdateTime()));
+	    Slider slider = new Slider();
+	    
+	    VBox container = new VBox(10);	
+	    container.setAlignment(Pos.CENTER);
+	    slider.setOrientation(Orientation.VERTICAL);
+	    slider.setMin(1);
+	    slider.setMax(30);
+	    slider.setValue((int)slider.getMax()-SimulationControler.getUpdateTime());
+	    slider.valueProperty().addListener(new ChangeListener<Number>() {
 	         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+	        	ammount.setText(Integer.toString((int)slider.getMax()-newValue.intValue()+1));
 	         	SimulationControler.setUpdateTime((int)slider.getMax()-newValue.intValue()+1);
-	          	if (SimulationControler.isPlaying()) {
+	         	if (SimulationControler.isPlaying()) {
 	 	             SimulationControler.pause();
 	 	             SimulationControler.play();
 	           }
 	         }
-		});
+	    });
+	    ImageView add = new ImageView(new Image("file:res/Images/add.png"));
+	    add.setFitHeight(15);
+	    add.setFitWidth(15);
+	    add.setOnMouseClicked(e->{
+	    	if(slider.getValue() < slider.getMax())
+	    		slider.setValue(slider.getValue()+1);
+	    });	    
+	    add.getStyleClass().add("Imageview");
+	    ImageView subtract = new ImageView(new Image("file:res/Images/subtract.png"));
+	    subtract.setFitHeight(15);
+	    subtract.setFitWidth(15);
+	    subtract.setOnMouseClicked(e->{
+	    	if(slider.getValue() > slider.getMin())
+	    		slider.setValue(slider.getValue()-1);
+	    });	
+	    subtract.getStyleClass().add("Imageview");
+	    container.getChildren().addAll(add,slider,subtract);
 		Label speed = new Label("speed");
-		HBox speedbox = new HBox(slider,speed);
-
-	     Button close = new Button();
-	     close.setGraphic(new ImageView(closeImg));
-	     this.setAlignment(Pos.CENTER);
-	     this.getChildren().addAll(playpause,stop,clear,speedbox);
-	     this.getStylesheets().add("file:res/css/SimulationControls.css");
+		HBox speedbox = new HBox(10);
+		speedbox.getChildren().addAll(container,speed,ammount);
+		speedbox.setAlignment(Pos.CENTER);
+		
+		Button exit = new Button("exit");
+		exit.setGraphic(new ImageView(new Image("file:res/Images/close.png")));
+		exit.setOnAction(e->{
+			new MainMenue(mainScene);
+			SimulationControler.pause();			
+		});
+		
+	    this.setAlignment(Pos.CENTER);
+	    this.getChildren().addAll(playpause,stop,clear,speedbox,exit);
+	    this.getStylesheets().add("file:res/css/SimulationControls.css");
 	}
 	
 }

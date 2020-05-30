@@ -1,9 +1,3 @@
-.MainMenue{
-	 -fx-background-image: url("../Images/background.jpg");
-	 -fx-background-position: -300 -50;
-	 -fx-background-size: auto;
-}
-
 .button {
     -fx-font: 16px "sans-Serif";
     -fx-text-fill: #fff;
@@ -11,4 +5,9 @@
     -fx-background-color: transparent;
     -fx-cursor: hand;
     -fx-min-width: 100;
+}
+
+.Vbox{
+	-fx-translate-x: -50;
+	-fx-translate-y: 50;
 }

@@ -21,15 +21,17 @@
 
 }
 
-.hbox>* {
-    //-fx-background-color: #2f4f4f;
-    -fx-spacing: 10;
-}
-
 .text-field {
     -fx-background-color: #000;
     -fx-text-fill: #fff;
     -fx-padding: 0;
     -fx-text-alignment: right;
     -fx-max-width: 40;
+    
+    fx-border-width: 3;
+   
+}
+
+.Imageview:hover{
+	-fx-cursor: hand;
 }
