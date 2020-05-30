@@ -1,23 +1,25 @@
 package MAIN;
 
+import UI.MainMenue.MainMenue;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
+ 
 public class Main extends Application{
 
 	public static void main(String[] args) {
 		launch(args);
 	}
 	
-	public void start(Stage primaryStage) throws Exception {
-		UI ui = new UI();
-        Simulation simulation = new Simulation();
-        simulation.initialize();
-        
+	public void start(Stage primaryStage) throws Exception {	
+	
+		Scene mainScene = new Scene(new Pane(),800, 800);
+		
+		MainMenue menue = new MainMenue(mainScene);
+		
         primaryStage.setTitle("Visual Computing 2 Prototyp");
-		primaryStage.setScene(new Scene(ui, 1088, 1000));
-		primaryStage.setResizable(false);
+		primaryStage.setScene(mainScene);
 		primaryStage.show();
 	}
 	

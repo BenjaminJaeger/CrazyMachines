@@ -1,5 +1,6 @@
 package UI.SideBar;
 
+import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 
 public class SideBar extends VBox{
@@ -9,11 +10,11 @@ public class SideBar extends VBox{
 	public SideBar() {
 		super(10);
 		
-		ExampleScenes exampleScenes = new ExampleScenes();
 		SimulationControls simulationControls = new SimulationControls();
 		objectSettings = new ObjectSettings();
 
-		this.getChildren().addAll(exampleScenes,simulationControls,objectSettings);
+		this.setAlignment(Pos.BASELINE_CENTER);
+		this.getChildren().addAll(simulationControls,objectSettings);
 		this.getStyleClass().add("vbox");
 		this.getStylesheets().add("file:res/css/SideBar.css");
 	}

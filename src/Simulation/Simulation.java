@@ -1,4 +1,4 @@
-package MAIN;
+package Simulation;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -15,7 +15,6 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.FPSAnimator;
 
-import Simulation.SimulationControler;
 import Simulation.Objects.GameObject;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
@@ -30,7 +29,7 @@ import UI.Util;
 
 
 public class Simulation implements GLEventListener{
-
+ 
 	private FPSAnimator animator;
 	private GLJPanel canvas;
 	private Renderer renderer;
@@ -49,7 +48,7 @@ public class Simulation implements GLEventListener{
 	
 		canvas.addGLEventListener(this);		
 		animator = new FPSAnimator(canvas, Config.FRAME_RATE);
-	  	animator.start();
+		animator.start();
 	}
 	
 	

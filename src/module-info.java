@@ -12,12 +12,12 @@ module jfx {
 	exports TESTING.Simulation;
 	exports TESTING.UI;
 	exports MAIN;
-
-	requires transitive gluegen.rt;
-	requires transitive java.desktop;
-	requires transitive javafx.base;
-	requires transitive javafx.controls;
+ 
+	requires  gluegen.rt;
+	requires  java.desktop;
+	requires  javafx.base;
+	requires  javafx.controls;
 	requires transitive javafx.graphics;
-	requires transitive javafx.swing;
-	requires transitive jogl.all;
+	requires  javafx.swing;
+	requires  jogl.all;
 }

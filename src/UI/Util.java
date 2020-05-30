@@ -9,6 +9,7 @@ public class Util {
 	public static boolean dragMode;
 	
 	public static SwingNode canvasWrapper;
+
 	
 	public static float convertMouseX(double ex,Camera camera) {
 		float x = ((float)ex - Config.CANVAS_WIDTH/2) / Config.CANVAS_WIDTH;		  			

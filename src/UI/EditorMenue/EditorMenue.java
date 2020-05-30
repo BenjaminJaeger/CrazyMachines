@@ -1,4 +1,4 @@
-package MAIN;
+package UI.EditorMenue;
 
 import UI.Util;
 import UI.EditorTabPane.EditorTabPane;
@@ -6,13 +6,15 @@ import UI.ObjectTransformer.ObjectTransformationListeners;
 import UI.SideBar.SideBar;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-public class UI extends StackPane{
+public class EditorMenue extends StackPane{
+	
+	public EditorMenue(Scene mainScene) {
 
-	public UI() {
 		Pane glassPane = new Pane ();
 
 		//Editorpane
@@ -39,5 +41,5 @@ public class UI extends StackPane{
 		this.setStyle("-fx-background-color: rgb(102,127,102);");
 		this.getChildren().addAll(glassPane,outer);
 	}
-
+	
 }
