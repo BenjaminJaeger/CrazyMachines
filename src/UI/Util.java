@@ -3,7 +3,9 @@ package UI;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import javafx.embed.swing.SwingNode;
+import javafx.scene.Scene;
 import javafx.scene.effect.ColorAdjust;
+import javafx.stage.Stage;
 
 public class Util {
 
@@ -14,6 +16,10 @@ public class Util {
 	
 	public static SwingNode canvasWrapper;
 	public static ColorAdjust colorAdjust = new ColorAdjust();
+
+	public static Stage primaryStage;
+	public static Scene mainScene;
+	public static int currentLevel;
 	
 	public static float convertMouseX(double ex,Camera camera) {
 		float x = ((float)ex - Config.CANVAS_WIDTH/2) / Config.CANVAS_WIDTH;		  			

@@ -119,8 +119,7 @@ public class Simulation implements GLEventListener{
 					camera.setRotateZ(0);
 					camera.setZ(1);
 					camera.setX(0);
-					camera.setY(0);
-					LevelExportImport.ExportLevel("test");
+					camera.setY(0);					
 				}
 			}
 		});

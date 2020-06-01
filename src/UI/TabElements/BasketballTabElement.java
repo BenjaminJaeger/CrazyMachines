@@ -1,4 +1,4 @@
-package UI.EditorTabPane.TabElements;
+package UI.TabElements;
 
 import Simulation.Objects.MovableObjects.Ball.BasketBall;
 import javafx.scene.layout.Pane;

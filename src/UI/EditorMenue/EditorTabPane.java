@@ -1,7 +1,7 @@
-package UI.EditorTabPane;
+package UI.EditorMenue;
 
-import UI.EditorTabPane.Tabs.BallTab;
-import UI.EditorTabPane.Tabs.BlockTab;
+import UI.EditorMenue.Tabs.BallTab;
+import UI.EditorMenue.Tabs.BlockTab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.Pane;
 

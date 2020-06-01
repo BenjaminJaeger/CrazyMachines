@@ -1,14 +1,15 @@
-package UI.SideBar;
+package UI.LevelMenue;
 
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class ObjectSettings extends VBox {
+public class ObjectSettingsLevel extends VBox {
 	
 	 private TextField xPosition;
 	 private TextField yPosition;
@@ -20,7 +21,7 @@ public class ObjectSettings extends VBox {
 	 private TextField speed;
 
 	 
-    public ObjectSettings() {
+    public ObjectSettingsLevel() {
         super(5);
         
         this.getStyleClass().add("hbox");      
@@ -111,15 +112,20 @@ public class ObjectSettings extends VBox {
 	        
 	        this.getChildren().addAll(xdirectionB,speedB);
         }
+        
+        
+        Button delete = new Button("Delete");
+        delete.setOnAction(e->{
+        	removeUI();
+        	GameObject.allObjects.remove(object);        	
+        });
+                     
+        this.getChildren().addAll(delete);
            
     }
 
-    public void removeUI(GameObject object) {
-    	if(object instanceof MoveableObject)
-    		this.getChildren().remove(0, 7);
-    	else 			
-    		this.getChildren().remove(0, 5);
-   	
+    public void removeUI() {
+    	this.getChildren().clear();
     }
     
     public void updateUI(GameObject object) {

@@ -1,4 +1,4 @@
-package UI.EditorTabPane.TabElements;
+package UI.TabElements;
 
 import Simulation.Objects.StaticObjects.StaticExternalObjects.StaticBucket;
 import javafx.scene.layout.Pane;
@@ -6,7 +6,7 @@ import javafx.scene.layout.Pane;
 public class BucketTabElement extends TabElement{
 
 	public BucketTabElement(Pane glass) {
-		super(glass,"Bucket", "BasketBall.png");
+		super(glass,"Bucket", "Bucket.png");
 	}
 	
 	public BucketTabElement(Pane glass,int ammount) {

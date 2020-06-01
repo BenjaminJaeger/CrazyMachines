@@ -1,4 +1,4 @@
-package UI.EditorTabPane.TabElements;
+package UI.TabElements;
 
 import Simulation.Objects.StaticObjects.StaticExternalObjects.StaticPlane;
 import javafx.scene.layout.Pane;

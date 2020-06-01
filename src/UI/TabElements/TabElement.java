@@ -1,5 +1,6 @@
-package UI.EditorTabPane.TabElements;
+package UI.TabElements;
 
+import Simulation.SimulationControler;
 import UI.Util;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -76,7 +77,7 @@ public abstract class TabElement extends VBox {
 		clone.setFitWidth(size);
 		
 		this.setOnDragDetected(e->{  
-			if(ammount>0) {
+			if(ammount>0 && !SimulationControler.isPlaying()) {
 				Util.dragMode = true;
 	        	clone.relocate(e.getSceneX()-(size/2),e.getSceneY()-(size/2));
 	        	glass.getChildren().add(clone);

@@ -13,12 +13,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class LevelSelectorMenue extends StackPane{
+public class LevelSelectionMenue extends StackPane{
 
 	private boolean[] levelsDone;
 	
-	public LevelSelectorMenue(Scene mainScene) {
+	public LevelSelectionMenue(Scene mainScene,Stage primaryStage) {
 		ImageView background = new ImageView(new Image("file:res/Images/background.jpg"));
 		background.setFitWidth(this.getWidth());
 		background.setFitHeight(this.getHeight());
@@ -29,16 +30,29 @@ public class LevelSelectorMenue extends StackPane{
 		loadLevels();
 		MenueLevelButton level1 = new MenueLevelButton("Level 1",levelsDone[0]);
 		level1.setOnMouseClicked(e->{
-			new Level(mainScene, "test");
+			new Level(mainScene, "Level1",primaryStage);
+			Util.currentLevel = 1;
 		});
 		MenueLevelButton level2 = new MenueLevelButton("Level 2",levelsDone[1]);
+		level2.setOnMouseClicked(e->{
+			new Level(mainScene, "Level2",primaryStage);
+			Util.currentLevel = 2;
+		});
 		MenueLevelButton level3 = new MenueLevelButton("Level 3",levelsDone[2]);
+		level3.setOnMouseClicked(e->{
+//			new Level(mainScene, "Level3",primaryStage);
+			Util.currentLevel = 3;
+		});
 		MenueLevelButton level4 = new MenueLevelButton("Level 4",levelsDone[3]);
+		level4.setOnMouseClicked(e->{
+//			new Level(mainScene, "Level4",primaryStage);
+			Util.currentLevel = 4;
+		});
 		
 		Button leave = new Button();
 		leave.setGraphic(new ImageView(new Image("file:res/Images/close.png")));
 		leave.setOnAction(e->{
-			new MainMenue(mainScene);
+			new MainMenue(mainScene,primaryStage);
 		});
 		
 		container.setAlignment(Pos.CENTER);

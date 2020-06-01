@@ -1,19 +1,18 @@
 package UI.EditorMenue;
 
 import UI.Util;
-import UI.EditorTabPane.EditorTabPane;
 import UI.ObjectTransformer.ObjectTransformationListeners;
-import UI.SideBar.SideBar;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 public class EditorMenue extends StackPane{
 	
-	public EditorMenue(Scene mainScene) {
+	public EditorMenue(Scene mainScene,Stage primaryStage) {
 
 		Pane glassPane = new Pane();
 
@@ -24,7 +23,7 @@ public class EditorMenue extends StackPane{
 		Util.canvasWrapper = new SwingNode();
 		
 		//Simulation controls
-		SideBar leftSideUI = new SideBar(mainScene);
+		SideBarEditor leftSideUI = new SideBarEditor(mainScene,primaryStage);
 		ObjectTransformationListeners.addListeners(leftSideUI.getObjectSettings());
 		
 		BorderPane outer = new BorderPane();
@@ -43,5 +42,6 @@ public class EditorMenue extends StackPane{
 		this.setEffect(Util.colorAdjust);
 		this.getChildren().addAll(glassPane,outer);
 	}
+	
 	
 }

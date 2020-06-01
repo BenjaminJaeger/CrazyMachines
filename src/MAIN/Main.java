@@ -16,7 +16,7 @@ public class Main extends Application{
 	
 		Scene mainScene = new Scene(new Pane(),1400, 900);
 		
-		MainMenue menue = new MainMenue(mainScene);
+		MainMenue menue = new MainMenue(mainScene,primaryStage);
 		
         primaryStage.setTitle("Visual Computing 2 Prototyp");
 		primaryStage.setScene(mainScene);

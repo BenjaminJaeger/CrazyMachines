@@ -13,10 +13,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class SettingsMenue extends StackPane{
 
-	public SettingsMenue(Scene mainScene) {
+	public SettingsMenue(Scene mainScene,Stage primaryStage) {
 		ImageView background = new ImageView(new Image("file:res/Images/background.jpg"));
 		background.setFitWidth(this.getWidth());
 		background.setFitHeight(this.getHeight());
@@ -36,7 +37,7 @@ public class SettingsMenue extends StackPane{
 		Button leave = new Button();
 		leave.setGraphic(new ImageView(new Image("file:res/Images/close.png")));
 		leave.setOnAction(e->{
-			new MainMenue(mainScene);
+			new MainMenue(mainScene,primaryStage);
 		});
 			
 		container.setAlignment(Pos.CENTER);

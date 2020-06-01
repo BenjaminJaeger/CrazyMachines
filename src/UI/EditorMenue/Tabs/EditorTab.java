@@ -1,4 +1,4 @@
-package UI.EditorTabPane.Tabs;
+package UI.EditorMenue.Tabs;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;

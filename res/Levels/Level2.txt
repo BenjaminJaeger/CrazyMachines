@@ -1,0 +1,32 @@
+false
+BasketBall
+-34.5/-90.0
+0.5
+57.78345
+1.0
+direction TODO 
+speed TODO 
+false
+StaticPlane
+-24.0/-143.25
+0.4
+0.0
+1.0E9
+direction TODO 
+speed TODO 
+false
+StaticBucket
+90.75/-177.0
+0.4
+0.0
+1.0E9
+direction TODO 
+speed TODO 
+true
+BasketBall
+-61.5/15.75
+1.0
+0.0
+1.0
+direction TODO 
+speed TODO 

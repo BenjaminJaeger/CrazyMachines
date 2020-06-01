@@ -42,6 +42,8 @@ public abstract class GameObject {
 	private boolean rotatable = false;
 	private boolean moveable = false;
 
+	private boolean editable = true;
+	private boolean playable = false;
 	
 ////////////////////
 ////Constructors////
@@ -345,4 +347,20 @@ public abstract class GameObject {
 		this.originalMass = mass;
 	}
 
+	public boolean isEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+	}
+
+	public boolean isPlayable() {
+		return playable;
+	}
+
+	public void setPlayable(boolean playable) {
+		this.playable = playable;
+	}
+	
 }

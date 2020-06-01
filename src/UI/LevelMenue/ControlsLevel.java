@@ -1,4 +1,4 @@
-package UI.SideBar;
+package UI.LevelMenue;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -17,10 +17,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
  
-public class SimulationControls extends VBox{
+public class ControlsLevel extends VBox{
 
-	public SimulationControls(Scene mainScene) {
+	public ControlsLevel(Scene mainScene,Stage primaryStage) {
 		 super(10);
 		
 		 Image expandImg= new Image("file:res/Images/expand.png");
@@ -73,7 +74,10 @@ public class SimulationControls extends VBox{
 	    clear.setGraphic(new ImageView(clearImg));
 	    clear.setOnAction(e->{
 	         if (!SimulationControler.isPlaying()) {
-	             GameObject.allObjects.clear();
+	        	 for (int i = 0; i < GameObject.allObjects.size(); i++) 
+					if(GameObject.allObjects.get(i).isEditable())
+						GameObject.allObjects.remove(i);
+				
 	         }
 	     });
 
@@ -119,13 +123,14 @@ public class SimulationControls extends VBox{
 		speedbox.getChildren().addAll(container,speed,ammount);
 		speedbox.setAlignment(Pos.CENTER);
 		
-		Button exit = new Button("exit");
+		Button exit = new Button(" Exit");
 		exit.setGraphic(new ImageView(new Image("file:res/Images/close.png")));
 		exit.setOnAction(e->{
-			new MainMenue(mainScene);
+			new MainMenue(mainScene,primaryStage);
 			SimulationControler.pause();			
 		});
 		
+			
 	    this.setAlignment(Pos.CENTER);
 	    this.getChildren().addAll(playpause,stop,clear,speedbox,exit);
 	    this.getStylesheets().add("file:res/css/SimulationControls.css");
