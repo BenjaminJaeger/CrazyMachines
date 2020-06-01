@@ -9,8 +9,8 @@ public class CollisionContext {
 	protected static int counter;
 	protected int id;
 	
-	protected BoundingCircle[] boundingCirlces;
-	protected BoundingPolygon[] boundingPolygons;
+	protected BoundingCircle[] boundingCirlces = new BoundingCircle[0];
+	protected BoundingPolygon[] boundingPolygons = new BoundingPolygon[0];
 	
 	protected GameObject gameObject;
 	

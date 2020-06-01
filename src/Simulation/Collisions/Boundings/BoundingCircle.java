@@ -13,8 +13,8 @@ public class BoundingCircle  extends Bounding{
 ////////////////////
 ////Constructors////
 ////////////////////
-	public BoundingCircle(float x, float y,float radius) {
-		super(x, y);
+	public BoundingCircle(float x, float y,float radius,float centerX, float centerY) {
+		super(x, y,centerX,centerY);
 		this.radius = radius;
 		originalRadius=radius;
 		model = new LineModel(new CircleLine(radius, 30), 0, 0, 1, x,y);

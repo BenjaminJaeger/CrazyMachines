@@ -54,7 +54,7 @@ public abstract class GameObject {
 		
 		models = new TriangleModel[files.length];
 		for (int i = 0; i < models.length; i++) 
-			models[i] = new TriangleModel(files[i],material,r,g,b,x,y);		
+			models[i] = new TriangleModel("Models/"+files[i],material,r,g,b,x,y);		
 		
 		allObjects.add(this);
 	}
@@ -67,7 +67,7 @@ public abstract class GameObject {
 		
 		models = new TriangleModel[files.length];
 		for (int i = 0; i < models.length; i++) 
-			models[i] = new TriangleModel(files[i],textures[i],material,x,y);		
+			models[i] = new TriangleModel("Models/"+files[i],"Models/"+textures[i],material,x,y);		
 		
 		allObjects.add(this);
 	}
@@ -79,7 +79,7 @@ public abstract class GameObject {
 		originalY=y;
 		
 		models = new TriangleModel[1];
-		models[0] = new TriangleModel(file,texture,material,x,y);		
+		models[0] = new TriangleModel("Models/"+file,"Models/"+texture,material,x,y);		
 		
 		allObjects.add(this);		
 	}
@@ -91,7 +91,7 @@ public abstract class GameObject {
 		originalY=y;
 		
 		models = new TriangleModel[1];
-		models[0] = new TriangleModel(file,material,r,g,b,x,y);		
+		models[0] = new TriangleModel("Models/"+file,material,r,g,b,x,y);		
 		
 		allObjects.add(this);
 	}
@@ -115,7 +115,7 @@ public abstract class GameObject {
 		originalY=y;
 		
 		models = new TriangleModel[1];
-		models[0] = new TriangleModel(primitive,material,texture,x,y);		
+		models[0] = new TriangleModel(primitive,material,"Models/"+texture,x,y);		
 		
 		allObjects.add(this);
 	}

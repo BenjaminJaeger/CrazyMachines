@@ -12,8 +12,8 @@ public class BoundingPolygon extends Bounding{
 ////////////////////
 ////Constructors////
 ////////////////////
-	public BoundingPolygon(float x, float y,Vector2f[] points) {
-		super(x, y);
+	public BoundingPolygon(float x, float y,Vector2f[] points,float centerX,float centerY) {
+		super(x, y,centerX,centerY);
 		this.originalPoints = points;
 		
 		//copy Array and add current position
@@ -94,7 +94,7 @@ public class BoundingPolygon extends Bounding{
 			p.y=p.y*scale+y;
 		}
 		
-		model = new LineModel(new PolygonLine(points),0,1,0,x,y);
+		model = new LineModel(new PolygonLine(points),0,1,0,0,0);
 	}
 	
 	public void setY(float y) {
@@ -111,7 +111,7 @@ public class BoundingPolygon extends Bounding{
 			p.y=p.y*scale+y;
 		}
 		
-		model = new LineModel(new PolygonLine(points),0,1,0,x,y);
+		model = new LineModel(new PolygonLine(points),0,1,0,0,0);
 	}
 	
 	public void setRotation(float rotation) {
@@ -127,9 +127,8 @@ public class BoundingPolygon extends Bounding{
 			p.x=p.x*scale+x;		
 			p.y=p.y*scale+y;
 		}
-		
-		model.setRotationZ(rotation);
-//		model = new LineModel(new PolygonLine(points),0,1,0,x,y);
+
+		model = new LineModel(new PolygonLine(points),0,1,0,0,0);
 	}
 	
 	public void setScale(float scale) {
@@ -145,8 +144,8 @@ public class BoundingPolygon extends Bounding{
 			p.x=p.x*scale+x;		
 			p.y=p.y*scale+y;
 		}
-		model.setScale(scale);
-//		model = new LineModel(new PolygonLine(points),0,1,0,x,y);
+		
+		model = new LineModel(new PolygonLine(points),0,1,0,0,0);
 	}
 
 }

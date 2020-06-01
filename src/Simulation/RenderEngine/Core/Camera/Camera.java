@@ -19,7 +19,7 @@ public class Camera {
 	private Matrix4f viewMatrix=new Matrix4f(); 		//view Matrix describing the camera transformation
 	
 	private boolean updateMatrix; 						//true if position or rotation got changed, if true the matrix will get calculate in the next draw call (better performance)
-	
+	 
 	private CameraControls cameraControls;				//controling the camera
 
 	

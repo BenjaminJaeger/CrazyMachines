@@ -85,7 +85,7 @@ public class DynamicCollisionContext extends CollisionContext{
 		
 		if(object instanceof MoveableObject) {			
 			CollisionCirclePolygon.removeCollision((MoveableObject)gameObject, circle.getRadius(), (MoveableObject)object, p1, p2);
-			CollisionCirclePolygon.elasticCollision((MoveableObject)gameObject, circle.getRadius(), (MoveableObject)object, p1, p2);
+			CollisionCirclePolygon.elasticCollision((MoveableObject)gameObject, circle.getRadius(), (MoveableObject)object, p1, p2,polygon,circle);
 		}else {			
 			CollisionCirclePolygon.removeCollision((MoveableObject)gameObject, circle.getRadius(), (StaticObject)object, p1, p2);
 			CollisionCirclePolygon.elasticCollision((MoveableObject)gameObject, circle.getRadius(), (StaticObject)object, p1, p2);	

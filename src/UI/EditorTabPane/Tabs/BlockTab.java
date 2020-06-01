@@ -1,5 +1,6 @@
 package UI.EditorTabPane.Tabs;
 
+import UI.EditorTabPane.TabElements.BucketTabElement;
 import UI.EditorTabPane.TabElements.StaticPlaneTabElement;
 import javafx.scene.layout.Pane;
 
@@ -12,7 +13,8 @@ public class BlockTab extends EditorTab{
 	@Override
 	protected void createContent(Pane glass) {
 		StaticPlaneTabElement plane = new StaticPlaneTabElement(glass,5);
-		content.getChildren().add(plane);
+		BucketTabElement bucket = new BucketTabElement(glass,5);
+		content.getChildren().addAll(plane,bucket);
 	}
 	
 	

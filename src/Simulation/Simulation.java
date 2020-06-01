@@ -51,6 +51,21 @@ public class Simulation implements GLEventListener{
 		animator.start();
 	}
 	
+	public void initialize(String level) {
+		canvas = new GLJPanel(new GLCapabilities( GLProfile.getDefault()));	   
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				Util.canvasWrapper.setContent(canvas);	
+		    }
+		});	
+	
+		canvas.addGLEventListener(this);		
+		animator = new FPSAnimator(canvas, Config.FRAME_RATE);
+		animator.start();
+		
+		LevelExportImport.ImportLevel(level);
+	}
+	
 	
 	@Override
 	public void display(GLAutoDrawable arg0) {
@@ -68,6 +83,7 @@ public class Simulation implements GLEventListener{
 	public void dispose(GLAutoDrawable arg0) {
 		animator.stop();
 		SimulationControler.pause();
+		GameObject.allObjects.clear();
 	}
 
 	
@@ -104,6 +120,7 @@ public class Simulation implements GLEventListener{
 					camera.setZ(1);
 					camera.setX(0);
 					camera.setY(0);
+					LevelExportImport.ExportLevel("test");
 				}
 			}
 		});

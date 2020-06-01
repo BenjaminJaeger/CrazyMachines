@@ -1,4 +1,4 @@
-package UI.MainMenue;
+package UI.MainMenue.Elements;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;

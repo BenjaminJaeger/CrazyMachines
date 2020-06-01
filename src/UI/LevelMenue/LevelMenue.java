@@ -1,7 +1,6 @@
-package UI.EditorMenue;
+package UI.LevelMenue;
 
 import UI.Util;
-import UI.EditorTabPane.EditorTabPane;
 import UI.ObjectTransformer.ObjectTransformationListeners;
 import UI.SideBar.SideBar;
 import javafx.embed.swing.SwingNode;
@@ -11,14 +10,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-public class EditorMenue extends StackPane{
+public class LevelMenue extends StackPane{
 	
-	public EditorMenue(Scene mainScene) {
+	public LevelMenue(Scene mainScene,String level) {
 
 		Pane glassPane = new Pane();
 
 		//Editorpane
-		EditorTabPane editorTabPane = new EditorTabPane(glassPane);
+		LevelTabPane levelTabPane = new LevelTabPane(glassPane,level);
 		
 		//Canvas
 		Util.canvasWrapper = new SwingNode();
@@ -28,14 +27,14 @@ public class EditorMenue extends StackPane{
 		ObjectTransformationListeners.addListeners(leftSideUI.getObjectSettings());
 		
 		BorderPane outer = new BorderPane();
-		BorderPane inner = new BorderPane ();
+		BorderPane inner = new BorderPane();
 
 		outer.setStyle("-fx-background-color: rgb(102,127,102);");
 		inner.setStyle("-fx-background-color: rgb(102,127,102);");
 		
 		inner.setCenter(Util.canvasWrapper);
 		BorderPane.setAlignment(inner.getCenter(), Pos.CENTER);
-		inner.setBottom(editorTabPane);
+		inner.setBottom(levelTabPane);
 		outer.setLeft(leftSideUI);
 		outer.setCenter(inner);
 

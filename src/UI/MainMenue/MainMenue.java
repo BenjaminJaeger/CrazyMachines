@@ -1,6 +1,8 @@
 package UI.MainMenue;
 
+import UI.Util;
 import UI.EditorMenue.EditorMode;
+import UI.MainMenue.Elements.MenueButton;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -37,14 +39,15 @@ public class MainMenue extends StackPane{
 		
 		MenueButton levelSelector = new MenueButton("Level Auswahl");
 		levelSelector.setOnMouseClicked(e->{
-			new LevelSelector(mainScene);
+			new LevelSelectorMenue(mainScene);
 		});
 	
 		container.setAlignment(Pos.CENTER);
-		container.getChildren().addAll(settings,levelSelector,editor,exit);
+		container.getChildren().addAll(levelSelector,editor,settings,exit);
 		
 		this.getChildren().addAll(background,container);
-		
+
+		this.setEffect(Util.colorAdjust);
 		this.getStyleClass().add("MainMenue");
 		this.getStylesheets().add("file:res/css/MainMenue.css");	
 		

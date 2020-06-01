@@ -1,6 +1,8 @@
 package Simulation.Collisions;
 
 import Simulation.Util;
+import Simulation.Collisions.Boundings.BoundingCircle;
+import Simulation.Collisions.Boundings.BoundingPolygon;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.Objects.StaticObjects.StaticObject;
 import Simulation.RenderEngine.Core.Math.Vector2f;
@@ -10,7 +12,7 @@ public class CollisionCirclePolygon {
 /////////////////////////
 ////ELASTIC COLLISION////
 /////////////////////////
-	public static void elasticCollision(MoveableObject object1,float radius, MoveableObject object2, Vector2f p1 , Vector2f p2) {
+	public static void elasticCollision(MoveableObject object1,float radius, MoveableObject object2, Vector2f p1 , Vector2f p2,BoundingPolygon polygon , BoundingCircle circle) {
 		float distance = Util.getDistance(object1.getX(), object1.getY(), object2.getX(), object2.getY());
 		
 		float nx = (object2.getX()-object1.getX())/distance;
@@ -50,6 +52,7 @@ public class CollisionCirclePolygon {
 	
 		object1.setVelocityX(-(tx * dpTan1 + nx * m1));
 		object1.setVelocityY(-(ty * dpTan1 + ny * m1));
+
 	}
 	
 	

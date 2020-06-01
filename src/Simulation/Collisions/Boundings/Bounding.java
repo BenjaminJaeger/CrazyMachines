@@ -8,6 +8,7 @@ public abstract class Bounding {
 	protected float x,y;
 	protected float rotation;
 	protected float scale = 1;
+	protected float centerX,centerY;
 	
 	protected LineModel model;
 	
@@ -16,9 +17,11 @@ public abstract class Bounding {
 ////////////////////
 ////Constructors////
 ////////////////////
-	public Bounding (float x, float y) {
+	public Bounding (float x, float y,float centerX, float centerY) {
 		this.x=x;
 		this.y=y;
+		this.centerX=centerX;
+		this.centerY=centerY;
 	}
 		
 	
@@ -59,6 +62,14 @@ public abstract class Bounding {
 	
 	public void setScale(float scale) {
 		this.scale = scale;
+	}
+
+	public float getCenterX() {
+		return centerX;
+	}
+
+	public float getCenterY() {
+		return centerY;
 	}
 
 }

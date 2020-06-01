@@ -142,6 +142,11 @@ public class Main extends Application implements GLEventListener{
 				for (ArrayList<Vector2f> hull : hulls) {
 					file.write("#New BoundingPolygon".getBytes());
 					file.write("\n".getBytes());
+					Vector2f offset = calculateOffset(hull);
+					System.out.println(offset);
+					String offsetString = "o "+Float.toString(offset.x)+" / "+Float.toString(offset.y);
+					file.write(offsetString.getBytes());
+					file.write("\n".getBytes());
 					for (Vector2f p : hull) {
 						String string = "v "+ p.x + " / " + p.y;
 						file.write(string.getBytes());
@@ -310,6 +315,19 @@ public class Main extends Application implements GLEventListener{
 		Config.CANVAS_HEIGHT=height;
 		Config.CANVAS_WIDTH=width;
 		renderer.updateProjectionMatrix();
+	}
+	
+	public Vector2f calculateOffset(ArrayList<Vector2f> hull) {
+		float sumX=0;
+		float sumY=0;
+		for (Vector2f v : hull) {
+			sumX+=v.x;
+			sumY+=v.y;
+		}
+		float centerX = sumX/hull.size();
+		float centerY = sumY/hull.size();
+	
+		return new Vector2f(centerX, centerY);
 	}
 
 }
