@@ -20,6 +20,7 @@ public class Util {
 	public static Stage primaryStage;
 	public static Scene mainScene;
 	public static int currentLevel;
+	public static boolean editorMode;
 	
 	public static float convertMouseX(double ex,Camera camera) {
 		float x = ((float)ex - Config.CANVAS_WIDTH/2) / Config.CANVAS_WIDTH;		  			

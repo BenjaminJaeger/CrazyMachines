@@ -9,6 +9,7 @@ import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Primitive;
 import UI.ObjectTransformer.ObjectTransformer;
+import UI.TabElements.TabElement;
 
 public abstract class GameObject {
 
@@ -44,6 +45,8 @@ public abstract class GameObject {
 
 	private boolean editable = true;
 	private boolean playable = false;
+	
+	private TabElement tabPane;
 	
 ////////////////////
 ////Constructors////
@@ -135,7 +138,11 @@ public abstract class GameObject {
 		setRotation(originalrotation);
 		setMass(originalMass);
 	}
-	
+
+	public void remove() {
+		if(this.tabPane!=null)
+			this.tabPane.resetCounter();
+	}
 /////////////////////////
 ////Getters & Setters////
 /////////////////////////
@@ -361,6 +368,10 @@ public abstract class GameObject {
 
 	public void setPlayable(boolean playable) {
 		this.playable = playable;
+	}
+	
+	public void setTabPane(TabElement tabPane) {
+		this.tabPane = tabPane;
 	}
 	
 }

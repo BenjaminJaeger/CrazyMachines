@@ -11,7 +11,9 @@ public class EditorMode {
 		mainScene.setRoot(menue);
 		
 		Simulation simulation = new Simulation();
-		simulation.initialize();		
+		simulation.initialize();
+		
+		UI.Util.editorMode = true;
 	}
 	
 }

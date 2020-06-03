@@ -21,6 +21,8 @@ import javafx.stage.Stage;
  
 public class ControlsLevel extends VBox{
 
+	protected  Button clear ;
+	
 	public ControlsLevel(Scene mainScene,Stage primaryStage) {
 		 super(10);
 		
@@ -70,14 +72,15 @@ public class ControlsLevel extends VBox{
 	         SimulationControler.restart();
 	     });
 
-	    Button clear = new Button(" Clear");
+	    clear = new Button(" Clear");
 	    clear.setGraphic(new ImageView(clearImg));
 	    clear.setOnAction(e->{
 	         if (!SimulationControler.isPlaying()) {
 	        	 for (int i = 0; i < GameObject.allObjects.size(); i++) 
-					if(GameObject.allObjects.get(i).isEditable())
+					if(GameObject.allObjects.get(i).isEditable()) {
+						GameObject.allObjects.get(i).remove();
 						GameObject.allObjects.remove(i);
-				
+					}
 	         }
 	     });
 
@@ -109,6 +112,7 @@ public class ControlsLevel extends VBox{
 	    		slider.setValue(slider.getValue()+1);
 	    });	    
 	    add.getStyleClass().add("Imageview");
+	    
 	    ImageView subtract = new ImageView(new Image("file:res/Images/subtract.png"));
 	    subtract.setFitHeight(15);
 	    subtract.setFitWidth(15);

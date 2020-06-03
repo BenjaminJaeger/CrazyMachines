@@ -77,6 +77,7 @@ public class MainMenue extends StackPane{
 		
 		Util.primaryStage = primaryStage;
 		Util.mainScene = mainScene;
+		UI.Util.editorMode = false;
 	}
 
 }

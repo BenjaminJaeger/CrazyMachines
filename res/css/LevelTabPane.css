@@ -1,3 +1,4 @@
 .LevelTabPane{
 	-fx-background-color: white;
+	-fx-min-height: 50px;
 }

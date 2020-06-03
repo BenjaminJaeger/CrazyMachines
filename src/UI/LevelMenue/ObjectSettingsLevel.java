@@ -117,6 +117,7 @@ public class ObjectSettingsLevel extends VBox {
         Button delete = new Button("Delete");
         delete.setOnAction(e->{
         	removeUI();
+        	object.remove();
         	GameObject.allObjects.remove(object);        	
         });
                      

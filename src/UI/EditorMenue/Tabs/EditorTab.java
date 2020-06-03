@@ -17,14 +17,15 @@ public abstract class EditorTab extends Tab{
 		VBox nameAndIcon = new VBox();
 		Label nameLabel = new Label(name); 
 		nameLabel.setAlignment(Pos.BOTTOM_CENTER);
+		
 		//Tab Icon
 //	    ImageView iconImageView = new ImageView(new Image("file:res/TabImages/"+icon));
 //	    iconImageView.setFitWidth(25); 
 //	    iconImageView.setFitHeight(25);  
+		
 	    nameAndIcon.getChildren().addAll(nameLabel);
 	    this.setGraphic(nameAndIcon);
-		
-	    
+			    
 	    content = new HBox(10);
 		content.setAlignment(Pos.CENTER_LEFT);
 		  

@@ -1,6 +1,7 @@
 package UI.TabElements;
 
 import Simulation.SimulationControler;
+import Simulation.Objects.GameObject;
 import UI.Util;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -17,13 +18,18 @@ public abstract class TabElement extends VBox {
 	 private String imageURL;
 	 private double size = 100;
 	 private int ammount;
+	 private int originalAmmount;
 	 private Label ammountText;
+	 
+	 private GameObject object;
 	 
     public TabElement(Pane glass,String name, String imageURL,int ammount) {
         super(10);
         this.setAlignment(Pos.BOTTOM_CENTER);
         
         this.ammount = ammount;
+        this.originalAmmount=ammount;
+        
         this.imageURL = imageURL;
         
         Label nameLabel = new Label(name);
@@ -97,7 +103,8 @@ public abstract class TabElement extends VBox {
 	    		if(Util.dragMode) {
 		            float x = Util.convertMouseX(e2.getX());
 		            float y = Util.convertMouseY(e2.getY());
-		            createObject(x, y);
+		            this.object = createObject(x, y);
+		            object.setTabPane(this);
 		            Util.dragMode = false;
 	    		}
 	    	});			
@@ -141,6 +148,11 @@ public abstract class TabElement extends VBox {
     	ammountText.setText(Integer.toString(ammount));
     }
 
-	protected abstract void createObject(float x, float y);
+	protected abstract GameObject createObject(float x, float y);
+
+	public void resetCounter() {
+		this.ammount = originalAmmount;
+		ammountText.setText(Integer.toString(ammount));
+	}
 
 }

@@ -12,6 +12,8 @@ public class BasketBall extends Ball{
 ////////////////////
 	public BasketBall(float x, float y) {
 		super(20, 30, material,"basketball.png", x, y);
+		setScale(0.7f);
+		setOriginalscale(0.7f);
 	}
 	
 }

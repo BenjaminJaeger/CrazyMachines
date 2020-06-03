@@ -1,5 +1,6 @@
 package UI.TabElements;
 
+import Simulation.Objects.GameObject;
 import Simulation.Objects.StaticObjects.StaticExternalObjects.StaticPlane;
 import javafx.scene.layout.Pane;
 
@@ -14,8 +15,8 @@ public class StaticPlaneTabElement extends TabElement{
 	}
 
 	@Override
-	public void createObject(float x, float y) {
-		new StaticPlane(x, y);
+	public GameObject createObject(float x, float y) {
+		return new StaticPlane(x, y);
 	}
 
 }

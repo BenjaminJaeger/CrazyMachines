@@ -1,5 +1,6 @@
 package UI.TabElements;
 
+import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.Ball.BasketBall;
 import javafx.scene.layout.Pane;
 
@@ -14,8 +15,8 @@ public class BasketballTabElement extends TabElement{
 	}
 
 	@Override
-	public void createObject(float x, float y) {
-		new BasketBall(x,y);
+	public GameObject createObject(float x, float y) {
+		return new BasketBall(x,y);
 	}
 
 }

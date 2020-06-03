@@ -14,7 +14,7 @@ public class ObjectSettingsEditor extends ObjectSettingsLevel {
        public void addUI(GameObject object) {
     	   super.addUI(object);
     	     	   
-	       CheckBox playable = new CheckBox("Playable");
+	       CheckBox playable = new CheckBox(" Playable");
 	       playable.setSelected(object.isPlayable());
 	       playable.setOnAction(e->{
 	       		object.setPlayable(playable.isSelected());

@@ -1,6 +1,8 @@
 package UI.EditorMenue;
 
 import Simulation.LevelExportImport;
+import Simulation.SimulationControler;
+import Simulation.Objects.GameObject;
 import UI.LevelMenue.ControlsLevel;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,6 +17,12 @@ public class ControlsEditor extends ControlsLevel{
 
 	public ControlsEditor(Scene mainScene,Stage primaryStage) {
 		 super(mainScene, primaryStage);
+		 
+		 clear.setOnAction(e->{
+	         if (!SimulationControler.isPlaying()) 
+	        	GameObject.allObjects.clear();
+	         
+	     });
 		 
 		Button save = new Button(" Save");
 		save.setOnAction(e->{
