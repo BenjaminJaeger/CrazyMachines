@@ -7,15 +7,17 @@ import Simulation.Objects.GameObject;
 
 public class SimulationControler {
 
-	private static int updateTime = 10; 
+	private static int updateTime = 10;
 	private static Timer simulationTimer;
+	private static int counter = 0;
 	private static boolean isPlaying;
-	
+
 	public static void setUpdateTime(int updateTime) {
 		SimulationControler.updateTime=updateTime;
 	}
 	
 	public static void pause() {
+		counter = 0;
 		if(isPlaying) {
 			isPlaying=false;
 			simulationTimer.cancel();
@@ -28,6 +30,7 @@ public class SimulationControler {
 			simulationTimer = new Timer();
 			simulationTimer.scheduleAtFixedRate(new TimerTask() {
 			    public void run() {
+			    	counter += updateTime;
 				      for (GameObject object : GameObject.allObjects) 
 				    	  object.update();			      
 				    }
@@ -48,5 +51,13 @@ public class SimulationControler {
 	public static boolean isPlaying() {
 		return isPlaying;
 	}
-	
+
+	public static int getCounter() {
+		return counter;
+	}
+
+	public static void setCounter(int counter) {
+		SimulationControler.counter = counter;
+	}
+
 }

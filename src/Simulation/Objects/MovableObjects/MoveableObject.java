@@ -4,6 +4,7 @@ import Simulation.Collisions.DynamicCollisionContext;
 import Simulation.Objects.GameObject;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Primitive;
+import Simulation.SimulationControler;
 
 public abstract class MoveableObject extends GameObject{
 
@@ -36,22 +37,35 @@ public abstract class MoveableObject extends GameObject{
 ////Methods////
 ///////////////
 	public void update() {	
-		applyForce(0, -0.1f);	
-		increaseVelocity(accelerationX, accelerationY);
-		
-		if (Math.abs(velocityX) <0.1f) 
+		applyForce(0, -0.0009807f);
+		calculateVelocity();
+
+		/*
+		if (Math.abs(velocityX) <0.1f)  //Wenn die Beschleunigung sehr niedrig ist, wird sie auf null gesetzt
 			velocityX=0;
 		if (Math.abs(velocityY)  <0.1f) 
 			velocityY=0;
-		
-		increasePosition(velocityX, velocityY);
+		 */
+
+		calculatePosition();
+		//increasePosition(velocityX, velocityY);
 		increaseRotation(-velocityX);
 		resetAcceleration();
-				
-		accelerationX = -velocityX*0.005f;
+
+		/*
+		accelerationX = -velocityX*0.005f; //Reibung
 		accelerationY = -velocityY*0.005f;
+		 */
 
 		((DynamicCollisionContext) collisionContext).checkCollisions();
+	}
+
+	public void calculatePosition() {
+		//s = s0 + v0 * t + 0,5 * a * t2
+		this.x = x + velocityX * SimulationControler.getCounter() * 0.01f + 0.5f * accelerationX * (SimulationControler.getCounter() * 0.01f) * (SimulationControler.getCounter() * 0.01f);
+		this.y = y + velocityY * SimulationControler.getCounter() * 0.01f + 0.5f * accelerationY * (SimulationControler.getCounter() * 0.01f) * (SimulationControler.getCounter() * 0.01f);
+		setX(x);
+		setY(y);
 	}
 	
 	public void applyForce(float x,float y) {
@@ -60,9 +74,10 @@ public abstract class MoveableObject extends GameObject{
 		increaseAcceleration(x, y);
 	}
 	
-	public void increaseVelocity(float dx,float dy) {
-		this.velocityX+=dx;
-		this.velocityY+=dy;
+	public void calculateVelocity() {
+		// v=v0+a*δt
+		this.velocityX = velocityX + accelerationX * SimulationControler.getUpdateTime() * 0.01f;
+		this.velocityY = velocityY + accelerationY * SimulationControler.getUpdateTime() * 0.01f;
 	}
 	
 	public void increaseAcceleration(float dx,float dy) {
