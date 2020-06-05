@@ -7,7 +7,7 @@ import Simulation.Objects.GameObject;
 
 public class SimulationControler {
 
-	private static int updateTime = 10;
+	private static int updateTime = 50;
 	private static Timer simulationTimer;
 	private static int counter = 0;
 	private static boolean isPlaying;
@@ -48,12 +48,16 @@ public class SimulationControler {
 		return updateTime;
 	}
 	
+	public static float getUpdateTimeInSeconds() {
+		return (float)updateTime/100;
+	}
+	
 	public static boolean isPlaying() {
 		return isPlaying;
 	}
 
-	public static int getCounter() {
-		return counter;
+	public static float getTime() {
+		return counter/1000;
 	}
 
 	public static void setCounter(int counter) {
