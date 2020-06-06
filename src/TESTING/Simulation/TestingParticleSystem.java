@@ -71,8 +71,9 @@ public class TestingParticleSystem extends Application implements GLEventListene
     public void display(GLAutoDrawable arg0) {
         renderer.clear();
 
-        particleSystem.update(new Vector2f(0,-2));
+        particleSystem.update();
 
+        //Boolean, wenn das Objekt generiert wird, dann hau richtig durch
         renderer.render(particleSystem.particles, shader);
 
         for (LineModel object : test)

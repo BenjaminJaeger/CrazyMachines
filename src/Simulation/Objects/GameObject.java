@@ -3,6 +3,7 @@ package Simulation.Objects;
 import java.util.ArrayList;
 
 import Simulation.Collisions.CollisionContext;
+import Simulation.Particles.ParticleSystem;
 import Simulation.RenderEngine.Core.Models.Model;
 import Simulation.RenderEngine.Core.Models.TriangleModel;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
@@ -47,7 +48,8 @@ public abstract class GameObject {
 	private boolean playable = false;
 	
 	private TabElement tabPane;
-	
+
+	protected ParticleSystem particleSystem;
 ////////////////////
 ////Constructors////
 ////////////////////
@@ -372,6 +374,14 @@ public abstract class GameObject {
 	
 	public void setTabPane(TabElement tabPane) {
 		this.tabPane = tabPane;
+	}
+
+	public ParticleSystem getParticleSystem() {
+		return particleSystem;
+	}
+
+	public void setParticleSystem(ParticleSystem particleSystem) {
+		this.particleSystem = particleSystem;
 	}
 	
 }
