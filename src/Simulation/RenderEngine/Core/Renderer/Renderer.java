@@ -161,6 +161,9 @@ public class Renderer {
 
 	public void render(InstancedModel model, BasicShader shader) {
 		GL4 gl=(GL4)GLContext.getCurrentGL();
+		
+		model.update();
+		
 		float[] matrixData = new float[16*model.getInstances()];
 			
 		//activate shader before rendering

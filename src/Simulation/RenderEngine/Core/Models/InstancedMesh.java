@@ -43,8 +43,7 @@ public class InstancedMesh {
 		baseVertices=parser.getVertices();
 		indices=parser.getIndices();
 		indexCount=indices.length;
-//		normals=parser.getNormals(); // normals dont get read properly
-		calculateNormals();
+		normals=parser.getNormals(); 
 	}
 
 	/**
