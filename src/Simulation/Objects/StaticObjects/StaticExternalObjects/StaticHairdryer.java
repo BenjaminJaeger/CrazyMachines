@@ -7,7 +7,7 @@ public class StaticHairdryer extends StaticExternalObject{
     private static Material material = new Material(new Vector3f(0.2f), new Vector3f(0.5f), new Vector3f(1f), 4f);
 
     public StaticHairdryer(float x, float y) {
-        super("hairdryer","PlaneBounding","HairdryerTexture.jpg", material, x, y);
+        super("hairdryer","hairdryer","HairdryerTexture.jpg", material, x, y);
         setScale(0.4f);
         setOriginalscale(0.4f);
     }

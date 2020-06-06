@@ -1,6 +1,7 @@
 package Simulation.Objects.MovableObjects;
 
 import Simulation.SimulationControler;
+import Simulation.Collisions.DynamicCollisionContext;
 import Simulation.Objects.GameObject;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Primitive;
@@ -52,7 +53,7 @@ public abstract class MoveableObject extends GameObject{
 //		accelerationX = -velocityX*0.005f; 
 //		accelerationY = -velocityY*0.005f;
 		
-//		((DynamicCollisionContext) collisionContext).checkCollisions();
+		((DynamicCollisionContext) collisionContext).checkCollisions();
 	}
 
 	public void calculatePosition() {
