@@ -1,8 +1,6 @@
 package Simulation.RenderEngine.Core.Models;
 
 import Simulation.RenderEngine.Core.Math.Matrix4f;
-import Simulation.RenderEngine.Core.Math.Vector2f;
-import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Primitive;
 
@@ -18,6 +16,8 @@ import Simulation.RenderEngine.Primitives.Primitive;
  */
 public class InstancedModel{
 
+	private boolean createMesh;
+	
 	private Material material;
 	private Mesh mesh;
 
@@ -45,7 +45,8 @@ public class InstancedModel{
 			scaleZ[i]=1;
 		}
 		this.material=material;
-		loadToGPU.loadinstancedMeshToGPU(this);
+		
+		createMesh=true;
 	}
 
 	public InstancedModel(String file,int instances,Material material,float[] colors) {
@@ -58,10 +59,20 @@ public class InstancedModel{
 			scaleZ[i]=1;
 		}
 		this.material=material;
-		loadToGPU.loadinstancedMeshToGPU(this);
+		
+		createMesh=true;
 	}
 
+	public void update() {
+		if (createMesh) 
+			createMesh();
+	}
 
+	public void createMesh() {
+		loadToGPU.loadinstancedMeshToGPU(this);
+		this.createMesh = false;
+	}
+	
 	/**
 	 *increases the x,y,z position of each instance by dx,dy,dz
 	 * @param dx
@@ -235,6 +246,14 @@ public class InstancedModel{
 
 	public Mesh getMesh() {
 		return mesh;
+	}
+
+	public boolean isCreateMesh() {
+		return createMesh;
+	}
+
+	public void setCreateMesh(boolean createMesh) {
+		this.createMesh = createMesh;
 	}
 	
 	
