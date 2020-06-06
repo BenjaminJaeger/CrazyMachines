@@ -12,8 +12,8 @@ public class BoundingPolygon extends Bounding{
 ////////////////////
 ////Constructors////
 ////////////////////
-	public BoundingPolygon(float x, float y,Vector2f[] points,float centerX,float centerY) {
-		super(x, y,centerX,centerY);
+	public BoundingPolygon(float x, float y,Vector2f[] points) {
+		super(x, y);
 		this.originalPoints = points;
 		
 		//copy Array and add current position

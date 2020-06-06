@@ -10,14 +10,11 @@ import Simulation.RenderEngine.Core.Math.Vector2f;
 public class BoundingReader {
 
 	public static ArrayList<ArrayList<Vector2f>> hulls;
-	public static ArrayList<Vector2f> centers;
 	
 	public static BoundingPolygon[] read(String file,float x ,float y) {
 		
-		hulls = new ArrayList<ArrayList<Vector2f>>();
-		centers =  new ArrayList<Vector2f>();
-		readFile(file);
-		
+		hulls = new ArrayList<ArrayList<Vector2f>>();	
+		readFile(file);		
 		BoundingPolygon[] boundingPolygons = createBoundingPolygons(x, y);
 	
 		return boundingPolygons;
@@ -40,9 +37,6 @@ public class BoundingReader {
 						hulls.add(currentHull);
 						currentHull = new ArrayList<Vector2f>();
 					}
-				}else if(scannedLine.startsWith("o ")) {
-					String[] v = scannedLine.substring(2).split("/");
-					centers.add(new Vector2f(Float.parseFloat(v[0]) *Config.CANVAS_WIDTH , Float.parseFloat(v[1]) * Config.CANVAS_HEIGHT )); 	
 				}else {
 					String[] v = scannedLine.substring(2).split("/");
 					currentHull.add(new Vector2f(Float.parseFloat(v[0]) *Config.CANVAS_WIDTH , Float.parseFloat(v[1]) * Config.CANVAS_HEIGHT )); 			
@@ -65,7 +59,7 @@ public class BoundingReader {
 			for (int j = 0; j < points.length; j++) 
 				points[j] = hulls.get(i).get(j);
 							
-			boundingPolygons[i] = new BoundingPolygon(x, y, points,centers.get(i).x,centers.get(i).y);
+			boundingPolygons[i] = new BoundingPolygon(x, y, points);
 		}
 		
 		return boundingPolygons;

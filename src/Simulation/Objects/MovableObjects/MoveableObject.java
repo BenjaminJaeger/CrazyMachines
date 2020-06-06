@@ -1,7 +1,6 @@
 package Simulation.Objects.MovableObjects;
 
 import Simulation.SimulationControler;
-import Simulation.Collisions.DynamicCollisionContext;
 import Simulation.Objects.GameObject;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Primitive;
@@ -53,8 +52,7 @@ public abstract class MoveableObject extends GameObject{
 //		accelerationX = -velocityX*0.005f; 
 //		accelerationY = -velocityY*0.005f;
 		
-
-		((DynamicCollisionContext) collisionContext).checkCollisions();
+//		((DynamicCollisionContext) collisionContext).checkCollisions();
 	}
 
 	public void calculatePosition() {
@@ -63,8 +61,11 @@ public abstract class MoveableObject extends GameObject{
 		//  acceleration = m/s²
 		//  time         = s
 		
-		setX( x + velocityX * SimulationControler.getUpdateTimeInSeconds() + 0.5f * accelerationX * (float)Math.pow(SimulationControler.getUpdateTimeInSeconds(),2) );
-		setY( y + velocityY * SimulationControler.getUpdateTimeInSeconds() + 0.5f * accelerationY * (float)Math.pow(SimulationControler.getUpdateTimeInSeconds(),2) );
+		float newX = x + velocityX * SimulationControler.getUpdateTimeInSeconds() + 0.5f * accelerationX * (float)Math.pow(SimulationControler.getUpdateTimeInSeconds(),2);
+		float newY = y + velocityY * SimulationControler.getUpdateTimeInSeconds() + 0.5f * accelerationY * (float)Math.pow(SimulationControler.getUpdateTimeInSeconds(),2);
+		
+		setX(newX);
+		setY(newY);
 	}
 	
 	public void applyForce(float x,float y) {

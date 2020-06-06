@@ -14,6 +14,12 @@ public abstract class StaticObject extends GameObject{
 		mass = 999999999;
 		originalMass = 999999999;
 	}
+	
+	public StaticObject(Primitive primitive, String file,Material material, float x, float y) {
+		super(primitive,material,file, x, y);
+		mass = 999999999;
+		originalMass = 999999999;
+	}
 
 	public StaticObject(String file, Material material, float r, float g, float b, float x, float y) {
 		super(file, material, r,g,b, x, y);

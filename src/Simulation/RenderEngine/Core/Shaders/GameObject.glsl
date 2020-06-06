@@ -148,7 +148,9 @@ void main(void){
 	fragmentColor+=material.ambientColor*ambientLightColor;
 	fragmentColor*=selectionHighlight;
 	
-	vec3 textureColor = texture(textureSampler,pass_textureCoords).xyz;
-	
+	vec4 texColor = texture(textureSampler,pass_textureCoords);
+	if(texColor.a < 0.1)
+        discard;
+	vec3 textureColor = texColor.xyz;
 	finalColor=vec4(textureColor*fragmentColor,material.alphaValue);							
 };

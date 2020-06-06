@@ -9,7 +9,6 @@ public class SimulationControler {
 
 	private static int updateTime = 50;
 	private static Timer simulationTimer;
-	private static int counter = 0;
 	private static boolean isPlaying;
 
 	public static void setUpdateTime(int updateTime) {
@@ -17,7 +16,6 @@ public class SimulationControler {
 	}
 	
 	public static void pause() {
-		counter = 0;
 		if(isPlaying) {
 			isPlaying=false;
 			simulationTimer.cancel();
@@ -30,7 +28,6 @@ public class SimulationControler {
 			simulationTimer = new Timer();
 			simulationTimer.scheduleAtFixedRate(new TimerTask() {
 			    public void run() {
-			    	counter += updateTime;
 				      for (GameObject object : GameObject.allObjects) 
 				    	  object.update();			      
 				    }
@@ -49,19 +46,11 @@ public class SimulationControler {
 	}
 	
 	public static float getUpdateTimeInSeconds() {
-		return (float)updateTime/100;
+		return (float)updateTime/1000;
 	}
 	
 	public static boolean isPlaying() {
 		return isPlaying;
-	}
-
-	public static float getTime() {
-		return counter/1000;
-	}
-
-	public static void setCounter(int counter) {
-		SimulationControler.counter = counter;
 	}
 
 }

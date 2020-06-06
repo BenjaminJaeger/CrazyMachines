@@ -17,11 +17,9 @@ public abstract class Bounding {
 ////////////////////
 ////Constructors////
 ////////////////////
-	public Bounding (float x, float y,float centerX, float centerY) {
+	public Bounding (float x, float y) {
 		this.x=x;
 		this.y=y;
-		this.centerX=centerX;
-		this.centerY=centerY;
 	}
 		
 	

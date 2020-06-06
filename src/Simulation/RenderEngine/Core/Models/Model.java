@@ -118,6 +118,7 @@ public abstract class Model {
 		if (dz!=0) this.z+=dz;	
 		if (dx!=0 || dy!=0 || dz!=0) 
 			updateMatrix=true;
+		
 	}
 	
 	/**
@@ -128,7 +129,7 @@ public abstract class Model {
 		if (dx!=0) 	this.rotationX+=dx;
 		if (dy!=0) this.rotationY+=dy;
 		if (dz!=0) this.rotationZ+=dz;
-		if (dx!=0 && dy!=0 && dz!=0) 
+		if (dx!=0 || dy!=0 || dz!=0)
 			updateMatrix=true;
 	}
 	

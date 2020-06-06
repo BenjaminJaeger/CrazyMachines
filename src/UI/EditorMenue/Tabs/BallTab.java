@@ -1,6 +1,7 @@
 package UI.EditorMenue.Tabs;
 
 import UI.TabElements.BasketballTabElement;
+import UI.TabElements.PortalTabElement;
 import javafx.scene.layout.Pane;
 
 public class BallTab extends EditorTab{
@@ -12,7 +13,8 @@ public class BallTab extends EditorTab{
 	@Override
 	protected void createContent(Pane glass) {
 		 BasketballTabElement basketBall = new BasketballTabElement(glass);
-		 content.getChildren().add(basketBall);
+		 PortalTabElement portal = new PortalTabElement(glass);
+		 content.getChildren().addAll(basketBall,portal);
 	}
 	
 	
