@@ -1,0 +1,64 @@
+false
+Portal
+-103.5/-54.75
+0.8
+0.0
+1.0E9
+direction TODO 
+speed TODO 
+false
+Portal
+6.0/-114.0
+0.8
+0.0
+1.0E9
+direction TODO 
+speed TODO 
+false
+StaticBucket
+85.5/-207.0
+0.4
+0.0
+1.0E9
+direction TODO 
+speed TODO 
+false
+StaticPlane
+63.0/-68.25
+0.4
+0.0
+1.0E9
+direction TODO 
+speed TODO 
+true
+StaticPlane
+-187.5/-12.0
+0.4
+90.0
+1.0E9
+direction TODO 
+speed TODO 
+false
+StaticPlane
+130.5/-146.25
+0.4
+90.0
+1.0E9
+direction TODO 
+speed TODO 
+true
+StaticPlane
+48.75/76.5
+0.4
+-136.03624
+1.0E9
+direction TODO 
+speed TODO 
+false
+BasketBall
+33.75/201.75
+0.7
+0.0
+1.0
+direction TODO 
+speed TODO 
