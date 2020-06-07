@@ -19,11 +19,12 @@ public class StaticMagnet extends StaticExternalObject{
 
     @Override
     public void update() {
-        Vector2f facingVector = new Vector2f(-1, 0);
+        Vector2f directional = Util.rotate(-1, 0, this.getRotation());
+        System.out.println(directional.toString());
         //angle value between 0 and 180
         double thresholdAngle = Util.remap(60);
         int thresholdDistance = 200;
-        Vector2f directional = Util.calculateDirection(facingVector.getX(), facingVector.getY(), this.getRotation());
+
 
         for (GameObject object : allObjects) {
             if (object instanceof MoveableObject) {
@@ -32,9 +33,16 @@ public class StaticMagnet extends StaticExternalObject{
                 double scalar = Util.calcScalar(directional, connecting);
 
                 if (scalar > thresholdAngle && distance <= thresholdDistance) {
-                    ((MoveableObject) object).applyForce(35, 0);
+                    float force = 50f; //TO-DO force function
+                    Vector2f initForceDirection = Util.rotate(-1, 0, this.getRotation());
+                    System.out.println(initForceDirection.getX()+"+"+initForceDirection.getY());
+                    ((MoveableObject) object).applyForce(initForceDirection.getX()*force, initForceDirection.getY()*force);
                 }
             }
         }
+    }
+
+    private float forceFunction () {
+        return 50f;
     }
 }

@@ -60,10 +60,6 @@ public class Util {
 			return (float)Math.random() * Config.CANVAS_HEIGHT/4;
 	}
 
-	public static Vector2f calculateDirection (float x, float y, double rotation) {
-		return new Vector2f ((float)(Math.cos(rotation)*x - Math.sin(rotation)*y), (float) (Math.sin(rotation)*x + Math.cos(rotation)*y));
-	}
-
 	public static double calcVectorSize (Vector2f vector) {
 		return Math.sqrt(Math.pow(vector.getX(),2)+Math.pow(vector.getY(),2));
 	}
