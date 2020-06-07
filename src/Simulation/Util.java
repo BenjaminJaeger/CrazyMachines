@@ -6,7 +6,7 @@ import Simulation.RenderEngine.Core.Math.Vector2f;
 public class Util {
 	
 	public static float getDistance(float x1,float y1,float x2,float y2) {
-		//pythagoras theorem a² + b² = c² -> sqrt(a² + b²) = c
+		//pythagoras theorem aï¿½ + bï¿½ = cï¿½ -> sqrt(aï¿½ + bï¿½) = c
 		return (float)Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
 	}
 	
@@ -59,6 +59,16 @@ public class Util {
 		else 
 			return (float)Math.random() * Config.CANVAS_HEIGHT/4;
 	}
-	
-	
+
+	public static Vector2f calculateDirection (float x, float y, double rotation) {
+		return new Vector2f ((float)(Math.cos(rotation)*x - Math.sin(rotation)*y), (float) (Math.sin(rotation)*x + Math.cos(rotation)*y));
+	}
+
+	public static double calcVectorSize (Vector2f vector) {
+		return Math.sqrt(Math.pow(vector.getX(),2)+Math.pow(vector.getY(),2));
+	}
+
+	public static double calcScalar (Vector2f a, Vector2f b) {
+		return a.getX()*b.getX()+a.getY()*b.getY();
+	}
 }

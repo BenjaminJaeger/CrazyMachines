@@ -5,7 +5,7 @@ import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.RenderEngine.Core.Math.Vector2f;
 import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
-import UI.Util;
+import Simulation.Util;
 
 public class StaticMagnet extends StaticExternalObject{
 
@@ -19,11 +19,19 @@ public class StaticMagnet extends StaticExternalObject{
 
     @Override
     public void update() {
-        Vector2f directional = Util.calculateDirection((double) this.getRotation());
+        double thresholdAngle = 7.5;
+        int thresholdDistance = 200;
+        Vector2f directional = Util.calculateDirection(-1, 0, this.getRotation());
 
         for (GameObject object : allObjects) {
             if (object instanceof MoveableObject) {
-                ((MoveableObject) object).applyForce(0, 0);
+                Vector2f connecting = new Vector2f (object.getX() - this.getX(), object.getY() - this.getY());
+                double distance = Util.calcVectorSize(connecting);
+                double scalar = Util.calcScalar(directional, connecting);
+
+                if (scalar > thresholdAngle && distance <= thresholdDistance) {
+                    ((MoveableObject) object).applyForce(35, 0);
+                }
             }
         }
     }
