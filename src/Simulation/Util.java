@@ -71,4 +71,12 @@ public class Util {
 	public static double calcScalar (Vector2f a, Vector2f b) {
 		return a.getX()*b.getX()+a.getY()*b.getY();
 	}
+
+	public static double remap (double value) {
+		if (value >= 0 && value <= 180) {
+			value /= 180;
+			value *= 15;
+		}
+		return value;
+	}
 }
