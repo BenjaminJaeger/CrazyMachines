@@ -15,7 +15,6 @@ public class CollisionContext {
 	protected GameObject gameObject;
 	
 	protected boolean canCollide = true;
-	protected int canCollideCounter = 0;
 
 ////////////////////
 ////Constructors////
@@ -137,8 +136,7 @@ public class CollisionContext {
 		for (BoundingPolygon polygon : boundingPolygons) 
 			polygon.setScale(scale);
 	}
-	
-	
+		
 	public boolean canCollide() {
 		return canCollide;
 	}
@@ -147,18 +145,4 @@ public class CollisionContext {
 		this.canCollide = canCollide;
 	}
 
-	public int getCanCollideCounter() {
-		return canCollideCounter;
-	}
-
-	public void setCanCollideCounter(int canCollideCounter) {
-		this.canCollideCounter = canCollideCounter;
-	}
-	
-	public void increaseCanColliderCounter() {
-		this.canCollideCounter++;
-	}
-
-	
-	
 }

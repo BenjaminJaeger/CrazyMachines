@@ -85,19 +85,19 @@ public class ControlsLevel extends VBox{
 	     });
 
 
-	    Label ammount = new Label(Integer.toString(30-SimulationControler.getUpdateTime()));
+	    Label ammount = new Label(Integer.toString(10-SimulationControler.getUpdateTime()));
 	    Slider slider = new Slider();
 	    
 	    VBox container = new VBox(10);	
 	    container.setAlignment(Pos.CENTER);
 	    slider.setOrientation(Orientation.VERTICAL);
 	    slider.setMin(1);
-	    slider.setMax(30);
-	    slider.setValue((int)slider.getMax()-SimulationControler.getUpdateTime());
+	    slider.setMax(10);
+	    slider.setValue(SimulationControler.getUpdateTime());
 	    slider.valueProperty().addListener(new ChangeListener<Number>() {
 	         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-	        	ammount.setText(Integer.toString((int)slider.getMax()-newValue.intValue()+1));
-	         	SimulationControler.setUpdateTime((int)slider.getMax()-newValue.intValue()+1);
+	        	ammount.setText(Integer.toString(newValue.intValue()));
+	         	SimulationControler.setUpdateTime(newValue.intValue());
 	         	if (SimulationControler.isPlaying()) {
 	 	             SimulationControler.pause();
 	 	             SimulationControler.play();

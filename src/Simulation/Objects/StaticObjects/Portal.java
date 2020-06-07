@@ -14,56 +14,57 @@ import UI.ObjectTransformer.ObjectTransformer;
 public class Portal extends StaticObject{
 
 	private float offset = 60;
+	private float originalOffset = offset;
 	private Portal portal;
-	private boolean activated = true;
 	
 	private static Material material = new Material(new Vector3f(0.2f), new Vector3f(0.5f), new Vector3f(0.1f,0.1f,0.1f), 4f);
 
 	public Portal(float x, float y) {
 		super(new Plane(100, 100, 0), "portal.png", material, x, y);			
-		createCollsionContext();
+		collisionContext = new DynamicCollisionContext(this,new BoundingRectangle(x, y, 80));
+		collisionContext.canCollide(false);
+		objectTransformer = new ObjectTransformer(this);
 		setRotation((float)Math.random()*360);
+		setScale(0.8f);
+		originalscale = 0.8f;
 	}
 
-	protected void createCollsionContext() {
-		collisionContext = new DynamicCollisionContext(this,new BoundingRectangle(x, y, 40));
-		objectTransformer = new ObjectTransformer(this);
-	}
-	
-	public void setPortal(Portal portal) {
-		this.portal = portal;
-	}
-	
-	public void setActivated(boolean activated) {
-		this.activated = activated;
-	}
-	
 	@Override
 	public void update() {
 		models[0].increaseRotation(0, 0, 1);
 	
-		if (activated) 
-			for (GameObject gameObject : allObjects) 
-				if(gameObject instanceof MoveableObject) {
-					MoveableObject object = (MoveableObject)gameObject;
+		for (GameObject gameObject : allObjects) 
+			if(gameObject instanceof MoveableObject) {
+				MoveableObject object = (MoveableObject)gameObject;
 					
-					if(object.getX() <= x+offset && object.getX() >= x-offset && object.getY() <= y+offset && object.getY() >= y-offset) {
-						object.setX(portal.getX());
-						object.setY(portal.getY());
-						activated=false;
-						portal.setActivated(false);
-						
-						Timer timer = new Timer();
-						timer.schedule(new TimerTask() {
-						    public void run() {
-						    	activated=true;
-								portal.setActivated(true);   
-						    }
-						},2000);	
-						
-					}	
+				if(object.isPortable() && object.getX() <= x+offset && object.getX() >= x-offset && object.getY() <= y+offset && object.getY() >= y-offset) {
+					object.setX(portal.getX());
+					object.setY(portal.getY());
 					
-				}
+					object.setPortable(false);
+					
+					Timer timer = new Timer();
+					timer.schedule(new TimerTask() {
+						public void run() {
+							object.setPortable(true);
+						   }
+					},1500);							
+				}						
+			}
+	}
+	
+	public void setScale(float scale) {
+		super.setScale(scale);
+		this.offset= originalOffset * scale;
+	}
+	
+	public void remove() {
+		super.remove();
+		GameObject.allObjects.remove(portal);
+	}
+
+	public void setPortal(Portal portal) {
+		this.portal = portal;
 	}
 
 }

@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.Ball.BasketBall;
+import Simulation.Objects.StaticObjects.Portal;
 import Simulation.Objects.StaticObjects.StaticExternalObjects.StaticBucket;
 import Simulation.Objects.StaticObjects.StaticExternalObjects.StaticPlane;
 import UI.Util;
@@ -63,7 +64,10 @@ public class LevelExportImport {
 	try	{	
 				
 			Scanner sc = new Scanner(new File("res/levels/"+file+".txt"));
-
+			int portalCounter = 0;
+			GameObject object = null;
+			GameObject oldObject = null;
+			
 			while (sc.hasNext()){
 				boolean playable = Boolean.parseBoolean(sc.nextLine());
 				if(!playable) {
@@ -71,7 +75,6 @@ public class LevelExportImport {
 					String position = sc.nextLine();
 					float x = Float.valueOf(position.split("/")[0]);
 					float y = Float.valueOf(position.split("/")[1]);
-					GameObject object = null;
 					
 					switch (type) {
 					case "BasketBall": {
@@ -86,10 +89,22 @@ public class LevelExportImport {
 						object = new StaticBucket(x,y);	
 						break;
 					}
-					
+					case "Portal": {	
+						portalCounter++;
+						object = new Portal(x,y);	
+						if(portalCounter>1) {
+							((Portal)object).setPortal((Portal)oldObject);
+							((Portal)oldObject).setPortal((Portal)object);
+							portalCounter=0;
+						}
+						
+						break;
+					}
 					default:
 						throw new IllegalArgumentException("Unexpected value: " + type);
 					}
+					
+					oldObject = object;
 					
 					float scale = Float.valueOf(sc.nextLine());
 					float rotation = Float.valueOf(sc.nextLine());
