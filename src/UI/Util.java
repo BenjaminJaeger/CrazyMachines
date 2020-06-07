@@ -50,4 +50,12 @@ public class Util {
 	public static Vector2f calculateDirection (double rotation) {
 		return new Vector2f ((float)(- Math.sin(rotation)), (float) (- Math.cos(rotation)));
 	}
+
+	public static double calcVectorSize (Vector2f vector) {
+		return Math.sqrt(Math.pow(vector.getX(),2)+Math.pow(vector.getY(),2));
+	}
+
+	public static double calcScalar (Vector2f a, Vector2f b) {
+		return a.getX()*b.getX()+a.getY()*b.getY();
+	}
 }
