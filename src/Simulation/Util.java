@@ -74,7 +74,8 @@ public class Util {
 
 	public static double remap (double value) {
 		if (value >= 0 && value <= 180) {
-			value /= 180;
+			value /= 2;
+			value /= 90;
 			value *= 15;
 		}
 		return value;

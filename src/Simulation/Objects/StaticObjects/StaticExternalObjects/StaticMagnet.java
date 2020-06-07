@@ -19,9 +19,11 @@ public class StaticMagnet extends StaticExternalObject{
 
     @Override
     public void update() {
-        double thresholdAngle = 7.5;
+        Vector2f facingVector = new Vector2f(-1, 0);
+        //angle value between 0 and 180
+        double thresholdAngle = Util.remap(60);
         int thresholdDistance = 200;
-        Vector2f directional = Util.calculateDirection(-1, 0, this.getRotation());
+        Vector2f directional = Util.calculateDirection(facingVector.getX(), facingVector.getY(), this.getRotation());
 
         for (GameObject object : allObjects) {
             if (object instanceof MoveableObject) {

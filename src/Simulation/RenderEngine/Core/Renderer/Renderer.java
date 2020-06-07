@@ -104,7 +104,7 @@ public class Renderer {
 			render(object.getObjectTransformer().getSquareUI().getRectangleLine(), object.getObjectTransformer().getSquareUI().getShader());
 		}
 
-		render(object.getParticleSystem().particles, object.getParticleSystem().getBasicShader());
+		//render(object.getParticleSystem().particles, object.getParticleSystem().getBasicShader());
 	}
 
 	
