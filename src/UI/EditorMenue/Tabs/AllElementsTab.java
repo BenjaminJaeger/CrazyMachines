@@ -16,8 +16,9 @@ public class AllElementsTab extends EditorTab{
 		 PortalTabElement portal = new PortalTabElement(glass);
 		 StaticPlaneTabElement plane = new StaticPlaneTabElement(glass);
 		 BucketTabElement bucket = new BucketTabElement(glass);
+		 MagnetTabElement magnetTab = new MagnetTabElement (glass);
 			
-		 content.getChildren().addAll(basketBall,portal,plane,bucket, hairdryer);
+		 content.getChildren().addAll(basketBall,portal,plane,bucket, hairdryer, magnetTab);
 	}
 	
 	
