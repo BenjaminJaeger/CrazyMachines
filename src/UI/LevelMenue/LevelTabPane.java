@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import UI.TabElements.BasketballTabElement;
 import UI.TabElements.BucketTabElement;
-import UI.TabElements.StaticPlaneTabElement;
+import UI.TabElements.PlaneTabElement;
 import UI.TabElements.TabElement;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -40,7 +40,7 @@ public class LevelTabPane extends HBox{
 						break;
 					}
 					case "StaticPlane": {
-						element = new StaticPlaneTabElement(glass, 1);
+						element = new PlaneTabElement(glass, 1);
 						break;
 					}
 					case "StaticBucket": {

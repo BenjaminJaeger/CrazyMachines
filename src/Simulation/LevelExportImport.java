@@ -9,9 +9,9 @@ import java.util.Scanner;
 
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.Ball.BasketBall;
-import Simulation.Objects.StaticObjects.Portal;
-import Simulation.Objects.StaticObjects.StaticExternalObjects.StaticBucket;
-import Simulation.Objects.StaticObjects.StaticExternalObjects.StaticPlane;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Portal;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Bucket;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Plane;
 import UI.Util;
 
 public class LevelExportImport {
@@ -82,11 +82,11 @@ public class LevelExportImport {
 						break;
 					}
 					case "StaticPlane": {
-						object = new StaticPlane(x,y);	
+						object = new Plane(x,y);	
 						break;
 					}
 					case "StaticBucket": {
-						object = new StaticBucket(x,y);	
+						object = new Bucket(x,y);	
 						break;
 					}
 					case "Portal": {	

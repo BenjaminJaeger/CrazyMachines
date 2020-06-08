@@ -1,7 +1,7 @@
 package UI.TabElements;
 
 import Simulation.Objects.GameObject;
-import Simulation.Objects.StaticObjects.Portal;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Portal;
 import javafx.scene.layout.Pane;
 
 public class PortalTabElement extends TabElement{

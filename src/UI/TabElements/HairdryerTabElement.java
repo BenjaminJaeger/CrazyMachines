@@ -1,7 +1,7 @@
 package UI.TabElements;
 
 import Simulation.Objects.GameObject;
-import Simulation.Objects.StaticObjects.StaticExternalObjects.StaticHairdryer;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Hairdryer;
 import javafx.scene.layout.Pane;
 
 public class HairdryerTabElement extends TabElement {
@@ -15,6 +15,6 @@ public class HairdryerTabElement extends TabElement {
 
     @Override
     public GameObject createObject(float x, float y) {
-        return new StaticHairdryer(x,y);
+        return new Hairdryer(x,y);
     }
 }
