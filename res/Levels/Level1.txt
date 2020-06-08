@@ -1,5 +1,5 @@
 false
-StaticPlane
+Plane
 145.5/96.0
 0.4
 20.0
@@ -7,7 +7,7 @@ StaticPlane
 direction TODO 
 speed TODO 
 true
-StaticPlane
+Plane
 -78.75/-18.0
 0.4
 -20.0
@@ -15,7 +15,7 @@ StaticPlane
 direction TODO 
 speed TODO 
 false
-StaticBucket
+Bucket
 43.5/-105.0
 0.4
 0.0
@@ -23,7 +23,7 @@ StaticBucket
 direction TODO 
 speed TODO 
 false
-StaticPlane
+Plane
 86.25/-34.5
 0.4
 90.0

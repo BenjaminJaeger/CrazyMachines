@@ -6,7 +6,6 @@ import java.util.ConcurrentModificationException;
 
 import javax.swing.SwingUtilities;
 
-import Simulation.Objects.StaticObjects.StaticExternalObjects.StaticHairdryer;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLCapabilities;
@@ -26,8 +25,6 @@ import Simulation.RenderEngine.Core.Models.LineModel;
 import Simulation.RenderEngine.Core.Renderer.Renderer;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import UI.Util;
-
-
 
 public class Simulation implements GLEventListener{
  

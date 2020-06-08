@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -25,6 +27,7 @@ public class ControlsEditor extends ControlsLevel{
 	     });
 		 
 		Button save = new Button(" Save");
+		save.setGraphic(new ImageView(new Image("file:res/Images/save.png")));
 		save.setOnAction(e->{
 			
 			Label text = new Label("Name your Level!");

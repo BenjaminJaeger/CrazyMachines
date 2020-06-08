@@ -45,8 +45,18 @@ public class LevelSelectionMenue extends StackPane{
 		});
 		MenueLevelButton level4 = new MenueLevelButton("Level 4",levelsDone[3]);
 		level4.setOnMouseClicked(e->{
-//			new Level(mainScene, "Level4",primaryStage);
+			new Level(mainScene, "Level4",primaryStage);
 			Util.currentLevel = 4;
+		});
+		MenueLevelButton level5 = new MenueLevelButton("Level 4",levelsDone[3]);
+		level4.setOnMouseClicked(e->{
+//			new Level(mainScene, "Level5",primaryStage);
+			Util.currentLevel = 5;
+		});
+		MenueLevelButton level6 = new MenueLevelButton("Level 4",levelsDone[3]);
+		level4.setOnMouseClicked(e->{
+//			new Level(mainScene, "Level6",primaryStage);
+			Util.currentLevel = 6;
 		});
 		
 		Button leave = new Button();
@@ -56,7 +66,7 @@ public class LevelSelectionMenue extends StackPane{
 		});
 		
 		container.setAlignment(Pos.CENTER);
-		container.getChildren().addAll(level1,level2,level3,level4,leave);
+		container.getChildren().addAll(level1,level2,level3,level4,level5,level6,leave);
 		
 		this.getChildren().addAll(background,container);
 		
