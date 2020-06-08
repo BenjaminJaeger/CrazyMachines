@@ -3,6 +3,7 @@ package UI.EditorMenue.Tabs;
 import UI.TabElements.BasketballTabElement;
 import UI.TabElements.BucketTabElement;
 import UI.TabElements.HairdryerTabElement;
+import UI.TabElements.MagnetTabElement;
 import UI.TabElements.PlaneTabElement;
 import UI.TabElements.PortalTabElement;
 import UI.TabElements.SpinnerTabElement;
@@ -22,8 +23,9 @@ public class AllElementsTab extends EditorTab{
 		 PlaneTabElement plane = new PlaneTabElement(glass);
 		 BucketTabElement bucket = new BucketTabElement(glass);
 		 SpinnerTabElement spinner = new SpinnerTabElement(glass);
-			
-		 content.getChildren().addAll(basketBall,portal,plane,bucket, hairdryer,spinner);
+		 MagnetTabElement magnetTab = new MagnetTabElement (glass);
+		 
+		 content.getChildren().addAll(basketBall,portal,plane,bucket, hairdryer,spinner,magnetTab);
 	}
 	
 	

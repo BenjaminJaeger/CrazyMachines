@@ -1,6 +1,7 @@
 package Simulation.Particles;
 
 import Simulation.RenderEngine.Core.Math.Vector2f;
+import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Cube;
 
@@ -11,6 +12,8 @@ public class ParticleSystem {
     private Cube cube = new Cube (10);
     private float life;
     private float [] yNow;
+    private boolean activated = false;
+    private BasicShader basicShader = new BasicShader("Instanced");
 
     private Vector2f [] coordinates;
 
@@ -61,7 +64,7 @@ public class ParticleSystem {
         return newVectors;
     }
 
-    public void update(Vector2f particleMovement) {
+    public void update() {
         particles.setXconstant(0,0);
         particles.setYconstant(0,0);
 
@@ -77,5 +80,22 @@ public class ParticleSystem {
                 particles.setY(i, 0);
             }
         }
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+
+    public BasicShader getBasicShader() {
+        return basicShader;
+    }
+
+    public void setBasicShader(BasicShader basicShader) {
+        this.basicShader = basicShader;
     }
 }
