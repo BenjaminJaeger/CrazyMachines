@@ -1,6 +1,6 @@
 package Simulation.RenderEngine.Core;
 
-import Simulation.RenderEngine.Core.Math.Vector3f;
+import Simulation.RenderEngine.Core.Math.Vector4f;
 
 /**
  * Configuration class. This class configurates render settings but also canvas width height and framerate
@@ -12,7 +12,7 @@ public class Config {
 	//render settings
 	public static boolean BACK_FACE_CULLING = true;
 	public static boolean WIREFRAME_MODE = false;
-	public static Vector3f BACKGROUND_COLOR = new Vector3f(1, 1, 1);
+	public static Vector4f BACKGROUND_COLOR = new Vector4f(1, 1, 1,1);
 	
 	public static final float FIELD_OF_VIEW= 40 * (float)Math.PI/180;
 	public static final float NEAR_PLANE=0.1f;

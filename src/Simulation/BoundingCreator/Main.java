@@ -26,6 +26,7 @@ import Simulation.RenderEngine.Core.Lights.AmbientLight;
 import Simulation.RenderEngine.Core.Lights.DirectionalLight;
 import Simulation.RenderEngine.Core.Math.Vector2f;
 import Simulation.RenderEngine.Core.Math.Vector3f;
+import Simulation.RenderEngine.Core.Math.Vector4f;
 import Simulation.RenderEngine.Core.Models.LineModel;
 import Simulation.RenderEngine.Core.Models.TriangleModel;
 import Simulation.RenderEngine.Core.Renderer.Renderer;
@@ -279,7 +280,7 @@ public class Main extends Application implements GLEventListener{
 	@Override
 	public void init(GLAutoDrawable arg0) {
 		Config.BACK_FACE_CULLING = false;
-		Config.BACKGROUND_COLOR = new Vector3f(0.4f,0.5f,0.4f);
+		Config.BACKGROUND_COLOR = new Vector4f(0.4f,0.5f,0.4f,1);
 		Config.CANVAS_HEIGHT = canvas.getHeight();
 		Config.CANVAS_WIDTH = canvas.getWidth();
 		Config.LINE_WIDTH= 4;

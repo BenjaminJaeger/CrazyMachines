@@ -4,7 +4,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import Simulation.SimulationControler;
 import Simulation.Objects.GameObject;
-import UI.MainMenue.MainMenue;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Orientation;
@@ -127,17 +126,10 @@ public class ControlsLevel extends VBox{
 		speedbox.getChildren().addAll(container,speed,ammount);
 		speedbox.setAlignment(Pos.CENTER);
 		
-		Button exit = new Button(" Exit");
-		exit.setGraphic(new ImageView(new Image("file:res/Images/close.png")));
-		exit.setOnAction(e->{
-			new MainMenue(mainScene,primaryStage);
-			SimulationControler.pause();			
-		});
 		
-			
 	    this.setAlignment(Pos.CENTER);
-	    this.getChildren().addAll(playpause,stop,clear,speedbox,exit);
-	    this.getStylesheets().add("file:res/css/SimulationControls.css");
+	    this.getChildren().addAll(playpause,stop,clear,speedbox);
+	    this.getStylesheets().add("file:res/css/SideBar.css");
 	}
 	
 }

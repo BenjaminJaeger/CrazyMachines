@@ -23,8 +23,8 @@ public class MenueButton extends HBox{
 		this.getChildren().addAll(unchecked,btnText);		
 		this.setAlignment(Pos.CENTER);
 		
-		this.getStyleClass().add("MenueButton");
-		this.getStylesheets().add("file:res/css/MenueButton.css");
+		this.getStyleClass().add("MenueElement");
+		this.getStylesheets().add("file:res/css/MenueElements.css");
 		
 		this.setOnMouseEntered(e->{
 			this.getChildren().set(0, checked);			

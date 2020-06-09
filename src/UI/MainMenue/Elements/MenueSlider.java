@@ -29,8 +29,8 @@ public class MenueSlider extends HBox{
 		this.getChildren().addAll(btnText,container);		
 		this.setAlignment(Pos.CENTER);
 		
-		this.getStyleClass().add("MenueSlider");
-		this.getStylesheets().add("file:res/css/MenueSlider.css");			
+		this.getStyleClass().add("MenueElement");
+		this.getStylesheets().add("file:res/css/MenueElements.css");			
 	}
 	
 }

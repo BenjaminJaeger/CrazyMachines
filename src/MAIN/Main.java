@@ -16,10 +16,12 @@ public class Main extends Application{
 	
 		Scene mainScene = new Scene(new Pane(),1400, 900);
 		
-		MainMenue menue = new MainMenue(mainScene,primaryStage);
+		new MainMenue(mainScene,primaryStage);
 		
         primaryStage.setTitle("Visual Computing 2 Prototyp");
 		primaryStage.setScene(mainScene);
+		primaryStage.setMinWidth(800);
+		primaryStage.setMinHeight(800);
 		primaryStage.show();
 	}
 	

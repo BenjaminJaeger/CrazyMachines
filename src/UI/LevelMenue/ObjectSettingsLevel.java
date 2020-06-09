@@ -6,6 +6,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -15,7 +17,7 @@ public class ObjectSettingsLevel extends VBox {
 	 private TextField yPosition;
 	 private TextField scale;
 	 private TextField rotation;
-	 private TextField weight;
+	 private TextField mass;
 	 private TextField xdirection;
 	 private TextField ydirection;
 	 private TextField speed;
@@ -26,64 +28,84 @@ public class ObjectSettingsLevel extends VBox {
         
         this.getStyleClass().add("hbox");      
         this.setAlignment(Pos.CENTER);
-        this.getStylesheets().add("file:res/css/SimulationControls.css");
+        this.getStylesheets().add("file:res/css/SideBar.css");
     }
 
     public void addUI(GameObject object) {
         Label head = new Label("Object Settings");
 
-        Label xPositionL = new Label("position");
-        Label xp = new Label("x");
+        //POSITION
+        Label xPositionL = new Label("Position");
+        xPositionL.setMinWidth(50);
+        Label xp = new Label("X");
+        
         xPosition = new TextField (Float.toString(object.getX()));
         xPosition.setOnAction(e->{
         	object.setX(Float.parseFloat(xPosition.getText()));
         	object.setOriginalX(Float.parseFloat(xPosition.getText()));
         });
         
-        Label yp = new Label("y");
+        Label yp = new Label("Y");
         yPosition = new TextField (Float.toString(object.getY()));
         yPosition.setOnAction(e->{
         	object.setY(Float.parseFloat(yPosition.getText()));
         	object.setOriginalY(Float.parseFloat(yPosition.getText()));
         });
         
-        HBox xPositionB = new HBox(xPositionL,xp,xPosition,yp,yPosition);
+        HBox positionContainer = new HBox(10);
+        positionContainer.getChildren().addAll(xPositionL,xp,xPosition,yp,yPosition);
 
+       
+        //SCALE
+        Label scaleL = new Label("Scale");
+        scaleL.setMinWidth(50);
         
-        Label scaleL = new Label("scale");
         scale = new TextField (Float.toString(object.getScale()));
-//      scale.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
         scale.setOnAction(e->{
         	object.setScale(Float.parseFloat(scale.getText()));
         	object.setOriginalscale(Float.parseFloat(scale.getText()));
         });
         
-        HBox scaleB = new HBox(scaleL,scale);
+        HBox scaleContainer = new HBox(10);
+        scaleContainer.getChildren().addAll(scaleL,scale);
 
-        Label rotationL = new Label("rotation");
+        
+        //ROTATION
+        Label rotationL = new Label("Rotation");
+        rotationL.setMinWidth(50);
+        
         rotation = new TextField (Float.toString(object.getRotation()));
         rotation.setOnAction(e->{
         	object.setRotation(Float.parseFloat(rotation.getText()));
         	object.setOriginalrotation(Float.parseFloat(rotation.getText()));
         });
         
-        HBox rotationB = new HBox(rotationL,rotation);
+        HBox rotationContainer = new HBox(10);
+        rotationContainer.getChildren().addAll(rotationL,rotation);
 
-        Label weightL = new Label("weight");
-        weight = new TextField (Float.toString(object.getMass()));
-        weight.setOnAction(e->{
-        	object.setMass(Float.parseFloat(weight.getText()));
-        	object.setOriginalMass(Float.parseFloat(weight.getText()));
+        
+        //MASS
+        Label massL = new Label("Mass");
+        massL.setMinWidth(50);
+        
+        mass = new TextField (Float.toString(object.getMass()));
+        mass.setOnAction(e->{
+        	object.setMass(Float.parseFloat(mass.getText()));
+        	object.setOriginalMass(Float.parseFloat(mass.getText()));
         });
-        HBox weightB = new HBox(weightL,weight);
+        HBox massContainer = new HBox(10);
+        massContainer.getChildren().addAll(massL,mass);
 
-        this.getChildren().addAll(head,xPositionB,scaleB,rotationB,weightB);
+        this.getChildren().addAll(head,positionContainer,scaleContainer,rotationContainer,massContainer);
+        
+        
         
         if(object instanceof MoveableObject) {
-        	ydirection = new TextField ("0");
-        	xdirection = new TextField ("0");
-        	 
-        	Label speedL = new Label("speed");
+	
+        	//SPEED
+        	Label speedL = new Label("Speed");
+        	speedL.setMinWidth(50);
+        	
 	        speed = new TextField (Float.toString(((MoveableObject) object).getAccelerationX()));
 	        speed.setOnAction(e->{
 	        	((MoveableObject) object).setAccelerationX(Float.parseFloat(xdirection.getText())*Float.parseFloat(speed.getText()));
@@ -91,30 +113,37 @@ public class ObjectSettingsLevel extends VBox {
 	        	((MoveableObject) object).setOriginalAccelerationX(Float.parseFloat(xdirection.getText())*Float.parseFloat(speed.getText()));
 	        	((MoveableObject) object).setOriginalAccelerationY(Float.parseFloat(ydirection.getText())*Float.parseFloat(speed.getText()));
 	        });
-	        HBox speedB = new HBox(speedL,speed);
+	        HBox speedContainer = new HBox(10);
+	        speedContainer.getChildren().addAll(speedL,speed);
 	        
-	        Label xdirectionL = new Label("direction");
-	        Label xd = new Label("x");	         
 	        
+	        //DIRECTION
+	        Label directionL = new Label("Direction");
+	        directionL.setMinWidth(50);
+	        
+	        Label xd = new Label("X");	         	        
+	        xdirection = new TextField ("0");
 	        xdirection.setOnAction(e->{
 	        	((MoveableObject) object).setAccelerationX(Float.parseFloat(xdirection.getText())*Float.parseFloat(speed.getText()));
 	        	((MoveableObject) object).setOriginalAccelerationX(Float.parseFloat(xdirection.getText())*Float.parseFloat(speed.getText()));
 	        });
 	        
-	        Label yd = new Label(Float.toString(((MoveableObject) object).getAccelerationY()));
-	       
+	        Label yd = new Label("Y");	       
+	        ydirection = new TextField ("0");
 	        ydirection.setOnAction(e->{
 	        	((MoveableObject) object).setAccelerationY(Float.parseFloat(ydirection.getText())*Float.parseFloat(speed.getText()));
 	        	((MoveableObject) object).setOriginalAccelerationY(Float.parseFloat(ydirection.getText())*Float.parseFloat(speed.getText()));
 	        });	       	       
-	        HBox xdirectionB = new HBox(xdirectionL,xd,xdirection,yd,ydirection);
+	        HBox directionContainer = new HBox(10);
+	        directionContainer.getChildren().addAll(directionL,xd,xdirection,yd,ydirection);
 	  
 	        
-	        this.getChildren().addAll(xdirectionB,speedB);
+	        this.getChildren().addAll(speedContainer,directionContainer);
         }
         
         
         Button delete = new Button("Delete");
+        delete.setGraphic(new ImageView(new Image("file:res/Images/delete.png")));
         delete.setOnAction(e->{
         	removeUI();
         	object.remove();
@@ -134,7 +163,7 @@ public class ObjectSettingsLevel extends VBox {
     	yPosition.setText(Float.toString(object.getY()));
     	scale.setText(Float.toString(object.getScale()));
     	rotation.setText(Float.toString(object.getRotation()));
-    	weight.setText(Float.toString(object.getMass()));
+    	mass.setText(Float.toString(object.getMass()));
     	
     	if(object instanceof MoveableObject) {
     		xdirection.setText(Float.toString(object.getScale()));

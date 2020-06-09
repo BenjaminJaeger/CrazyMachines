@@ -2,13 +2,13 @@ package UI.MainMenue;
 
 import UI.Util;
 import UI.MainMenue.Elements.MenueCheckBox;
+import UI.MainMenue.Elements.MenueLeaveButton;
 import UI.MainMenue.Elements.Slider.MenueBrightnessSlider;
 import UI.MainMenue.Elements.Slider.MenueContrastSlider;
 import UI.MainMenue.Elements.Slider.MenueFPSSlider;
 import UI.MainMenue.Elements.Slider.MenueSoundSlider;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -34,8 +34,7 @@ public class SettingsMenue extends StackPane{
 		MenueBrightnessSlider brightness = new MenueBrightnessSlider();
 		MenueContrastSlider contrast = new  MenueContrastSlider();
 		
-		Button leave = new Button();
-		leave.setGraphic(new ImageView(new Image("file:res/Images/close.png")));
+		MenueLeaveButton leave = new MenueLeaveButton();
 		leave.setOnAction(e->{
 			new MainMenue(mainScene,primaryStage);
 		});

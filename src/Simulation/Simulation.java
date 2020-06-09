@@ -21,6 +21,7 @@ import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
 import Simulation.RenderEngine.Core.Lights.DirectionalLight;
 import Simulation.RenderEngine.Core.Math.Vector3f;
+import Simulation.RenderEngine.Core.Math.Vector4f;
 import Simulation.RenderEngine.Core.Models.LineModel;
 import Simulation.RenderEngine.Core.Renderer.Renderer;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
@@ -37,7 +38,11 @@ public class Simulation implements GLEventListener{
 	private BasicShader tmpShader;
 	
 	public void initialize() {
-		canvas = new GLJPanel(new GLCapabilities( GLProfile.getDefault()));	   
+		GLCapabilities capabilities = new GLCapabilities(GLProfile.getDefault());
+		capabilities.setAlphaBits(8);
+		capabilities.setBackgroundOpaque(false);
+		canvas = new GLJPanel(capabilities);	   
+		canvas.setOpaque(false);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				Util.canvasWrapper.setContent(canvas);	
@@ -50,7 +55,11 @@ public class Simulation implements GLEventListener{
 	}
 	
 	public void initialize(String level) {
-		canvas = new GLJPanel(new GLCapabilities( GLProfile.getDefault()));	   
+		GLCapabilities capabilities = new GLCapabilities(GLProfile.getDefault());
+		capabilities.setAlphaBits(8);
+		capabilities.setBackgroundOpaque(false);
+		canvas = new GLJPanel(capabilities);	   
+		canvas.setOpaque(false);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				Util.canvasWrapper.setContent(canvas);	
@@ -89,7 +98,7 @@ public class Simulation implements GLEventListener{
 	@Override
 	public void init(GLAutoDrawable arg0) {
 		Config.BACK_FACE_CULLING = false;
-		Config.BACKGROUND_COLOR = new Vector3f(0.4f,0.5f,0.4f);
+		Config.BACKGROUND_COLOR = new Vector4f(1,1,1,0.0f);
 		Config.CANVAS_HEIGHT =canvas.getHeight();
 		Config.CANVAS_WIDTH = canvas.getWidth();
 			
