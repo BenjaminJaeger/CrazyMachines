@@ -26,10 +26,14 @@ public class SettingsMenue extends StackPane{
 		container.getStyleClass().add("Vbox");
 		
 		MenueCheckBox showFPS = new MenueCheckBox("show FPS");
+		showFPS.setMinWidth(700);
 		MenueFPSSlider fps = new MenueFPSSlider();
+		fps.setMinWidth(700);
 		
 		MenueCheckBox muteSound = new MenueCheckBox("Mute Sound");
+		muteSound.setMinWidth(700);
 		MenueSoundSlider soundValue = new MenueSoundSlider();
+		soundValue.setMinWidth(700);
 		
 		MenueBrightnessSlider brightness = new MenueBrightnessSlider();
 		MenueContrastSlider contrast = new  MenueContrastSlider();
@@ -39,13 +43,12 @@ public class SettingsMenue extends StackPane{
 			new MainMenue(mainScene,primaryStage);
 		});
 			
-		container.setAlignment(Pos.CENTER);
 		container.getChildren().addAll(showFPS,fps,muteSound,soundValue,brightness,contrast,leave);
-				
+		container.setAlignment(Pos.CENTER);	
+		
+		this.setAlignment(Pos.CENTER);
+		this.getChildren().addAll(background,container);		
 		this.setEffect(Util.colorAdjust);
-		
-		this.getChildren().addAll(background,container);
-		
 		this.getStyleClass().add("MainMenue");
 		this.getStylesheets().add("file:res/css/MainMenue.css");	
 		

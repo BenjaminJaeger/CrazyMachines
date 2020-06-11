@@ -11,16 +11,14 @@ public class ObjectSettingsEditor extends ObjectSettingsLevel {
     	   super();
        }
        
-       public void addUI(GameObject object) {
-    	   super.addUI(object);
-    	     	   
-	       CheckBox playable = new CheckBox(" Playable");
-	       playable.setSelected(object.isPlayable());
-	       playable.setOnAction(e->{
-	       		object.setPlayable(playable.isSelected());
-	       });
-        
-	       super.getChildren().addAll(playable);        
-       }	
 
+       public void completeUI(GameObject object) {
+    	   CheckBox playable = new CheckBox("Interactive");
+  	    	playable.setSelected(object.isPlayable());
+  	    	playable.setOnAction(e->{
+  	    		object.setPlayable(playable.isSelected());
+  	    	});
+  	    	
+      	 this.getChildren().addAll(head,playable,line,properties,settings);
+      }
 }

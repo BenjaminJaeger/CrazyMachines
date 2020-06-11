@@ -4,6 +4,7 @@ import UI.MainMenue.MainMenue;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
  
 public class Main extends Application{
@@ -14,6 +15,8 @@ public class Main extends Application{
 	
 	public void start(Stage primaryStage) throws Exception {	
 	
+		Font.loadFont("file:res/Roboto.ttf", 10);
+		
 		Scene mainScene = new Scene(new Pane(),1400, 900);
 		
 		new MainMenue(mainScene,primaryStage);

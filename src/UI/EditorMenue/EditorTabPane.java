@@ -1,6 +1,8 @@
 package UI.EditorMenue;
 
 import UI.EditorMenue.Tabs.AllElementsTab;
+import UI.EditorMenue.Tabs.BallTab;
+import UI.EditorMenue.Tabs.BlockTab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.Pane;
 
@@ -13,12 +15,11 @@ public class EditorTabPane extends TabPane{
    }
    
    private void addTabs(Pane glass) {
-//	   BallTab balls = new BallTab(glass);
-//	   BlockTab blocks = new BlockTab(glass);
+	   BallTab balls = new BallTab(glass);
+	   BlockTab blocks = new BlockTab(glass);
 	   
 	   AllElementsTab all = new AllElementsTab(glass);
-	   
-	   getTabs().addAll(all);
+	   getTabs().addAll(all,balls,blocks);
    }
 
 }

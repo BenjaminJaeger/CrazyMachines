@@ -3,13 +3,15 @@ package UI.LevelMenue;
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 
 public class ObjectSettingsLevel extends VBox {
 	
@@ -18,142 +20,174 @@ public class ObjectSettingsLevel extends VBox {
 	 private TextField scale;
 	 private TextField rotation;
 	 private TextField mass;
-	 private TextField xdirection;
-	 private TextField ydirection;
+	 private TextField xDirection;
+	 private TextField yDirection;
 	 private TextField speed;
+	 
+	 protected VBox settings;
+	 protected HBox head;
+	 protected Line line;
+	 protected Label properties;
 
+	 private float imageSize = 20;
 	 
     public ObjectSettingsLevel() {
-        super(5);
+        super(10);
         
-        this.getStyleClass().add("hbox");      
-        this.setAlignment(Pos.CENTER);
+        this.getStyleClass().add("section");      
+        this.setAlignment(Pos.BASELINE_LEFT);
         this.getStylesheets().add("file:res/css/SideBar.css");
     }
 
     public void addUI(GameObject object) {
-        Label head = new Label("Object Settings");
-
-        //POSITION
-        Label xPositionL = new Label("Position");
-        xPositionL.setMinWidth(50);
-        Label xp = new Label("X");
+        Label name = new Label(object.getClass().getSimpleName());    
+        name.setStyle("-fx-font: 20px 'Roboto';");
+         
+        ImageView deleteImg = new ImageView(new Image("file:res/Images/delete.png"));        
+        deleteImg.setFitHeight(30);
+        deleteImg.setFitWidth(30);
+        StackPane delete = new StackPane(deleteImg);
+        delete.getStyleClass().add("delete");
+        deleteImg.setOnMouseClicked(e->{
+        	removeUI();
+        	object.remove();
+        	GameObject.allObjects.remove(object);        	
+        });
+        head = new HBox(10);
+        head.setAlignment(Pos.CENTER_LEFT);
+        head.getChildren().addAll(name,delete);
+     
+        line = new Line(0,20,110,20);
+	    line.setStrokeWidth(3);
+	    line.setStroke(Color.rgb(30, 30, 30));
         
+        properties = new Label("Properties:");
+        properties.setStyle("-fx-font: 14px 'Roboto';");
+        
+        //POSITION
+        ImageView xImg = new ImageView(new Image("file:res/Images/object-settings/x.png"));
+        xImg.setFitHeight(imageSize);
+        xImg.setFitWidth(imageSize);
         xPosition = new TextField (Float.toString(object.getX()));
         xPosition.setOnAction(e->{
         	object.setX(Float.parseFloat(xPosition.getText()));
         	object.setOriginalX(Float.parseFloat(xPosition.getText()));
         });
+        HBox xContainer = new HBox();
+//        xContainer.setAlignment(Pos.CENTER);
+        xContainer.getChildren().addAll(xImg,xPosition);
         
-        Label yp = new Label("Y");
+        ImageView yImg = new ImageView(new Image("file:res/Images/object-settings/y.png"));
+        yImg.setFitHeight(imageSize);
+        yImg.setFitWidth(imageSize);
         yPosition = new TextField (Float.toString(object.getY()));
         yPosition.setOnAction(e->{
         	object.setY(Float.parseFloat(yPosition.getText()));
         	object.setOriginalY(Float.parseFloat(yPosition.getText()));
         });
-        
-        HBox positionContainer = new HBox(10);
-        positionContainer.getChildren().addAll(xPositionL,xp,xPosition,yp,yPosition);
+        HBox yContainer = new HBox();
+//        yContainer.setAlignment(Pos.CENTER);
+        yContainer.getChildren().addAll(yImg,yPosition);
 
        
         //SCALE
-        Label scaleL = new Label("Scale");
-        scaleL.setMinWidth(50);
-        
+        ImageView scaleImg = new ImageView(new Image("file:res/Images/object-settings/scale.png"));
+        scaleImg.setFitHeight(imageSize);
+        scaleImg.setFitWidth(imageSize);
         scale = new TextField (Float.toString(object.getScale()));
         scale.setOnAction(e->{
         	object.setScale(Float.parseFloat(scale.getText()));
         	object.setOriginalscale(Float.parseFloat(scale.getText()));
-        });
-        
-        HBox scaleContainer = new HBox(10);
-        scaleContainer.getChildren().addAll(scaleL,scale);
+        });        
+        HBox scaleContainer = new HBox();
+//        scaleContainer.setAlignment(Pos.CENTER);
+        scaleContainer.getChildren().addAll(scaleImg,scale);
 
         
-        //ROTATION
-        Label rotationL = new Label("Rotation");
-        rotationL.setMinWidth(50);
-        
+        ImageView rotationImg = new ImageView(new Image("file:res/Images/object-settings/rotation.png"));
+        rotationImg.setFitHeight(imageSize);
+        rotationImg.setFitWidth(imageSize);
         rotation = new TextField (Float.toString(object.getRotation()));
         rotation.setOnAction(e->{
         	object.setRotation(Float.parseFloat(rotation.getText()));
         	object.setOriginalrotation(Float.parseFloat(rotation.getText()));
-        });
-        
-        HBox rotationContainer = new HBox(10);
-        rotationContainer.getChildren().addAll(rotationL,rotation);
+        });        
+        HBox rotationContainer = new HBox();
+//        rotationContainer.setAlignment(Pos.CENTER);
+        rotationContainer.getChildren().addAll(rotationImg,rotation);
 
         
         //MASS
-        Label massL = new Label("Mass");
-        massL.setMinWidth(50);
-        
+        ImageView massImg = new ImageView(new Image("file:res/Images/object-settings/mass.png"));
+        massImg.setFitHeight(imageSize);
+        massImg.setFitWidth(imageSize);
         mass = new TextField (Float.toString(object.getMass()));
         mass.setOnAction(e->{
         	object.setMass(Float.parseFloat(mass.getText()));
         	object.setOriginalMass(Float.parseFloat(mass.getText()));
         });
-        HBox massContainer = new HBox(10);
-        massContainer.getChildren().addAll(massL,mass);
+        HBox massContainer = new HBox();
+//        massContainer.setAlignment(Pos.CENTER);
+        massContainer.getChildren().addAll(massImg,mass);
 
-        this.getChildren().addAll(head,positionContainer,scaleContainer,rotationContainer,massContainer);
-        
+        settings = new VBox(5);
+        settings.getChildren().addAll(xContainer,yContainer,scaleContainer,rotationContainer,massContainer);
         
         
         if(object instanceof MoveableObject) {
 	
         	//SPEED
-        	Label speedL = new Label("Speed");
-        	speedL.setMinWidth(50);
-        	
+        	ImageView speedImg = new ImageView(new Image("file:res/Images/object-settings/speed.png"));
+        	speedImg.setFitHeight(imageSize);
+        	speedImg.setFitWidth(imageSize);
 	        speed = new TextField (Float.toString(((MoveableObject) object).getAccelerationX()));
 	        speed.setOnAction(e->{
-	        	((MoveableObject) object).setAccelerationX(Float.parseFloat(xdirection.getText())*Float.parseFloat(speed.getText()));
-	        	((MoveableObject) object).setAccelerationY(Float.parseFloat(ydirection.getText())*Float.parseFloat(speed.getText()));
-	        	((MoveableObject) object).setOriginalAccelerationX(Float.parseFloat(xdirection.getText())*Float.parseFloat(speed.getText()));
-	        	((MoveableObject) object).setOriginalAccelerationY(Float.parseFloat(ydirection.getText())*Float.parseFloat(speed.getText()));
+	        	((MoveableObject) object).setAccelerationX(Float.parseFloat(xDirection.getText())*Float.parseFloat(speed.getText()));
+	        	((MoveableObject) object).setAccelerationY(Float.parseFloat(yDirection.getText())*Float.parseFloat(speed.getText()));
+	        	((MoveableObject) object).setOriginalAccelerationX(Float.parseFloat(xDirection.getText())*Float.parseFloat(speed.getText()));
+	        	((MoveableObject) object).setOriginalAccelerationY(Float.parseFloat(yDirection.getText())*Float.parseFloat(speed.getText()));
 	        });
-	        HBox speedContainer = new HBox(10);
-	        speedContainer.getChildren().addAll(speedL,speed);
+	        HBox speedContainer = new HBox();
+//	        speedContainer.setAlignment(Pos.CENTER);
+	        speedContainer.getChildren().addAll(speedImg,speed);
 	        
 	        
 	        //DIRECTION
-	        Label directionL = new Label("Direction");
-	        directionL.setMinWidth(50);
-	        
-	        Label xd = new Label("X");	         	        
-	        xdirection = new TextField ("0");
-	        xdirection.setOnAction(e->{
-	        	((MoveableObject) object).setAccelerationX(Float.parseFloat(xdirection.getText())*Float.parseFloat(speed.getText()));
-	        	((MoveableObject) object).setOriginalAccelerationX(Float.parseFloat(xdirection.getText())*Float.parseFloat(speed.getText()));
+	        ImageView xDirectionImg = new ImageView(new Image("file:res/Images/object-settings/dirx.png"));
+	        xDirectionImg.setFitHeight(imageSize);
+	        xDirectionImg.setFitWidth(imageSize);
+	        xDirection = new TextField ("0");
+	        xDirection.setOnAction(e->{
+	        	((MoveableObject) object).setAccelerationX(Float.parseFloat(xDirection.getText())*Float.parseFloat(speed.getText()));
+	        	((MoveableObject) object).setOriginalAccelerationX(Float.parseFloat(xDirection.getText())*Float.parseFloat(speed.getText()));
 	        });
+	        HBox xDirectionContainer = new HBox();
+//	        xDirectionContainer.setAlignment(Pos.CENTER);
+	        xDirectionContainer.getChildren().addAll(xDirectionImg, xDirection);
 	        
-	        Label yd = new Label("Y");	       
-	        ydirection = new TextField ("0");
-	        ydirection.setOnAction(e->{
-	        	((MoveableObject) object).setAccelerationY(Float.parseFloat(ydirection.getText())*Float.parseFloat(speed.getText()));
-	        	((MoveableObject) object).setOriginalAccelerationY(Float.parseFloat(ydirection.getText())*Float.parseFloat(speed.getText()));
+	        ImageView yDirectionImg = new ImageView(new Image("file:res/Images/object-settings/diry.png"));
+	        yDirectionImg.setFitHeight(imageSize);
+	        yDirectionImg.setFitWidth(imageSize);
+	        yDirection = new TextField ("0");
+	        yDirection.setOnAction(e->{
+	        	((MoveableObject) object).setAccelerationY(Float.parseFloat(yDirection.getText())*Float.parseFloat(speed.getText()));
+	        	((MoveableObject) object).setOriginalAccelerationY(Float.parseFloat(yDirection.getText())*Float.parseFloat(speed.getText()));
 	        });	       	       
-	        HBox directionContainer = new HBox(10);
-	        directionContainer.getChildren().addAll(directionL,xd,xdirection,yd,ydirection);
+	        HBox yDirectionContainer = new HBox();
+//	        xDirectionContainer.setAlignment(Pos.CENTER);
+	        yDirectionContainer.getChildren().addAll(yDirectionImg,yDirection);
 	  
 	        
-	        this.getChildren().addAll(speedContainer,directionContainer);
+	        settings.getChildren().addAll(speedContainer,xDirectionContainer,yDirectionContainer);
         }
-        
-        
-        Button delete = new Button("Delete");
-        delete.setGraphic(new ImageView(new Image("file:res/Images/delete.png")));
-        delete.setOnAction(e->{
-        	removeUI();
-        	object.remove();
-        	GameObject.allObjects.remove(object);        	
-        });
-                     
-        this.getChildren().addAll(delete);
            
+        completeUI(object);
     }
 
+    public void completeUI(GameObject object) {
+    	 this.getChildren().addAll(head,line,properties,settings);
+    }
+    
     public void removeUI() {
     	this.getChildren().clear();
     }
@@ -166,8 +200,8 @@ public class ObjectSettingsLevel extends VBox {
     	mass.setText(Float.toString(object.getMass()));
     	
     	if(object instanceof MoveableObject) {
-    		xdirection.setText(Float.toString(object.getScale()));
-    		ydirection.setText(Float.toString(object.getScale()));
+    		xDirection.setText(Float.toString(object.getScale()));
+    		yDirection.setText(Float.toString(object.getScale()));
     		speed.setText(Float.toString(object.getScale()));
     	}
     

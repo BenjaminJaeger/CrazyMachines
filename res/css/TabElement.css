@@ -1,3 +1,12 @@
+.TabElement:hover{
+	-fx-cursor: hand;
+	-fx-background-color: rgb(200,200,200);
+}
+
+.TabElement{
+	-fx-background-color:white;
+}
+
 .TabElement .label{
 	-fx-font: 16px "Serif";
 	-fx-text-fill: black;

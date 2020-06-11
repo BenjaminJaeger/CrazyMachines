@@ -2,12 +2,19 @@
 	-fx-focus-color: transparent;
 }
 
+.tab-pane{
+    -fx-tab-min-width:90px;
+    -fx-padding: 0 50 0 50;
+   	-fx-effect: dropshadow(gaussian , rgb(1,1,1,0.3), 15, 0.2, 0, 0);	
+}
+
 .tab {
 	-fx-text-fill: rgb(0,0,0);
 	-fx-background-radius: 10 10 0 0;
-	-fx-background-color: transparent, transparent , rgb(255,255,255);
-    -fx-background-insets: 0, 0 5 0 0, 1 6 0 0;
-    -fx-padding: 4 10 4 4;
+    -fx-background-insets: 0, 0 5 0 0, 1 6 0 0 ;
+    -fx-padding: 4 4 4 4 ;
+    -fx-background-color: transparent, transparent , white;
+    -fx-font: 16px "Roboto";
 }
 
 .tab:selected {
@@ -23,5 +30,12 @@
 }
 
 .tab-content-area{
-	-fx-background-color: #f77949;
+	-fx-background-radius: 10 10 0 0;
+	-fx-padding: 10 10 10 10;
+	-fx-border-width: 5 0 0 0;
+	-fx-border-color: #f77949 ;
+	-fx-border-radius: 3px;
+	-fx-background-color: white;
+	-fx-font: 16px "Roboto";
 }
+

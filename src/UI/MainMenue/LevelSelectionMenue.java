@@ -113,8 +113,7 @@ public class LevelSelectionMenue extends StackPane{
 		container.getStyleClass().add("LevelSelection");
 		container.getChildren().addAll(levelContainer,leave);
 		
-		this.getChildren().addAll(background,container);
-		
+		this.getChildren().addAll(background,container);		
 		this.setEffect(Util.colorAdjust);
 		this.getStyleClass().add("MainMenue");
 		this.getStylesheets().add("file:res/css/MainMenue.css");	
