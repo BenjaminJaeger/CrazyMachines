@@ -16,7 +16,7 @@ public abstract class TabElement extends VBox {
 
 	 private ImageView icon;
 	 private String imageURL;
-	 private double size = 100;
+	 private double size = 80;
 	 private int ammount;
 	 private int originalAmmount;
 	 private Label ammountText;

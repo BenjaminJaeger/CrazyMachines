@@ -23,10 +23,7 @@ public class MainMenue extends StackPane{
 		ImageView background = new ImageView(new Image("file:res/Images/background.jpg"));
 		background.setFitWidth(this.getWidth());
 		background.setFitHeight(this.getHeight());
-		
-		VBox container = new VBox(40);
-		container.getStyleClass().add("Vbox");
-		
+			
 		MenueButton exit = new MenueButton("Exit");
 		exit.setOnMouseClicked(e->{
 			Platform.exit();
@@ -64,16 +61,17 @@ public class MainMenue extends StackPane{
 			new LevelSelectionMenue(mainScene,primaryStage);
 		});
 	
+		VBox container = new VBox(40);
+		container.getStyleClass().add("Vbox");
 		container.setAlignment(Pos.CENTER);
 		container.getChildren().addAll(levelSelector,editor,loadLevel,settings,exit);
 		
 		this.getChildren().addAll(background,container);
-
 		this.setEffect(Util.colorAdjust);
 		this.getStyleClass().add("MainMenue");
 		this.getStylesheets().add("file:res/css/MainMenue.css");	
 		
-		mainScene.setRoot(this);
+		mainScene.setRoot(this);		
 		
 		Util.primaryStage = primaryStage;
 		Util.mainScene = mainScene;

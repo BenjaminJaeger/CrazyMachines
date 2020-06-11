@@ -5,7 +5,11 @@ import java.util.Scanner;
 
 import UI.TabElements.BasketballTabElement;
 import UI.TabElements.BucketTabElement;
-import UI.TabElements.StaticPlaneTabElement;
+import UI.TabElements.HairdryerTabElement;
+import UI.TabElements.MagnetTabElement;
+import UI.TabElements.PlaneTabElement;
+import UI.TabElements.PortalTabElement;
+import UI.TabElements.SpinnerTabElement;
 import UI.TabElements.TabElement;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -39,12 +43,28 @@ public class LevelTabPane extends HBox{
 						element = new BasketballTabElement(glass,1);
 						break;
 					}
-					case "StaticPlane": {
-						element = new StaticPlaneTabElement(glass, 1);
+					case "Plane": {
+						element = new PlaneTabElement(glass, 1);
 						break;
 					}
-					case "StaticBucket": {
+					case "Bucket": {
 						element = new BucketTabElement(glass, 1);
+						break;
+					}
+					case "Spinner": {
+						element = new SpinnerTabElement(glass, 1);
+						break;
+					}
+					case "Magnet": {
+						element = new MagnetTabElement(glass, 1);
+						break;
+					}
+					case "Hairdryer": {
+						element = new HairdryerTabElement(glass, 1);
+						break;
+					}
+					case "Portal": {
+						element = new PortalTabElement(glass, 1);
 						break;
 					}
 					

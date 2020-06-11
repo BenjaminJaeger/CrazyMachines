@@ -25,8 +25,8 @@ public class MenueCheckBox extends HBox{
 		this.getChildren().addAll(btnText,checked);		
 		this.setAlignment(Pos.CENTER);
 		
-		this.getStyleClass().add("MenueCheckBox");
-		this.getStylesheets().add("file:res/css/MenueCheckBox.css");
+		this.getStyleClass().add("MenueElement");
+		this.getStylesheets().add("file:res/css/MenueElements.css");
 			
 		this.setOnMouseClicked(e->{
 			if(checkedBool)

@@ -11,3 +11,8 @@
 	-fx-translate-x: -50;
 	-fx-translate-y: 50;
 }
+
+.LevelSelection{
+	-fx-translate-y: 80;
+	-fx-translate-x: -50;
+}

@@ -30,8 +30,8 @@ public class MenueLevelButton extends HBox{
 		this.getChildren().add(btnText);		
 		this.setAlignment(Pos.CENTER);
 		
-		this.getStyleClass().add("MenueLevelButton");
-		this.getStylesheets().add("file:res/css/MenueLevelButton.css");
+		this.getStyleClass().add("MenueElement");
+		this.getStylesheets().add("file:res/css/MenueElements.css");
 	}
 
 }

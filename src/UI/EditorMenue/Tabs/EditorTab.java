@@ -28,12 +28,11 @@ public abstract class EditorTab extends Tab{
 			    
 	    content = new HBox(10);
 		content.setAlignment(Pos.CENTER_LEFT);
-		  
+		
 		ScrollPane scrollPane = new ScrollPane();
 		scrollPane.setContent(content);
 	    
 		this.setContent(scrollPane);
-		
 		createContent(glass);
 	}
 	

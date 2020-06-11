@@ -9,8 +9,6 @@ import static com.jogamp.opengl.GL.GL_FRONT_AND_BACK;
 import static com.jogamp.opengl.GL.GL_LINEAR;
 import static com.jogamp.opengl.GL.GL_LINEAR_MIPMAP_LINEAR;
 import static com.jogamp.opengl.GL.GL_LINE_LOOP;
-import static com.jogamp.opengl.GL.GL_ONE_MINUS_SRC_ALPHA;
-import static com.jogamp.opengl.GL.GL_SRC_ALPHA;
 import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
 import static com.jogamp.opengl.GL.GL_TRIANGLES;
 import static com.jogamp.opengl.GL.GL_UNSIGNED_INT;
@@ -59,8 +57,7 @@ public class Renderer {
 	 
 		//start settings of the renderer
 		gl.glEnable(GL_DEPTH_TEST); 
-		gl.glEnable(GL_BLEND);
-		gl.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		gl.glEnable(GL_BLEND);	
 		
 		gl.glLineWidth(Config.LINE_WIDTH);
 		gl.glPointSize(Config.POINT_SIZE);
@@ -75,9 +72,11 @@ public class Renderer {
 	 */
 	public void clear() {
 		GL4 gl=(GL4)GLContext.getCurrentGL();
-		gl.glClearColor(Config.BACKGROUND_COLOR.x, Config.BACKGROUND_COLOR.y,Config.BACKGROUND_COLOR.z,1); //Clears every pixel with a specific color
 		gl.glClear(GL_COLOR_BUFFER_BIT);  //Clears color buffer
 		gl.glClear(GL_DEPTH_BUFFER_BIT);//Clears the depth buffer
+		
+		gl.glClearColor(Config.BACKGROUND_COLOR.x, Config.BACKGROUND_COLOR.y,Config.BACKGROUND_COLOR.z,Config.BACKGROUND_COLOR.w); //Clears every pixel with a specific color
+	
 		wireframeMode(); //checks if wireframe mode is enabled
 		backFacCulling(); //checks if backfaceculling is enabled
 	}

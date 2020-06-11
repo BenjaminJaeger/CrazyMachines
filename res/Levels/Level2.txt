@@ -7,7 +7,7 @@ BasketBall
 direction TODO 
 speed TODO 
 false
-StaticPlane
+Plane
 -24.0/-143.25
 0.4
 0.0
@@ -15,7 +15,7 @@ StaticPlane
 direction TODO 
 speed TODO 
 false
-StaticBucket
+Bucket
 90.75/-177.0
 0.4
 0.0

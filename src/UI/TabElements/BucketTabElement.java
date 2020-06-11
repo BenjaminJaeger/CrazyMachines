@@ -1,7 +1,7 @@
 package UI.TabElements;
 
 import Simulation.Objects.GameObject;
-import Simulation.Objects.StaticObjects.StaticExternalObjects.StaticBucket;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Bucket;
 import javafx.scene.layout.Pane;
 
 public class BucketTabElement extends TabElement{
@@ -16,7 +16,7 @@ public class BucketTabElement extends TabElement{
 
 	@Override
 	public GameObject createObject(float x, float y) {
-		return new StaticBucket(x,y);
+		return new Bucket(x,y);
 	}
 
 }

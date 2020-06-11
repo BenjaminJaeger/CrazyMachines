@@ -9,9 +9,12 @@ import java.util.Scanner;
 
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.Ball.BasketBall;
-import Simulation.Objects.StaticObjects.Portal;
-import Simulation.Objects.StaticObjects.StaticExternalObjects.StaticBucket;
-import Simulation.Objects.StaticObjects.StaticExternalObjects.StaticPlane;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Bucket;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Hairdryer;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Magnet;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Plane;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Portal;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Spinner;
 import UI.Util;
 
 public class LevelExportImport {
@@ -81,12 +84,24 @@ public class LevelExportImport {
 						object = new BasketBall(x,y);	
 						break;
 					}
-					case "StaticPlane": {
-						object = new StaticPlane(x,y);	
+					case "Plane": {
+						object = new Plane(x,y);	
 						break;
 					}
-					case "StaticBucket": {
-						object = new StaticBucket(x,y);	
+					case "Bucket": {
+						object = new Bucket(x,y);	
+						break;
+					}
+					case "Spinner": {
+						object = new Spinner(x,y);	
+						break;
+					}
+					case "Magnet": {
+						object = new Magnet(x,y);	
+						break;
+					}
+					case "Hairdryer": {
+						object = new Hairdryer(x,y);	
 						break;
 					}
 					case "Portal": {	

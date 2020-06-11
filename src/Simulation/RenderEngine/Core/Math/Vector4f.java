@@ -18,6 +18,13 @@ public class Vector4f {
 	public Vector4f() {	
 	}
 	
+	public Vector4f(float value) {	
+		this.x=value;
+		this.y=value;
+		this.z=value;
+		this.w=value;
+	}
+	
 	public Vector4f(float x,float y,float z,float w) {
 		this.x=x;
 		this.y=y;
