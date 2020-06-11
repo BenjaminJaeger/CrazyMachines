@@ -44,10 +44,9 @@ public class LevelMenue extends StackPane{
 		outer.setLeft(leftSideUI);
 		outer.setCenter(inner);
 		
-		ImageView background = new ImageView(new Image("file:res/Images/backgroundGame.jpg"));
+		ImageView background = new ImageView(new Image(Util.background));
 		background.setOpacity(0.4);
-		background.setFitHeight(this.getHeight());
-		background.setFitWidth(this.getWidth());
+
 
 		this.setStyle("-fx-background-color: transparent;");
 		this.setEffect(Util.colorAdjust);

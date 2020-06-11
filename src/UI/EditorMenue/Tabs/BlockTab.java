@@ -1,6 +1,6 @@
 package UI.EditorMenue.Tabs;
 
-import UI.TabElements.BucketTabElement;
+import UI.TabElements.MovingBoxTabElement;
 import UI.TabElements.PlaneTabElement;
 import javafx.scene.layout.Pane;
 
@@ -13,8 +13,9 @@ public class BlockTab extends EditorTab{
 	@Override
 	protected void createContent(Pane glass) {
 		PlaneTabElement plane = new PlaneTabElement(glass);
-		BucketTabElement bucket = new BucketTabElement(glass);
-		content.getChildren().addAll(plane,bucket);
+		MovingBoxTabElement movingBox = new MovingBoxTabElement(glass);
+		
+		content.getChildren().addAll(plane,movingBox);
 	}
 	
 	

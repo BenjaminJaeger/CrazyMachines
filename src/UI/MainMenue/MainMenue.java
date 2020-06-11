@@ -23,7 +23,7 @@ public class MainMenue extends StackPane{
 		ImageView background = new ImageView(new Image("file:res/Images/background.jpg"));
 		background.setFitWidth(this.getWidth());
 		background.setFitHeight(this.getHeight());
-			
+		
 		MenueButton exit = new MenueButton("Exit");
 		exit.setOnMouseClicked(e->{
 			Platform.exit();

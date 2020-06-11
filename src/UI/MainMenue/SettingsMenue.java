@@ -1,8 +1,10 @@
 package UI.MainMenue;
 
 import UI.Util;
+import UI.MainMenue.Elements.MenueChangeBackground;
 import UI.MainMenue.Elements.MenueCheckBox;
 import UI.MainMenue.Elements.MenueLeaveButton;
+import UI.MainMenue.Elements.MenueWindowSizeDropDown;
 import UI.MainMenue.Elements.Slider.MenueBrightnessSlider;
 import UI.MainMenue.Elements.Slider.MenueContrastSlider;
 import UI.MainMenue.Elements.Slider.MenueFPSSlider;
@@ -22,29 +24,41 @@ public class SettingsMenue extends StackPane{
 		background.setFitWidth(this.getWidth());
 		background.setFitHeight(this.getHeight());
 		
-		VBox container = new VBox(40);
+		VBox container = new VBox(30);
 		container.getStyleClass().add("Vbox");
 		
-		MenueCheckBox showFPS = new MenueCheckBox("show FPS");
-		showFPS.setMinWidth(700);
+		MenueCheckBox fullscreen = new MenueCheckBox("Fullscreen");
+		fullscreen.setChecked(Util.fullscreen);
+		fullscreen.setOnMouseClicked(e->{
+			if(fullscreen.isChecked()) {
+				Util.fullscreen=false;
+				fullscreen.setChecked(false);
+				primaryStage.setFullScreen(false);
+			}else {
+				Util.fullscreen=true;
+				fullscreen.setChecked(true);
+				primaryStage.setFullScreen(true);
+			}
+		});
+		MenueWindowSizeDropDown windowsize = new MenueWindowSizeDropDown(primaryStage);
+				
 		MenueFPSSlider fps = new MenueFPSSlider();
-		fps.setMinWidth(700);
 		
-		MenueCheckBox muteSound = new MenueCheckBox("Mute Sound");
-		muteSound.setMinWidth(700);
 		MenueSoundSlider soundValue = new MenueSoundSlider();
-		soundValue.setMinWidth(700);
 		
 		MenueBrightnessSlider brightness = new MenueBrightnessSlider();
 		MenueContrastSlider contrast = new  MenueContrastSlider();
+		
+		MenueChangeBackground changeBackground = new MenueChangeBackground(primaryStage);
 		
 		MenueLeaveButton leave = new MenueLeaveButton();
 		leave.setOnAction(e->{
 			new MainMenue(mainScene,primaryStage);
 		});
 			
-		container.getChildren().addAll(showFPS,fps,muteSound,soundValue,brightness,contrast,leave);
+		container.getChildren().addAll(fullscreen,windowsize,fps,soundValue,brightness,contrast,changeBackground,leave);
 		container.setAlignment(Pos.CENTER);	
+		container.getStyleClass().add("Settings");
 		
 		this.setAlignment(Pos.CENTER);
 		this.getChildren().addAll(background,container);		
@@ -54,4 +68,5 @@ public class SettingsMenue extends StackPane{
 		
 		mainScene.setRoot(this);
 	}
+	
 }

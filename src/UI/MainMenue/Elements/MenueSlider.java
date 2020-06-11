@@ -10,9 +10,7 @@ public class MenueSlider extends HBox{
 	protected Slider slider;
 	protected Label sliderValue;
 	
-	public MenueSlider(String name,int startValue){
-		super(100);
-		
+	public MenueSlider(String name,int startValue){		
 		HBox container = new HBox(10);
 		
 		sliderValue = new Label(Integer.toString(startValue));
@@ -25,6 +23,7 @@ public class MenueSlider extends HBox{
 		container.getChildren().addAll(slider,sliderValue);
 		
 		Label btnText = new Label(name);
+		btnText.setMinWidth(200);
 		
 		this.getChildren().addAll(btnText,container);		
 		this.setAlignment(Pos.CENTER);

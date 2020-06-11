@@ -1,9 +1,12 @@
 package UI.EditorMenue.Tabs;
 
 import UI.TabElements.BasketballTabElement;
+import UI.TabElements.BeachBallTabElement;
 import UI.TabElements.BucketTabElement;
 import UI.TabElements.HairdryerTabElement;
 import UI.TabElements.MagnetTabElement;
+import UI.TabElements.MetalBallTabElement;
+import UI.TabElements.MovingBoxTabElement;
 import UI.TabElements.PlaneTabElement;
 import UI.TabElements.PortalTabElement;
 import UI.TabElements.SpinnerTabElement;
@@ -24,8 +27,11 @@ public class AllElementsTab extends EditorTab{
 		 BucketTabElement bucket = new BucketTabElement(glass);
 		 SpinnerTabElement spinner = new SpinnerTabElement(glass);
 		 MagnetTabElement magnetTab = new MagnetTabElement (glass);
+		 BeachBallTabElement beachball = new BeachBallTabElement(glass);
+		 MetalBallTabElement golfball = new MetalBallTabElement(glass);
+		 MovingBoxTabElement movingBox = new MovingBoxTabElement(glass);
 		 
-		 content.getChildren().addAll(basketBall,portal,plane,bucket, hairdryer,spinner,magnetTab);
+		 content.getChildren().addAll(basketBall,beachball,golfball,plane,movingBox,bucket, hairdryer,spinner,magnetTab,portal);
 	}
 	
 	

@@ -26,6 +26,15 @@ public abstract class Box extends MoveableObject{
 		objectTransformer = new ObjectTransformer(this);
 	}
 	
+	public Box(float size, Material material, String texture, float x, float y) {
+		super(new Cube(size), material, texture, x, y);
+		this.width=size;
+		this.height=size;
+		this.depth=size;
+		collisionContext = new DynamicCollisionContext(this,new BoundingRectangle(x, y,width, height));
+		objectTransformer = new ObjectTransformer(this);
+	}
+	
 	public Box(float width,float height ,float depth , Material material, float r,float g,float b, float x, float y) {
 		super(new Cube(width,height,depth), material, r,g,b, x, y);
 		this.width=width;

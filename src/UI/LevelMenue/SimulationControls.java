@@ -59,7 +59,7 @@ public class SimulationControls extends VBox{
 	     stopImg.setFitWidth(imageSize);
 	     stopImg.setFitHeight(imageSize);
 	     
-	     Label stopLabel = new Label("Stop");
+	     Label stopLabel = new Label("Restart");
 	     HBox stop = new HBox(10);
 	     stop.setAlignment(Pos.CENTER_LEFT);
 	     stop.getStyleClass().add("fakeButton");

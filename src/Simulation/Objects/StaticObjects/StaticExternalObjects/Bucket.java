@@ -6,7 +6,8 @@ import Simulation.Objects.GameObject;
 import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import UI.Util;
-import UI.MainMenue.MainMenue;
+import UI.LevelMenue.Level;
+import UI.MainMenue.LevelSelectionMenue;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Effect;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -51,21 +53,33 @@ public class Bucket extends StaticExternalObject{
 								
 								Label text = new Label("Level Done!");
 								Button exit = new Button("Exit");
+								Button next = new Button("Next Level");
+								
+								HBox container = new HBox(10);
+								container.setAlignment(Pos.CENTER);
+								container.getChildren().addAll(exit,next);
 								
 						        VBox root = new VBox(20);
 						        root.setAlignment(Pos.CENTER);
-						        root.getChildren().addAll(text,exit);
+						        root.getChildren().addAll(text,container);
 						 
 						        Scene secondScene = new Scene(root, 250, 150);
 						 
 						        Stage newWindow = new Stage();
 						        newWindow.setTitle("Congratulations!");
 						        newWindow.setScene(secondScene);
+						        newWindow.setOnCloseRequest(e->e.consume());
 						 	           
 						        exit.setOnAction(e2->{
-						        	new MainMenue(mainScene, primaryStage);
+						        	new LevelSelectionMenue(mainScene, primaryStage);
 						        	newWindow.close();
 								});
+						        
+						        next.setOnAction(e->{
+						        	Util.currentLevel +=1;
+						        	new Level(mainScene, "Level"+Util.currentLevel,primaryStage);			
+						        	newWindow.close();
+						        });
 	
 						        newWindow.initModality(Modality.WINDOW_MODAL);
 						        newWindow.initOwner(primaryStage);
