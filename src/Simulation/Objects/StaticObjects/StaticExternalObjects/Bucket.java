@@ -68,7 +68,11 @@ public class Bucket extends StaticExternalObject{
 						        Stage newWindow = new Stage();
 						        newWindow.setTitle("Congratulations!");
 						        newWindow.setScene(secondScene);
-						        newWindow.setOnCloseRequest(e->e.consume());
+						        newWindow.setOnCloseRequest(e->{
+						        	mainScene.getRoot().setEffect(null);
+						        	newWindow.close();
+						        });
+
 						 	           
 						        exit.setOnAction(e2->{
 						        	new LevelSelectionMenue(mainScene, primaryStage);

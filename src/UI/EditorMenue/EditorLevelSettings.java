@@ -42,11 +42,7 @@ public class EditorLevelSettings extends VBox{
 	     clear.getChildren().addAll(clearImg,clearLabel);
 	     clear.setOnMouseClicked(e->{
 	    	 if (!SimulationControler.isPlaying()) {
-			       for (int i = 0; i < GameObject.allObjects.size(); i++) 
-			    	   if(GameObject.allObjects.get(i).isEditable()) {
-						GameObject.allObjects.get(i).remove();
-						GameObject.allObjects.remove(i);
-					}
+		        	GameObject.allObjects.clear();	
 				}
 	     });
 	     		 

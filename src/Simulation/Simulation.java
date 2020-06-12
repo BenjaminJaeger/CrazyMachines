@@ -112,7 +112,7 @@ public class Simulation implements GLEventListener{
 		//								    new DirectionalLight(lightDirection,         diffuseColor,          speculaColor)
 		DirectionalLight directionalLight = new DirectionalLight(new Vector3f(0, 0, -1), new Vector3f(1, 1, 1), new Vector3f(1, 1, 1));
 		
-		tmp = new LineModel(new float[]{0,0,0}, 0, 0, 0, 0, 0); 
+		tmp = new LineModel(new float[]{0,0,0}, 0, 0, 0, -1000, -10000); 
 		tmpShader= new BasicShader("Line");
 		
 		canvas.addKeyListener(new KeyListener() {

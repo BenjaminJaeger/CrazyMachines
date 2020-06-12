@@ -16,34 +16,40 @@ public class ScaleSquareUI {
 
     private ArrayList<Vector2f> verticesSmaller = new ArrayList<Vector2f>();
     private ArrayList<Vector2f> verticesBigger = new ArrayList<Vector2f>();
-
-    float radius;
+    private ArrayList<Vector2f> originalVertices = new ArrayList<Vector2f>();
+    
+    private float smaller = 0.8f;
+    private float bigger = 1.2f;
 
     public ScaleSquareUI (float size, float r, float g, float b, float x, float y) {
-        this.radius = size;
         rectangleLine = new LineModel(new RectangleLine(size, 0), r, g, b, x, y);
-
-        verticesSmaller.add(0, new Vector2f((rectangleLine.getMesh().getVertices()[0] * Config.CANVAS_WIDTH)*0.8f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[1]*Config.CANVAS_HEIGHT)*0.8f+rectangleLine.getY()));
-        verticesSmaller.add(1, new Vector2f((rectangleLine.getMesh().getVertices()[3] * Config.CANVAS_WIDTH)*0.8f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[4]*Config.CANVAS_HEIGHT)*0.8f+rectangleLine.getY()));
-        verticesSmaller.add(2, new Vector2f((rectangleLine.getMesh().getVertices()[6] * Config.CANVAS_WIDTH)*0.8f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[7]*Config.CANVAS_HEIGHT)*0.8f+rectangleLine.getY()));
-        verticesSmaller.add(3, new Vector2f((rectangleLine.getMesh().getVertices()[9] * Config.CANVAS_WIDTH)*0.8f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[10]*Config.CANVAS_HEIGHT)*0.8f+rectangleLine.getY()));
-
-        verticesBigger.add(0, new Vector2f((rectangleLine.getMesh().getVertices()[0] * Config.CANVAS_WIDTH)*1.2f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[1]*Config.CANVAS_HEIGHT)*1.2f+rectangleLine.getY()));
-        verticesBigger.add(1, new Vector2f((rectangleLine.getMesh().getVertices()[3] * Config.CANVAS_WIDTH)*1.2f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[4]*Config.CANVAS_HEIGHT)*1.2f+rectangleLine.getY()));
-        verticesBigger.add(2, new Vector2f((rectangleLine.getMesh().getVertices()[6] * Config.CANVAS_WIDTH)*1.2f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[7]*Config.CANVAS_HEIGHT)*1.2f+rectangleLine.getY()));
-        verticesBigger.add(3, new Vector2f((rectangleLine.getMesh().getVertices()[9] * Config.CANVAS_WIDTH)*1.2f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[10]*Config.CANVAS_HEIGHT)*1.2f+rectangleLine.getY()));
-    }
+        
+        for (int i = 0; i < rectangleLine.getMesh().getVertices().length; i+=3) 
+        	originalVertices.add(new Vector2f(rectangleLine.getMesh().getVertices()[i],rectangleLine.getMesh().getVertices()[i+1]));
+		
+        verticesSmaller.add(null);
+        verticesSmaller.add(null);
+        verticesSmaller.add(null);
+        verticesSmaller.add(null);       
+        verticesBigger.add(null);
+        verticesBigger.add(null);
+        verticesBigger.add(null);
+        verticesBigger.add(null);     
+       
+        calculateVertices();
+   }
 
     public void calculateVertices() {
-        verticesSmaller.set(0, new Vector2f((rectangleLine.getMesh().getVertices()[0] * Config.CANVAS_WIDTH)*0.8f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[1]*Config.CANVAS_HEIGHT)*0.8f+rectangleLine.getY()));
-        verticesSmaller.set(1, new Vector2f((rectangleLine.getMesh().getVertices()[3] * Config.CANVAS_WIDTH)*0.8f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[4]*Config.CANVAS_HEIGHT)*0.8f+rectangleLine.getY()));
-        verticesSmaller.set(2, new Vector2f((rectangleLine.getMesh().getVertices()[6] * Config.CANVAS_WIDTH)*0.8f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[7]*Config.CANVAS_HEIGHT)*0.8f+rectangleLine.getY()));
-        verticesSmaller.set(3, new Vector2f((rectangleLine.getMesh().getVertices()[9] * Config.CANVAS_WIDTH)*0.8f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[10]*Config.CANVAS_HEIGHT)*0.8f+rectangleLine.getY()));
+    	  
+        verticesSmaller.set(0, new Vector2f((originalVertices.get(0).x * Config.CANVAS_WIDTH)*smaller+rectangleLine.getX(),(originalVertices.get(0).y *Config.CANVAS_HEIGHT)*smaller+rectangleLine.getY()));
+        verticesSmaller.set(1, new Vector2f((originalVertices.get(1).x * Config.CANVAS_WIDTH)*smaller+rectangleLine.getX(),(originalVertices.get(1).y *Config.CANVAS_HEIGHT)*smaller+rectangleLine.getY()));
+        verticesSmaller.set(2, new Vector2f((originalVertices.get(2).x * Config.CANVAS_WIDTH)*smaller+rectangleLine.getX(),(originalVertices.get(2).y *Config.CANVAS_HEIGHT)*smaller+rectangleLine.getY()));
+        verticesSmaller.set(3, new Vector2f((originalVertices.get(3).x * Config.CANVAS_WIDTH)*smaller+rectangleLine.getX(),(originalVertices.get(3).y *Config.CANVAS_HEIGHT)*smaller+rectangleLine.getY()));
 
-        verticesBigger.set(0, new Vector2f((rectangleLine.getMesh().getVertices()[0] * Config.CANVAS_WIDTH)*1.2f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[1]*Config.CANVAS_HEIGHT)*1.2f+rectangleLine.getY()));
-        verticesBigger.set(1, new Vector2f((rectangleLine.getMesh().getVertices()[3] * Config.CANVAS_WIDTH)*1.2f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[4]*Config.CANVAS_HEIGHT)*1.2f+rectangleLine.getY()));
-        verticesBigger.set(2, new Vector2f((rectangleLine.getMesh().getVertices()[6] * Config.CANVAS_WIDTH)*1.2f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[7]*Config.CANVAS_HEIGHT)*1.2f+rectangleLine.getY()));
-        verticesBigger.set(3, new Vector2f((rectangleLine.getMesh().getVertices()[9] * Config.CANVAS_WIDTH)*1.2f+rectangleLine.getX(),(rectangleLine.getMesh().getVertices()[10]*Config.CANVAS_HEIGHT)*1.2f+rectangleLine.getY()));
+        verticesBigger.set(0, new Vector2f((originalVertices.get(0).x * Config.CANVAS_WIDTH)*bigger+rectangleLine.getX(),(originalVertices.get(0).y *Config.CANVAS_HEIGHT)*bigger+rectangleLine.getY()));
+        verticesBigger.set(1, new Vector2f((originalVertices.get(1).x * Config.CANVAS_WIDTH)*bigger+rectangleLine.getX(),(originalVertices.get(1).y *Config.CANVAS_HEIGHT)*bigger+rectangleLine.getY()));
+        verticesBigger.set(2, new Vector2f((originalVertices.get(2).x * Config.CANVAS_WIDTH)*bigger+rectangleLine.getX(),(originalVertices.get(2).y *Config.CANVAS_HEIGHT)*bigger+rectangleLine.getY()));
+        verticesBigger.set(3, new Vector2f((originalVertices.get(3).x * Config.CANVAS_WIDTH)*bigger+rectangleLine.getX(),(originalVertices.get(3).y *Config.CANVAS_HEIGHT)*bigger+rectangleLine.getY()));  
     }
 
     public LineModel getRectangleLine() {
@@ -62,23 +68,14 @@ public class ScaleSquareUI {
         ScaleSquareUI.shader = shader;
     }
 
-    public float getRadius() {
-        return radius;
-    }
-
-    public void setRadius(float radius) {
-        this.radius = radius;
-    }
-
     public ArrayList<Vector2f> getVerticesSmaller() {
         return verticesSmaller;
-
     }
 
     public ArrayList<Vector2f> getVerticesBigger() {
         return verticesBigger;
     }
-
+   
     public void setScale(float scale) {
         rectangleLine.setScale(scale);
         calculateVertices();

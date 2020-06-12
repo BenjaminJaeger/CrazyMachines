@@ -9,6 +9,7 @@ import static com.jogamp.opengl.GL.GL_FRONT_AND_BACK;
 import static com.jogamp.opengl.GL.GL_LINEAR;
 import static com.jogamp.opengl.GL.GL_LINEAR_MIPMAP_LINEAR;
 import static com.jogamp.opengl.GL.GL_LINE_LOOP;
+import static com.jogamp.opengl.GL.GL_POINTS;
 import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
 import static com.jogamp.opengl.GL.GL_TRIANGLES;
 import static com.jogamp.opengl.GL.GL_UNSIGNED_INT;
@@ -155,6 +156,7 @@ public class Renderer {
 			
 		gl.glBindVertexArray(model.getMesh().getVaoID());
 		gl.glDrawArrays(GL_LINE_LOOP, 0,model.getMesh().getVertices().length/3);
+		gl.glDrawArrays(GL_POINTS, 0,model.getMesh().getVertices().length/3);
 	}
 	
 

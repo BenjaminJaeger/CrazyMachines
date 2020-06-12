@@ -27,7 +27,7 @@ public class ObjectTransformationModes {
         float mouseX = (float)e.getX(); // die Mausposition
         float mouseY = (float)e.getY(); // die Mausposition
 
-        float scale = (float)Math.sqrt(Math.pow((objectX-mouseX),2)+Math.pow((objectY-mouseY),2)) /100; //Skalierungsvektor
+        float scale = (float)Math.sqrt(Math.pow((objectX-mouseX),2)+Math.pow((objectY-mouseY),2)) /100; //Skalierungsvektor;
         allobjects.get(objectCounter).setScale(scale);
         allobjects.get(objectCounter).setOriginalscale(scale);
     }
