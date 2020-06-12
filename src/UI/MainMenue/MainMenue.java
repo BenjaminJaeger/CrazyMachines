@@ -8,6 +8,7 @@ import UI.LevelMenue.Level;
 import UI.MainMenue.Elements.MenueButton;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,6 +21,8 @@ import javafx.stage.Stage;
 public class MainMenue extends StackPane{
 
 	public MainMenue(Scene mainScene,Stage primaryStage) {		
+		mainScene.setCursor(Cursor.DEFAULT);
+		
 		ImageView background = new ImageView(new Image("file:res/Images/background.jpg"));
 		background.setFitWidth(this.getWidth());
 		background.setFitHeight(this.getHeight());

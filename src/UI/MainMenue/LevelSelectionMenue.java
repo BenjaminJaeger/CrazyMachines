@@ -8,6 +8,7 @@ import UI.LevelMenue.Level;
 import UI.MainMenue.Elements.MenueLeaveButton;
 import UI.MainMenue.Elements.MenueLevelButton;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,6 +22,8 @@ public class LevelSelectionMenue extends StackPane{
 	private boolean[] levelsDone;
 	
 	public LevelSelectionMenue(Scene mainScene,Stage primaryStage) {
+		mainScene.setCursor(Cursor.DEFAULT);
+		
 		ImageView background = new ImageView(new Image("file:res/Images/background.jpg"));
 		background.setFitWidth(this.getWidth());
 		background.setFitHeight(this.getHeight());

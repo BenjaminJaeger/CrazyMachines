@@ -12,48 +12,68 @@ public class ObjectTransformationListeners {
     	
         Util.canvasWrapper.setOnMouseClicked(e-> {
         	if(!SimulationControler.isPlaying()) {
+        		
+	        	int slectedObjectIndex=-1;
+	        	boolean objectGotSelected = false;
 	        	
-        		//Initial Object picking
+	        	//Unselect Object
 	            for (int first = 0; first < GameObject.allObjects.size(); first++) {
 	            	
 	            	if(GameObject.allObjects.get(first).isEditable()) {
 	            				            
 		            	float distance = ObjectPickingMethods.calculateCircleDistance(e,GameObject.allObjects.get(first));
 		            	
-		            	if (GameObject.allObjects.get(first).isSelected()) { 
+		            	if (GameObject.allObjects.get(first).isSelected()) {
+		            		objectGotSelected=true;
+		            		slectedObjectIndex=first;
 		                    if (!(distance <= GameObject.allObjects.get(first).getObjectTransformer().getCircleUI().getRadius()*1.5f)) {
 		                    	GameObject.allObjects.get(first).unSelectObject();
-		                		objectSettings.removeUI();
+		                		objectSettings.removeUI();		                		
 		                    }
 
-		                    continue;
+		                    break;
 		            	}	
-		         	     	          	
+		            	objectGotSelected=false;
+	            	}    	
+	            }
+	            
+	          //Initial Object picking
+	            	for (int first = 0; first < GameObject.allObjects.size(); first++) {
 		                for (int second = 0; second < GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons().length; second++)
-		                	if(ObjectPickingMethods.detectPolygonMouseCollision(e,GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons()[second])) {
-		                		GameObject.allObjects.get(first).selectObject();
+		                	if(!GameObject.allObjects.get(first).isSelected() && ObjectPickingMethods.detectPolygonMouseCollision(e,GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons()[second])) {
+		                		if(objectGotSelected && slectedObjectIndex != first) {
+		                			GameObject.allObjects.get(slectedObjectIndex).unSelectObject();
+			                		objectSettings.removeUI();	                		
+		                		}		     
+	                			GameObject.allObjects.get(first).selectObject();
 		                		objectSettings.addUI(GameObject.allObjects.get(first));
 		                		break;
 		                	}
+		                
+		                float distance = ObjectPickingMethods.calculateCircleDistance(e,GameObject.allObjects.get(first));
 		     
 		                for (int third = 0; third < GameObject.allObjects.get(first).getCollisionContext().getBoundingCircles().length; third++)  
-		                	if(ObjectPickingMethods.detectCircleMouseCollision(GameObject.allObjects.get(first).getCollisionContext().getBoundingCircles()[third],distance)) {
+		                	if(!GameObject.allObjects.get(first).isSelected() && ObjectPickingMethods.detectCircleMouseCollision(GameObject.allObjects.get(first).getCollisionContext().getBoundingCircles()[third],distance)) {
+		                		if(objectGotSelected && slectedObjectIndex != first) {
+		                			GameObject.allObjects.get(slectedObjectIndex).unSelectObject();
+			                		objectSettings.removeUI();		                		
+		                		}
 		                		GameObject.allObjects.get(first).selectObject();
 		                		objectSettings.addUI(GameObject.allObjects.get(first));
 		                		break;
 		                	}
 		                
-		                
-	            	}        	
-	            }
-
-        	}  
+	            		}
+	            	}  
+ 
         });
 
 
         //Highlight Object On Mouse over
         Util.canvasWrapper.setOnMouseMoved(e-> {
-        	if(!SimulationControler.isPlaying()) {         
+             
+
+            if(!SimulationControler.isPlaying()) {         
 	            for (int first = 0; first < GameObject.allObjects.size(); first++) {
 	            	
 	               	if(GameObject.allObjects.get(first).isEditable()) {
@@ -61,22 +81,29 @@ public class ObjectTransformationListeners {
 		            	float distance = ObjectPickingMethods.calculateCircleDistance(e,GameObject.allObjects.get(first));
 		            	     	     	          	
 		                for (int second = 0; second < GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons().length; second++)
-		                	if(ObjectPickingMethods.detectPolygonMouseCollision(e,GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons()[second]))      
+		                	if(ObjectPickingMethods.detectPolygonMouseCollision(e,GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons()[second])) {   
 		                		GameObject.allObjects.get(first).highlight(true);
-		                	else 
+		                		Util.mainScene.setCursor(Cursor.HAND);
+		                		first=GameObject.allObjects.size()-1;
+		                		break;
+		                	}else {
 		                		GameObject.allObjects.get(first).highlight(false);
-							
+		                		Util.mainScene.setCursor(Cursor.DEFAULT);
+		                	}
 		     
 		                for (int third = 0; third < GameObject.allObjects.get(first).getCollisionContext().getBoundingCircles().length; third++)  
-		                	if(ObjectPickingMethods.detectCircleMouseCollision(GameObject.allObjects.get(first).getCollisionContext().getBoundingCircles()[third],distance)) 
+		                	if(ObjectPickingMethods.detectCircleMouseCollision(GameObject.allObjects.get(first).getCollisionContext().getBoundingCircles()[third],distance))  {
 		                		GameObject.allObjects.get(first).highlight(true);
-		                    else 
+		                		Util.mainScene.setCursor(Cursor.HAND);
+		                		first=GameObject.allObjects.size()-1;
+		                		break;
+		                	} else { 
 		                    	GameObject.allObjects.get(first).highlight(false);
-		                
+		                		Util.mainScene.setCursor(Cursor.DEFAULT);
+	               			}
 	               	}
 	            }
         	}
-        	
             
             //Change Move Rotate Scale State of Object On Mouse clicked
             for (int objectCounter = 0; objectCounter < GameObject.allObjects.size(); objectCounter++) {
@@ -102,7 +129,7 @@ public class ObjectTransformationListeners {
 	            	GameObject.allObjects.get(objectCounter).setScalable(false);
                     GameObject.allObjects.get(objectCounter).setRotatable(false);
                     GameObject.allObjects.get(objectCounter).setMoveable(false);
-                    Util.mainScene.setCursor(Cursor.DEFAULT);
+                    
                     
                 }
             }

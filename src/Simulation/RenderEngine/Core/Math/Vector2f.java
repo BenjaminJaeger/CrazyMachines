@@ -21,6 +21,9 @@ public class Vector2f {
 		y/=magnitude;
 	}
 	
+	public float length() {
+		return (float)Math.sqrt(x*x+y*y);
+	}
 	/**
 	 * divides each component through the devisor
 	 * @param devisor

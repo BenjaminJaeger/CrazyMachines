@@ -37,10 +37,6 @@ public class ObjectTransformer {
             for (int vertexAddCounter = 0; vertexAddCounter < object.getCollisionContext().getBoundingPolygons().length; vertexAddCounter++) 
                 vertices.addAll(Arrays.asList(object.getCollisionContext().getBoundingPolygon(vertexAddCounter).getPoints()));
             
-            for (Vector2f v : vertices) 
-				System.out.println(v);
-			
-
             for (int i = 0; i < vertices.size(); i++) {
                 //Abstandsvektor zum Mittelpunkt berechnen
                 if (i == 0) 

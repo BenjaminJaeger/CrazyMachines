@@ -4,6 +4,7 @@
 
 
 .LevelTabPane{
+	  -fx-max-height:150px;
 	-fx-background-radius: 10 10 0 0;
 	-fx-border-width: 8 0 0 0;
 	-fx-border-color: #f77949;
