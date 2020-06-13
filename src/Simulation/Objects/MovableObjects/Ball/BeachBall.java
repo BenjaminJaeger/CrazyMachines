@@ -12,6 +12,8 @@ public class BeachBall extends Ball{
 ////////////////////
 	public BeachBall(float x, float y) {
 		super(40, 50, material,"BeachBall.png", x, y);
+		setCoefficientOfRestitution(0.8f);
+		setMass(0.2f);
 	}
 	
 }

@@ -9,12 +9,17 @@ import static com.jogamp.opengl.GL.GL_FRONT_AND_BACK;
 import static com.jogamp.opengl.GL.GL_LINEAR;
 import static com.jogamp.opengl.GL.GL_LINEAR_MIPMAP_LINEAR;
 import static com.jogamp.opengl.GL.GL_LINE_LOOP;
+import static com.jogamp.opengl.GL.GL_LINE_SMOOTH;
+import static com.jogamp.opengl.GL.GL_MULTISAMPLE;
+import static com.jogamp.opengl.GL.GL_NICEST;
 import static com.jogamp.opengl.GL.GL_POINTS;
 import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
 import static com.jogamp.opengl.GL.GL_TRIANGLES;
 import static com.jogamp.opengl.GL.GL_UNSIGNED_INT;
 import static com.jogamp.opengl.GL2GL3.GL_FILL;
 import static com.jogamp.opengl.GL2GL3.GL_LINE;
+import static com.jogamp.opengl.GL2GL3.GL_POLYGON_SMOOTH;
+import static com.jogamp.opengl.GL2GL3.GL_POLYGON_SMOOTH_HINT;
 
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLContext;
@@ -60,6 +65,12 @@ public class Renderer {
 		gl.glEnable(GL_DEPTH_TEST); 
 		gl.glEnable(GL_BLEND);	
 		
+		gl.glEnable(GL_POLYGON_SMOOTH);
+		gl.glEnable(GL_LINE_SMOOTH);
+		
+		gl.glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+		gl.glEnable(GL_MULTISAMPLE);
+
 		gl.glLineWidth(Config.LINE_WIDTH);
 		gl.glPointSize(Config.POINT_SIZE);
 		

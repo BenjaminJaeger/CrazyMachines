@@ -130,7 +130,7 @@ public class ObjectSettingsLevel extends VBox {
                 	object.setOriginalscale(1);
             	}else {
             		object.setScale(Float.parseFloat(scale.getText())/100);
-                	object.setOriginalscale(Float.parseFloat(scale.getText()));
+                	object.setOriginalscale(Float.parseFloat(scale.getText())/100);
             	}
          	
             }

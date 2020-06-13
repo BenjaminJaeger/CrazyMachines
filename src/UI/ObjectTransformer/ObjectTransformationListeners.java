@@ -39,6 +39,9 @@ public class ObjectTransformationListeners {
 	            
 	          //Initial Object picking
 	            	for (int first = 0; first < GameObject.allObjects.size(); first++) {
+	            		
+	            		if(GameObject.allObjects.get(first).isEditable()) {
+	            			
 		                for (int second = 0; second < GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons().length; second++)
 		                	if(!GameObject.allObjects.get(first).isSelected() && ObjectPickingMethods.detectPolygonMouseCollision(e,GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons()[second])) {
 		                		if(objectGotSelected && slectedObjectIndex != first) {
@@ -65,6 +68,7 @@ public class ObjectTransformationListeners {
 		                
 	            		}
 	            	}  
+    		}
  
         });
 

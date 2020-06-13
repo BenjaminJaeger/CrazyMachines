@@ -23,8 +23,9 @@ public abstract class GameObject {
 	
 	protected float x,y;
 	protected float rotation=0;
-	protected float scale=1;
-
+	protected float scale=1;	
+	protected float CoefficientOfRestitution = 1;
+	
 	protected CollisionContext collisionContext;
 	protected boolean renderBounding = false;
 	
@@ -47,9 +48,11 @@ public abstract class GameObject {
 	private boolean editable = true;
 	private boolean playable = false;
 	
-	private TabElement tabPane;
+	protected TabElement tabPane;
 
 	protected ParticleSystem particleSystem;
+
+	
 ////////////////////
 ////Constructors////
 ////////////////////
@@ -383,5 +386,13 @@ public abstract class GameObject {
 	public void setParticleSystem(ParticleSystem particleSystem) {
 		this.particleSystem = particleSystem;
 	}
-	
+
+	public float getCoefficientOfRestitution() {
+		return CoefficientOfRestitution;
+	}
+
+	public void setCoefficientOfRestitution(float coefficientOfRestitution) {
+		CoefficientOfRestitution = coefficientOfRestitution;
+	}
+
 }
