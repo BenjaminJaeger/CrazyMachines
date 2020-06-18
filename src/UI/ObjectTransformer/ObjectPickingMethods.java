@@ -21,7 +21,7 @@ public class ObjectPickingMethods {
 
     public static boolean detectCircleMouseCollision(BoundingCircle circle, float distance) {
         if (distance <= circle.getRadius())        
-            return true;    
+            return true;   
         else 
             return false;
     }
@@ -52,8 +52,6 @@ public class ObjectPickingMethods {
 
 
     public static boolean chooseCircleLine(MouseEvent e, RotationCircleUI object) {
-        boolean dragged = false;
-
         float x = UI.Util.convertMouseX(e.getX());
         float y = UI.Util.convertMouseY(e.getY());
 
@@ -62,11 +60,10 @@ public class ObjectPickingMethods {
 
         float distance = (float) Math.sqrt((distX*distX) + (distY*distY));
 
-        if (distance >= (object.getRadius())*0.7 && distance <= (object.getRadius()) * 1.3) {
-            dragged = true;
-        }
-
-        return dragged;
+        if (distance >= (object.getRadius()*0.9f) && distance <= (object.getRadius()) * 1.5) 
+        	return true;
+        
+        return false;
     }
 
     
@@ -79,12 +76,37 @@ public class ObjectPickingMethods {
         float ry = squareUI.getVerticesBigger().get(1).y;
         float ry2 = squareUI.getVerticesBigger().get(2).y;
 
-        if (px >= rx &&         // right of the left edge AND
-                px <= rx2 &&    // left of the right edge AND
-                py >= ry &&         // below the top AND
-                py <= ry2) {    // above the bottom
-            return true;
+        if (px > rx &&  px < rx2 && py < ry && py > ry2) { 
+
+        	 rx = squareUI.getVerticesSmaller().get(1).x;
+             rx2 = squareUI.getVerticesSmaller().get(0).x;
+             ry = squareUI.getVerticesSmaller().get(1).y;
+             ry2 = squareUI.getVerticesSmaller().get(2).y;
+        	
+             if (!(px > rx &&  px < rx2 && py < ry && py > ry2)) 
+            	 return true;
+   
         }
+                
+        return false;
+    }
+    
+    public static boolean chooseObject(MouseEvent e ,ScaleSquareUI squareUI) {
+    	
+        float px = UI.Util.convertMouseX(e.getX());
+        float py = UI.Util.convertMouseY(e.getY());
+        
+        float rx = squareUI.getVerticesSmaller().get(1).x;
+        float rx2 = squareUI.getVerticesSmaller().get(0).x;
+        float ry = squareUI.getVerticesSmaller().get(1).y;
+        float ry2 = squareUI.getVerticesSmaller().get(2).y;
+
+        if (px > rx &&         
+            px < rx2 &&    	
+            py < ry &&         
+            py > ry2) 		
+        	   return true;
+        
         return false;
     }
 }

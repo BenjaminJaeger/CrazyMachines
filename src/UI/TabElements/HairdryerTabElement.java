@@ -6,11 +6,11 @@ import javafx.scene.layout.Pane;
 
 public class HairdryerTabElement extends TabElement {
     public HairdryerTabElement(Pane glass) {
-        super(glass,"Foehn", "Hairdryer.png");
+        super(glass,"Föhn", "Hairdryer.png");
     }
 
     public HairdryerTabElement(Pane glass,int ammount) {
-        super(glass,"Foehn", "Hairdryer.png",ammount);
+        super(glass,"Föhn", "Hairdryer.png",ammount);
     }
 
     @Override

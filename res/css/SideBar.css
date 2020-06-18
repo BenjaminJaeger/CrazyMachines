@@ -15,6 +15,7 @@
     -fx-border-color: #333333;
     -fx-max-width: 100;
     -fx-min-height: 40;
+    -fx-cursor: hand;
 }
 
 .fakeButton:hover{
@@ -22,6 +23,7 @@
 }
 
 .button {
+	 -fx-cursor: hand;
     -fx-font: 15px "Roboto";
     -fx-text-fill: #fff;
     -fx-background-color: transparent;
@@ -48,6 +50,7 @@
 }
 
 .slider{
+	 -fx-cursor: hand;
 	 -fx-min-height: 150;
 	 -fx-max-height: 150;
 	 -fx-padding: 0 5 5 12;

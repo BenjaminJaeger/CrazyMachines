@@ -29,10 +29,11 @@ public class CameraControls implements KeyListener, MouseMotionListener, MouseWh
     private float CameraZInc = 0.01f;
     
     //increment of the rotation
-    private float CameraRotationXInc = 0.5f;
-    private float CameraRotationYInc = 0.5f;
+    private float CameraRotationXInc = 0.2f;
+    private float CameraRotationYInc = 0.2f;
     
-    private boolean leftMouseButtonPressed = false;
+//    private boolean leftMouseButtonPressed = false;
+    private boolean middleMouseButtonPressed = false;  
     private boolean rightMouseButtonPressed = false;
     
     private Point lastMouseLocation=new Point(0, 0);
@@ -60,8 +61,8 @@ public class CameraControls implements KeyListener, MouseMotionListener, MouseWh
 	       int pressedButton = e.getButton();
 	       lastMouseLocation = e.getLocationOnScreen();
 	        switch (pressedButton) {
-	            case MouseEvent.BUTTON1:
-	                leftMouseButtonPressed = true;
+	            case MouseEvent.BUTTON2:
+	            	middleMouseButtonPressed = true;
 	                break;
 	            case MouseEvent.BUTTON3:
 	                rightMouseButtonPressed = true;
@@ -72,11 +73,13 @@ public class CameraControls implements KeyListener, MouseMotionListener, MouseWh
     public void mouseReleased(MouseEvent e) {
     	int releasedButton = e.getButton();
     	switch (releasedButton) {
-	    	case MouseEvent.BUTTON1:
-	    		leftMouseButtonPressed = false;
+	    	case MouseEvent.BUTTON2:
+	    		middleMouseButtonPressed = false;    		
 	    		break;
 	    	case MouseEvent.BUTTON3:
 	    		rightMouseButtonPressed = false;
+	    		camera.setRotateX(0);
+	    		camera.setRotateY(0);
 	    		break;
     	}
     }
@@ -89,13 +92,13 @@ public class CameraControls implements KeyListener, MouseMotionListener, MouseWh
 		    lastMouseLocation = currentMouseLocation;
 		        
 		     // holding the left mouse button rotates the scene
-		     if (leftMouseButtonPressed) {	
+		     if (rightMouseButtonPressed) {	
 		        camera.increaseRotationX(CameraRotationXInc * -deltaY);
 		        camera.increaseRotationY(CameraRotationYInc * -deltaX);
 		     }
 		        
 		    // holding the right mouse button translates the scene
-		    if (rightMouseButtonPressed) {
+		    if (middleMouseButtonPressed) {
 		        camera.increaseX(CameraXInc * -deltaX);
 		        camera.increaseY(CameraYInc * +deltaY);
 		    }

@@ -11,10 +11,12 @@ public class RotationCircleUI {
     private LineModel circleModel;
     private static BasicShader shader = new BasicShader("Line");
 
-    float radius;
+    private float originalRadius;
+    private float radius;
 
     public RotationCircleUI (float radius, int resolution, float r, float g, float b, float x, float y) {
         this.radius = radius + 10;
+        this.originalRadius = this.radius;
         circleModel = new LineModel(new CircleLine(this.radius, resolution, 0), r, g, b, x, y);
     }
 
@@ -40,7 +42,7 @@ public class RotationCircleUI {
 
     public void setScale(float scale) {
         circleModel.setScale(scale);
-        radius *= scale;
+        radius = originalRadius*scale;
     }
     
     public void setX(float x) {

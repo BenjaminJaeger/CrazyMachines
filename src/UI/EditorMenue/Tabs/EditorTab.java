@@ -28,9 +28,13 @@ public abstract class EditorTab extends Tab{
 			    
 	    content = new HBox(10);
 		content.setAlignment(Pos.CENTER_LEFT);
+		content.setStyle("-fx-background-color: transparent;");
 		
 		ScrollPane scrollPane = new ScrollPane();
 		scrollPane.setContent(content);
+		scrollPane.setMinHeight(120);
+		scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+	    scrollPane.getStylesheets().add("file:res/css/EditorTabPane.css");
 	    
 		this.setContent(scrollPane);
 		createContent(glass);

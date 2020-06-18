@@ -52,7 +52,7 @@ public abstract class TabElement extends VBox {
         this.getChildren().addAll(container, nameLabel);
         
         this.getStyleClass().add("TabElement");
-		this.getStylesheets().add("file:res/css/TabElement.css");
+		this.getStylesheets().add("file:res/css/EditorTabPane.css");
 		
 		addDragAndDropWithAmmount(glass);         
     }
@@ -71,7 +71,7 @@ public abstract class TabElement extends VBox {
         this.getChildren().addAll(icon, nameLabel);
         
         this.getStyleClass().add("TabElement");
-		this.getStylesheets().add("file:res/css/TabElement.css");
+        this.getStylesheets().add("file:res/css/EditorTabPane.css");
 		
         addDragAndDrop(glass);         
     }

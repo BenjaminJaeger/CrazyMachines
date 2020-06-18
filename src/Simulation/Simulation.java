@@ -41,6 +41,8 @@ public class Simulation implements GLEventListener{
 		GLCapabilities capabilities = new GLCapabilities(GLProfile.getDefault());
 		capabilities.setAlphaBits(8);
 		capabilities.setBackgroundOpaque(false);
+		capabilities.setSampleBuffers(true);
+		capabilities.setNumSamples(4);
 		canvas = new GLJPanel(capabilities);	   
 		canvas.setOpaque(false);
 		SwingUtilities.invokeLater(new Runnable() {
@@ -55,9 +57,12 @@ public class Simulation implements GLEventListener{
 	}
 	
 	public void initialize(String level) {
+
 		GLCapabilities capabilities = new GLCapabilities(GLProfile.getDefault());
 		capabilities.setAlphaBits(8);
 		capabilities.setBackgroundOpaque(false);
+		capabilities.setSampleBuffers(true);
+		capabilities.setNumSamples(4);
 		canvas = new GLJPanel(capabilities);	   
 		canvas.setOpaque(false);
 		SwingUtilities.invokeLater(new Runnable() {
@@ -65,12 +70,13 @@ public class Simulation implements GLEventListener{
 				Util.canvasWrapper.setContent(canvas);	
 		    }
 		});	
-	
+
 		canvas.addGLEventListener(this);		
 		animator = new FPSAnimator(canvas, Config.FRAME_RATE);
-		animator.start();
+		animator.start();	
 		
-		LevelExportImport.ImportLevel(level);
+		
+		LevelExportImport.ImportLevel(level);		
 	}
 	
 	
@@ -112,7 +118,7 @@ public class Simulation implements GLEventListener{
 		//								    new DirectionalLight(lightDirection,         diffuseColor,          speculaColor)
 		DirectionalLight directionalLight = new DirectionalLight(new Vector3f(0, 0, -1), new Vector3f(1, 1, 1), new Vector3f(1, 1, 1));
 		
-		tmp = new LineModel(new float[]{0,0,0}, 0, 0, 0, 0, 0); 
+		tmp = new LineModel(new float[]{0,0,0}, 0, 0, 0, -1000, -10000); 
 		tmpShader= new BasicShader("Line");
 		
 		canvas.addKeyListener(new KeyListener() {

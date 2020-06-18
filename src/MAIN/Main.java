@@ -17,14 +17,14 @@ public class Main extends Application{
 	
 		Font.loadFont("file:res/Roboto.ttf", 10);
 		
-		Scene mainScene = new Scene(new Pane(),1400, 900);
+		Scene mainScene = new Scene(new Pane(),1480, 920);
 		
 		new MainMenue(mainScene,primaryStage);
 		
         primaryStage.setTitle("Visual Computing 2 Prototyp");
 		primaryStage.setScene(mainScene);
-		primaryStage.setMinWidth(800);
-		primaryStage.setMinHeight(800);
+		primaryStage.setMinWidth(1080);
+		primaryStage.setMinHeight(720);
 		primaryStage.show();
 	}
 	

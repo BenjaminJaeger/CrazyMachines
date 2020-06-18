@@ -29,7 +29,7 @@ public class SimulationControler {
 			simulationTimer.scheduleAtFixedRate(new TimerTask() {
 			    public void run() {
 				      for (GameObject object : GameObject.allObjects) 
-				    	  object.update();			      
+				    	  object.update();			      				    				      
 				    }
 				},10,5);		
 		}

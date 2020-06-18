@@ -30,10 +30,12 @@ public class CollisionCirclePolygon {
 		float m1 = (dpNorm1 * (object1.getMass() - object2.getMass()) + 2 * object2.getMass() *dpNorm2 ) / (object1.getMass() + object2.getMass());	
 		float m2 = (dpNorm2 * (object2.getMass() - object1.getMass()) + 2 * object1.getMass() *dpNorm1 ) / (object1.getMass() + object2.getMass());
 			
-		object1.setVelocityX(tx * dpTan1 + nx * m1);
-		object1.setVelocityY(ty * dpTan1 + ny * m1);
-		object2.setVelocityX(tx * dpTan2 + nx * m2);
-		object2.setVelocityY(ty * dpTan2 + ny * m2);
+		float k = (object1.getCoefficientOfRestitution()+object2.getCoefficientOfRestitution())/2;
+		
+		object1.setVelocityX((tx * dpTan1 + nx * m1)*k);
+		object1.setVelocityY((ty * dpTan1 + ny * m1)*k);
+		object2.setVelocityX((tx * dpTan2 + nx * m2)*k);
+		object2.setVelocityY((ty * dpTan2 + ny * m2)*k);
 	}
 	
 	public static void elasticCollision(MoveableObject object1 ,float radius, StaticObject object2, Vector2f p1 , Vector2f p2) {
@@ -50,8 +52,10 @@ public class CollisionCirclePolygon {
 
 		float m1 = (dpNorm1 * (object1.getMass() - object2.getMass()) ) / (object1.getMass() + object2.getMass());	
 	
-		object1.setVelocityX(-(tx * dpTan1 + nx * m1));
-		object1.setVelocityY(-(ty * dpTan1 + ny * m1));
+		float k = (object1.getCoefficientOfRestitution()+object2.getCoefficientOfRestitution())/2;
+		
+		object1.setVelocityX((-(tx * dpTan1 + nx * m1))*k);
+		object1.setVelocityY((-(ty * dpTan1 + ny * m1))*k);
 
 	}
 	

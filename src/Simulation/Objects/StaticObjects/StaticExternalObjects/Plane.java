@@ -5,7 +5,7 @@ import Simulation.RenderEngine.Core.Shaders.Core.Material;
 
 public class Plane extends StaticExternalObject{
 
-	private static Material material = new Material(new Vector3f(0.2f), new Vector3f(0.5f), new Vector3f(1f), 4f);
+	private static Material material = new Material(new Vector3f(0.2f), new Vector3f(0.5f), new Vector3f(0.5f), 4f);
 	
 	public Plane(float x, float y) {
 		super("PlaneTriangles","PlaneTriangles","PlaneTexture.jpg", material, x, y);

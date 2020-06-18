@@ -11,19 +11,36 @@ import UI.TabElements.PlaneTabElement;
 import UI.TabElements.PortalTabElement;
 import UI.TabElements.SpinnerTabElement;
 import UI.TabElements.TabElement;
+import javafx.geometry.Pos;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
-public class LevelTabPane extends HBox{
+public class LevelTabPane extends StackPane{
 
-   public LevelTabPane(Pane glass,String level) {
-	   this.getStyleClass().add("LevelTabPane");
-	   this.getStylesheets().add("file:res/css/LevelTabPane.css");
+	protected HBox content;
+	
+	public LevelTabPane(Pane glass,String level) {
 	   
-	   loadElements(glass, level);
-   }
+	   	content = new HBox(10);
+		content.setAlignment(Pos.CENTER_LEFT);
+		content.setStyle("-fx-background-color: transparent;");
+		content.getStyleClass().add("hbox");
+		ScrollPane scollPane = new ScrollPane();
+		
+		scollPane.setContent(content);		
+		scollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);	
+		
+		this.setMinHeight(120);
+		this.getStyleClass().add("LevelTabPane");
+		this.getStylesheets().add("file:res/css/LevelTabPane.css");
+		this.getChildren().add(scollPane);
+	   
+		loadElements(glass, level);
+	}
    
-   public void loadElements(Pane glass,String level) {
+	public void loadElements(Pane glass,String level) {
 	   try	{	
 			
 			Scanner sc = new Scanner(new File("res/levels/"+level+".txt"));
@@ -72,7 +89,7 @@ public class LevelTabPane extends HBox{
 						throw new IllegalArgumentException("Unexpected value: " + type);
 					}
 					
-					this.getChildren().add(element);
+					content.getChildren().add(element);
 														
 				}else 	
 					sc.nextLine();

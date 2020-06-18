@@ -19,6 +19,7 @@ public class MenueButton extends HBox{
 		checked.setFitWidth(20);
 		
 		Label btnText = new Label(text);
+		btnText.setMinWidth(200);
 		
 		this.getChildren().addAll(unchecked,btnText);		
 		this.setAlignment(Pos.CENTER);

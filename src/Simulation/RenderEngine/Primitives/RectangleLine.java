@@ -25,7 +25,6 @@ public class RectangleLine extends Primitive{
 	public RectangleLine(float size) {
 		this.height=size/Config.CANVAS_HEIGHT;
 		this.width=size/Config.CANVAS_WIDTH;
-		this.z = z;
 		constructMesh();
 	}
 		

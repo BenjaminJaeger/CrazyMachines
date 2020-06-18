@@ -14,3 +14,9 @@
 .label{
 	-fx-font: 16px "Serif";
 }
+
+.combo-box-popup .list-view {
+    -fx-rotate: 15;
+    -fx-translate-y: -15;
+	-fx-translate-x: -15;
+}    
