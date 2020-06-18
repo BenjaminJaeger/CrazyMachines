@@ -6,42 +6,66 @@ import Simulation.RenderEngine.Core.Math.Vector2f;
 import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.Util;
+import com.jogamp.nativewindow.util.Point;
 
 public class Magnet extends StaticExternalObject{
 
     private static Material material = new Material(new Vector3f(0.2f), new Vector3f(0.5f), new Vector3f(1f), 4f);
+    private static Vector2f negativeSrc, positiveSrc;
+    private float offset = 10;
+    private double charge = 2.7 * Math.pow(10,-6); //in coulomb, equals 25000 gauss -> gauss:coulomb - 8.9*10^11:1
 
     public Magnet(float x, float y) {
-        super("MagnetObject","PlaneTriangles","magnetTexture.jpg", material, x, y);
-        setScale(0.25f);
-        setOriginalscale(0.25f);
+        super("stabmagnet_tri","PlaneTriangles","magnetTexture.png", material, x, y);
+
+        setScale(1f);
+        setOriginalscale(1f);
+        negativeSrc = new Vector2f (x, y-(offset*this.getScale()));
+        positiveSrc = new Vector2f (x, y-(offset*this.getScale()));
     }
 
     @Override
     public void update() {
-        float currentRotation = (float)(this.getRotation()*Math.PI/180);
-        Vector2f directional = Util.rotate(-1, 0, currentRotation);
-        //angle value between 0 and 180
-        double thresholdAngle = 90;
-        int thresholdDistance = 200;
+        double threshold = 2000; //set infinite for full realism
+        Vector2f newNegative = Util.rotateArroundPoint(negativeSrc.getX(), negativeSrc.getY(), this.getRotation(), this.getX(), this.getY());
+        Vector2f newPositive = Util.rotateArroundPoint(positiveSrc.getX(), positiveSrc.getY(), this.getRotation(), this.getX(), this.getY());
 
-
-        for (GameObject object : allObjects) {
+        for (GameObject object: allObjects) {
             if (object instanceof MoveableObject) {
-                Vector2f connecting = new Vector2f (object.getX() - this.getX(), object.getY() - this.getY());
-                double distance = Util.calcVectorSize(connecting);
-                double scalar = Util.calcScalar(directional, connecting);
+                Vector2f repel = new Vector2f(newNegative.getX()-object.getX(), newNegative.getY()-object.getY());
+                Vector2f attract = new Vector2f(object.getX()-newPositive.getX(), object.getY()-newPositive.getY());
 
-                if (Math.acos(scalar) > thresholdAngle && distance <= thresholdDistance) {
-                    float force = 50f; //TO-DO force function
-                    Vector2f initForceDirection = Util.rotate(-1, 0, currentRotation);
-                    ((MoveableObject) object).applyForce(initForceDirection.getX()*force, initForceDirection.getY()*force);
+                double attractDistance = Util.calcVectorSize(attract);
+                double repelDistance = Util.calcVectorSize(repel);
+
+                float mass = object.getMass();
+
+                if (attractDistance < repelDistance) {
+                    Vector2f attractNorm = Util.normVector(attract);
+                    float accX = attractNorm.getX() * forceFunction(attractDistance, charge, mass);
+                    float accY = attractNorm.getY() * forceFunction(attractDistance, charge, mass);
+                    ((MoveableObject) object).applyForce(accX, accY);
+                }
+
+                else {
+                    Vector2f repelNorm = Util.normVector(repel);
+                    float accX = repelNorm.getX() * forceFunction(repelDistance, charge, mass);
+                    float accY = repelNorm.getY() * forceFunction(repelDistance, charge, mass);
+                    ((MoveableObject) object).applyForce(accX, accY);
+                }
                 }
             }
         }
-    }
 
-    private float forceFunction () {
-        return 50f;
+
+    private float forceFunction (double r, double Q, float m) {
+        final double e0 = 8.854187 * Math.pow(10,-12);
+        double eR = 1;
+        double eQ = 1.602*Math.pow(10,-2);
+        double f =  (1/(4*Math.PI*eR*e0)*(Q*eQ))/(Math.pow(r,2));
+
+        return 50;
+        //System.out.println((float)(f/m));
+        //return (float)(f/m);
     }
 }

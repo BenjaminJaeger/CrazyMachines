@@ -76,4 +76,9 @@ public class Util {
 		}
 		return value;
 	}
+
+	public static Vector2f normVector (Vector2f vector) {
+		double size = calcVectorSize(vector);
+		return new Vector2f ((float)(vector.getX()/size), (float)(vector.getY()/size));
+	}
 }
