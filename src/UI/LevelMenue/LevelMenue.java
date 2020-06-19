@@ -1,10 +1,7 @@
 package UI.LevelMenue;
 
-import java.util.Properties;
-
 import UI.Util;
 import UI.ObjectTransformer.ObjectTransformationListeners;
-import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -22,14 +19,7 @@ public class LevelMenue extends StackPane{
 
 		//Editorpane
 		LevelTabPane levelTabPane = new LevelTabPane(glassPane,level);
-		
-		//Canvas
-		Util.canvasWrapper = new SwingNode();
-		Util.canvasWrapper.setStyle("-fx-translate-x: 150");
-		
-		Properties props = System.getProperties(); 
-		props.setProperty("swing.jlf.contentPaneTransparent", "true");
-		
+
 		//Simulation controls
 		SideBarLevel leftSideUI = new SideBarLevel(mainScene,primaryStage);
 		ObjectTransformationListeners.addListeners(leftSideUI.getObjectSettings());

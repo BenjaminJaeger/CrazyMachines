@@ -10,8 +10,7 @@ public class Level {
 		LevelMenue menue = new LevelMenue(mainScene,level,primaryStage);
 		mainScene.setRoot(menue);
 		
-		Simulation simulation = new Simulation();
-		simulation.initialize(level);
+		Simulation.start(level);
 	}
 	
 }

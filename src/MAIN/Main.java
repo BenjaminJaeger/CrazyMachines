@@ -1,5 +1,6 @@
 package MAIN;
 
+import Simulation.Simulation;
 import UI.MainMenue.MainMenue;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -15,6 +16,8 @@ public class Main extends Application{
 	
 	public void start(Stage primaryStage) throws Exception {	
 	
+		Simulation.initialize();
+
 		Font.loadFont("file:res/Roboto.ttf", 10);
 		
 		Scene mainScene = new Scene(new Pane(),1480, 920);

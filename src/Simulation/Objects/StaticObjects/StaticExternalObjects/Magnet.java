@@ -1,12 +1,11 @@
 package Simulation.Objects.StaticObjects.StaticExternalObjects;
 
+import Simulation.Util;
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.RenderEngine.Core.Math.Vector2f;
 import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
-import Simulation.Util;
-import com.jogamp.nativewindow.util.Point;
 
 public class Magnet extends StaticExternalObject{
 

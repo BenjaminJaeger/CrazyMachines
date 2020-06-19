@@ -10,8 +10,7 @@ public class EditorMode {
 		EditorMenue menue = new EditorMenue(mainScene,primaryStage);
 		mainScene.setRoot(menue);
 		
-		Simulation simulation = new Simulation();
-		simulation.initialize();
+		Simulation.start();
 		
 		UI.Util.editorMode = true;
 	}

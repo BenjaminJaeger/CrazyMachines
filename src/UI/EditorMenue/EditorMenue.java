@@ -1,10 +1,7 @@
 package UI.EditorMenue;
 
-import java.util.Properties;
-
 import UI.Util;
 import UI.ObjectTransformer.ObjectTransformationListeners;
-import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -22,13 +19,6 @@ public class EditorMenue extends StackPane{
 
 		//Editorpane
 		EditorTabPane editorTabPane = new EditorTabPane(glassPane);
-		
-		//Canvas
-		Util.canvasWrapper = new SwingNode();
-		Util.canvasWrapper.setStyle("-fx-translate-x: 150;");
-				
-		Properties props = System.getProperties(); 
-		props.setProperty("swing.jlf.contentPaneTransparent", "true");
 		
 		//Simulation controls
 		SideBarEditor leftSideUI = new SideBarEditor(mainScene,primaryStage);

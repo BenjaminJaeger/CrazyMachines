@@ -108,6 +108,7 @@ public class Renderer {
 			shader.uploadSelectionHighlight(object.isSelected(),object.getHighlighted());
 			for (TriangleModel model : object.getModels()) 
 				render(model,shader);
+			
 		}
 
 		if (object.isSelected()) {
