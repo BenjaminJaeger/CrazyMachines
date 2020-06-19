@@ -39,7 +39,7 @@ public abstract class MoveableObject extends GameObject{
 ////Methods////
 ///////////////
 	public void update() {	
-		applyForce(0, -9.807f); //Gravitation
+		increaseAcceleration(0, -9.807f); //Gravitation
 		
 		applyForce(-velocityX*0.5f , -velocityY*0.5f); //air friction
 		
@@ -92,6 +92,11 @@ public abstract class MoveableObject extends GameObject{
 	public void increaseAcceleration(float dx,float dy) {
 		this.accelerationX+=dx;
 		this.accelerationY+=dy;
+	}
+	
+	public void increaseVelocity(float dx, float dy) {
+		this.velocityX +=dx;
+		this.velocityY +=dy;
 	}
 	
 	public void resetAcceleration() {

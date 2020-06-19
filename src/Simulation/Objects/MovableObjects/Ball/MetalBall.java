@@ -14,6 +14,7 @@ public class MetalBall extends Ball{
 		super(10, 50, material,"PlaneTexture.jpg", x, y);
 		setCoefficientOfRestitution(0.1f);
 		setMass(5);
+		setOriginalMass(5);
 	}
 	
 }

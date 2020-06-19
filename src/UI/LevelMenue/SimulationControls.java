@@ -83,10 +83,6 @@ public class SimulationControls extends VBox{
 	    slider.valueProperty().addListener(new ChangeListener<Number>() {
 	         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 	         	SimulationControler.setUpdateTime(newValue.intValue());
-	         	if (SimulationControler.isPlaying()) {
-	 	             SimulationControler.pause();
-	 	             SimulationControler.play();
-	           }
 	         }
 	    });
 	  
