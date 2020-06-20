@@ -75,6 +75,8 @@ public class CameraControls implements KeyListener, MouseMotionListener, MouseWh
     	switch (releasedButton) {
 	    	case MouseEvent.BUTTON2:
 	    		middleMouseButtonPressed = false;    		
+	    		camera.setX(0);
+	    		camera.setY(0);
 	    		break;
 	    	case MouseEvent.BUTTON3:
 	    		rightMouseButtonPressed = false;

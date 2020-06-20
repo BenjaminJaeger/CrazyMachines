@@ -1,6 +1,7 @@
-package UI.LevelMenue;
+package UI.SideBar;
 
 import Simulation.SimulationControler;
+import UI.Util;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Orientation;
@@ -20,7 +21,7 @@ public class SimulationControls extends VBox{
 
 	protected float imageSize = 30;
 
-	public SimulationControls(Scene mainScene,Stage primaryStage) {
+	public SimulationControls(Scene mainScene,Stage primaryStage,VBox container) {
 		super(10);
 		 
 		 Label title = new Label("Simulation");
@@ -33,26 +34,28 @@ public class SimulationControls extends VBox{
 	     ImageView playImg = new ImageView(new Image("file:res/Images/play.png"));
 	     playImg.setFitWidth(imageSize);
 	     playImg.setFitHeight(imageSize);
-		    
 	     ImageView pauseImg = new ImageView(new Image("file:res/Images/pause.png"));
 	     pauseImg.setFitWidth(imageSize);
 	     pauseImg.setFitHeight(imageSize);
-	     
-	     Label playpauseLabel = new Label("Play");
+		    	     
+	     Label playpauseText = new Label("Play");
 	     HBox playpause = new HBox(10);
 	     playpause.setAlignment(Pos.CENTER_LEFT);
 	     playpause.getStyleClass().add("fakeButton");
-	     playpause.getChildren().addAll(playImg,playpauseLabel);
+	     playpause.getChildren().addAll(playImg,playpauseText);
 	     playpause.setOnMouseClicked(e->{
 	    	 if(SimulationControler.isPlaying()) {
+	    		 playpauseText.setText("Play");
+	    		 SimulationControler.pause();
 	    		 playpause.getChildren().set(0, playImg);
-	             playpauseLabel.setText("Play");
-	             SimulationControler.pause();
-	         }else {
-	        	 playpause.getChildren().set(0, pauseImg);
-	             playpauseLabel.setText("Pause");
-	             SimulationControler.play();
-	         }
+	    		 container.getChildren().remove(container.getChildren().size()-1);
+	    	 }else {
+	    		 playpauseText.setText("Pause");
+	    		 SimulationControler.play();
+	    		 playpause.getChildren().set(0, pauseImg);
+	    		 Util.objectSettings.removeUI();	    		
+	    		 container.getChildren().add(new ObjectSpeed());
+			}	        
 	     });
 	     
 	     ImageView stopImg = new ImageView(new Image("file:res/Images/reset.png"));
@@ -67,8 +70,8 @@ public class SimulationControls extends VBox{
 	     stop.setOnMouseClicked(e->{
 	    	 if (SimulationControler.isPlaying()) {
 	             SimulationControler.pause();
+	             container.getChildren().remove(container.getChildren().size()-1);
 	             playpause.getChildren().set(0, playImg);
-	             playpauseLabel.setText("Play");
 	         }
 	         SimulationControler.restart();
 	     });

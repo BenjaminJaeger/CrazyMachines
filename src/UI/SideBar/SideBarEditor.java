@@ -1,7 +1,8 @@
-package UI.EditorMenue;
+package UI.SideBar;
 
 import Simulation.SimulationControler;
-import UI.LevelMenue.SimulationControls;
+import UI.Util;
+import UI.EditorMenue.EditorLevelSettings;
 import UI.MainMenue.MainMenue;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -19,8 +21,9 @@ public class SideBarEditor extends AnchorPane{
 	private ObjectSettingsEditor objectSettings;
 	
 	public SideBarEditor(Scene mainScene,Stage primaryStage) {
+		VBox container = new VBox();
 		
-		SimulationControls simulationControls = new SimulationControls(mainScene,primaryStage);
+		SimulationControls simulationControls = new SimulationControls(mainScene,primaryStage,container);
 		
 		Line line1 = new Line(0,0,164,0);
 		line1.setStrokeWidth(6);
@@ -33,8 +36,9 @@ public class SideBarEditor extends AnchorPane{
 		line2.setFill(Color.BLACK);
 				
 		objectSettings = new ObjectSettingsEditor();
-			
-		VBox container = new VBox();
+		Util.objectSettings = objectSettings;
+		
+		
 		container.setAlignment(Pos.TOP_LEFT);
 		container.getChildren().addAll(simulationControls,line1,levelSettings,line2,objectSettings);
 		
@@ -46,7 +50,7 @@ public class SideBarEditor extends AnchorPane{
 		});
 		AnchorPane.setBottomAnchor(exit, 10.0);
 
-		this.getChildren().addAll(container,exit);
+		this.getChildren().addAll(container,new Pane(),exit);
 		this.getStyleClass().add("vbox");
 		this.getStylesheets().add("file:res/css/SideBar.css");
 	}

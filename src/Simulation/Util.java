@@ -5,6 +5,14 @@ import Simulation.RenderEngine.Core.Math.Vector2f;
 
 public class Util {
 	
+	public static float round(float value) {
+		return (float)Math.round(value * 1000f) / 1000f;
+	}
+	
+	public static String getRoundedString(float value) {
+		return Float.toString(round(value));
+	}
+	
 	public static float getDistance(float x1,float y1,float x2,float y2) {
 		//pythagoras theorem a� + b� = c� -> sqrt(a� + b�) = c
 		return (float)Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));

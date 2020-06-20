@@ -3,7 +3,7 @@ package UI.ObjectTransformer;
 import Simulation.SimulationControler;
 import Simulation.Objects.GameObject;
 import UI.Util;
-import UI.LevelMenue.ObjectSettingsLevel;
+import UI.SideBar.ObjectSettingsLevel;
 import javafx.scene.Cursor;
 
 public class ObjectTransformationListeners {

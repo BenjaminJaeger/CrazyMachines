@@ -5,6 +5,7 @@ import Simulation.Collisions.DynamicCollisionContext;
 import Simulation.Objects.GameObject;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Primitive;
+import UI.SideBar.PlaySideBarElement;
 
 public abstract class MoveableObject extends GameObject{
 
@@ -14,6 +15,8 @@ public abstract class MoveableObject extends GameObject{
 	protected float originalAccelerationX,originalAccelerationY;
 	
 	protected boolean portable = true;
+	
+	protected PlaySideBarElement element;
 	
 ////////////////////
 ////Constructors////
@@ -41,7 +44,7 @@ public abstract class MoveableObject extends GameObject{
 	public void update() {	
 		increaseAcceleration(0, -9.807f); //Gravitation
 		
-		applyForce(-velocityX*0.5f , -velocityY*0.5f); //air friction
+		increaseAcceleration(-velocityX*0.5f , -velocityY*0.5f); //air friction
 		
 		calculateVelocity();
 		calculatePosition();
@@ -175,5 +178,14 @@ public abstract class MoveableObject extends GameObject{
 	public void setPortable(boolean portable) {
 		this.portable = portable;
 	}
+
+	public void updateElement() {
+		element.update(this);
+	}
+
+	public void setElement(PlaySideBarElement element) {
+		this.element = element;
+	}
+	
 	
 }

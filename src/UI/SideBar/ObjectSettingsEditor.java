@@ -1,7 +1,6 @@
-package UI.EditorMenue;
+package UI.SideBar;
 
 import Simulation.Objects.GameObject;
-import UI.LevelMenue.ObjectSettingsLevel;
 import javafx.scene.control.CheckBox;
 
 public class ObjectSettingsEditor extends ObjectSettingsLevel {
@@ -11,7 +10,6 @@ public class ObjectSettingsEditor extends ObjectSettingsLevel {
     	   super();
        }
        
-
        public void completeUI(GameObject object) {
     	   CheckBox playable = new CheckBox("Interactive");
   	    	playable.setSelected(object.isPlayable());

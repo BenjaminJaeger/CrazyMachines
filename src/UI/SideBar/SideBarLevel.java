@@ -1,6 +1,8 @@
-package UI.LevelMenue;
+package UI.SideBar;
 
 import Simulation.SimulationControler;
+import UI.Util;
+import UI.LevelMenue.LevelSettings;
 import UI.MainMenue.MainMenue;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,7 +21,9 @@ public class SideBarLevel extends AnchorPane{
 	
 	public SideBarLevel(Scene mainScene,Stage primaryStage) {
 
-		SimulationControls simulationControls = new SimulationControls(mainScene,primaryStage);
+		VBox container = new VBox();
+		
+		SimulationControls simulationControls = new SimulationControls(mainScene,primaryStage,container);
 		
 		Line line1 = new Line(0,0,164,0);
 		line1.setStrokeWidth(6);
@@ -32,8 +36,8 @@ public class SideBarLevel extends AnchorPane{
 		line2.setFill(Color.BLACK);
 				
 		objectSettings = new ObjectSettingsLevel();
+		Util.objectSettings = objectSettings;	
 			
-		VBox container = new VBox();
 		container.setAlignment(Pos.TOP_LEFT);
 		container.getChildren().addAll(simulationControls,line1,levelSettings,line2,objectSettings);
 		

@@ -23,7 +23,7 @@
 }
 
 .button {
-	 -fx-cursor: hand;
+	-fx-cursor: hand;
     -fx-font: 15px "Roboto";
     -fx-text-fill: #fff;
     -fx-background-color: transparent;

@@ -2,6 +2,7 @@ package UI.EditorMenue;
 
 import UI.Util;
 import UI.ObjectTransformer.ObjectTransformationListeners;
+import UI.SideBar.SideBarEditor;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -20,9 +21,9 @@ public class EditorMenue extends StackPane{
 		//Editorpane
 		EditorTabPane editorTabPane = new EditorTabPane(glassPane);
 		
-		//Simulation controls
-		SideBarEditor leftSideUI = new SideBarEditor(mainScene,primaryStage);
-		ObjectTransformationListeners.addListeners(leftSideUI.getObjectSettings());
+		//Simulation control
+		SideBarEditor sideBar = new SideBarEditor(mainScene,primaryStage);			
+		ObjectTransformationListeners.addListeners(sideBar.getObjectSettings());
 		
 		BorderPane layout = new BorderPane();
 		layout.setStyle("-fx-background-color: transparent;");
@@ -30,7 +31,7 @@ public class EditorMenue extends StackPane{
 		StackPane container = new StackPane(Util.canvasWrapper,editorTabPane);
 		container.setAlignment(Pos.BOTTOM_CENTER);
 		layout.setCenter(container);
-		layout.setLeft(leftSideUI);
+		layout.setLeft(sideBar);
 		
 		ImageView background = new ImageView(new Image(Util.background));
 		background.setOpacity(0.4);

@@ -4,6 +4,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import Simulation.Objects.GameObject;
+import Simulation.Objects.MovableObjects.MoveableObject;
+import javafx.application.Platform;
 
 public class SimulationControler {
 
@@ -11,10 +13,26 @@ public class SimulationControler {
 	private static Timer simulationTimer;
 	private static boolean isPlaying;
 
+	public static void simulation() {
+		  for (GameObject object : GameObject.allObjects) {
+	    	  object.update();	
+	    	  
+	    	  Platform.runLater(new Runnable() {				
+				@Override
+				public void run() {
+					if(object instanceof MoveableObject) 
+			    		 ((MoveableObject) object).updateElement();
+				}
+			});
+	    	  
+	    	  
+		  }
+	}
+	
 	public static void setUpdateTime(int updateTime) {
 		SimulationControler.updateTime=updateTime;
 	}
-	
+
 	public static void pause() {
 		if(isPlaying) {
 			isPlaying=false;
@@ -28,12 +46,13 @@ public class SimulationControler {
 			simulationTimer = new Timer();
 			simulationTimer.scheduleAtFixedRate(new TimerTask() {
 			    public void run() {
-				      for (GameObject object : GameObject.allObjects) 
-				    	  object.update();			      				    				      
+				      simulation();	      				    				      
 				    }
-				},10,5);		
+				},0,5);		
 		}
 		
+		for (GameObject object : GameObject.allObjects) 
+			object.unSelectObject();	
 	}
 	
 	public static void restart() {

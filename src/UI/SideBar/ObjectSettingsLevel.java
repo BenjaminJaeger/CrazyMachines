@@ -1,7 +1,9 @@
-package UI.LevelMenue;
+package UI.SideBar;
 
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Hairdryer;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Magnet;
 import Simulation.RenderEngine.Core.Math.Vector2f;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -74,8 +76,8 @@ public class ObjectSettingsLevel extends VBox {
         xPosition = new TextField (Float.toString(Math.round(object.getX())));
         xPosition.textProperty().addListener(new ChangeListener<String>() {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            	if (!newValue.matches("\\d*")) 
-            		xPosition.setText(newValue.replaceAll("\\D", ""));
+            	if (!newValue.matches("-?[1-9]\\d*|0")) 
+            		xPosition.setText(newValue.replaceAll("-?[1-9]\\d*|0", ""));
 	 
             	if(xPosition.getText().length() == 0) {
             		object.setX(0);
@@ -194,8 +196,31 @@ public class ObjectSettingsLevel extends VBox {
         HBox massContainer = new HBox(5);
         massContainer.getChildren().addAll(massImg,mass,massUnit);
 
+             
+        ImageView elasticImg = new ImageView(new Image("file:res/Images/object-settings/elasticity.png"));
+        elasticImg.setFitHeight(imageSize);
+        elasticImg.setFitWidth(imageSize);
+        TextField elastic = new TextField(Float.toString(Math.round(object.getCoefficientOfRestitution()*100)));
+        elastic.textProperty().addListener(new ChangeListener<String>() {
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            	if (!newValue.matches("\\d*")) 
+            		mass.setText(newValue.replaceAll("\\D", ""));
+	 
+            	if(mass.getText().length() == 0) {
+            		object.setCoefficientOfRestitution(1);
+            	}else {
+            		object.setCoefficientOfRestitution(Float.parseFloat(elastic.getText())/100);
+            	}
+         	
+            }
+        });
+
+        Label elasticUnit = new Label("%");
+        HBox elasticContainer = new HBox(5);
+        elasticContainer.getChildren().addAll(elasticImg,elastic,elasticUnit);
+        
         settings = new VBox(5);
-        settings.getChildren().addAll(xContainer,yContainer,scaleContainer,rotationContainer,massContainer);
+        settings.getChildren().addAll(xContainer,yContainer,scaleContainer,rotationContainer,massContainer,elasticContainer);
         
         
         if(object instanceof MoveableObject) {
@@ -281,6 +306,56 @@ public class ObjectSettingsLevel extends VBox {
 	        
 	        settings.getChildren().addAll(speedContainer,xDirectionContainer,yDirectionContainer);
         }
+        
+        if(object instanceof Hairdryer) {
+	        ImageView windImg = new ImageView(new Image("file:res/Images/object-settings/wind.png"));
+	        windImg.setFitHeight(imageSize);
+	        windImg.setFitWidth(imageSize);
+	        TextField wind = new TextField(Float.toString(Math.round(0)));
+	        wind.textProperty().addListener(new ChangeListener<String>() {
+	            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+	            	if (!newValue.matches("\\d*")) 
+	            		xDirection.setText(newValue.replaceAll("\\D", ""));
+		 
+	            	if(xDirection.getText().length() == 0) {
+	            		
+	            	}else {
+	            		
+	            	}
+	         	
+	            }
+	        });
+	        Label windUnit = new Label("°");
+	        HBox windnContainer = new HBox(5);
+	        windnContainer.getChildren().addAll(windImg, wind,windUnit);
+	        
+	        settings.getChildren().add(windnContainer);
+        }
+        
+        if(object instanceof Magnet) {
+	        ImageView magnetImg = new ImageView(new Image("file:res/Images/object-settings/magnetism.png"));
+	        magnetImg.setFitHeight(imageSize);
+	        magnetImg.setFitWidth(imageSize);
+	        TextField magnet = new TextField(Float.toString(Math.round(0)));
+	        magnet.textProperty().addListener(new ChangeListener<String>() {
+	            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+	            	if (!newValue.matches("\\d*")) 
+	            		xDirection.setText(newValue.replaceAll("\\D", ""));
+		 
+	            	if(xDirection.getText().length() == 0) {
+	            		
+	            	}else {
+	            		
+	            	}
+	         	
+	            }
+	        });
+	        Label magnetUint = new Label("°");
+	        HBox magnetContainer = new HBox(5);
+	        magnetContainer.getChildren().addAll(magnetImg, magnet,magnetUint);
+	        
+	        settings.getChildren().add(magnetContainer);
+        }
            
         completeUI(object);
     }
@@ -297,24 +372,8 @@ public class ObjectSettingsLevel extends VBox {
 //    	xPosition.setText(Float.toString(Math.round(object.getX())));
 //    	yPosition.setText(Float.toString(Math.round(object.getY())));
 //    	scale.setText(Float.toString(Math.round(object.getScale()*100)));
-//    	rotation.setText(Float.toString(Math.round(object.getRotation())));
-//    	
-//    	if(object.getMass()>999999)
-//    		mass.setText("99");
-//    	else 
-//    		mass.setText(Float.toString(Math.round(object.getMass())));
-//		
-//    	
-//    	if(object instanceof MoveableObject) {
-//    		Vector2f directionVector = new Vector2f(((MoveableObject) object).getVelocityX(), ((MoveableObject) object).getVelocityY());
-//    		
-//    		speed.setText(Float.toString(Math.round(directionVector.length())));
-//    		
-//    		directionVector.normalize();
-//    		xDirection.setText(Float.toString(Math.round(directionVector.x)));
-//    		yDirection.setText(Float.toString(Math.round(directionVector.y)));
-//    		
-//    	}
-    
+//    	rotation.setText(Float.toString(Math.round(object.getRotation())));    		    
     }
+    
+    
 }

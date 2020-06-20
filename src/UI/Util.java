@@ -2,6 +2,7 @@ package UI;
 
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
+import UI.SideBar.ObjectSettingsLevel;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Scene;
 import javafx.scene.effect.ColorAdjust;
@@ -27,6 +28,8 @@ public class Util {
 	public static int screenSize = 1;
 
 	public static String background = "file:res/Backgrounds/background3.jpg";
+
+	public static ObjectSettingsLevel objectSettings;
 	
 	public static float convertMouseX(double ex,Camera camera) {
 		float x = ((float)ex - Config.CANVAS_WIDTH/2) / Config.CANVAS_WIDTH;		  			
