@@ -95,7 +95,14 @@ public class ObjectSpeedElement extends VBox{
         yDirToolTip.setShowDelay(Duration.millis(0));
         Tooltip.install(yDirectionContainer,yDirToolTip);
        
+        this.setOnMouseEntered(e->{
+        	object.highlight(true);
+        });
    
+        this.setOnMouseExited(e->{
+        	object.highlight(false);
+        });
+        
 		this.setAlignment(Pos.TOP_LEFT);
 	    this.getChildren().addAll(line,name,xContainer,yContainer,speedContainer,xDirectionContainer,yDirectionContainer);
 	    this.getStylesheets().add("file:res/css/SideBar.css");

@@ -64,7 +64,7 @@ public class ObjectSettingsLevel extends VBox {
         properties.setStyle("-fx-font: 14px 'Roboto';");
         
         //XPOSITION
-        xPosition = new ObjectSettingsTextField("x", object, "m", object.getX());
+        xPosition = new ObjectSettingsTextField("x", object, "m", object.getX(),"X Position");
         xPosition.getTextField().textProperty().addListener(new ChangeListener<String>() {
         	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		      	if(xPosition.getTextField().getText().length() == 0) {
@@ -78,7 +78,7 @@ public class ObjectSettingsLevel extends VBox {
         });
         
         //YPOSITION
-        yPosition = new ObjectSettingsTextField("y", object, "m", object.getY());
+        yPosition = new ObjectSettingsTextField("y", object, "m", object.getY(),"Y Position");
         yPosition.getTextField().textProperty().addListener(new ChangeListener<String>() {
         	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		      	if(yPosition.getTextField().getText().length() == 0) {
@@ -92,7 +92,7 @@ public class ObjectSettingsLevel extends VBox {
         });
 
         //ROTATION
-        rotation = new ObjectSettingsTextField("rotation", object, "°", object.getRotation());
+        rotation = new ObjectSettingsTextField("rotation", object, "°", object.getRotation(),"Rotation");
         rotation.getTextField().textProperty().addListener(new ChangeListener<String>() {
         	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		      	if(rotation.getTextField().getText().length() == 0) {
@@ -106,7 +106,7 @@ public class ObjectSettingsLevel extends VBox {
         });
                 
         //SCALE
-        scale = new ObjectSettingsTextField("scale", object, "%", object.getScale()*100);
+        scale = new ObjectSettingsTextField("scale", object, "%", object.getScale()*100,"Scale");
         scale.getTextField().textProperty().addListener(new ChangeListener<String>() {
         	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		      	if(scale.getTextField().getText().length() == 0) 
@@ -117,7 +117,10 @@ public class ObjectSettingsLevel extends VBox {
         });
        
         //MASS
-        ObjectSettingsTextField mass = new ObjectSettingsTextField("mass", object, "kg", object.getMass());
+        float massf = object.getMass();
+        if(object.getMass()>99999)
+        	massf = 999;
+        ObjectSettingsTextField mass = new ObjectSettingsTextField("mass", object, "kg", massf,"Mass");
         mass.getTextField().textProperty().addListener(new ChangeListener<String>() {
         	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		      	if(mass.getTextField().getText().length() == 0) 
@@ -128,7 +131,7 @@ public class ObjectSettingsLevel extends VBox {
         });
         
         //ELASTICITY
-        ObjectSettingsTextField elasticity = new ObjectSettingsTextField("elasticity", object, "%", object.getCoefficientOfRestitution()*100);    
+        ObjectSettingsTextField elasticity = new ObjectSettingsTextField("elasticity", object, "%", object.getCoefficientOfRestitution()*100,"Elasticity");    
         elasticity.getTextField().textProperty().addListener(new ChangeListener<String>() {
         	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		      	if(elasticity.getTextField().getText().length() == 0) 
@@ -146,9 +149,14 @@ public class ObjectSettingsLevel extends VBox {
         if(object instanceof MoveableObject) {
 	
         	Vector2f directionVector = new Vector2f(((MoveableObject) object).getVelocityX(), ((MoveableObject) object).getVelocityY());
-	        	        
+        	Vector2f directionVector2= new Vector2f(((MoveableObject) object).getVelocityX(), ((MoveableObject) object).getVelocityY());
+        	directionVector2.normalize();     
+        	
+        	ObjectSettingsTextField xDirection = new ObjectSettingsTextField("dirx", object, "", directionVector2.x,"X Direction");  
+        	ObjectSettingsTextField yDirection = new ObjectSettingsTextField("diry", object, "", directionVector2.y,"Y Direction");   
+        	 
         	//SPEED
-        	ObjectSettingsTextField speed = new ObjectSettingsTextField("speed", object, "m/s", directionVector.length());
+        	ObjectSettingsTextField speed = new ObjectSettingsTextField("speed", object, "m/s", directionVector.length(),"Velocity"); 
         	speed.getTextField().textProperty().addListener(new ChangeListener<String>() {
                	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
        		      	if(speed.getTextField().getText().length() == 0) {
@@ -157,41 +165,45 @@ public class ObjectSettingsLevel extends VBox {
 	    	        	((MoveableObject) object).setOriginalAccelerationX(0);
 	    	        	((MoveableObject) object).setOriginalAccelerationY(0);
        		      	}else {
-//	       		      	((MoveableObject) object).setAccelerationX(Float.parseFloat(xDirection.getText())*Float.parseFloat(speed.getText()));
-//	    	        	((MoveableObject) object).setAccelerationY(Float.parseFloat(yDirection.getText())*Float.parseFloat(speed.getText()));
-//	    	        	((MoveableObject) object).setOriginalAccelerationX(Float.parseFloat(xDirection.getText())*Float.parseFloat(speed.getText()));
-//	    	        	((MoveableObject) object).setOriginalAccelerationY(Float.parseFloat(yDirection.getText())*Float.parseFloat(speed.getText()));
+	       		     	Vector2f directionVector3= new Vector2f(Float.valueOf(xDirection.getTextField().getText()),Float.valueOf(yDirection.getTextField().getText()));
+	       	        	directionVector3.normalize();     
+
+	       		      	((MoveableObject) object).setVelocityX(directionVector3.x*Float.parseFloat(speed.getTextField().getText()));
+	    	        	((MoveableObject) object).setVelocityY(directionVector3.y*Float.parseFloat(speed.getTextField().getText()));
+	    	        	((MoveableObject) object).setOriginalAccelerationX(directionVector3.x*Float.parseFloat(speed.getTextField().getText()));
+	    	        	((MoveableObject) object).setOriginalAccelerationY(directionVector3.y*Float.parseFloat(speed.getTextField().getText()));
        		      	}	   	
                	}
             });
-
-        
-	        directionVector.normalize();
-	        
-	        //XDIRECTION
-	        ObjectSettingsTextField xDirection = new ObjectSettingsTextField("dirx", object, "", directionVector.x);	        
+                
+	        //XDIRECTION         
 	        xDirection.getTextField().textProperty().addListener(new ChangeListener<String>() {
                	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
        		      	if(xDirection.getTextField().getText().length() == 0) {
 	       		      	((MoveableObject) object).setAccelerationX(0);
 	    	        	((MoveableObject) object).setOriginalAccelerationX(0);
        		      	}else {
-	       		        ((MoveableObject) object).setVelocityX(Float.parseFloat(xDirection.getTextField().getText())*Float.parseFloat(speed.getTextField().getText()));	            		
-	    	        	((MoveableObject) object).setOriginalAccelerationX(Float.parseFloat(xDirection.getTextField().getText())*Float.parseFloat(speed.getTextField().getText()));
+       		      		Vector2f directionVector3= new Vector2f(Float.valueOf(xDirection.getTextField().getText()),Float.valueOf(yDirection.getTextField().getText()));	
+	       	        	directionVector3.normalize();   
+
+	       		        ((MoveableObject) object).setVelocityX(directionVector3.x*Float.parseFloat(speed.getTextField().getText()));          		
+	    	        	((MoveableObject) object).setOriginalAccelerationX(directionVector3.x*Float.parseFloat(speed.getTextField().getText()));
        		      	}	   	
                	}
             });
 	       
 	        //YDIRECTION
-	        ObjectSettingsTextField yDirection = new ObjectSettingsTextField("diry", object, "", directionVector.y);
 	        yDirection.getTextField().textProperty().addListener(new ChangeListener<String>() {
            	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 	   		      	if(yDirection.getTextField().getText().length() == 0) {
 	       		      	((MoveableObject) object).setAccelerationY(0);
 	    	        	((MoveableObject) object).setOriginalAccelerationY(0);
 	   		      	}else {
-	       		        ((MoveableObject) object).setVelocityY(Float.parseFloat(yDirection.getTextField().getText())*Float.parseFloat(speed.getTextField().getText()));	            		
-	    	        	((MoveableObject) object).setOriginalAccelerationY(Float.parseFloat(yDirection.getTextField().getText())*Float.parseFloat(speed.getTextField().getText()));
+	   		      		Vector2f directionVector3= new Vector2f(Float.valueOf(xDirection.getTextField().getText()),Float.valueOf(yDirection.getTextField().getText()));
+	       	        	directionVector3.normalize();   
+	       	        	
+	       		        ((MoveableObject) object).setVelocityY(directionVector3.y*Float.parseFloat(speed.getTextField().getText()));	
+	    	        	((MoveableObject) object).setOriginalAccelerationY(directionVector3.y*Float.parseFloat(speed.getTextField().getText()));
 	   		      	}	   	
 	           	}
 	        });   	       
@@ -202,7 +214,7 @@ public class ObjectSettingsLevel extends VBox {
         
         if(object instanceof Hairdryer) {
         	
-        	ObjectSettingsTextField wind = new ObjectSettingsTextField("wind", object, "", 0);
+        	ObjectSettingsTextField wind = new ObjectSettingsTextField("wind", object, "", 0,"Wind Speed");   
         	wind.getTextField().textProperty().addListener(new ChangeListener<String>() {
              	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
      		      	if(wind.getTextField().getText().length() == 0) 
@@ -218,7 +230,7 @@ public class ObjectSettingsLevel extends VBox {
         
         if(object instanceof Magnet) {
         	
-        	ObjectSettingsTextField magnet = new ObjectSettingsTextField("magnetism", object, "", 0);
+        	ObjectSettingsTextField magnet = new ObjectSettingsTextField("magnetism", object, "", 0,"Magnet Power");  
         	magnet.getTextField().textProperty().addListener(new ChangeListener<String>() {
 	         	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 	 		      	if(magnet.getTextField().getText().length() == 0) 

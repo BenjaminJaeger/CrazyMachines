@@ -1,14 +1,14 @@
-false
-BasketBall
--34.5/-90.0
-0.5
-57.78345
+true
+BeachBall
+-76.07142/238.929
 1.0
+0.0
+0.2
 direction TODO 
 speed TODO 
 false
 Plane
--24.0/-143.25
+-59.46428/-25.179
 0.4
 0.0
 1.0E9
@@ -16,15 +16,15 @@ direction TODO
 speed TODO 
 false
 Bucket
-90.75/-177.0
+71.78572/-85.179
 0.4
 0.0
 1.0E9
 direction TODO 
 speed TODO 
-true
+false
 BasketBall
--61.5/15.75
+-46.07142/23.571419
 1.0
 0.0
 1.0

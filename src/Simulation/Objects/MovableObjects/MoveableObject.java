@@ -86,10 +86,10 @@ public abstract class MoveableObject extends GameObject{
 		velocityX = velocityX + accelerationX * SimulationControler.getUpdateTimeInSeconds();
 		velocityY = velocityY + accelerationY * SimulationControler.getUpdateTimeInSeconds();
 	
-		if (Math.abs(velocityX) <0.01f) 
+		if (Math.abs(velocityX) <0.03f) 
 			velocityX=0;
-//		if (Math.abs(velocityY)  <0.01f) 
-//			velocityY=0;
+		if (Math.abs(velocityY)  <0.03f) 
+			velocityY=0;
 	}
 	
 	public void increaseAcceleration(float dx,float dy) {
@@ -114,9 +114,8 @@ public abstract class MoveableObject extends GameObject{
 	
 	public void reset() {
 		super.reset();
-		resetVelocity();
-		setAccelerationX(originalAccelerationX);
-		setAccelerationY(originalAccelerationY);		
+		setVelocityX(originalAccelerationX);
+		setVelocityY(originalAccelerationY);		
 	}
 	
 /////////////////////////

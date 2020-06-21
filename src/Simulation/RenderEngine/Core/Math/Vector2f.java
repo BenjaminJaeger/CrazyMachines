@@ -17,8 +17,11 @@ public class Vector2f {
 
 	public void normalize() {
 		float magnitude = (float)Math.sqrt(x*x+y*y); //Euclidean distance (magnitude=length of the vector)
-		x/=magnitude;
-		y/=magnitude;
+		if(magnitude!=0) {
+			x/=magnitude;
+			y/=magnitude;
+		}
+		
 	}
 	
 	public float length() {

@@ -9,6 +9,8 @@ import java.util.Scanner;
 
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.Ball.BasketBall;
+import Simulation.Objects.MovableObjects.Ball.BeachBall;
+import Simulation.Objects.MovableObjects.Ball.MetalBall;
 import Simulation.Objects.StaticObjects.StaticExternalObjects.Bucket;
 import Simulation.Objects.StaticObjects.StaticExternalObjects.Hairdryer;
 import Simulation.Objects.StaticObjects.StaticExternalObjects.Magnet;
@@ -102,6 +104,14 @@ public class LevelExportImport {
 					}
 					case "Hairdryer": {
 						object = new Hairdryer(x,y);	
+						break;
+					}
+					case "BeachBall": {
+						object = new BeachBall(x,y);	
+						break;
+					}
+					case "MetalBall": {
+						object = new MetalBall(x,y);	
 						break;
 					}
 					case "Portal": {	

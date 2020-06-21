@@ -3,7 +3,7 @@ package UI.SideBar;
 import Simulation.SimulationControler;
 import UI.Util;
 import UI.LevelMenue.LevelSettings;
-import UI.MainMenue.MainMenue;
+import UI.MainMenue.LevelSelectionMenue;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -44,7 +44,7 @@ public class SideBarLevel extends AnchorPane{
 		Button exit = new Button("Exit");
 		exit.setGraphic(new ImageView(new Image("file:res/Images/close.png")));
 		exit.setOnAction(e->{
-			new MainMenue(mainScene,primaryStage);
+			new LevelSelectionMenue(mainScene, primaryStage);
 			SimulationControler.pause();			
 		});
 		AnchorPane.setBottomAnchor(exit, 10.0);

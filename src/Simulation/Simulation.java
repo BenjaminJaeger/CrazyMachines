@@ -39,6 +39,9 @@ public class Simulation {
 	private static LineModel tmp;
 	private static BasicShader tmpShader;
 	
+	private static String level;
+	private static boolean importLevel = false;
+	
 	public static void initialize() {
 		Util.canvasWrapper = new SwingNode();
 		Util.canvasWrapper.setStyle("-fx-translate-x: 270; -fx-scale-x: 1.4; -fx-scale-y: 1.4;");		
@@ -54,8 +57,9 @@ public class Simulation {
 		animator.start();
 	}
 	
-	public static void start(String level) {
-		LevelExportImport.ImportLevel(level);	
+	public static void start(String levelpath) {
+		importLevel = true;
+		level = levelpath;
 		animator.start();
 	}
 	
@@ -75,6 +79,23 @@ public class Simulation {
 		});	
 	
 		canvas.addGLEventListener(new GLEventListener() {
+			
+			@Override
+			public void display(GLAutoDrawable drawable) {
+				renderer.clear();
+
+				if(importLevel) {
+					importLevel=false;
+					LevelExportImport.ImportLevel(level);	
+				}
+				
+				try {
+					for (GameObject object : GameObject.allObjects) 
+						renderer.render(object, object.getShader()); 
+				} catch (ConcurrentModificationException e) {}
+				
+				renderer.render(tmp,tmpShader);
+			}
 			
 			@Override
 			public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
@@ -105,6 +126,8 @@ public class Simulation {
 				
 				renderer = new Renderer(camera);	
 
+				DirectionalLight.getDirectionalLights().clear();
+				
 				AmbientLight ambientLight = new AmbientLight(1);    
 				
 				//								    new DirectionalLight(lightDirection,         diffuseColor,          speculaColor)
@@ -136,18 +159,7 @@ public class Simulation {
 				GameObject.allObjects.clear();
 				animator.stop();
 			}
-			
-			@Override
-			public void display(GLAutoDrawable drawable) {
-				renderer.clear();
-
-				try {
-					for (GameObject object : GameObject.allObjects) 
-						renderer.render(object, object.getShader()); 
-				} catch (ConcurrentModificationException e) {}
-				
-				renderer.render(tmp,tmpShader);
-			}
+						
 		});	
 	}
 	

@@ -4,9 +4,11 @@ import java.io.File;
 import java.util.Scanner;
 
 import UI.TabElements.BasketballTabElement;
+import UI.TabElements.BeachBallTabElement;
 import UI.TabElements.BucketTabElement;
 import UI.TabElements.HairdryerTabElement;
 import UI.TabElements.MagnetTabElement;
+import UI.TabElements.MetalBallTabElement;
 import UI.TabElements.PlaneTabElement;
 import UI.TabElements.PortalTabElement;
 import UI.TabElements.SpinnerTabElement;
@@ -82,6 +84,14 @@ public class LevelTabPane extends StackPane{
 					}
 					case "Portal": {
 						element = new PortalTabElement(glass, 1);
+						break;
+					}
+					case "BeachBall": {
+						element = new BeachBallTabElement(glass, 1);
+						break;
+					}
+					case "MetalBall": {
+						element = new MetalBallTabElement(glass, 1);
 						break;
 					}
 					
