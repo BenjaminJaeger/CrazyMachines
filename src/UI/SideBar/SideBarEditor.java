@@ -37,8 +37,7 @@ public class SideBarEditor extends AnchorPane{
 				
 		objectSettings = new ObjectSettingsEditor();
 		Util.objectSettings = objectSettings;
-		
-		
+				
 		container.setAlignment(Pos.TOP_LEFT);
 		container.getChildren().addAll(simulationControls,line1,levelSettings,line2,objectSettings);
 		

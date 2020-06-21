@@ -27,7 +27,6 @@ public class Portal extends StaticObject{
 		objectTransformer = new ObjectTransformer(this);
 		setRotation((float)Math.random()*360);
 		setScale(0.8f);
-		originalscale = 0.8f;
 	}
 
 	@Override

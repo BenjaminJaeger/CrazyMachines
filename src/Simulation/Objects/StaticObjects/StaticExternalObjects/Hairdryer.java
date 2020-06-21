@@ -9,7 +9,6 @@ public class Hairdryer extends StaticExternalObject{
     public Hairdryer(float x, float y) {
         super("hairdryer","hairdryer","HairdryerTexture.jpg", material, x, y);
         setScale(0.4f);
-        setOriginalscale(0.4f);
     }
 
     @Override

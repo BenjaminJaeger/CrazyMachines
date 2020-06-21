@@ -17,8 +17,6 @@ public class Magnet extends StaticExternalObject{
     public Magnet(float x, float y) {
         super("stabmagnet_tri","PlaneTriangles","magnetTexture.png", material, x, y);
 
-        setScale(1f);
-        setOriginalscale(1f);
         negativeSrc = new Vector2f (x, y-(offset*this.getScale()));
         positiveSrc = new Vector2f (x, y-(offset*this.getScale()));
     }

@@ -29,7 +29,6 @@ public class Bucket extends StaticExternalObject{
 	public Bucket(float x, float y) {
 		super("bucket","bucket","PlaneTexture.jpg", material, x, y);
 		setScale(0.4f);
-		setOriginalscale(0.4f);
 	}
 
 	@Override

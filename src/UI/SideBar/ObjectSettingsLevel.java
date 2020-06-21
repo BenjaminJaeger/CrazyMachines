@@ -1,5 +1,6 @@
 package UI.SideBar;
 
+import Simulation.Util;
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.Objects.StaticObjects.StaticExternalObjects.Hairdryer;
@@ -9,7 +10,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -20,22 +20,16 @@ import javafx.scene.shape.Line;
 
 public class ObjectSettingsLevel extends VBox {
 	
-	 private TextField xPosition;
-	 private TextField yPosition;
-	 private TextField scale;
-	 private TextField rotation;
-	 private TextField mass;
-	 private TextField xDirection;
-	 private TextField yDirection;
-	 private TextField speed;
+	private ObjectSettingsTextField xPosition;
+	private ObjectSettingsTextField yPosition;
+	private ObjectSettingsTextField scale;
+	private ObjectSettingsTextField rotation;
 	 
-	 protected VBox settings;
-	 protected HBox head;
-	 protected Line line;
-	 protected Label properties;
-
-	 private float imageSize = 20;
-	 
+	protected VBox settings;
+	protected HBox head;
+	protected Line line;
+	protected Label properties;
+ 
     public ObjectSettingsLevel() {
         super(10);
         
@@ -69,158 +63,84 @@ public class ObjectSettingsLevel extends VBox {
         properties = new Label("Properties:");
         properties.setStyle("-fx-font: 14px 'Roboto';");
         
-        //POSITION
-        ImageView xImg = new ImageView(new Image("file:res/Images/object-settings/x.png"));
-        xImg.setFitHeight(imageSize);
-        xImg.setFitWidth(imageSize);
-        xPosition = new TextField (Float.toString(Math.round(object.getX())));
-        xPosition.textProperty().addListener(new ChangeListener<String>() {
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            	if (!newValue.matches("-?[1-9]\\d*|0")) 
-            		xPosition.setText(newValue.replaceAll("-?[1-9]\\d*|0", ""));
-	 
-            	if(xPosition.getText().length() == 0) {
-            		object.setX(0);
-                	object.setOriginalX(0);
-            	}else {
-            		object.setX(Float.parseFloat(xPosition.getText()));
-                	object.setOriginalX(Float.parseFloat(xPosition.getText()));
-            	}
-         	
-            }
+        //XPOSITION
+        xPosition = new ObjectSettingsTextField("x", object, "m", object.getX());
+        xPosition.getTextField().textProperty().addListener(new ChangeListener<String>() {
+        	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		      	if(xPosition.getTextField().getText().length() == 0) {
+		      		object.setX(0);
+		          	object.setOriginalX(0);
+		      	}else {
+		      		object.setX(Float.valueOf(xPosition.getTextField().getText()));
+		          	object.setOriginalX(Float.valueOf(xPosition.getTextField().getText()));
+		      	}	   	
+        	}
         });
-        Label xUnit = new Label("m");
-        HBox xContainer = new HBox(5);
-        xContainer.getChildren().addAll(xImg,xPosition,xUnit);
         
-        ImageView yImg = new ImageView(new Image("file:res/Images/object-settings/y.png"));
-        yImg.setFitHeight(imageSize);
-        yImg.setFitWidth(imageSize);
-        yPosition = new TextField (Float.toString(Math.round(object.getY())));
-        yPosition.textProperty().addListener(new ChangeListener<String>() {
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            	if (!newValue.matches("\\d*")) 
-            		yPosition.setText(newValue.replaceAll("\\D", ""));
-	 
-            	if(yPosition.getText().length() == 0) {
-            		object.setY(0);
-                	object.setOriginalY(0);
-            	}else {
-            		object.setY(Float.parseFloat(yPosition.getText()));
-                	object.setOriginalY(Float.parseFloat(yPosition.getText()));
-            	}
-         	
-            }
+        //YPOSITION
+        yPosition = new ObjectSettingsTextField("y", object, "m", object.getY());
+        yPosition.getTextField().textProperty().addListener(new ChangeListener<String>() {
+        	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		      	if(yPosition.getTextField().getText().length() == 0) {
+		      		object.setY(0);
+		          	object.setOriginalY(0);
+		      	}else {
+		      		object.setY(Float.valueOf(yPosition.getTextField().getText()));
+		          	object.setOriginalY(Float.valueOf(yPosition.getTextField().getText()));
+		      	}	   	
+        	}
         });
-        Label yUnit = new Label("m");
-        HBox yContainer = new HBox(5);
-        yContainer.getChildren().addAll(yImg,yPosition,yUnit);
 
-       
-        //SCALE
-        ImageView scaleImg = new ImageView(new Image("file:res/Images/object-settings/scale.png"));
-        scaleImg.setFitHeight(imageSize);
-        scaleImg.setFitWidth(imageSize);
-        scale = new TextField (Float.toString(Math.round(object.getScale()*100)));
-        scale.textProperty().addListener(new ChangeListener<String>() {
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            	if (!newValue.matches("\\d*")) 
-            		scale.setText(newValue.replaceAll("\\D", ""));
-	 
-            	if(scale.getText().length() == 0) {
-            		object.setScale(1);
-                	object.setOriginalscale(1);
-            	}else {
-            		object.setScale(Float.parseFloat(scale.getText())/100);
-                	object.setOriginalscale(Float.parseFloat(scale.getText())/100);
-            	}
-         	
-            }
-        });
-        Label scaleUnit = new Label("%");
-        HBox scaleContainer = new HBox(5);
-        scaleContainer.getChildren().addAll(scaleImg,scale,scaleUnit);
-
-        
-        ImageView rotationImg = new ImageView(new Image("file:res/Images/object-settings/rotation.png"));
-        rotationImg.setFitHeight(imageSize);
-        rotationImg.setFitWidth(imageSize);
-        rotation = new TextField (Float.toString(Math.round(object.getRotation())));
-        rotation.textProperty().addListener(new ChangeListener<String>() {
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            	if (!newValue.matches("\\d*")) 
-            		rotation.setText(newValue.replaceAll("[^\\d]", ""));
-	 
-            	if(rotation.getText().length() == 0) {
-            		object.setRotation(0);
+        //ROTATION
+        rotation = new ObjectSettingsTextField("rotation", object, "°", object.getRotation());
+        rotation.getTextField().textProperty().addListener(new ChangeListener<String>() {
+        	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		      	if(rotation.getTextField().getText().length() == 0) {
+		      		object.setRotation(0);
             		object.setOriginalrotation(0);
-            	}else {
-            		object.setRotation(Float.parseFloat(rotation.getText()));
-            		object.setOriginalrotation(Float.parseFloat(rotation.getText()));
-            	}
-				
-	            	
-            }
+		      	}else {
+		      		object.setRotation(Float.valueOf(rotation.getTextField().getText()));
+		          	object.setOriginalrotation(Float.valueOf(rotation.getTextField().getText()));
+		      	}	   	
+        	}
         });
-
-        Label rotationUnit = new Label("°");
-        HBox rotationContainer = new HBox(5);
-        rotationContainer.getChildren().addAll(rotationImg,rotation,rotationUnit);
-
-        
+                
+        //SCALE
+        scale = new ObjectSettingsTextField("scale", object, "%", object.getScale()*100);
+        scale.getTextField().textProperty().addListener(new ChangeListener<String>() {
+        	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		      	if(scale.getTextField().getText().length() == 0) 
+		      		object.setScale(1);
+		      	else 
+		      		object.setScale(Float.valueOf(scale.getTextField().getText())/100);    		   	
+        	}
+        });
+       
         //MASS
-        ImageView massImg = new ImageView(new Image("file:res/Images/object-settings/mass.png"));
-        massImg.setFitHeight(imageSize);
-        massImg.setFitWidth(imageSize);
-        if(object.getMass()<999999)
-        	mass = new TextField(Float.toString(Math.round(object.getMass())));
-        else 
-        	mass = new TextField("99");
-        mass.textProperty().addListener(new ChangeListener<String>() {
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            	if (!newValue.matches("\\d*")) 
-            		mass.setText(newValue.replaceAll("\\D", ""));
-	 
-            	if(mass.getText().length() == 0) {
-            		object.setScale(1);
-                	object.setOriginalscale(1);
-            	}else {
-            		object.setMass(Float.parseFloat(mass.getText()));
-                	object.setOriginalMass(Float.parseFloat(mass.getText()));
-            	}
-         	
-            }
+        ObjectSettingsTextField mass = new ObjectSettingsTextField("mass", object, "kg", object.getMass());
+        mass.getTextField().textProperty().addListener(new ChangeListener<String>() {
+        	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		      	if(mass.getTextField().getText().length() == 0) 
+		      		object.setMass(0);
+		      	else 
+		      		object.setMass(Float.valueOf(mass.getTextField().getText()));
+        	}	   	       	
         });
-
-        Label massUnit = new Label("kg");
-        HBox massContainer = new HBox(5);
-        massContainer.getChildren().addAll(massImg,mass,massUnit);
-
-             
-        ImageView elasticImg = new ImageView(new Image("file:res/Images/object-settings/elasticity.png"));
-        elasticImg.setFitHeight(imageSize);
-        elasticImg.setFitWidth(imageSize);
-        TextField elastic = new TextField(Float.toString(Math.round(object.getCoefficientOfRestitution()*100)));
-        elastic.textProperty().addListener(new ChangeListener<String>() {
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            	if (!newValue.matches("\\d*")) 
-            		mass.setText(newValue.replaceAll("\\D", ""));
-	 
-            	if(mass.getText().length() == 0) {
-            		object.setCoefficientOfRestitution(1);
-            	}else {
-            		object.setCoefficientOfRestitution(Float.parseFloat(elastic.getText())/100);
-            	}
-         	
-            }
-        });
-
-        Label elasticUnit = new Label("%");
-        HBox elasticContainer = new HBox(5);
-        elasticContainer.getChildren().addAll(elasticImg,elastic,elasticUnit);
         
+        //ELASTICITY
+        ObjectSettingsTextField elasticity = new ObjectSettingsTextField("elasticity", object, "%", object.getCoefficientOfRestitution()*100);    
+        elasticity.getTextField().textProperty().addListener(new ChangeListener<String>() {
+        	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		      	if(elasticity.getTextField().getText().length() == 0) 
+		      		object.setCoefficientOfRestitution(1);
+		      	else 
+		      		object.setCoefficientOfRestitution(Float.valueOf(elasticity.getTextField().getText())/100);
+        	}	   	       	
+        });
+
+              
         settings = new VBox(5);
-        settings.getChildren().addAll(xContainer,yContainer,scaleContainer,rotationContainer,massContainer,elasticContainer);
+        settings.getChildren().addAll(xPosition,yPosition,scale,rotation,mass,elasticity);
         
         
         if(object instanceof MoveableObject) {
@@ -228,133 +148,87 @@ public class ObjectSettingsLevel extends VBox {
         	Vector2f directionVector = new Vector2f(((MoveableObject) object).getVelocityX(), ((MoveableObject) object).getVelocityY());
 	        	        
         	//SPEED
-        	ImageView speedImg = new ImageView(new Image("file:res/Images/object-settings/speed.png"));
-        	speedImg.setFitHeight(imageSize);
-        	speedImg.setFitWidth(imageSize);
-	        speed = new TextField (Float.toString(Math.round(directionVector.length())));
-	        speed.textProperty().addListener(new ChangeListener<String>() {
-	            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-	            	if (!newValue.matches("\\d*")) 
-	            		speed.setText(newValue.replaceAll("\\D", ""));
-		 
-	            	if(speed.getText().length() == 0) {
-	            		((MoveableObject) object).setAccelerationX(0);
+        	ObjectSettingsTextField speed = new ObjectSettingsTextField("speed", object, "m/s", directionVector.length());
+        	speed.getTextField().textProperty().addListener(new ChangeListener<String>() {
+               	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+       		      	if(speed.getTextField().getText().length() == 0) {
+	       		      	((MoveableObject) object).setAccelerationX(0);
 	    	        	((MoveableObject) object).setAccelerationY(0);
 	    	        	((MoveableObject) object).setOriginalAccelerationX(0);
 	    	        	((MoveableObject) object).setOriginalAccelerationY(0);
-	            	}else {
-	            		((MoveableObject) object).setAccelerationX(Float.parseFloat(xDirection.getText())*Float.parseFloat(speed.getText()));
-	    	        	((MoveableObject) object).setAccelerationY(Float.parseFloat(yDirection.getText())*Float.parseFloat(speed.getText()));
-	    	        	((MoveableObject) object).setOriginalAccelerationX(Float.parseFloat(xDirection.getText())*Float.parseFloat(speed.getText()));
-	    	        	((MoveableObject) object).setOriginalAccelerationY(Float.parseFloat(yDirection.getText())*Float.parseFloat(speed.getText()));
-	            	}
-	         	
-	            }
-	        });
-	        Label speedUnit = new Label("m/s");
-	        HBox speedContainer = new HBox(5);
-	        speedContainer.getChildren().addAll(speedImg,speed,speedUnit);
-	        
+       		      	}else {
+//	       		      	((MoveableObject) object).setAccelerationX(Float.parseFloat(xDirection.getText())*Float.parseFloat(speed.getText()));
+//	    	        	((MoveableObject) object).setAccelerationY(Float.parseFloat(yDirection.getText())*Float.parseFloat(speed.getText()));
+//	    	        	((MoveableObject) object).setOriginalAccelerationX(Float.parseFloat(xDirection.getText())*Float.parseFloat(speed.getText()));
+//	    	        	((MoveableObject) object).setOriginalAccelerationY(Float.parseFloat(yDirection.getText())*Float.parseFloat(speed.getText()));
+       		      	}	   	
+               	}
+            });
+
+        
 	        directionVector.normalize();
 	        
-	        //DIRECTION
-	        ImageView xDirectionImg = new ImageView(new Image("file:res/Images/object-settings/dirx.png"));
-	        xDirectionImg.setFitHeight(imageSize);
-	        xDirectionImg.setFitWidth(imageSize);
-	        xDirection = new TextField (Float.toString(Math.round(directionVector.x)));
-	        xDirection.textProperty().addListener(new ChangeListener<String>() {
-	            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-	            	if (!newValue.matches("\\d*")) 
-	            		xDirection.setText(newValue.replaceAll("\\D", ""));
-		 
-	            	if(xDirection.getText().length() == 0) {
-	            		((MoveableObject) object).setAccelerationX(0);
+	        //XDIRECTION
+	        ObjectSettingsTextField xDirection = new ObjectSettingsTextField("dirx", object, "", directionVector.x);	        
+	        xDirection.getTextField().textProperty().addListener(new ChangeListener<String>() {
+               	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+       		      	if(xDirection.getTextField().getText().length() == 0) {
+	       		      	((MoveableObject) object).setAccelerationX(0);
 	    	        	((MoveableObject) object).setOriginalAccelerationX(0);
-	            	}else {
-	            		((MoveableObject) object).setVelocityX(Float.parseFloat(xDirection.getText())*Float.parseFloat(speed.getText()));
-	            		System.out.println(((MoveableObject) object).getAccelerationX());
-	    	        	((MoveableObject) object).setOriginalAccelerationX(Float.parseFloat(xDirection.getText())*Float.parseFloat(speed.getText()));
-	            	}
-	         	
-	            }
-	        });
-	        HBox xDirectionContainer = new HBox(5);
-	        xDirectionContainer.getChildren().addAll(xDirectionImg, xDirection);
-	        
-	        ImageView yDirectionImg = new ImageView(new Image("file:res/Images/object-settings/diry.png"));
-	        yDirectionImg.setFitHeight(imageSize);
-	        yDirectionImg.setFitWidth(imageSize);
-	        yDirection = new TextField (Float.toString(Math.round(directionVector.y)));
-	        yDirection.textProperty().addListener(new ChangeListener<String>() {
-	            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-	            	if (!newValue.matches("\\d*")) 
-	            		yDirection.setText(newValue.replaceAll("\\D", ""));
-		 
-	            	if(yDirection.getText().length() == 0) {
-	            		((MoveableObject) object).setAccelerationY(0);
+       		      	}else {
+	       		        ((MoveableObject) object).setVelocityX(Float.parseFloat(xDirection.getTextField().getText())*Float.parseFloat(speed.getTextField().getText()));	            		
+	    	        	((MoveableObject) object).setOriginalAccelerationX(Float.parseFloat(xDirection.getTextField().getText())*Float.parseFloat(speed.getTextField().getText()));
+       		      	}	   	
+               	}
+            });
+	       
+	        //YDIRECTION
+	        ObjectSettingsTextField yDirection = new ObjectSettingsTextField("diry", object, "", directionVector.y);
+	        yDirection.getTextField().textProperty().addListener(new ChangeListener<String>() {
+           	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+	   		      	if(yDirection.getTextField().getText().length() == 0) {
+	       		      	((MoveableObject) object).setAccelerationY(0);
 	    	        	((MoveableObject) object).setOriginalAccelerationY(0);
-	            	}else {
-	            		((MoveableObject) object).setAccelerationY(Float.parseFloat(yDirection.getText())*Float.parseFloat(speed.getText()));
-	    	        	((MoveableObject) object).setOriginalAccelerationY(Float.parseFloat(yDirection.getText())*Float.parseFloat(speed.getText()));
-	            	}
-	         	
-	            }
-	        });      	       
-	        HBox yDirectionContainer = new HBox(5);
-	        yDirectionContainer.getChildren().addAll(yDirectionImg,yDirection);
+	   		      	}else {
+	       		        ((MoveableObject) object).setVelocityY(Float.parseFloat(yDirection.getTextField().getText())*Float.parseFloat(speed.getTextField().getText()));	            		
+	    	        	((MoveableObject) object).setOriginalAccelerationY(Float.parseFloat(yDirection.getTextField().getText())*Float.parseFloat(speed.getTextField().getText()));
+	   		      	}	   	
+	           	}
+	        });   	       
 	  
 	        
-	        settings.getChildren().addAll(speedContainer,xDirectionContainer,yDirectionContainer);
+	        settings.getChildren().addAll(speed,xDirection,yDirection);
         }
         
         if(object instanceof Hairdryer) {
-	        ImageView windImg = new ImageView(new Image("file:res/Images/object-settings/wind.png"));
-	        windImg.setFitHeight(imageSize);
-	        windImg.setFitWidth(imageSize);
-	        TextField wind = new TextField(Float.toString(Math.round(0)));
-	        wind.textProperty().addListener(new ChangeListener<String>() {
-	            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-	            	if (!newValue.matches("\\d*")) 
-	            		xDirection.setText(newValue.replaceAll("\\D", ""));
-		 
-	            	if(xDirection.getText().length() == 0) {
-	            		
-	            	}else {
-	            		
-	            	}
-	         	
-	            }
-	        });
-	        Label windUnit = new Label("°");
-	        HBox windnContainer = new HBox(5);
-	        windnContainer.getChildren().addAll(windImg, wind,windUnit);
+        	
+        	ObjectSettingsTextField wind = new ObjectSettingsTextField("wind", object, "", 0);
+        	wind.getTextField().textProperty().addListener(new ChangeListener<String>() {
+             	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+     		      	if(wind.getTextField().getText().length() == 0) 
+     		      		System.out.println("TODO");
+     		      	else 
+     		      		System.out.println("TODO"); 	
+             	}
+             });
+
 	        
-	        settings.getChildren().add(windnContainer);
+	        settings.getChildren().add(wind);
         }
         
         if(object instanceof Magnet) {
-	        ImageView magnetImg = new ImageView(new Image("file:res/Images/object-settings/magnetism.png"));
-	        magnetImg.setFitHeight(imageSize);
-	        magnetImg.setFitWidth(imageSize);
-	        TextField magnet = new TextField(Float.toString(Math.round(0)));
-	        magnet.textProperty().addListener(new ChangeListener<String>() {
-	            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-	            	if (!newValue.matches("\\d*")) 
-	            		xDirection.setText(newValue.replaceAll("\\D", ""));
-		 
-	            	if(xDirection.getText().length() == 0) {
-	            		
-	            	}else {
-	            		
-	            	}
-	         	
-	            }
-	        });
-	        Label magnetUint = new Label("°");
-	        HBox magnetContainer = new HBox(5);
-	        magnetContainer.getChildren().addAll(magnetImg, magnet,magnetUint);
-	        
-	        settings.getChildren().add(magnetContainer);
+        	
+        	ObjectSettingsTextField magnet = new ObjectSettingsTextField("magnetism", object, "", 0);
+        	magnet.getTextField().textProperty().addListener(new ChangeListener<String>() {
+	         	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+	 		      	if(magnet.getTextField().getText().length() == 0) 
+	 		      		System.out.println("TODO");
+	 		      	else 
+	 		      		System.out.println("TODO"); 	
+	         	}
+	         });
+
+	        settings.getChildren().add(magnet);
         }
            
         completeUI(object);
@@ -369,10 +243,10 @@ public class ObjectSettingsLevel extends VBox {
     }
     
     public void updateUI(GameObject object) {
-//    	xPosition.setText(Float.toString(Math.round(object.getX())));
-//    	yPosition.setText(Float.toString(Math.round(object.getY())));
-//    	scale.setText(Float.toString(Math.round(object.getScale()*100)));
-//    	rotation.setText(Float.toString(Math.round(object.getRotation())));    		    
+    	xPosition.getTextField().setText(Util.getRoundedString(object.getX()));
+    	yPosition.getTextField().setText(Util.getRoundedString(object.getY()));
+    	scale.getTextField().setText(Util.getRoundedString(object.getScale()*100));
+    	rotation.getTextField().setText(Util.getRoundedString(object.getRotation()));    		    
     }
     
     

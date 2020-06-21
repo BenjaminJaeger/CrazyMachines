@@ -25,17 +25,14 @@ public abstract class GameObject {
 	protected float rotation=0;
 	protected float scale=1;	
 	protected float CoefficientOfRestitution = 1;
+	protected float mass = 1;
 	
 	protected CollisionContext collisionContext;
 	protected boolean renderBounding = false;
 	
 	protected float originalX,originalY;
 	protected float originalrotation=0;
-	protected float originalscale= 1;
-	protected float originalMass= 1;
-	
-	protected float mass = 1;
-	
+		
 	protected boolean selected;
 	protected boolean highlighted;
 
@@ -139,9 +136,7 @@ public abstract class GameObject {
 	public void reset() {
 		setY(originalY);
 		setX(originalX);
-		setScale(originalscale);
 		setRotation(originalrotation);
-		setMass(originalMass);
 	}
 
 	public void remove() {
@@ -283,14 +278,6 @@ public abstract class GameObject {
 		this.originalrotation = originalrotation;
 	}
 
-	public float getOriginalscale() {
-		return originalscale;
-	}
-
-	public void setOriginalscale(float originalscale) {
-		this.originalscale = originalscale;
-	}
-
 	public float getMass() {
 		return mass;
 	}
@@ -353,10 +340,6 @@ public abstract class GameObject {
 	
 	public boolean getHighlighted() {
 		return highlighted;
-	}
-
-	public void setOriginalMass(float mass) {
-		this.originalMass = mass;
 	}
 
 	public boolean isEditable() {

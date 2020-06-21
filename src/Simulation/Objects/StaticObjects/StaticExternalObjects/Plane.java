@@ -10,7 +10,6 @@ public class Plane extends StaticExternalObject{
 	public Plane(float x, float y) {
 		super("PlaneTriangles","PlaneTriangles","PlaneTexture.jpg", material, x, y);
 		setScale(0.4f);
-		setOriginalscale(0.4f);
 	}
 
 	@Override

@@ -14,7 +14,6 @@ public class BeachBall extends Ball{
 		super(40, 50, material,"BeachBall.png", x, y);
 		setCoefficientOfRestitution(0.8f);
 		setMass(0.2f);
-		setOriginalMass(0.2f);
 	}
 	
 }

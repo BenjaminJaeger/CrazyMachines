@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 
-public class PlaySideBarElement extends VBox{
+public class ObjectSpeedElement extends VBox{
 
 	private int imageSize = 20;
 	
@@ -23,7 +23,7 @@ public class PlaySideBarElement extends VBox{
 	private Label xDirection;
 	private Label yDirection;
 	 
-	public PlaySideBarElement(MoveableObject object) {
+	public ObjectSpeedElement(MoveableObject object) {
 		super(5);
 
 		Line line = new Line(0,0,110,0);
@@ -31,7 +31,7 @@ public class PlaySideBarElement extends VBox{
 	    line.setStroke(Color.rgb(30, 30, 30));
 	    
 	    Label name = new Label(object.getClass().getSimpleName());
-	    name.setStyle("-fx-font: 12px 'Roboto';");
+	    name.setStyle("-fx-font: 16px 'Roboto';");
 	    
 	    ImageView xImg = new ImageView(new Image("file:res/Images/object-settings/x.png"));
         xImg.setFitHeight(imageSize);

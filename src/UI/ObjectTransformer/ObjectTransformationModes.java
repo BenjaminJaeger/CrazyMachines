@@ -29,7 +29,6 @@ public class ObjectTransformationModes {
 
         float scale = (float)Math.sqrt(Math.pow((objectX-mouseX),2)+Math.pow((objectY-mouseY),2)) /100; //Skalierungsvektor;
         allobjects.get(objectCounter).setScale(scale);
-        allobjects.get(objectCounter).setOriginalscale(scale);
     }
 
     public static void moveObject (int objectCounter, ArrayList<GameObject> allobjects, MouseEvent e) {

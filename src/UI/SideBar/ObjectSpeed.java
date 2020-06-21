@@ -18,7 +18,7 @@ public class ObjectSpeed extends VBox{
 	    
 		for (GameObject object : GameObject.allObjects) {
 			if(object instanceof MoveableObject) {
-				PlaySideBarElement element = new PlaySideBarElement((MoveableObject) object);
+				ObjectSpeedElement element = new ObjectSpeedElement((MoveableObject) object);
 				((MoveableObject) object).setElement(element);
 				this.getChildren().add(element);
 			}

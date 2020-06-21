@@ -5,7 +5,7 @@ import Simulation.Collisions.DynamicCollisionContext;
 import Simulation.Objects.GameObject;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Primitive;
-import UI.SideBar.PlaySideBarElement;
+import UI.SideBar.ObjectSpeedElement;
 
 public abstract class MoveableObject extends GameObject{
 
@@ -16,7 +16,7 @@ public abstract class MoveableObject extends GameObject{
 	
 	protected boolean portable = true;
 	
-	protected PlaySideBarElement element;
+	protected ObjectSpeedElement element;
 	
 ////////////////////
 ////Constructors////
@@ -183,7 +183,7 @@ public abstract class MoveableObject extends GameObject{
 		element.update(this);
 	}
 
-	public void setElement(PlaySideBarElement element) {
+	public void setElement(ObjectSpeedElement element) {
 		this.element = element;
 	}
 	

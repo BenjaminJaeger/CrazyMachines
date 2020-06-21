@@ -135,11 +135,9 @@ public class LevelExportImport {
 					sc.nextLine();
 								
 					object.setScale(scale);
-					object.setOriginalscale(scale);
 					object.setRotation(rotation);
 					object.setOriginalrotation(rotation);
 					object.setMass(mass);
-					object.setOriginalMass(mass);
 					object.setEditable(false);
 					
 				}else {

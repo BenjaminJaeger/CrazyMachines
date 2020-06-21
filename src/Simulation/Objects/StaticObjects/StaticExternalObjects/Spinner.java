@@ -10,7 +10,7 @@ public class Spinner extends StaticExternalObject{
 	public Spinner(float x, float y) {
 		super("spinner","spinner","spinner.jpg", material, x, y);
 		setScale(0.6f);
-		setOriginalscale(0.6f);
+
 	}
 
 	@Override
