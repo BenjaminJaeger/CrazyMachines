@@ -6,6 +6,7 @@ import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.Objects.StaticObjects.StaticExternalObjects.Hairdryer;
 import Simulation.Objects.StaticObjects.StaticExternalObjects.Magnet;
 import Simulation.RenderEngine.Core.Math.Vector2f;
+import UI.Sounds;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -48,6 +49,7 @@ public class ObjectSettingsLevel extends VBox {
         StackPane delete = new StackPane(deleteImg);
         delete.getStyleClass().add("delete");
         deleteImg.setOnMouseClicked(e->{
+        	Sounds.playDeleteSound();
         	removeUI();
         	object.remove();
         	GameObject.allObjects.remove(object);        	

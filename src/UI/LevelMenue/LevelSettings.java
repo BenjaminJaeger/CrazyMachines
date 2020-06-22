@@ -2,6 +2,7 @@ package UI.LevelMenue;
 
 import Simulation.SimulationControler;
 import Simulation.Objects.GameObject;
+import UI.Sounds;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -36,6 +37,7 @@ public class LevelSettings extends VBox{
 	     clear.getChildren().addAll(clearImg,clearLabel);
 	     clear.setOnMouseClicked(e->{
 	    	 if (!SimulationControler.isPlaying()) {
+	    		 Sounds.playDeleteSound();
 	    		  for (int i = 0; i < GameObject.allObjects.size(); i++) 
 			    	   if(GameObject.allObjects.get(i).isEditable()) {
 						GameObject.allObjects.get(i).remove();

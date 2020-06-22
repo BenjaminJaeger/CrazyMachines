@@ -2,6 +2,7 @@ package UI.TabElements;
 
 import Simulation.SimulationControler;
 import Simulation.Objects.GameObject;
+import UI.Sounds;
 import UI.Util;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -103,6 +104,7 @@ public abstract class TabElement extends VBox {
 	    		if(Util.dragMode && !SimulationControler.isPlaying()) {
 		            float x = Util.convertMouseX(e2.getX());
 		            float y = Util.convertMouseY(e2.getY());
+		            Sounds.playCreateSound();
 		            this.object = createObject(x, y);
 		            object.setTabPane(this);
 		            Util.dragMode = false;
@@ -137,6 +139,7 @@ public abstract class TabElement extends VBox {
 	    		if(Util.dragMode) {
 		            float x = Util.convertMouseX(e2.getX());
 		            float y = Util.convertMouseY(e2.getY());
+		            Sounds.playCreateSound();
 		            createObject(x, y);
 		            Util.dragMode = false;
 	    		}

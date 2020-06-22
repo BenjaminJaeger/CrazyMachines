@@ -74,8 +74,6 @@ public class MainMenue extends StackPane{
 		this.getStyleClass().add("MainMenue");
 		this.getStylesheets().add("file:res/css/MainMenue.css");	
 		
-		mainScene.setRoot(this);		
-		
 		Util.primaryStage = primaryStage;
 		Util.mainScene = mainScene;
 		UI.Util.editorMode = false;

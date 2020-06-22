@@ -8,7 +8,7 @@ import UI.TabElements.BeachBallTabElement;
 import UI.TabElements.BucketTabElement;
 import UI.TabElements.HairdryerTabElement;
 import UI.TabElements.MagnetTabElement;
-import UI.TabElements.MetalBallTabElement;
+import UI.TabElements.TennisBallTabElement;
 import UI.TabElements.PlaneTabElement;
 import UI.TabElements.PortalTabElement;
 import UI.TabElements.SpinnerTabElement;
@@ -91,7 +91,7 @@ public class LevelTabPane extends StackPane{
 						break;
 					}
 					case "MetalBall": {
-						element = new MetalBallTabElement(glass, 1);
+						element = new TennisBallTabElement(glass, 1);
 						break;
 					}
 					

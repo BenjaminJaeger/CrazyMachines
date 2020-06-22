@@ -10,27 +10,68 @@ public class Sounds {
 
 	public static MediaPlayer theme;
 	public static MediaPlayer basketball;
-		
+	public static MediaPlayer tennisball;
+	public static MediaPlayer beachball;
+	public static MediaPlayer portal;
+	public static MediaPlayer create;
+	public static MediaPlayer delete;
 
 	public static void stopSounds() {
 		theme.stop();
 	}
 	
 	public static void updateVolume() {
-		theme.setVolume(Util.soundVolume);
-		basketball.setVolume(Util.soundVolume);
+		theme.setVolume(Util.soundVolume*0.7f);
 	}
 
 	public static void initSounds() {
 		initMainTheme();
+		initTennisBallSound();
 		initBasketBallSound();
+		initBeachBallSound();
+		initPortalSound();
+		initDeleteSound();
+		initCreateSound();
 	}
+	
+	public static void initCreateSound() {
+		Media sound = new Media(new File("res/Sounds/create.wav").toURI().toString());
+		create = new MediaPlayer(sound);
+		create.setVolume(Util.soundVolume);
+		create.setOnEndOfMedia(new Runnable() {		
+			@Override
+			public void run() {
+				create.stop();
+			}
+		});
+	}
+	
+	public static void playCreateSound() {
+		create.play();
+	}
+	
+	public static void initDeleteSound() {
+		Media sound = new Media(new File("res/Sounds/delete.wav").toURI().toString());
+		delete = new MediaPlayer(sound);
+		delete.setVolume(Util.soundVolume);
+		delete.setOnEndOfMedia(new Runnable() {		
+			@Override
+			public void run() {
+				delete.stop();
+			}
+		});
+	}
+	
+	public static void playDeleteSound() {
+		delete.play();
+	}
+	
 		
 	public static void initMainTheme() {
 		Media sound = new Media(new File("res/Sounds/theme.mp3").toURI().toString());
 		theme = new MediaPlayer(sound);
 		theme.setCycleCount(MediaPlayer.INDEFINITE);
-		theme.setVolume(Util.soundVolume);
+		theme.setVolume(Util.soundVolume*0.7f);
 	}
 	
 	public static void playMainTheme() {
@@ -53,48 +94,102 @@ public class Sounds {
 		basketball.play();
 	}
 	
+	public static void initTennisBallSound() {
+		Media sound = new Media(new File("res/Sounds/tennisball.wav").toURI().toString());
+		tennisball = new MediaPlayer(sound);
+		tennisball.setVolume(Util.soundVolume);
+		tennisball.setOnEndOfMedia(new Runnable() {		
+			@Override
+			public void run() {
+				tennisball.stop();
+			}
+		});
+	}
+	
+	public static void playBeachBallSound() {
+		beachball.play();
+	}
+	
+	public static void initBeachBallSound() {
+		Media sound = new Media(new File("res/Sounds/beachball.wav").toURI().toString());
+		beachball = new MediaPlayer(sound);
+		beachball.setVolume(Util.soundVolume);
+		beachball.setOnEndOfMedia(new Runnable() {		
+			@Override
+			public void run() {
+				beachball.stop();
+			}
+		});
+	}
+	
+	public static void playTennisBallSound() {
+		tennisball.play();
+	}
+	
+	public static void initPortalSound() {
+		Media sound = new Media(new File("res/Sounds/Portal.mp3").toURI().toString());
+		portal = new MediaPlayer(sound);
+		portal.setVolume(Util.soundVolume);
+		portal.setOnEndOfMedia(new Runnable() {		
+			@Override
+			public void run() {
+				portal.stop();
+			}
+		});
+	}
+	
+	public static void playPortalSound() {
+		portal.play();
+	}
+	
 	public static void playPlaySound() {
-		Media sound = new Media(new File("res/Sounds/Start/00.mp3").toURI().toString());
-		
-		float random = (float)Math.random()*8f;
-		
-		if(random>7)
-			sound = new Media(new File("res/Sounds/Start/01.mp3").toURI().toString());
-		else if(random>6)
-			sound = new Media(new File("res/Sounds/Start/07.mp3").toURI().toString());
-		else if(random>5)
-			sound = new Media(new File("res/Sounds/Start/06.mp3").toURI().toString());
-		else if(random>4)
-			sound = new Media(new File("res/Sounds/Start/05.mp3").toURI().toString());
-		else if(random>3)
-			sound = new Media(new File("res/Sounds/Start/04.mp3").toURI().toString());
-		else if(random>2)
-			sound = new Media(new File("res/Sounds/Start/03.mp3").toURI().toString());
-		else if(random>1)
-			sound = new Media(new File("res/Sounds/Start/02.mp3").toURI().toString());
-		
-		AudioClip play = new AudioClip(sound.getSource());
-		play.setVolume(Util.soundVolume);
-		play.play();
+		float random2 = (float)Math.random();
+		if(random2>0.6f) {
+			Media sound = new Media(new File("res/Sounds/Start/00.mp3").toURI().toString());
+			
+			float random = (float)Math.random()*8f;
+			
+			if(random>7)
+				sound = new Media(new File("res/Sounds/Start/01.mp3").toURI().toString());
+			else if(random>6)
+				sound = new Media(new File("res/Sounds/Start/07.mp3").toURI().toString());
+			else if(random>5)
+				sound = new Media(new File("res/Sounds/Start/06.mp3").toURI().toString());
+			else if(random>4)
+				sound = new Media(new File("res/Sounds/Start/05.mp3").toURI().toString());
+			else if(random>3)
+				sound = new Media(new File("res/Sounds/Start/04.mp3").toURI().toString());
+			else if(random>2)
+				sound = new Media(new File("res/Sounds/Start/03.mp3").toURI().toString());
+			else if(random>1)
+				sound = new Media(new File("res/Sounds/Start/02.mp3").toURI().toString());
+			
+			AudioClip play = new AudioClip(sound.getSource());
+			play.setVolume(Util.soundVolume);
+			play.play();
+		}
 	}
 	
 	public static void playStopSound() {
-		Media sound = new Media(new File("res/Sounds/Stop/00.mp3").toURI().toString());
-		
-		float random = (float)Math.random()*5f;
-		
-		if(random>4)
-			sound = new Media(new File("res/Sounds/Stop/05.mp3").toURI().toString());
-		else if(random>3)
-			sound = new Media(new File("res/Sounds/Stop/04.mp3").toURI().toString());
-		else if(random>2)
-			sound = new Media(new File("res/Sounds/Stop/03.mp3").toURI().toString());
-		else if(random>1)
-			sound = new Media(new File("res/Sounds/Stop/02.mp3").toURI().toString());
-		
-		AudioClip stop = new AudioClip(sound.getSource());
-		stop.setVolume(Util.soundVolume);
-		stop.play();
+		float random2 = (float)Math.random();
+		if(random2>0.6f) {
+			Media sound = new Media(new File("res/Sounds/Stop/00.mp3").toURI().toString());
+			
+			float random = (float)Math.random()*5f;
+			
+			if(random>4)
+				sound = new Media(new File("res/Sounds/Stop/05.mp3").toURI().toString());
+			else if(random>3)
+				sound = new Media(new File("res/Sounds/Stop/04.mp3").toURI().toString());
+			else if(random>2)
+				sound = new Media(new File("res/Sounds/Stop/03.mp3").toURI().toString());
+			else if(random>1)
+				sound = new Media(new File("res/Sounds/Stop/02.mp3").toURI().toString());
+			
+			AudioClip stop = new AudioClip(sound.getSource());
+			stop.setVolume(Util.soundVolume);
+			stop.play();
+		}
 	}
 	
 	public static void playDoneSound() {

@@ -2,6 +2,7 @@ package Simulation.Objects.MovableObjects.Ball;
 
 import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
+import UI.Sounds;
 
 public class BeachBall extends Ball{
 	
@@ -18,8 +19,7 @@ public class BeachBall extends Ball{
 
 	@Override
 	public void onCollision() {
-		// TODO Auto-generated method stub
-		
+		Sounds.playBeachBallSound();
 	}
 	
 }

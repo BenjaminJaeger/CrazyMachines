@@ -3,6 +3,7 @@ package UI.EditorMenue;
 import Simulation.LevelExportImport;
 import Simulation.SimulationControler;
 import Simulation.Objects.GameObject;
+import UI.Sounds;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -42,6 +43,7 @@ public class EditorLevelSettings extends VBox{
 	     clear.getChildren().addAll(clearImg,clearLabel);
 	     clear.setOnMouseClicked(e->{
 	    	 if (!SimulationControler.isPlaying()) {
+	    		 	Sounds.playDeleteSound();
 		        	GameObject.allObjects.clear();	
 				}
 	     });

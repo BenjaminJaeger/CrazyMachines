@@ -5,7 +5,7 @@ import UI.TabElements.BeachBallTabElement;
 import UI.TabElements.BucketTabElement;
 import UI.TabElements.HairdryerTabElement;
 import UI.TabElements.MagnetTabElement;
-import UI.TabElements.MetalBallTabElement;
+import UI.TabElements.TennisBallTabElement;
 import UI.TabElements.MovingBoxTabElement;
 import UI.TabElements.PlaneTabElement;
 import UI.TabElements.PortalTabElement;
@@ -28,7 +28,7 @@ public class AllElementsTab extends EditorTab{
 		 SpinnerTabElement spinner = new SpinnerTabElement(glass);
 		 MagnetTabElement magnetTab = new MagnetTabElement (glass);
 		 BeachBallTabElement beachball = new BeachBallTabElement(glass);
-		 MetalBallTabElement golfball = new MetalBallTabElement(glass);
+		 TennisBallTabElement golfball = new TennisBallTabElement(glass);
 		 MovingBoxTabElement movingBox = new MovingBoxTabElement(glass);
 		 
 		 content.getChildren().addAll(basketBall,beachball,golfball,plane,movingBox,bucket, hairdryer,spinner,magnetTab,portal);

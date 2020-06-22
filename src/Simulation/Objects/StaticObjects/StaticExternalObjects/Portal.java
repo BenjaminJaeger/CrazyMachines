@@ -10,6 +10,7 @@ import Simulation.Objects.StaticObjects.StaticObject;
 import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Plane;
+import UI.Sounds;
 import UI.ObjectTransformer.ObjectTransformer;
 
 public class Portal extends StaticObject{
@@ -38,6 +39,8 @@ public class Portal extends StaticObject{
 				MoveableObject object = (MoveableObject)gameObject;
 					
 				if(object.isPortable() && object.getX() <= x+offset && object.getX() >= x-offset && object.getY() <= y+offset && object.getY() >= y-offset) {
+					Sounds.playPortalSound();
+					
 					object.setX(portal.getX());
 					object.setY(portal.getY());
 					
