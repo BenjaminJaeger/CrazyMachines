@@ -8,7 +8,7 @@ import UI.MainMenue.MainMenue;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -28,9 +28,7 @@ public class Main extends Application{
 
 		Font.loadFont("file:res/Roboto.ttf", 10);
 		
-		StackPane root = new StackPane();
-		
-		Scene mainScene = new Scene(root,1480, 920);
+		Scene mainScene = new Scene(new Pane(),1480, 920);
 		
 		MainMenue menue = new MainMenue(mainScene,primaryStage);
 		FadeTransition fadein = new FadeTransition(Duration.millis(1000), menue);
@@ -42,13 +40,14 @@ public class Main extends Application{
 		mediaPlayer.setOnEndOfMedia(new Runnable() {
 			public void run() {
 				fadein.play();
-				root.getChildren().add(menue);
+				menue.getChildren().remove(menue.getChildren().size()-1);
 			}
 		});
 		mediaPlayer.play();
 		MediaView intro = new MediaView(mediaPlayer);
 
-		root.getChildren().add(intro);
+		menue.getChildren().add(intro);
+
 		
         primaryStage.setTitle("Visual Computing 2");
 		primaryStage.setScene(mainScene);
