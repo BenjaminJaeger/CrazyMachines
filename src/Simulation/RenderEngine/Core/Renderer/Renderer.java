@@ -55,26 +55,10 @@ public class Renderer {
 	 * creates a renderer and sets it up depending on the config based on the Config.java class
 	 */
 	public Renderer(Camera camera) {
-		GL4 gl=(GL4)GLContext.getCurrentGL(); 
 		modelViewProjectionMatrix=new Matrix4f();
 		this.camera=camera;
 		this.projectionMatrix=new Matrix4f();
-		projectionMatrix.changeToPerspecitveMatrix(Config.FIELD_OF_VIEW, Config.NEAR_PLANE, Config.FAR_PLANE,Config.CANVAS_HEIGHT,Config.CANVAS_WIDTH);
-	 
-		//start settings of the renderer
-		gl.glEnable(GL_DEPTH_TEST); 
-		gl.glEnable(GL_BLEND);	
-		
-		gl.glEnable(GL_POLYGON_SMOOTH);
-		gl.glEnable(GL_LINE_SMOOTH);
-		
-		gl.glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
-		gl.glEnable(GL_MULTISAMPLE);
-
-		gl.glLineWidth(Config.LINE_WIDTH);
-		gl.glPointSize(Config.POINT_SIZE);
-		
-		gl.glTexParameteri(GL_TEXTURE_2D, GL_LINEAR_MIPMAP_LINEAR , GL_LINEAR);
+		projectionMatrix.changeToPerspecitveMatrix(Config.FIELD_OF_VIEW, Config.NEAR_PLANE, Config.FAR_PLANE,Config.CANVAS_HEIGHT,Config.CANVAS_WIDTH);	
 	}
 	
 	/**
@@ -91,6 +75,21 @@ public class Renderer {
 	
 		wireframeMode(); //checks if wireframe mode is enabled
 		backFacCulling(); //checks if backfaceculling is enabled
+		
+		//start settings of the renderer
+				gl.glEnable(GL_DEPTH_TEST); 
+				gl.glEnable(GL_BLEND);	
+				
+				gl.glEnable(GL_POLYGON_SMOOTH);
+				gl.glEnable(GL_LINE_SMOOTH);
+				
+				gl.glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+				gl.glEnable(GL_MULTISAMPLE);
+
+				gl.glLineWidth(Config.LINE_WIDTH);
+				gl.glPointSize(Config.POINT_SIZE);
+				
+				gl.glTexParameteri(GL_TEXTURE_2D, GL_LINEAR_MIPMAP_LINEAR , GL_LINEAR);
 	}
 	
 

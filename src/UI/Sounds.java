@@ -5,6 +5,7 @@ import java.io.File;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 public class Sounds {
 
@@ -130,6 +131,8 @@ public class Sounds {
 		Media sound = new Media(new File("res/Sounds/Portal.mp3").toURI().toString());
 		portal = new MediaPlayer(sound);
 		portal.setVolume(Util.soundVolume);
+		portal.setStopTime(Duration.millis(800));
+		portal.setStartTime(Duration.millis(600));
 		portal.setOnEndOfMedia(new Runnable() {		
 			@Override
 			public void run() {

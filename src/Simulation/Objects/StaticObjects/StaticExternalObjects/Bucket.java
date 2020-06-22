@@ -7,7 +7,6 @@ import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import UI.Sounds;
 import UI.Util;
-import UI.LevelMenue.Level;
 import UI.MainMenue.LevelSelectionMenue;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -55,11 +54,10 @@ public class Bucket extends StaticExternalObject{
 								
 								Label text = new Label("Level Done!");
 								Button exit = new Button("Exit");
-								Button next = new Button("Next Level");
 																
 								HBox container = new HBox(10);
 								container.setAlignment(Pos.CENTER);
-								container.getChildren().addAll(exit,next);
+								container.getChildren().addAll(exit);
 								
 						        VBox root = new VBox(20);
 						        root.setAlignment(Pos.CENTER);
@@ -80,14 +78,7 @@ public class Bucket extends StaticExternalObject{
 						        	new LevelSelectionMenue(mainScene, primaryStage);
 						        	newWindow.close();
 								});
-						        
-						        next.setOnAction(e2->{
-						        	Util.currentLevel+=1;
-						        	new Level(mainScene, "Level"+Util.currentLevel, primaryStage);
-						        	newWindow.close();
-								});
-						        
-						        
+			        
 						        newWindow.initModality(Modality.WINDOW_MODAL);
 						        newWindow.initOwner(primaryStage);
 						 

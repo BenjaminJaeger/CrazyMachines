@@ -47,7 +47,7 @@ public class LevelSelectionMenue extends StackPane{
 		});
 		MenueLevelButton level4 = new MenueLevelButton("Level 4",levelsDone[3]);
 		level4.setOnMouseClicked(e->{
-//			new Level(mainScene, "Level4",primaryStage);
+			new Level(mainScene, "Level4",primaryStage);
 			Util.currentLevel = 4;
 		});
 		MenueLevelButton level5 = new MenueLevelButton("Level 5",levelsDone[4]);

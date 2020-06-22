@@ -9,8 +9,7 @@ import Simulation.RenderEngine.Core.Math.Vector2f;
 
 public class DynamicCollisionContext extends CollisionContext{
 
- static float counter;
- 
+	public GameObject lastCollided;
 ////////////////////
 ////Constructors////
 ////////////////////
@@ -44,7 +43,6 @@ public class DynamicCollisionContext extends CollisionContext{
 				checkCollision(object.getCollisionContext());							
 	}
 	
-	
 ///////////////
 ////Methods////
 ///////////////
@@ -62,10 +60,16 @@ public class DynamicCollisionContext extends CollisionContext{
 		
 		if(object instanceof MoveableObject) {
 			CollisionCircleCircle.removeCollision((MoveableObject)gameObject, r1, (MoveableObject)object, r2);
+			
 			CollisionCircleCircle.elasticCollision((MoveableObject)gameObject, (MoveableObject)object);
+			object.onCollision();
+			this.getGameObject().onCollision();
 		}else {
 			CollisionCircleCircle.removeCollision((MoveableObject)gameObject, r1, (StaticObject)object, r2);
+			
 			CollisionCircleCircle.elasticCollision((MoveableObject)gameObject, (StaticObject)object);
+			object.onCollision();
+			this.getGameObject().onCollision();
 		}
 	}
 	
@@ -85,10 +89,16 @@ public class DynamicCollisionContext extends CollisionContext{
 		
 		if(object instanceof MoveableObject) {			
 			CollisionCirclePolygon.removeCollision((MoveableObject)gameObject, circle.getRadius(), (MoveableObject)object, p1, p2);
+			
 			CollisionCirclePolygon.elasticCollision((MoveableObject)gameObject, circle.getRadius(), (MoveableObject)object, p1, p2,polygon,circle);
+			object.onCollision();
+			this.getGameObject().onCollision();
 		}else {			
 			CollisionCirclePolygon.removeCollision((MoveableObject)gameObject, circle.getRadius(), (StaticObject)object, p1, p2);
+			
 			CollisionCirclePolygon.elasticCollision((MoveableObject)gameObject, circle.getRadius(), (StaticObject)object, p1, p2);	
+			object.onCollision();
+			this.getGameObject().onCollision();			
 		}
 			
 	}
@@ -105,11 +115,8 @@ public class DynamicCollisionContext extends CollisionContext{
 	public void checkCollisionCircleCircle(CollisionContext context) {
 		for (BoundingCircle circle1 : boundingCirlces) 
 			for (BoundingCircle circle2 : context.getBoundingCircles()) 
-				if(circle1.checkCollision(circle2)) {
+				if(circle1.checkCollision(circle2)) 
 					collisionCircleCircle(circle1,circle2,context.getGameObject());
-					context.getGameObject().onCollision();
-					this.getGameObject().onCollision();
-				}
 	}
 	
 	public void checkCollisionPolygonPolygon(CollisionContext context) {
@@ -123,20 +130,14 @@ public class DynamicCollisionContext extends CollisionContext{
 	public void checkCollisionPolygonCircle(CollisionContext context) {
 		for (BoundingPolygon polygon : boundingPolygons) 
 			for (BoundingCircle circle : context.getBoundingCircles()) 
-				if(circle.checkCollision(polygon)) {
+				if(circle.checkCollision(polygon)) 
 					collisionCirclePolygon(polygon,circle,context.getGameObject());
-					context.getGameObject().onCollision();
-					this.getGameObject().onCollision();
-				}
 				
-
 		for (BoundingPolygon polygon : context.getBoundingPolygons()) 
 			for (BoundingCircle circle : boundingCirlces) 
-				if(circle.checkCollision(polygon)) {
+				if(circle.checkCollision(polygon)) 
 					collisionCirclePolygon(polygon,circle,context.getGameObject());
-					context.getGameObject().onCollision();
-					this.getGameObject().onCollision();
-				}
+
 	}
 	
 	public boolean checkCollisionPolygonCircle2(CollisionContext context) {

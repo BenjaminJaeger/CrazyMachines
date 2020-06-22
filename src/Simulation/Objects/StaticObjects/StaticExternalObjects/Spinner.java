@@ -15,7 +15,7 @@ public class Spinner extends StaticExternalObject{
 
 	@Override
 	public void update() {
-		increaseRotation(1f);
+		increaseRotation(0.4f);
 	}
 
 	@Override

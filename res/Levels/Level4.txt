@@ -1,32 +1,72 @@
-true
-Plane
--138.21/-95.357
-0.4
-162.026
+false
+Bucket
+182.14284/-75.536
+0.38547
+0.0
 1.0E9
 direction TODO 
 speed TODO 
 false
-BeachBall
--144.64/77.143
-1.0
+Plane
+-258.75/51.429
+0.26209
+-10.771
+1.0E9
+direction TODO 
+speed TODO 
+false
+Spinner
+-103.39/-39.643
+0.17166
+143.357
+1.0E9
+direction TODO 
+speed TODO 
+false
+Portal
+9.10714/-78.21428
+0.8
 0.0
-4.0
+1.0E9
+direction TODO 
+speed TODO 
+false
+Portal
+-82.5/175.179
+0.8
+0.0
+1.0E9
 direction TODO 
 speed TODO 
 false
 BasketBall
--102.32/156.429
-1.0
+-302.67/89.464
+0.90948
 0.0
 1.0
 direction TODO 
 speed TODO 
 false
-Bucket
-232.5/50.893
-0.4
-42.012
+BeachBall
+-321.42/198.75
+0.84033996
+0.0
+0.2
+direction TODO 
+speed TODO 
+true
+Plane
+-21.96428/70.71428
+0.13861
+0.0
+1.0E9
+direction TODO 
+speed TODO 
+true
+Plane
+275.357/50.35714
+0.24705
+-89.645
 1.0E9
 direction TODO 
 speed TODO 
