@@ -13,7 +13,7 @@ public class Util {
 	public static boolean dragMode;
 	
 	public static boolean muteAudio;
-	public static int soundVolume = 50;
+	public static float soundVolume = 0.2f;
 	
 	public static SwingNode canvasWrapper;
 	public static ColorAdjust colorAdjust = new ColorAdjust();

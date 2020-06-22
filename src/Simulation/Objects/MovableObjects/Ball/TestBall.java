@@ -13,6 +13,12 @@ public class TestBall extends Ball{
 	public TestBall(float radius,float x, float y) {
 		super(radius, 30, material,(float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
 	}
+
+	@Override
+	public void onCollision() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
  

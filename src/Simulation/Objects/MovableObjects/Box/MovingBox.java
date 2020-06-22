@@ -11,4 +11,15 @@ public class MovingBox extends Box{
 		super(30, material, "MovingBox.jpg", x, y);
 	}
 
+	@Override
+	public void update() {
+		super.update();
+		setRotation(0);
+	}
+
+	@Override
+	public void onCollision() {
+		// TODO Auto-generated method stub
+		
+	}
 }

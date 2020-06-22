@@ -15,6 +15,12 @@ public class BeachBall extends Ball{
 		setCoefficientOfRestitution(0.8f);
 		setMass(0.2f);
 	}
+
+	@Override
+	public void onCollision() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
  

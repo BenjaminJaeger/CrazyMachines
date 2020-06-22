@@ -17,4 +17,10 @@ public class Plane extends StaticExternalObject{
 		
 	}
 
+	@Override
+	public void onCollision() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -18,4 +18,5 @@ module jfx {
 	requires transitive javafx.graphics;
 	requires  javafx.swing;
 	requires  jogl.all;
+	requires javafx.media;
 }

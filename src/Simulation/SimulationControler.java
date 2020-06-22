@@ -5,7 +5,9 @@ import java.util.TimerTask;
 
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
+import UI.Util;
 import javafx.application.Platform;
+import javafx.scene.Cursor;
 
 public class SimulationControler {
 
@@ -34,7 +36,7 @@ public class SimulationControler {
 	}
 
 	public static void pause() {
-		if(isPlaying) {
+		if(isPlaying) {			
 			isPlaying=false;
 			simulationTimer.cancel();
 		}	
@@ -42,6 +44,7 @@ public class SimulationControler {
 	
 	public static void play() {
 		if(!isPlaying) {
+			Util.mainScene.setCursor(Cursor.DEFAULT);
 			isPlaying=true;
 			simulationTimer = new Timer();
 			simulationTimer.scheduleAtFixedRate(new TimerTask() {

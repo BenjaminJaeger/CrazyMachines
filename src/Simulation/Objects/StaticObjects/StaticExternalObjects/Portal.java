@@ -67,4 +67,10 @@ public class Portal extends StaticObject{
 		this.portal = portal;
 	}
 
+	@Override
+	public void onCollision() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

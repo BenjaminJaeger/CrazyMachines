@@ -1,6 +1,7 @@
 package MAIN;
 
 import Simulation.Simulation;
+import UI.Sounds;
 import UI.MainMenue.MainMenue;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -29,6 +30,12 @@ public class Main extends Application{
 		primaryStage.setMinWidth(1080);
 		primaryStage.setMinHeight(720);
 		primaryStage.show();
+		primaryStage.setOnCloseRequest(e->{
+			Sounds.stopSounds();
+		});
+		
+		Sounds.initSounds();
+		Sounds.playMainTheme();
 	}
 	
 }

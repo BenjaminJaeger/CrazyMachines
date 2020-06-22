@@ -128,10 +128,10 @@ public class Simulation {
 
 				DirectionalLight.getDirectionalLights().clear();
 				
-				AmbientLight ambientLight = new AmbientLight(1);    
+				new AmbientLight(1);    
 				
-				//								    new DirectionalLight(lightDirection,         diffuseColor,          speculaColor)
-				DirectionalLight directionalLight = new DirectionalLight(new Vector3f(0, 0, -1), new Vector3f(1, 1, 1), new Vector3f(1, 1, 1));
+			  //new DirectionalLight(lightDirection,         diffuseColor,          speculaColor)
+				new DirectionalLight(new Vector3f(0, 0, -1), new Vector3f(1, 1, 1), new Vector3f(1, 1, 1));
 				
 				tmp = new LineModel(new float[]{0,0,0}, 0, 0, 0, -1000, -10000); 
 				tmpShader= new BasicShader("Line");

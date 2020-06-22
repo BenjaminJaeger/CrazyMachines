@@ -50,6 +50,32 @@ public class ObjectPickingMethods {
         return collision;
     }
 
+    public static boolean detectInitialPolygonMouseCollision(MouseEvent e, BoundingPolygon polygon,GameObject object) {
+        float px = UI.Util.convertMouseX(e.getX());
+        float py = UI.Util.convertMouseY(e.getY());
+
+        boolean collision = false;
+        int next = 0;
+        float scale = 1.1f;
+     
+        for (int i = 0; i < polygon.getPoints().length; i++) {
+            next = i + 1;
+
+            if (next == polygon.getPoints().length) 
+                next = 0;
+            
+            Vector2f original1 = polygon.getPoints()[i];
+            Vector2f original2 = polygon.getPoints()[next];
+            Vector2f vc = new Vector2f((original1.x-object.getX())*scale+object.getX(), (original1.y-object.getY())*scale+object.getY());
+            Vector2f vn = new Vector2f((original2.x-object.getX())*scale+object.getX(), (original2.y-object.getY())*scale+object.getY());
+
+            if (((vc.y > py) != (vn.y > py)) && (px < (vn.x - vc.x) * (py - vc.y) / (vn.y - vc.y) + vc.x)) 
+                collision = !collision;
+            
+        }
+
+        return collision;
+    }
 
     public static boolean chooseCircleLine(MouseEvent e, RotationCircleUI object) {
         float x = UI.Util.convertMouseX(e.getX());
@@ -83,7 +109,7 @@ public class ObjectPickingMethods {
              ry = squareUI.getVerticesSmaller().get(1).y;
              ry2 = squareUI.getVerticesSmaller().get(2).y;
         	
-             if (!(px > rx &&  px < rx2 && py < ry && py > ry2)) 
+             if (!(px >= rx &&  px <= rx2 && py <= ry && py >= ry2)) 
             	 return true;
    
         }

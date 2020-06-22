@@ -18,6 +18,12 @@ public class TestBox extends Box{
 	public TestBox(float size, float x, float y) {
 		super(size, material, (float)Math.random(),(float)Math.random(),(float)Math.random(), x, y);
 	}
+
+	@Override
+	public void onCollision() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
  

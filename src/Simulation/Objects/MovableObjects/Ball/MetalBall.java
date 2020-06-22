@@ -15,6 +15,12 @@ public class MetalBall extends Ball{
 		setCoefficientOfRestitution(0.1f);
 		setMass(5);
 	}
+
+	@Override
+	public void onCollision() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
  

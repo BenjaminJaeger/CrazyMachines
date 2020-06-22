@@ -100,7 +100,7 @@ public abstract class TabElement extends VBox {
         	glass.toBack();
         	glass.getChildren().clear();    
 	    	Util.canvasWrapper.setOnMouseEntered(e2->{    	
-	    		if(Util.dragMode) {
+	    		if(Util.dragMode && !SimulationControler.isPlaying()) {
 		            float x = Util.convertMouseX(e2.getX());
 		            float y = Util.convertMouseY(e2.getY());
 		            this.object = createObject(x, y);
@@ -118,10 +118,12 @@ public abstract class TabElement extends VBox {
 		clone.setFitWidth(size);
 		
 		this.setOnDragDetected(e->{  
-			Util.dragMode = true;
-	        clone.relocate(e.getSceneX()-(size/2),e.getSceneY()-(size/2));
-	        glass.getChildren().add(clone);
-	        glass.toFront(); 				
+			if(!SimulationControler.isPlaying()) {
+				Util.dragMode = true;
+		        clone.relocate(e.getSceneX()-(size/2),e.getSceneY()-(size/2));
+		        glass.getChildren().add(clone);
+		        glass.toFront(); 	
+			}
         });
         
 		this.setOnMouseDragged(e->{

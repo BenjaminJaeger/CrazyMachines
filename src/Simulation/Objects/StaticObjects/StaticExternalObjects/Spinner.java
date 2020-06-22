@@ -9,13 +9,19 @@ public class Spinner extends StaticExternalObject{
 	
 	public Spinner(float x, float y) {
 		super("spinner","spinner","spinner.jpg", material, x, y);
-		setScale(0.6f);
+		setScale(0.4f);
 
 	}
 
 	@Override
 	public void update() {
 		increaseRotation(1f);
+	}
+
+	@Override
+	public void onCollision() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

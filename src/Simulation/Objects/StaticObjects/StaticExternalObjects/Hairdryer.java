@@ -15,4 +15,10 @@ public class Hairdryer extends StaticExternalObject{
     public void update() {
 
     }
+
+	@Override
+	public void onCollision() {
+		// TODO Auto-generated method stub
+		
+	}
 }

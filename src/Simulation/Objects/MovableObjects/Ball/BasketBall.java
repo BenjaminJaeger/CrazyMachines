@@ -2,6 +2,7 @@ package Simulation.Objects.MovableObjects.Ball;
 
 import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
+import UI.Sounds;
 
 public class BasketBall extends Ball{
 	
@@ -12,6 +13,11 @@ public class BasketBall extends Ball{
 ////////////////////
 	public BasketBall(float x, float y) {
 		super(17, 50, material,"basketball.png", x, y);
+	}
+
+	@Override
+	public void onCollision() {
+		Sounds.playBasketBallSound();
 	}
 	
 }

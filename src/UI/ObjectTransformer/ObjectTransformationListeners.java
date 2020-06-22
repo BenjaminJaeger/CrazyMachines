@@ -43,7 +43,7 @@ public class ObjectTransformationListeners {
 	            		if(GameObject.allObjects.get(first).isEditable()) {
 	            			
 		                for (int second = 0; second < GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons().length; second++)
-		                	if(!GameObject.allObjects.get(first).isSelected() && ObjectPickingMethods.detectPolygonMouseCollision(e,GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons()[second])) {
+		                	if(!GameObject.allObjects.get(first).isSelected() && ObjectPickingMethods.detectInitialPolygonMouseCollision(e,GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons()[second],GameObject.allObjects.get(first))) {
 		                		if(objectGotSelected && slectedObjectIndex != first) {
 		                			GameObject.allObjects.get(slectedObjectIndex).unSelectObject();
 			                		objectSettings.removeUI();	                		
@@ -83,9 +83,9 @@ public class ObjectTransformationListeners {
 	               	if(GameObject.allObjects.get(first).isEditable()) {
 	               		               	            	
 		            	float distance = ObjectPickingMethods.calculateCircleDistance(e,GameObject.allObjects.get(first));
-		            	     	     	          	
+		            	 
 		                for (int second = 0; second < GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons().length; second++)
-		                	if(ObjectPickingMethods.detectPolygonMouseCollision(e,GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons()[second])) {   
+		                	if(ObjectPickingMethods.detectInitialPolygonMouseCollision(e,GameObject.allObjects.get(first).getCollisionContext().getBoundingPolygons()[second],GameObject.allObjects.get(first))) {   
 		                		GameObject.allObjects.get(first).highlight(true);
 		                		Util.mainScene.setCursor(Cursor.HAND);
 		                		first=GameObject.allObjects.size()-1;

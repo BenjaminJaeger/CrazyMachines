@@ -5,7 +5,9 @@ import Simulation.SimulationControler;
 import Simulation.Objects.GameObject;
 import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
+import UI.Sounds;
 import UI.Util;
+import UI.LevelMenue.Level;
 import UI.MainMenue.LevelSelectionMenue;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -42,6 +44,7 @@ public class Bucket extends StaticExternalObject{
 	
 							@Override
 							public void run() {
+								Sounds.playDoneSound();
 								
 								Stage primaryStage = Util.primaryStage;
 								Scene mainScene = Util.mainScene;
@@ -53,8 +56,7 @@ public class Bucket extends StaticExternalObject{
 								Label text = new Label("Level Done!");
 								Button exit = new Button("Exit");
 								Button next = new Button("Next Level");
-								
-								
+																
 								HBox container = new HBox(10);
 								container.setAlignment(Pos.CENTER);
 								container.getChildren().addAll(exit,next);
@@ -79,7 +81,13 @@ public class Bucket extends StaticExternalObject{
 						        	newWindow.close();
 								});
 						        
-						       
+						        next.setOnAction(e2->{
+						        	Util.currentLevel+=1;
+						        	new Level(mainScene, "Level"+Util.currentLevel, primaryStage);
+						        	newWindow.close();
+								});
+						        
+						        
 						        newWindow.initModality(Modality.WINDOW_MODAL);
 						        newWindow.initOwner(primaryStage);
 						 
@@ -93,6 +101,12 @@ public class Bucket extends StaticExternalObject{
 						
 					}
 					
+		
+	}
+
+	@Override
+	public void onCollision() {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -1,6 +1,7 @@
 package UI.SideBar;
 
 import Simulation.SimulationControler;
+import UI.Sounds;
 import UI.Util;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -45,11 +46,13 @@ public class SimulationControls extends VBox{
 	     playpause.getChildren().addAll(playImg,playpauseText);
 	     playpause.setOnMouseClicked(e->{
 	    	 if(SimulationControler.isPlaying()) {
+	    		 Sounds.playStopSound();
 	    		 playpauseText.setText("Play");
 	    		 SimulationControler.pause();
 	    		 playpause.getChildren().set(0, playImg);
 	    		 container.getChildren().remove(container.getChildren().size()-1);
 	    	 }else {
+	 			 Sounds.playPlaySound();
 	    		 playpauseText.setText("Pause");
 	    		 SimulationControler.play();
 	    		 playpause.getChildren().set(0, pauseImg);

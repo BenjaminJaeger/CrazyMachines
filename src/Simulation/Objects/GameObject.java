@@ -143,6 +143,8 @@ public abstract class GameObject {
 		if(this.tabPane!=null)
 			this.tabPane.resetCounter();
 	}
+	
+	public abstract void onCollision();
 /////////////////////////
 ////Getters & Setters////
 /////////////////////////

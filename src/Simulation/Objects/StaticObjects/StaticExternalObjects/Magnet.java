@@ -65,4 +65,10 @@ public class Magnet extends StaticExternalObject{
         //System.out.println((float)(f/m));
         //return (float)(f/m);
     }
+
+	@Override
+	public void onCollision() {
+		// TODO Auto-generated method stub
+		
+	}
 }
