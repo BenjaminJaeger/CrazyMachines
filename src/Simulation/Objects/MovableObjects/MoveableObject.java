@@ -86,9 +86,9 @@ public abstract class MoveableObject extends GameObject{
 		velocityX = velocityX + accelerationX * SimulationControler.getUpdateTimeInSeconds();
 		velocityY = velocityY + accelerationY * SimulationControler.getUpdateTimeInSeconds();
 	
-		if (Math.abs(velocityX) <0.03f) 
+		if (Math.abs(velocityX) <0.01f) 
 			velocityX=0;
-		if (Math.abs(velocityY)  <0.03f) 
+		if (Math.abs(velocityY)  <0.01f) 
 			velocityY=0;
 	}
 	

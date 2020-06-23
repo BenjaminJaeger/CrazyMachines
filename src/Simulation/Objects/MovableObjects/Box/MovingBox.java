@@ -9,6 +9,7 @@ public class MovingBox extends Box{
 	
 	public MovingBox(float x, float y) {
 		super(30, material, "MovingBox.jpg", x, y);
+		setCoefficientOfRestitution(0.3f);
 	}
 
 	@Override

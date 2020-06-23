@@ -64,7 +64,7 @@ public class BoundingCircle  extends Bounding{
 
 	    // since floats are so minutely accurate, add
 	    // a little buffer zone that will give collision
-	    float buffer = 0.1f;    // higher # = less accurate
+	    float buffer = 0.0001f;    // higher # = less accurate
 
 	    // if the two distances are equal to the line's
 	    // length, the point is on the line!
@@ -78,7 +78,7 @@ public class BoundingCircle  extends Bounding{
 	    float distY = closestY - y;
 	    float distance = (float)Math.sqrt( (distX*distX) + (distY*distY) );
 	 		    
-	   	if (distance <= radius) 
+	   	if (distance < radius) 
 			return true;
 	   	
 		return false;			

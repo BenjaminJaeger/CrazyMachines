@@ -23,6 +23,12 @@ public class Sounds {
 	
 	public static void updateVolume() {
 		theme.setVolume(Util.soundVolume*0.7f);
+		basketball.setVolume(Util.soundVolume);
+		tennisball.setVolume(Util.soundVolume);
+		beachball.setVolume(Util.soundVolume);
+		portal.setVolume(Util.soundVolume);
+		create.setVolume(Util.soundVolume);
+		delete.setVolume(Util.soundVolume);
 	}
 
 	public static void initSounds() {

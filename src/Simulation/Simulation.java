@@ -158,7 +158,6 @@ public class Simulation {
 				SimulationControler.pause();
 				GameObject.allObjects.clear();
 				animator.stop();
-				System.out.println("dispose");
 			}
 						
 		});	

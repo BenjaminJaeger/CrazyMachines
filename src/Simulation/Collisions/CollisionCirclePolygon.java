@@ -9,12 +9,12 @@ import Simulation.RenderEngine.Core.Math.Vector2f;
 
 public class CollisionCirclePolygon {
 
+	
 /////////////////////////
 ////ELASTIC COLLISION////
 /////////////////////////
-	public static void elasticCollision(MoveableObject object1,float radius, MoveableObject object2, Vector2f p1 , Vector2f p2,BoundingPolygon polygon , BoundingCircle circle) {
-		float distance = Util.getDistance(object1.getX(), object1.getY(), object2.getX(), object2.getY());
-		
+	public static void elasticCollision(MoveableObject object1, MoveableObject object2, Vector2f p1 , Vector2f p2,BoundingPolygon polygon , BoundingCircle circle) {
+		float distance = Util.getDistance(object1.getX(), object1.getY(), object2.getX(), object2.getY());		
 		float nx = (object2.getX()-object1.getX())/distance;
 		float ny = (object2.getY()-object1.getY())/distance;
 			
@@ -30,17 +30,16 @@ public class CollisionCirclePolygon {
 		float m1 = (dpNorm1 * (object1.getMass() - object2.getMass()) + 2 * object2.getMass() *dpNorm2 ) / (object1.getMass() + object2.getMass());	
 		float m2 = (dpNorm2 * (object2.getMass() - object1.getMass()) + 2 * object1.getMass() *dpNorm1 ) / (object1.getMass() + object2.getMass());
 			
-		float k = (object1.getCoefficientOfRestitution()+object2.getCoefficientOfRestitution())/2;
-		
-		object1.setVelocityX((tx * dpTan1 + nx * m1)*k);
-		object1.setVelocityY((ty * dpTan1 + ny * m1)*k);
-		object2.setVelocityX((tx * dpTan2 + nx * m2)*k);
-		object2.setVelocityY((ty * dpTan2 + ny * m2)*k);
+
+		object1.setVelocityX((tx * dpTan1 + nx * m1));
+		object1.setVelocityY((ty * dpTan1 + ny * m1));
+		object2.setVelocityX((tx * dpTan2 + nx * m2));
+		object2.setVelocityY((ty * dpTan2 + ny * m2));
 	}
 	
-	public static void elasticCollision(MoveableObject object1 ,float radius, StaticObject object2, Vector2f p1 , Vector2f p2) {
+	public static void elasticCollision(MoveableObject object1, StaticObject object2, Vector2f p1, Vector2f p2) {
 		float length = Util.getDistance(p1.x, p1.y, p2.x, p2.y);
-		float nx = 	(p2.x - p1.x)/length;
+		float nx = (p2.x - p1.x)/length;
 		float ny = (p2.y - p1.y)/length;	
 			
 		float tx = -ny;
@@ -56,7 +55,6 @@ public class CollisionCirclePolygon {
 		
 		object1.setVelocityX((-(tx * dpTan1 + nx * m1))*k);
 		object1.setVelocityY((-(ty * dpTan1 + ny * m1))*k);
-
 	}
 	
 	
@@ -64,8 +62,7 @@ public class CollisionCirclePolygon {
 ////////////////////////
 ////REMOVE COLLISION////
 ////////////////////////
-	public static void removeCollision(MoveableObject object1, float r , MoveableObject object2, Vector2f p1 , Vector2f p2) {
-		
+	public static void removeCollision(MoveableObject object1, MoveableObject object2, Vector2f p1 , Vector2f p2) {
 		float length = Util.getDistance(p1.x, p1.y, p2.x, p2.y);
 		float nx = -(p2.y - p1.y)/length;			
 		float ny = (p2.x - p1.x)/length;
@@ -92,8 +89,7 @@ public class CollisionCirclePolygon {
 		
 	}
 	
-	public static void removeCollision(MoveableObject object1, float r , StaticObject object2,Vector2f p1 , Vector2f p2) {
-
+	public static void removeCollision(MoveableObject object1, StaticObject object2,Vector2f p1 , Vector2f p2) {
 		float length = Util.getDistance(p1.x, p1.y, p2.x, p2.y);
 		float nx = -(p2.y - p1.y)/length;			
 		float ny = (p2.x - p1.x)/length;
@@ -114,4 +110,4 @@ public class CollisionCirclePolygon {
 		
 	}
 	
-}
+} 
