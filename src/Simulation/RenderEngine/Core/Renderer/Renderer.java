@@ -21,6 +21,7 @@ import static com.jogamp.opengl.GL2GL3.GL_LINE;
 import static com.jogamp.opengl.GL2GL3.GL_POLYGON_SMOOTH;
 import static com.jogamp.opengl.GL2GL3.GL_POLYGON_SMOOTH_HINT;
 
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Magnet;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLContext;
 
@@ -114,7 +115,6 @@ public class Renderer {
 			render(object.getObjectTransformer().getCircleUI().getCircleModel(), object.getObjectTransformer().getCircleUI().getShader());
 			render(object.getObjectTransformer().getSquareUI().getRectangleLine(), object.getObjectTransformer().getSquareUI().getShader());
 		}
-
 		//render(object.getParticleSystem().particles, object.getParticleSystem().getBasicShader());
 	}
 
