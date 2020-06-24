@@ -45,7 +45,7 @@ public class Simulation {
 	public static void initialize() {
 		Util.canvasWrapper = new SwingNode();
 		Util.canvasWrapper.setStyle("-fx-translate-x: 270; -fx-scale-x: 1.4; -fx-scale-y: 1.4;");		
-//		Util.canvasWrapper.setStyle("-fx-translate-x: 150;");		
+//		Util.canvasWrapper.setStyle("-fx-translate-x: 150;");	
 		createGLEventListener();
 		animator = new FPSAnimator(canvas, Config.FRAME_RATE);
 		
@@ -62,8 +62,7 @@ public class Simulation {
 		level = levelpath;
 		animator.start();
 	}
-	
-	
+		
 	public static void createGLEventListener() {
 		GLCapabilities capabilities = new GLCapabilities(GLProfile.getDefault());
 		capabilities.setAlphaBits(8);

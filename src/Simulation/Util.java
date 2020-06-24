@@ -6,7 +6,7 @@ import Simulation.RenderEngine.Core.Math.Vector2f;
 public class Util {
 	
 	public static float round(float value) {
-		return (float)Math.round(value * 1000f) / 1000f;
+		return (float)Math.round(value * 100f) / 100f;
 	}
 	
 	public static String getRoundedString(float value) {

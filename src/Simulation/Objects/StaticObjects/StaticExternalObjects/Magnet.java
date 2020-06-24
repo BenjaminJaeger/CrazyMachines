@@ -1,5 +1,6 @@
 package Simulation.Objects.StaticObjects.StaticExternalObjects;
 
+import Simulation.Util;
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.RenderEngine.Core.Math.Vector2f;
@@ -7,8 +8,6 @@ import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Models.LineModel;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.CircleLine;
-import Simulation.Util;
-import com.jogamp.nativewindow.util.Point;
 
 public class Magnet extends StaticExternalObject{
 
@@ -22,21 +21,17 @@ public class Magnet extends StaticExternalObject{
     private CircleLine circle1 = new CircleLine (5, 10, 0);
 
     public Magnet(float x, float y) {
-        super("stabmagnet_tri","PlaneTriangles","magnetTexture.png", material, x, y);
+        super("stabmagnet_tri","stabmagnet_tri","magnetTexture.png", material, x, y);
         //reference points for magnetic sources (both ends)
         negativeSrc = new Vector2f (x, y);
         positiveSrc = new Vector2f (x, y);
-
-        setScale(1f);
-        //setOriginalscale(1f);
 
         line1 = new LineModel(circle1, 0,0,0,negativeSrc.getX(), negativeSrc.getY());
         line2 = new LineModel(circle1, 0,0,0,positiveSrc.getX(), positiveSrc.getY());
     }
 
     @Override
-    public void onCollision () {
-    }
+    public void onCollision () {}
 
     @Override
     public void setScale (float scale) {
@@ -90,7 +85,6 @@ public class Magnet extends StaticExternalObject{
 
                 double attractDistance = Util.calcVectorSize(attract);
                 double repelDistance = Util.calcVectorSize(repel);
-                System.out.println(attractDistance + "    " + repelDistance);
 
                 if (attractDistance < repelDistance) {
                     Vector2f attractNorm = Util.normVector(attract);
@@ -105,9 +99,9 @@ public class Magnet extends StaticExternalObject{
                     float accY = repelNorm.getY() * forceFunction(repelDistance, charge);
                     ((MoveableObject) object).applyForce(accX, accY);
                 }
-                }
             }
         }
+    }
 
     private float forceFunction (double r, double Q) {
         final double e0 = 8.854187 * Math.pow(10,-12); //constant
@@ -116,8 +110,6 @@ public class Magnet extends StaticExternalObject{
         float f =  (float)((1/(4*Math.PI*eR*e0)*(Q*eQ))/(Math.pow(r,2)));
 
         return 20;
-        //System.out.println(f);
-        //return f*100;
     }
 
 
