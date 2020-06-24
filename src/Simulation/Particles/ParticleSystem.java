@@ -10,15 +10,14 @@ import Simulation.RenderEngine.Primitives.Cube;
 public class ParticleSystem {
     public Particles particles;
     private Cube cube = new Cube (10);
-    private float life;
     private float [] yNow;
-    private boolean activated = false;
     private BasicShader basicShader = new BasicShader("Instanced");
+    private Vector2f position = new Vector2f(0,0);
 
     private Vector2f [] coordinates;
 
-    public ParticleSystem(Material basicMaterial) {
-        particles = new Particles(cube, 100, basicMaterial, new float[] {1,0,0}, 2.0f);
+    public ParticleSystem(Material basicMaterial, float x, float y) {
+        particles = new Particles(cube, 100, basicMaterial, new float[] {1,0,0});
 
         yNow = new float [particles.getInstances()];
 
@@ -31,9 +30,11 @@ public class ParticleSystem {
         coordinates = new Vector2f[particles.getInstances()];
         coordinates = normalizingVector(particles.getVx(), yNow);
 
+        position.x = x;
+        position.y = y;
+
         //createVectorsY(particles.getVy());
     }
-
 
     //Die Art der Vektorerstellung sorgt für die letztendliche Bewegung der Partikel, weswegen sie vom System abhängen sollte.
     public float [] createVectorsX (float [] vx) {
@@ -44,13 +45,6 @@ public class ParticleSystem {
             }
         }
         return vx;
-    }
-
-    public float [] createVectorsY (float [] vy) {
-        for (int i = 0; i < particles.getInstances(); i++) {
-            vy[i] = (-6) + (int)(Math.random() * (((-1) - (-6)) + 1));
-        }
-        return vy;
     }
 
     public Vector2f [] normalizingVector(float [] x, float [] y) {
@@ -64,9 +58,11 @@ public class ParticleSystem {
         return newVectors;
     }
 
+
+    //Anpassen, dass die Position der Partikel in den Föhn gelegt werden
     public void update() {
-        particles.setXconstant(0,0);
-        particles.setYconstant(0,0);
+        particles.setXconstant(0,position.x);
+        particles.setYconstant(0,position.y);
 
         for (int i = 1; i < particles.getInstances(); i++) {
             if (particles.getY(i - 1) < -20 || i-1 == 0) {
@@ -76,20 +72,11 @@ public class ParticleSystem {
 
             //Rücksetzen auf den Kern des Systems
             if (particles.getY(i) < -700) {
-                particles.setX(i, 0);
-                particles.setY(i, 0);
+                particles.setX(i, position.x);
+                particles.setY(i, position.y);
             }
         }
     }
-
-    public boolean isActivated() {
-        return activated;
-    }
-
-    public void setActivated(boolean activated) {
-        this.activated = activated;
-    }
-
 
     public BasicShader getBasicShader() {
         return basicShader;
