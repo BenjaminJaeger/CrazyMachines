@@ -8,7 +8,6 @@ import Simulation.RenderEngine.Core.Models.LineModel;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.CircleLine;
 import Simulation.Util;
-import com.jogamp.nativewindow.util.Point;
 
 public class Magnet extends StaticExternalObject{
 
