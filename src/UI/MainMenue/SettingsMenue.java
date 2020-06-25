@@ -17,7 +17,14 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 public class SettingsMenue extends StackPane{
+
+	private String filePath;
 
 	public SettingsMenue(Scene mainScene,Stage primaryStage) {
 		ImageView background = new ImageView(new Image("file:res/Images/background.jpg"));
@@ -67,6 +74,13 @@ public class SettingsMenue extends StackPane{
 		this.getStylesheets().add("file:res/css/MainMenue.css");	
 		
 		mainScene.setRoot(this);
+	}
+
+	public void saveData () throws  IOException{
+		FileWriter write = new FileWriter (filePath, false);
+		PrintWriter printer = new PrintWriter (write);
+
+		printer.printf("%s" + "%n", "test");
 	}
 	
 }

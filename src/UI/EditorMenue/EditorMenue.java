@@ -40,6 +40,7 @@ public class EditorMenue extends StackPane{
 		this.setEffect(Util.colorAdjust);
 		this.getChildren().addAll(glassPane,background,layout);
 	}
+
 	
 	
 }

@@ -28,7 +28,6 @@ public class Magnet extends StaticExternalObject{
         positiveSrc = new Vector2f (x, y);
 
         setScale(1f);
-        //setOriginalscale(1f);
 
         line1 = new LineModel(circle1, 0,0,0,negativeSrc.getX(), negativeSrc.getY());
         line2 = new LineModel(circle1, 0,0,0,positiveSrc.getX(), positiveSrc.getY());
@@ -85,12 +84,11 @@ public class Magnet extends StaticExternalObject{
 
         for (GameObject object: allObjects) {
             if (object instanceof MoveableObject) {
-                Vector2f attract = new Vector2f(negativeSrc.getX()-object.getX(), negativeSrc.getY()-object.getY());
-                Vector2f repel = new Vector2f(object.getX()-positiveSrc.getX(), object.getY()-positiveSrc.getY());
+                Vector2f repel = new Vector2f(negativeSrc.getX()-object.getX(), negativeSrc.getY()-object.getY());
+                Vector2f attract = new Vector2f(object.getX()-positiveSrc.getX(), object.getY()-positiveSrc.getY());
 
                 double attractDistance = Util.calcVectorSize(attract);
                 double repelDistance = Util.calcVectorSize(repel);
-                System.out.println(attractDistance + "    " + repelDistance);
 
                 if (attractDistance < repelDistance) {
                     Vector2f attractNorm = Util.normVector(attract);
