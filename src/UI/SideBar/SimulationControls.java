@@ -74,6 +74,7 @@ public class SimulationControls extends VBox{
 	    	 if (SimulationControler.isPlaying()) {
 	             SimulationControler.pause();
 	             container.getChildren().remove(container.getChildren().size()-1);
+	             playpauseText.setText("Play");
 	             playpause.getChildren().set(0, playImg);
 	         }
 	         SimulationControler.restart();

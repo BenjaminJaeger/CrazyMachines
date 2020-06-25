@@ -27,7 +27,6 @@ public class RectangleLine extends Primitive{
 		this.width=size/Config.CANVAS_WIDTH;
 		constructMesh();
 	}
-		
 	
 	protected void constructMesh() {
 		float[] vertices = {

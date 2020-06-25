@@ -88,7 +88,7 @@ public abstract class MoveableObject extends GameObject{
 	
 		if (Math.abs(velocityX) <0.01f) 
 			velocityX=0;
-		if (Math.abs(velocityY)  <0.01f) 
+		if (Math.abs(velocityY)  <0.001f) 
 			velocityY=0;
 	}
 	

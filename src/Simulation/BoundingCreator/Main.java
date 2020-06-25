@@ -55,8 +55,7 @@ public class Main extends Application implements GLEventListener{
 	
 	private String fileName;
 	private int state;
-	
-	
+		
 	//Basic 3D Scene
 	private FPSAnimator animator;
 	private GLJPanel canvas;
@@ -279,7 +278,6 @@ public class Main extends Application implements GLEventListener{
 	@SuppressWarnings("unused")
 	@Override
 	public void init(GLAutoDrawable arg0) {
-		Config.BACK_FACE_CULLING = false;
 		Config.BACKGROUND_COLOR = new Vector4f(0.4f,0.5f,0.4f,1);
 		Config.CANVAS_HEIGHT = canvas.getHeight();
 		Config.CANVAS_WIDTH = canvas.getWidth();
@@ -298,7 +296,7 @@ public class Main extends Application implements GLEventListener{
 		//								    new DirectionalLight(lightDirection,         diffuseColor,          speculaColor)
 		DirectionalLight directionalLight = new DirectionalLight(new Vector3f(0, 0, -1), new Vector3f(1, 1, 1), new Vector3f(1, 1, 1));
 		
-		model = new TriangleModel("PlaneTriangles", new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 0, 1), 1, 1, 1, 0, 0);
+		model = new TriangleModel("/Models/PlaneTriangles", new Material(new Vector3f(0.2f,0.2f,0.2f), new Vector3f(0.5f,0.5f,0.5f), new Vector3f(1.f, 1.f, 1.f), 0, 1), 1, 1, 1, 0, 0);
 		
 		tmp = new LineModel(new CircleLine(0,0),0,0,0,0,0);
 	}

@@ -7,13 +7,10 @@ import Simulation.RenderEngine.Primitives.Primitive;
 public class Particles extends InstancedModel {
     private float [] vx;
     private float [] vy;
-    private float life;
-
-    public Particles(Primitive primitive, int instances, Material material, float[] colors, float life) {
+    public Particles(Primitive primitive, int instances, Material material, float[] colors) {
         super(primitive, instances, material, colors);
         vx = new float[instances];
         vy = new float[instances];
-        this.life = life;
     }
 
     public float[] getVx() {

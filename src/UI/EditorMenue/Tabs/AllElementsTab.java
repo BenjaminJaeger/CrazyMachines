@@ -1,15 +1,6 @@
 package UI.EditorMenue.Tabs;
 
-import UI.TabElements.BasketballTabElement;
-import UI.TabElements.BeachBallTabElement;
-import UI.TabElements.BucketTabElement;
-import UI.TabElements.HairdryerTabElement;
-import UI.TabElements.MagnetTabElement;
-import UI.TabElements.TennisBallTabElement;
-import UI.TabElements.MovingBoxTabElement;
-import UI.TabElements.PlaneTabElement;
-import UI.TabElements.PortalTabElement;
-import UI.TabElements.SpinnerTabElement;
+import UI.TabElements.*;
 import javafx.scene.layout.Pane;
 
 public class AllElementsTab extends EditorTab{
@@ -22,6 +13,7 @@ public class AllElementsTab extends EditorTab{
 	protected void createContent(Pane glass) {
 		 BasketballTabElement basketBall = new BasketballTabElement(glass);
 		 HairdryerTabElement hairdryer = new HairdryerTabElement(glass);
+		 YogaMatTabElement yogaMatTabElement = new YogaMatTabElement(glass);
 		 PortalTabElement portal = new PortalTabElement(glass);
 		 PlaneTabElement plane = new PlaneTabElement(glass);
 		 BucketTabElement bucket = new BucketTabElement(glass);
@@ -31,7 +23,7 @@ public class AllElementsTab extends EditorTab{
 		 TennisBallTabElement golfball = new TennisBallTabElement(glass);
 		 MovingBoxTabElement movingBox = new MovingBoxTabElement(glass);
 		 
-		 content.getChildren().addAll(basketBall,beachball,golfball,plane,movingBox,bucket, hairdryer,spinner,magnetTab,portal);
+		 content.getChildren().addAll(basketBall,beachball,golfball,plane,movingBox,bucket, hairdryer,spinner,magnetTab,portal, yogaMatTabElement);
 	}
 	
 	
