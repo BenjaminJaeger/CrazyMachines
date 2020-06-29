@@ -259,4 +259,8 @@ public class Hairdryer extends StaticExternalObject {
 
         cone = new LineModel(new PolygonLine(points, 0), 0, 1, 0, 0, 0);
     }
+
+    public void setAmax (float amax) {
+        this.amax = amax;
+    }
 }
