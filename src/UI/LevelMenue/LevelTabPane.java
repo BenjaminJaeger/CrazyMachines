@@ -8,11 +8,11 @@ import UI.TabElements.BeachBallTabElement;
 import UI.TabElements.BucketTabElement;
 import UI.TabElements.HairdryerTabElement;
 import UI.TabElements.MagnetTabElement;
-import UI.TabElements.TennisBallTabElement;
 import UI.TabElements.PlaneTabElement;
 import UI.TabElements.PortalTabElement;
 import UI.TabElements.SpinnerTabElement;
 import UI.TabElements.TabElement;
+import UI.TabElements.TennisBallTabElement;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
@@ -90,7 +90,7 @@ public class LevelTabPane extends StackPane{
 						element = new BeachBallTabElement(glass, 1);
 						break;
 					}
-					case "MetalBall": {
+					case "TennisBall": {
 						element = new TennisBallTabElement(glass, 1);
 						break;
 					}

@@ -9,7 +9,13 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.stage.Stage;
 
 public class Util {
-
+	
+	
+	/////////////
+	public static boolean devMode = false;
+	/////////////
+	
+	
 	public static boolean dragMode;
 	
 	public static boolean muteAudio;

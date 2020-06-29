@@ -51,7 +51,7 @@ public class Portal extends StaticObject{
 						public void run() {
 							object.setPortable(true);
 						   }
-					},300);							
+					},(int)(300));							
 				}						
 			}
 	}

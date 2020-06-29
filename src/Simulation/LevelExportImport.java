@@ -110,7 +110,7 @@ public class LevelExportImport {
 						object = new BeachBall(x,y);	
 						break;
 					}
-					case "MetalBall": {
+					case "TennisBall": {
 						object = new TennisBall(x,y);	
 						break;
 					}

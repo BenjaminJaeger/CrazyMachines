@@ -9,7 +9,7 @@ import Simulation.RenderEngine.Core.Math.Vector2f;
 
 public class DynamicCollisionContext extends CollisionContext{
 
-	public GameObject lastCollided;
+	public float tmp = 0.5f;
 ////////////////////
 ////Constructors////
 ////////////////////
@@ -60,15 +60,19 @@ public class DynamicCollisionContext extends CollisionContext{
 		if(object instanceof MoveableObject) {
 			CollisionCircleCircle.removeCollision((MoveableObject)gameObject, r1, (MoveableObject)object, r2);
 			
-			CollisionCircleCircle.elasticCollision((MoveableObject)gameObject, (MoveableObject)object);
-			object.onCollision();
-			this.getGameObject().onCollision();
+			if(Math.abs(((MoveableObject) this.getGameObject()).getVelocityY()) > tmp) {
+				CollisionCircleCircle.elasticCollision((MoveableObject)gameObject, (MoveableObject)object);
+				object.onCollision();
+				this.getGameObject().onCollision();
+			}
 		}else {
 			CollisionCircleCircle.removeCollision((MoveableObject)gameObject, r1, (StaticObject)object, r2);
 			
-			CollisionCircleCircle.elasticCollision((MoveableObject)gameObject, (StaticObject)object);
-			object.onCollision();
-			this.getGameObject().onCollision();
+			if(Math.abs(((MoveableObject) this.getGameObject()).getVelocityY()) > tmp) {
+				CollisionCircleCircle.elasticCollision((MoveableObject)gameObject, (StaticObject)object);
+				object.onCollision();
+				this.getGameObject().onCollision();
+			}
 		}
 	}
 	
@@ -90,15 +94,23 @@ public class DynamicCollisionContext extends CollisionContext{
 		if(object instanceof MoveableObject) {			
 			CollisionCirclePolygon.removeCollision((MoveableObject)gameObject, (MoveableObject)object, p1, p2);
 			
-			CollisionCirclePolygon.elasticCollision((MoveableObject)gameObject, (MoveableObject)object, p1, p2,polygon,circle);
-			object.onCollision();
-			this.getGameObject().onCollision();
+			if(Math.abs(((MoveableObject) this.getGameObject()).getVelocityY()) > tmp) {
+				CollisionCirclePolygon.elasticCollision((MoveableObject)gameObject, (MoveableObject)object, p1, p2,polygon,circle);
+				object.onCollision();
+				this.getGameObject().onCollision();
+			}else {
+				((MoveableObject)this.getGameObject()).setVelocityY(0);
+			}
 		}else {			
 			CollisionCirclePolygon.removeCollision((MoveableObject)gameObject,(StaticObject)object, p1, p2);
 			
-			CollisionCirclePolygon.elasticCollision((MoveableObject)gameObject, (StaticObject)object, p1, p2);	
-			object.onCollision();
-			this.getGameObject().onCollision();			
+			if(Math.abs(((MoveableObject) this.getGameObject()).getVelocityY()) > tmp) {
+				CollisionCirclePolygon.elasticCollision((MoveableObject)gameObject, (StaticObject)object, p1, p2);	
+				object.onCollision();
+				this.getGameObject().onCollision();	
+			}else {
+				((MoveableObject)this.getGameObject()).setVelocityY(0);
+			}
 		}
 			
 	}
@@ -132,15 +144,19 @@ public class DynamicCollisionContext extends CollisionContext{
 		if(object instanceof MoveableObject) {			
 			CollisionPolygonPolygon.removeCollision((MoveableObject)gameObject, (MoveableObject)object, p3, p4);
 			
-			CollisionPolygonPolygon.elasticCollision((MoveableObject)gameObject, p1, p2,(MoveableObject)object,p3,p4,polygon1,polygon2);
-			object.onCollision();
-			this.getGameObject().onCollision();
+			if(Math.abs(((MoveableObject) this.getGameObject()).getVelocityY()) > tmp) {
+				CollisionPolygonPolygon.elasticCollision((MoveableObject)gameObject, p1, p2,(MoveableObject)object,p3,p4,polygon1,polygon2);
+				object.onCollision();
+				this.getGameObject().onCollision();
+			}
 		}else {			
 			CollisionPolygonPolygon.removeCollision((MoveableObject)gameObject,(StaticObject)object, p3, p4);
 			
-			CollisionPolygonPolygon.elasticCollision((MoveableObject)gameObject, (StaticObject)object, p3, p4);	
-			object.onCollision();
-			this.getGameObject().onCollision();			
+			if(Math.abs(((MoveableObject) this.getGameObject()).getVelocityY()) > tmp) {
+				CollisionPolygonPolygon.elasticCollision((MoveableObject)gameObject, (StaticObject)object, p3, p4);	
+				object.onCollision();
+				this.getGameObject().onCollision();	
+			}
 		}
 			
 	}

@@ -1,5 +1,6 @@
 package Simulation.Objects.StaticObjects.StaticExternalObjects;
 
+import Simulation.Util;
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.RenderEngine.Core.Math.Vector2f;
@@ -7,7 +8,6 @@ import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Models.LineModel;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.CircleLine;
-import Simulation.Util;
 
 public class Magnet extends StaticExternalObject{
 
@@ -21,7 +21,7 @@ public class Magnet extends StaticExternalObject{
     private CircleLine circle1 = new CircleLine (5, 10, 0);
 
     public Magnet(float x, float y) {
-        super("stabmagnet_tri","PlaneTriangles","magnetTexture.png", material, x, y);
+        super("stabmagnet_tri","stabmagnet_tri","magnetTexture.png", material, x, y);
         //reference points for magnetic sources (both ends)
         negativeSrc = new Vector2f (x, y);
         positiveSrc = new Vector2f (x, y);

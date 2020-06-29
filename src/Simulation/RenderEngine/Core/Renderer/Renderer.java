@@ -97,11 +97,17 @@ public class Renderer {
 
 	@SuppressWarnings("exports")
 	public void render(GameObject object,BasicShader shader) {
+		GL4 gl=(GL4)GLContext.getCurrentGL();
+		
 		if (object.renderBounding()) {
+			gl.glLineWidth(1);
+			
 			for (BoundingCircle circle : object.getCollisionContext().getBoundingCircles()) 
 				render(circle.getModel(), circle.getShader());	
 			for (BoundingPolygon polygon : object.getCollisionContext().getBoundingPolygons()) 
 				render(polygon.getModel(), polygon.getShader());
+			
+			gl.glLineWidth(8);
 		}
 		
 		if(object.renderModel()) {
@@ -117,7 +123,9 @@ public class Renderer {
 			render(object.getObjectTransformer().getSquareUI().getRectangleLine(), object.getObjectTransformer().getSquareUI().getShader());
 		}
 		if(object instanceof Hairdryer) {
+			gl.glLineWidth(1);
 			render(((Hairdryer)object).getCone(), object.getObjectTransformer().getCircleUI().getShader());
+			gl.glLineWidth(8);
 		}
 
 		/*

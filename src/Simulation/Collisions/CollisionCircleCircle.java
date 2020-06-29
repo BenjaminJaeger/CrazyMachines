@@ -18,8 +18,8 @@ public class CollisionCircleCircle {
 		float tx = -ny;
 		float ty = nx;
 			
-		float dpTan1 = object1.getVelocityX()*tx + object1.getVelocityY()*ty;
-		float dpTan2 = object2.getVelocityX()*tx + object2.getVelocityY()*ty;
+		float directionBall1 = object1.getVelocityX()*tx + object1.getVelocityY()*ty;
+		float directionBall2 = object2.getVelocityX()*tx + object2.getVelocityY()*ty;
 		
 		float dpNorm1 = object1.getVelocityX() * nx + object1.getVelocityY()*ny;
 		float dpNorm2 = object2.getVelocityX() * nx + object2.getVelocityY()*ny;
@@ -29,10 +29,10 @@ public class CollisionCircleCircle {
 			
 		float k = (object1.getCoefficientOfRestitution()+object2.getCoefficientOfRestitution())/2;
 				
-		object1.setVelocityX((tx * dpTan1 + nx * m1)*k);
-		object1.setVelocityY((ty * dpTan1 + ny * m1)*k);
-		object2.setVelocityX((tx * dpTan2 + nx * m2)*k);
-		object2.setVelocityY((ty * dpTan2 + ny * m2)*k);
+		object1.setVelocityX((tx * directionBall1 + nx * m1)*k);
+		object1.setVelocityY((ty * directionBall1 + ny * m1)*k);
+		object2.setVelocityX((tx * directionBall2 + nx * m2)*k);
+		object2.setVelocityY((ty * directionBall2 + ny * m2)*k);
 	}
 	
 	public static void elasticCollision(MoveableObject object1 , StaticObject object2) {	

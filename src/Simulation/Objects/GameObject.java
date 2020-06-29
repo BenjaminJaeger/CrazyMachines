@@ -9,6 +9,7 @@ import Simulation.RenderEngine.Core.Models.TriangleModel;
 import Simulation.RenderEngine.Core.Shaders.Core.BasicShader;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.Primitive;
+import UI.Util;
 import UI.ObjectTransformer.ObjectTransformer;
 import UI.TabElements.TabElement;
 
@@ -28,7 +29,7 @@ public abstract class GameObject {
 	protected float mass = 1;
 	
 	protected CollisionContext collisionContext;
-	protected boolean renderBounding = false;
+	protected boolean renderBounding = Util.devMode;
 	
 	protected float originalX,originalY;
 	protected float originalrotation=0;

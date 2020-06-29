@@ -5,6 +5,7 @@ import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.Objects.StaticObjects.StaticExternalObjects.Hairdryer;
 import Simulation.Objects.StaticObjects.StaticExternalObjects.Magnet;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Spinner;
 import Simulation.RenderEngine.Core.Math.Vector2f;
 import UI.Sounds;
 import javafx.beans.value.ChangeListener;
@@ -216,13 +217,13 @@ public class ObjectSettingsLevel extends VBox {
         
         if(object instanceof Hairdryer) {
         	
-        	ObjectSettingsTextField wind = new ObjectSettingsTextField("wind", object, "", 0,"Wind Speed");   
+        	ObjectSettingsTextField wind = new ObjectSettingsTextField("wind", object, "", ((Hairdryer)object).getAmax(),"Wind Speed");   
         	wind.getTextField().textProperty().addListener(new ChangeListener<String>() {
              	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
      		      	if(wind.getTextField().getText().length() == 0) 
-     		      		System.out.println("TODO");
+     		      		((Hairdryer)object).setAmax(0);
      		      	else 
-     		      		System.out.println("TODO"); 	
+     		      		((Hairdryer)object).setAmax(Float.parseFloat(wind.getTextField().getText()));	
              	}
              });
 
@@ -243,6 +244,21 @@ public class ObjectSettingsLevel extends VBox {
 	         });
 
 	        settings.getChildren().add(magnet);
+        }
+        
+        if(object instanceof Spinner) {
+        	
+        	ObjectSettingsTextField spinner = new ObjectSettingsTextField("RotSpeed", object, "Grad/s", ((Spinner) object).getSpeed(),"Rotation speed");  
+        	spinner.getTextField().textProperty().addListener(new ChangeListener<String>() {
+	         	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+	 		      	if(spinner.getTextField().getText().length() == 0) 
+	 		      		((Spinner) object).setSpeed(0);
+	 		      	else 
+	 		      		((Spinner) object).setSpeed(Float.parseFloat(spinner.getTextField().getText()));
+	         	}
+	         });
+
+	        settings.getChildren().add(spinner);
         }
            
         completeUI(object);

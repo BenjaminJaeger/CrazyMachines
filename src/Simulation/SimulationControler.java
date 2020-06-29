@@ -17,7 +17,7 @@ public class SimulationControler {
 
 	public static void simulation() {
 		  for (GameObject object : GameObject.allObjects) {
-	    	  object.update();	
+			  object.update();	
 	    	  
 	    	  Platform.runLater(new Runnable() {				
 				@Override
@@ -26,8 +26,7 @@ public class SimulationControler {
 			    		 ((MoveableObject) object).updateElement();
 				}
 			});
-	    	  
-	    	  
+	    	  	  
 		  }
 	}
 	

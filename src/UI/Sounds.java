@@ -32,6 +32,8 @@ public class Sounds {
 	}
 
 	public static void initSounds() {
+		if(Util.devMode)
+			Util.soundVolume = 0;
 		initMainTheme();
 		initTennisBallSound();
 		initBasketBallSound();
@@ -89,6 +91,8 @@ public class Sounds {
 		Media sound = new Media(new File("res/Sounds/basketball.wav").toURI().toString());
 		basketball = new MediaPlayer(sound);
 		basketball.setVolume(Util.soundVolume);
+		basketball.setStopTime(Duration.millis(70));
+		basketball.setStartTime(Duration.millis(0));
 		basketball.setOnEndOfMedia(new Runnable() {		
 			@Override
 			public void run() {

@@ -1,17 +1,13 @@
 package Simulation.Objects.StaticObjects.StaticExternalObjects;
 
+import Simulation.Util;
 import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
-import Simulation.Particles.ParticleSystem;
 import Simulation.RenderEngine.Core.Math.Vector2f;
 import Simulation.RenderEngine.Core.Math.Vector3f;
 import Simulation.RenderEngine.Core.Models.LineModel;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
 import Simulation.RenderEngine.Primitives.PolygonLine;
-import Simulation.Util;
-
-import java.awt.*;
-import java.util.Vector;
 
 public class Hairdryer extends StaticExternalObject {
     private static Material material = new Material(new Vector3f(0.2f), new Vector3f(0.5f), new Vector3f(1f), 4f);
@@ -32,7 +28,7 @@ public class Hairdryer extends StaticExternalObject {
 
     private float dmax;
 
-    private float amax = 3f;
+    private float amax = 1f;
     private float distance;
 
     public Hairdryer(float x, float y) {
@@ -78,7 +74,7 @@ public class Hairdryer extends StaticExternalObject {
                 }
             }
             if (collision == true) {
-                System.out.println(true);
+               
                 float force;
 
                 if (distance == 0) {
