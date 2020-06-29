@@ -80,9 +80,8 @@ public class SimulationControls extends VBox{
 	         SimulationControler.restart();
 	     });
 
+
 	    Slider slider = new Slider();
-        slider.setMajorTickUnit(3);
-	    slider.setShowTickLabels(true);
 	    slider.setOrientation(Orientation.VERTICAL);
 	    slider.setMin(1);
 	    slider.setMax(10);
@@ -92,14 +91,29 @@ public class SimulationControls extends VBox{
 	         	SimulationControler.setUpdateTime(newValue.intValue());
 	         }
 	    });
-	  
-		Label speed = new Label("Speed");
+	    	  
+		Label speed = new Label("Playback");
 		speed.setStyle("-fx-font: 15px 'Roboto';");
+		Label speed2 = new Label("speed");
+		speed2.setStyle("-fx-font: 15px 'Roboto';");
 		
-		HBox speedbox = new HBox(10);
-		speedbox.getChildren().addAll(slider,speed);
+		VBox name = new VBox();
+		name.getChildren().addAll(speed,speed2);
+		name.setAlignment(Pos.CENTER_LEFT);
+		
+		Label one = new Label("2x");
+		one.setStyle("-fx-font: 15px 'Roboto';");
+		Label two = new Label("1x");
+		two.setStyle("-fx-font: 15px 'Roboto';");
+		Label three = new Label("1/2x");
+		three.setStyle("-fx-font: 15px 'Roboto';");
+		VBox counter = new VBox(50);
+		counter.getChildren().addAll(one,two,three);
+		
+		HBox speedbox = new HBox();
+		speedbox.getChildren().addAll(slider,counter,name);
 		speedbox.setAlignment(Pos.CENTER_LEFT);
-		
+	    
 	    this.setAlignment(Pos.BASELINE_LEFT);
 	    this.getStyleClass().add("section");
 	    this.getChildren().addAll(title,line,playpause,stop,speedbox);

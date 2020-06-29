@@ -121,7 +121,7 @@ public class ObjectSettingsLevel extends VBox {
         //MASS
         float massf = object.getMass();
         if(object.getMass()>99999)
-        	massf = 999;
+        	massf = 999999;
         ObjectSettingsTextField mass = new ObjectSettingsTextField("mass", object, "kg", massf,"Mass");
         mass.getTextField().textProperty().addListener(new ChangeListener<String>() {
         	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {

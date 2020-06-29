@@ -49,26 +49,31 @@ public abstract class MoveableObject extends GameObject{
 		calculateVelocity();
 		calculatePosition();
 		
-		increaseRotation(-velocityX);
+		increaseRotation(-velocityX*SimulationControler.getUpdateTimeInSeconds()*1000/5);
 		resetAcceleration();
-		
-		setX(x);
-		setY(y);
 		
 		((DynamicCollisionContext) collisionContext).checkCollisions();
 	}
 
 	public void calculatePosition() {
-		//  s = s0 + v0 * t + 0,5 * a * t2
+		//  s = s + v * t + 0,5 * a * t*t
 		//  velocity     = m/s
 		//  acceleration = m/s²
 		//  time         = s
-		float xInc = velocityX * SimulationControler.getUpdateTimeInSeconds() + 0.5f * accelerationX * (float)Math.pow(SimulationControler.getUpdateTimeInSeconds(),2);
-		float yInc = velocityY * SimulationControler.getUpdateTimeInSeconds() + 0.5f * accelerationY * (float)Math.pow(SimulationControler.getUpdateTimeInSeconds(),2);
-		xInc*=100;
-		yInc*=100;
-		x+=xInc;
-		y+=yInc;
+		float xNew = velocityX * SimulationControler.getUpdateTimeInSeconds() + 0.5f 
+				* accelerationX * (float)Math.pow(SimulationControler.getUpdateTimeInSeconds(),2);
+				
+		float yNew = velocityY * SimulationControler.getUpdateTimeInSeconds() + 0.5f * 
+				accelerationY * (float)Math.pow(SimulationControler.getUpdateTimeInSeconds(),2);
+		
+		xNew*=100;
+		yNew*=100;
+		
+		x+=xNew;
+		y+=yNew;
+		
+		setX(x);
+		setY(y);
 	}
 	
 	public void applyForce(float x,float y) {

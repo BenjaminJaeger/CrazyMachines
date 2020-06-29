@@ -51,8 +51,8 @@ public class Main extends Application{
 		
         primaryStage.setTitle("Visual Computing 2");
 		primaryStage.setScene(mainScene);
-		primaryStage.setMinWidth(1080);
-		primaryStage.setMinHeight(720);
+		primaryStage.setMinWidth(1280);
+		primaryStage.setMinHeight(920);
 		primaryStage.show();
 		primaryStage.setOnCloseRequest(e->{
 			Sounds.stopSounds();

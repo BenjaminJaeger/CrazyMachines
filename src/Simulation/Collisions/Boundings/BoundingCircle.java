@@ -25,7 +25,6 @@ public class BoundingCircle  extends Bounding{
 ////Collision////
 /////////////////
 	public boolean checkCollision(BoundingCircle circle) {
-		// when radii of both circles is smaller than the distance between them
 		return circle.getRadius() + radius > Util.getDistance(circle.getX(), circle.getY(), x, y);
 	}
 

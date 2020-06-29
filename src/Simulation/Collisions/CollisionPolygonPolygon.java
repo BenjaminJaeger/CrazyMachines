@@ -62,9 +62,9 @@ public class CollisionPolygonPolygon {
 ////REMOVE COLLISION////
 ////////////////////////
 	public static void removeCollision(MoveableObject object1, MoveableObject object2, Vector2f p1 , Vector2f p2) {
-		float length = Util.getDistance(p1.x, p1.y, p2.x, p2.y);				
-		float nx = (p2.y - p1.y)/length;			
-		float ny = (p2.x - p1.x)/length;
+		float distance = Util.getDistance(p1.x, p1.y, p2.x, p2.y);				
+		float nx = (p2.y - p1.y)/distance;			
+		float ny = (p2.x - p1.x)/distance;
 
 		DynamicCollisionContext context1 = (DynamicCollisionContext) object1.getCollisionContext();
 		DynamicCollisionContext context2 = (DynamicCollisionContext) object2.getCollisionContext();

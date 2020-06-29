@@ -86,7 +86,7 @@ public class ObjectPickingMethods {
 
         float distance = (float) Math.sqrt((distX*distX) + (distY*distY));
 
-        if (distance >= (object.getRadius()*0.9f) && distance <= (object.getRadius()) * 1.5) 
+        if (distance >= (object.getRadius()*0.9f) && distance <= (object.getRadius()) * 1.1) 
         	return true;
         
         return false;

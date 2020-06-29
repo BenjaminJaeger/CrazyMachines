@@ -21,13 +21,13 @@ import static com.jogamp.opengl.GL2GL3.GL_LINE;
 import static com.jogamp.opengl.GL2GL3.GL_POLYGON_SMOOTH;
 import static com.jogamp.opengl.GL2GL3.GL_POLYGON_SMOOTH_HINT;
 
-import Simulation.Objects.StaticObjects.StaticExternalObjects.Hairdryer;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLContext;
 
 import Simulation.Collisions.Boundings.BoundingCircle;
 import Simulation.Collisions.Boundings.BoundingPolygon;
 import Simulation.Objects.GameObject;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.Hairdryer;
 import Simulation.RenderEngine.Core.Config;
 import Simulation.RenderEngine.Core.Camera.Camera;
 import Simulation.RenderEngine.Core.Lights.AmbientLight;
@@ -60,6 +60,7 @@ public class Renderer {
 		this.camera=camera;
 		this.projectionMatrix=new Matrix4f();
 		projectionMatrix.changeToPerspecitveMatrix(Config.FIELD_OF_VIEW, Config.NEAR_PLANE, Config.FAR_PLANE,Config.CANVAS_HEIGHT,Config.CANVAS_WIDTH);	
+		updateProjectionMatrix();
 	}
 	
 	/**

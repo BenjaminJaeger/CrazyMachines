@@ -7,10 +7,8 @@ import java.util.Properties;
 
 import javax.swing.SwingUtilities;
 
-import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
@@ -105,8 +103,8 @@ public class Simulation {
 						width = height; 
 				}
 				
-				GL4 gl=(GL4)GLContext.getCurrentGL();
-				gl.glViewport(0, 0, width, height);
+//				GL4 gl=(GL4)GLContext.getCurrentGL();
+//				gl.glViewport(0, 0, width, height);
 				Config.CANVAS_HEIGHT=height;
 				Config.CANVAS_WIDTH=width;
 				canvas.setSize(width, height);
