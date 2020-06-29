@@ -31,6 +31,7 @@ public class Hairdryer extends StaticExternalObject {
     private float polygonBClength;
 
     private float dmax;
+
     private float amax = 3f;
     private float distance;
 
@@ -262,5 +263,9 @@ public class Hairdryer extends StaticExternalObject {
 
     public void setAmax (float amax) {
         this.amax = amax;
+    }
+
+    public float getAmax() {
+        return amax;
     }
 }
