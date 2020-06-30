@@ -14,11 +14,7 @@ public class Magnet extends StaticExternalObject{
     private static Material material = new Material(new Vector3f(0.2f), new Vector3f(0.5f), new Vector3f(1f), 4f);
     private static Vector2f negativeSrc, positiveSrc;
     private float offset = 65;
-    private double charge = 2.7 * Math.pow(10,-6); //in coulomb, equals 25000 gauss -> gauss:coulomb - 8.9*10^11:1
-
-    //DEBUG
-    private LineModel line1, line2;
-    private CircleLine circle1 = new CircleLine (5, 10, 0);
+    private float charge = 33; //in kilo-oersted kOe
 
     public Magnet(float x, float y) {
         super("stabmagnet_tri","stabmagnet_tri","magnetTexture.png", material, x, y);
@@ -27,9 +23,6 @@ public class Magnet extends StaticExternalObject{
         positiveSrc = new Vector2f (x, y);
 
         setScale(1f);
-
-        line1 = new LineModel(circle1, 0,0,0,negativeSrc.getX(), negativeSrc.getY());
-        line2 = new LineModel(circle1, 0,0,0,positiveSrc.getX(), positiveSrc.getY());
     }
 
     @Override
@@ -78,10 +71,7 @@ public class Magnet extends StaticExternalObject{
     }
 
     @Override
-    public void update() {
-        double threshold = 2000; //set infinite for full realism, maybe not needed
-
-        for (GameObject object: allObjects) {
+    public void update() {for (GameObject object: allObjects) {
             if (object instanceof MoveableObject) {
                 Vector2f repel = new Vector2f(negativeSrc.getX()-object.getX(), negativeSrc.getY()-object.getY());
                 Vector2f attract = new Vector2f(object.getX()-positiveSrc.getX(), object.getY()-positiveSrc.getY());
@@ -91,30 +81,40 @@ public class Magnet extends StaticExternalObject{
 
                 if (attractDistance < repelDistance) {
                     Vector2f attractNorm = Util.normVector(attract);
-                    float accX = attractNorm.getX() * forceFunction(attractDistance, charge);
-                    float accY = attractNorm.getY() * forceFunction(attractDistance, charge);
+                    float accX = attractNorm.getX() * forceFunction(attractDistance);
+                    float accY = attractNorm.getY() * forceFunction(attractDistance);
                     ((MoveableObject) object).applyForce(accX, accY);
                 }
 
                 else {
                     Vector2f repelNorm = Util.normVector(repel);
-                    float accX = repelNorm.getX() * forceFunction(repelDistance, charge);
-                    float accY = repelNorm.getY() * forceFunction(repelDistance, charge);
+                    float accX = repelNorm.getX() * forceFunction(repelDistance);
+                    float accY = repelNorm.getY() * forceFunction(repelDistance);
                     ((MoveableObject) object).applyForce(accX, accY);
                 }
                 }
             }
         }
 
-    private float forceFunction (double r, double Q) {
-        final double e0 = 8.854187 * Math.pow(10,-12); //constant
-        double eR = 1; //depending on material, 1 full magnetism -> 0 no magnetism
-        double eQ = 1.602/*Math.pow(10,-2)*/; //charge of object
-        float f =  (float)((1/(4*Math.PI*eR*e0)*(Q*eQ))/(Math.pow(r,2)));
+    private float forceFunction (double r) {
+        float perm = 1f; //permeability: depending on material, 1 full magnetism -> 0 no magnetism
+        float e_Q = 1f; //charge in oersted
+        float f =  (float)((perm*calcAM(charge)*e_Q)/(4*Math.PI*(Math.pow(r,2))));
 
-        return 20;
-        //System.out.println(f);
-        //return f*100;
+        System.out.println(f);
+        return f;
+    }
+
+    public float getCharge () {
+        return charge;
+    }
+
+    public void setCharge (float charge) {
+        this.charge = charge;
+    }
+
+    private float calcAM (float kOe) {
+        return kOe * 1000f * 79.5f;
     }
 
 
