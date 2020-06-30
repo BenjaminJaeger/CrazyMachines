@@ -67,32 +67,32 @@ public class LevelSelectionMenue extends StackPane{
 				
 		MenueLevelButton level7 = new MenueLevelButton("Level 7",levelsDone[6]);
 		level7.setOnMouseClicked(e->{
-//			new Level(mainScene, "Level7",primaryStage);
+			new Level(mainScene, "Level7",primaryStage);
 			Util.currentLevel = 7;
 		});
 		MenueLevelButton level8 = new MenueLevelButton("Level 8",levelsDone[7]);
 		level8.setOnMouseClicked(e->{
-//			new Level(mainScene, "Level8",primaryStage);
+			new Level(mainScene, "Level8",primaryStage);
 			Util.currentLevel = 8;
 		});
 		MenueLevelButton level9 = new MenueLevelButton("Level 9",levelsDone[8]);
 		level9.setOnMouseClicked(e->{
-//			new Level(mainScene, "Level9",primaryStage);
+			new Level(mainScene, "Level9",primaryStage);
 			Util.currentLevel = 9;
 		});
 		MenueLevelButton level10 = new MenueLevelButton("Level 10",levelsDone[9]);
 		level10.setOnMouseClicked(e->{
-//			new Level(mainScene, "Level10",primaryStage);
+			new Level(mainScene, "Level10",primaryStage);
 			Util.currentLevel = 10;
 		});
 		MenueLevelButton level11 = new MenueLevelButton("Level 11",levelsDone[10]);
 		level11.setOnMouseClicked(e->{
-//			new Level(mainScene, "Level11",primaryStage);
+			new Level(mainScene, "Level11",primaryStage);
 			Util.currentLevel = 11;
 		});
 		MenueLevelButton level12 = new MenueLevelButton("Level 12",levelsDone[11]);
 		level12.setOnMouseClicked(e->{
-//			new Level(mainScene, "Level12",primaryStage);
+			new Level(mainScene, "Level12",primaryStage);
 			Util.currentLevel = 12;
 		});
 		

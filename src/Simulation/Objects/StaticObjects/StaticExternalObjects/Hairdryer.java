@@ -28,7 +28,7 @@ public class Hairdryer extends StaticExternalObject {
 
     private float dmax;
 
-    private float amax = 1f;
+    private float amax = 0.5f;
     private float distance;
 
     public Hairdryer(float x, float y) {

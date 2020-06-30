@@ -5,16 +5,14 @@ import Simulation.Objects.GameObject;
 import Simulation.Objects.MovableObjects.MoveableObject;
 import Simulation.RenderEngine.Core.Math.Vector2f;
 import Simulation.RenderEngine.Core.Math.Vector3f;
-import Simulation.RenderEngine.Core.Models.LineModel;
 import Simulation.RenderEngine.Core.Shaders.Core.Material;
-import Simulation.RenderEngine.Primitives.CircleLine;
 
 public class Magnet extends StaticExternalObject{
 
     private static Material material = new Material(new Vector3f(0.2f), new Vector3f(0.5f), new Vector3f(1f), 4f);
     private static Vector2f negativeSrc, positiveSrc;
     private float offset = 65;
-    private float charge = 1050; //in kilo-Ampere/Meter
+    private float charge = 550; //in kilo-Ampere/Meter
 
     public Magnet(float x, float y) {
         super("stabmagnet_tri","stabmagnet_tri","magnetTexture.png", material, x, y);
@@ -101,7 +99,6 @@ public class Magnet extends StaticExternalObject{
         float e_Q = 1f; //charge in ampere/meter
         float f =  (float)((perm*charge*1000f*e_Q)/(4*Math.PI*(Math.pow(r,2))));
 
-        System.out.println(f);
         return f;
     }
 

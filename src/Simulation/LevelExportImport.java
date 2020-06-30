@@ -17,6 +17,7 @@ import Simulation.Objects.StaticObjects.StaticExternalObjects.Magnet;
 import Simulation.Objects.StaticObjects.StaticExternalObjects.Plane;
 import Simulation.Objects.StaticObjects.StaticExternalObjects.Portal;
 import Simulation.Objects.StaticObjects.StaticExternalObjects.Spinner;
+import Simulation.Objects.StaticObjects.StaticExternalObjects.YogaMat;
 import UI.Util;
 
 public class LevelExportImport {
@@ -112,6 +113,10 @@ public class LevelExportImport {
 					}
 					case "TennisBall": {
 						object = new TennisBall(x,y);	
+						break;
+					}
+					case "YogaMat": {
+						object = new YogaMat(x,y);	
 						break;
 					}
 					case "Portal": {	

@@ -44,7 +44,7 @@ public class ObjectSettingsLevel extends VBox {
         Label name = new Label(object.getClass().getSimpleName());    
         name.setStyle("-fx-font: 20px 'Roboto';");
          
-        ImageView deleteImg = new ImageView(new Image("file:res/Images/delete.png"));        
+        ImageView deleteImg = new ImageView(new Image("file:res/Images/delete2.jpg"));        
         deleteImg.setFitHeight(30);
         deleteImg.setFitWidth(30);
         StackPane delete = new StackPane(deleteImg);
@@ -233,13 +233,13 @@ public class ObjectSettingsLevel extends VBox {
         
         if(object instanceof Magnet) {
         	
-        	ObjectSettingsTextField magnet = new ObjectSettingsTextField("magnetism", object, "", 0,"Magnet Power");  
+        	ObjectSettingsTextField magnet = new ObjectSettingsTextField("magnetism", object, "", ((Magnet) object).getCharge(),"Magnet Power");  
         	magnet.getTextField().textProperty().addListener(new ChangeListener<String>() {
 	         	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 	 		      	if(magnet.getTextField().getText().length() == 0) 
-	 		      		System.out.println("TODO");
+	 		      		((Magnet) object).setCharge(0);
 	 		      	else 
-	 		      		System.out.println("TODO"); 	
+	 		      		((Magnet) object).setCharge(Float.parseFloat(magnet.getTextField().getText())); 	
 	         	}
 	         });
 
