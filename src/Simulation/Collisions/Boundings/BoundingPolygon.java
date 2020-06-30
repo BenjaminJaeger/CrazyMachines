@@ -33,6 +33,7 @@ public class BoundingPolygon extends Bounding{
 	public boolean checkCollision(BoundingPolygon polygon) {
 		for (BoundingPolygon polyontmp : new BoundingPolygon[] {this,polygon}) {
 			
+			//loop over all points
 			for (int i = 0; i < polyontmp.getPoints().length; i++){
 				
 				//calculate normal
@@ -41,28 +42,29 @@ public class BoundingPolygon extends Bounding{
 	
 			    Vector2f normal = new Vector2f(p2.y - p1.y, p1.x - p2.x);
 	
-			    //project Shape onto axis
+			    //project Polygon1 onto axis
 			    float minA = 0;
 			    float maxA = 0;
 			    for(Vector2f p : points){
 			    	float projected = normal.x * p.x + normal.y * p.y;
 			    	if (minA == 0 || projected < minA)
-			    		minA = projected;
+			    		minA = projected; //find most left Point of Polygon1
 			    	if (maxA == 0 || projected > maxA)
-			    		maxA = projected;
+			    		maxA = projected; //find most right Point of Polygon1
 			    }
 			    
+			  //project Polygon2 onto axis
 			    float minB = 0;
 			    float maxB = 0;
 			    for(Vector2f p : polygon.getPoints()){
 			    	float projected = normal.x * p.x + normal.y * p.y;
 			    	if (minB == 0 || projected < minB)
-			    		minB = projected;
+			    		minB = projected; //find most left Point of Polygon2
 			    	if (maxB == 0 || projected > maxB)
-			    		maxB = projected;
+			    		maxB = projected;  //find most right Point of Polygon2
 			    }
 			    
-
+			    //check if there is space between left and right most Points of each polygon
 			    if (maxA < minB || maxB < minA)
 			    	return false;
 			    
