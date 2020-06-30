@@ -14,7 +14,7 @@ public class Magnet extends StaticExternalObject{
     private static Material material = new Material(new Vector3f(0.2f), new Vector3f(0.5f), new Vector3f(1f), 4f);
     private static Vector2f negativeSrc, positiveSrc;
     private float offset = 65;
-    private float charge = 33; //in kilo-oersted kOe
+    private float charge = 1050; //in kilo-Ampere/Meter
 
     public Magnet(float x, float y) {
         super("stabmagnet_tri","stabmagnet_tri","magnetTexture.png", material, x, y);
@@ -98,8 +98,8 @@ public class Magnet extends StaticExternalObject{
 
     private float forceFunction (double r) {
         float perm = 1f; //permeability: depending on material, 1 full magnetism -> 0 no magnetism
-        float e_Q = 1f; //charge in oersted
-        float f =  (float)((perm*calcAM(charge)*e_Q)/(4*Math.PI*(Math.pow(r,2))));
+        float e_Q = 1f; //charge in ampere/meter
+        float f =  (float)((perm*charge*1000f*e_Q)/(4*Math.PI*(Math.pow(r,2))));
 
         System.out.println(f);
         return f;
@@ -111,10 +111,6 @@ public class Magnet extends StaticExternalObject{
 
     public void setCharge (float charge) {
         this.charge = charge;
-    }
-
-    private float calcAM (float kOe) {
-        return kOe * 1000f * 79.5f;
     }
 
 
