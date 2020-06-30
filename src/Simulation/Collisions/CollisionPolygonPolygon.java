@@ -70,7 +70,7 @@ public class CollisionPolygonPolygon {
 		DynamicCollisionContext context2 = (DynamicCollisionContext) object2.getCollisionContext();
 		
 		do {		
-			float overlap = 0.1f;
+			float overlap = 0.001f;
 			
 			float object1X = object1.getX() - overlap*nx;
 			float object1Y = object1.getY() - overlap*ny;
@@ -97,7 +97,7 @@ public class CollisionPolygonPolygon {
 		CollisionContext context2 = object2.getCollisionContext();
 		
 		do {			
-			float overlap = 0.1f;
+			float overlap = 0.001f;
 			
 			float object1X = object1.getX()+overlap*nx;
 			float object1Y = object1.getY()+overlap*ny;

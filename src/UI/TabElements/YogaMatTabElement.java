@@ -6,11 +6,11 @@ import javafx.scene.layout.Pane;
 
 public class YogaMatTabElement extends TabElement {
     public YogaMatTabElement(Pane glass) {
-        super(glass,"Yoga Mat", "StaticPlane.png");
+        super(glass,"Yoga Mat", "YogaMat.png");
     }
 
     public YogaMatTabElement(Pane glass, int ammount) {
-        super(glass,"Yoga Mat", "StaticPlane.png",ammount);
+        super(glass,"Yoga Mat", "YogaMat.png",ammount);
     }
 
     @Override
